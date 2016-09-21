@@ -25,7 +25,7 @@ public class MessageParretExample extends ListenerAdapter{
                     .setBotToken("MjI4MjE5OTEzNTkwOTMxNDY4.CsSBFg.PyamWudzNqZTP7vmUUaCqifav_0")
                     .addListener(new MessageParretExample())
                     .buildBlocking();
-          jda.getAccountManager().setGame("with Ranzer's head");
+          jda.getAccountManager().setGame("with Gilmore");
             
         }
         catch (IllegalArgumentException e)
