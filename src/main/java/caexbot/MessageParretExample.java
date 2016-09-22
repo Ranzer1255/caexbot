@@ -5,9 +5,12 @@ import java.util.List;
 import javax.security.auth.login.LoginException;
 
 import caexbot.commands.InfoCommand;
+import caexbot.commands.PingCommand;
+import caexbot.references.CaexBotReference;
 import de.btobastian.sdcf4j.CommandHandler;
 import de.btobastian.sdcf4j.handler.JDAHandler;
-import net.dv8tion.jda.*;
+import net.dv8tion.jda.JDA;
+import net.dv8tion.jda.JDABuilder;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageEmbedEvent;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -25,13 +28,14 @@ public class MessageParretExample extends ListenerAdapter{
         try
         {
           JDA jda = new JDABuilder()
-                    .setBotToken("MjI4MjE5OTEzNTkwOTMxNDY4.CsSBFg.PyamWudzNqZTP7vmUUaCqifav_0")
+                    .setBotToken(CaexBotReference.TOKEN)
                     .addListener(new MessageParretExample())
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
           
           CommandHandler h = new JDAHandler(jda);
           h.registerCommand(new InfoCommand());
+          h.registerCommand(new PingCommand());
             
         }
         catch (IllegalArgumentException e)
