@@ -1,16 +1,21 @@
 package caexbot;
 
+import java.nio.channels.ShutdownChannelGroupException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
 import caexbot.commands.InfoCommand;
 import caexbot.commands.PingCommand;
+import caexbot.commands.ShutdownCommand;
 import caexbot.references.CaexBotReference;
 import de.btobastian.sdcf4j.CommandHandler;
+import de.btobastian.sdcf4j.Sdcf4jMessage;
 import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageEmbedEvent;
@@ -33,11 +38,17 @@ public class MessageParretExample extends ListenerAdapter{
                     .addListener(new MessageParretExample())
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
+
           jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
-          
+          for (User u : jda.getUsers()) {
+			System.out.printf("[%s] [%s]\n",u.getUsername(), u.getId());
+		}
+          Sdcf4jMessage.MISSING_PERMISSIONS.setMessage("You're not my player! you can't tell me what to do!");
           CommandHandler h = new JDAHandler(jda);
+          h.addPermission("143929240440537089", "player");
           h.registerCommand(new InfoCommand());
           h.registerCommand(new PingCommand());
+          h.registerCommand(new ShutdownCommand());
             
         }
         catch (IllegalArgumentException e)
