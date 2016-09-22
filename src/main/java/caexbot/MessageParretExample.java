@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import caexbot.commands.InfoCommand;
+import de.btobastian.sdcf4j.CommandHandler;
+import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.*;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageEmbedEvent;
@@ -26,6 +29,9 @@ public class MessageParretExample extends ListenerAdapter{
                     .addListener(new MessageParretExample())
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
+          
+          CommandHandler h = new JDAHandler(jda);
+          h.registerCommand(new InfoCommand());
             
         }
         catch (IllegalArgumentException e)
