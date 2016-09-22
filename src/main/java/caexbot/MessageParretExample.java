@@ -11,6 +11,7 @@ import de.btobastian.sdcf4j.CommandHandler;
 import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
+import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageEmbedEvent;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -32,6 +33,7 @@ public class MessageParretExample extends ListenerAdapter{
                     .addListener(new MessageParretExample())
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
+          jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
           
           CommandHandler h = new JDAHandler(jda);
           h.registerCommand(new InfoCommand());
