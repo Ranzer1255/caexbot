@@ -20,14 +20,14 @@ public class InfoCommand implements CommandExecutor {
         }
         if (args.length == 1) { // 1 argument
             if (args[0].equals("author")) { // !info author
-                return "```- **Name:** Ranzer\n" +
+                return "- **Name:** Ranzer\n" +
                        "- **Age:** 27\n" +
-                       "- **Website:** http://www.github.com/sgmaniac1255```";
+                       "- **Website:** http://www.github.com/sgmaniac1255";
             }
             if (args[0].equals("time")) { // !info time
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                 Date currentDate = new Date(System.currentTimeMillis());
-                return "It's" + format.format(currentDate);
+                return "It's " + format.format(currentDate);
             }
         }
         return "Unknown argument!";
