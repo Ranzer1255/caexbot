@@ -26,15 +26,6 @@ public class MessageParretExample extends ListenerAdapter{
                     .addListener(new MessageParretExample())
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
-          List<User> u = jda.getUsers();
-          
-          for (User user : u) {
-			System.out.print(user.getUsername());
-			if(user.isBot())
-				System.out.print("[bot]");
-			System.out.print(", ");
-
-		  }
             
         }
         catch (IllegalArgumentException e)
