@@ -6,9 +6,11 @@ import de.btobastian.sdcf4j.CommandExecutor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import caexbot.references.CaexBotReference;
+
 public class InfoCommand implements CommandExecutor {
 
-    @Command(aliases = "!info", description = "Shows some information about the bot.", usage = "!info [author|time]")
+    @Command(aliases = CaexBotReference.COMMAND_LEAD+"info", description = "Shows some information about the bot.", usage = "!info [author|time]")
     public String onInfoCommand(String[] args) {
         if (args.length > 1) { // more than 1 argument
             return "To many arguments!";
