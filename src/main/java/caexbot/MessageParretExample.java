@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
 import caexbot.commands.PingCommand;
 import caexbot.commands.ShutdownCommand;
 import caexbot.references.CaexBotReference;
 import de.btobastian.sdcf4j.CommandHandler;
+import de.btobastian.sdcf4j.CommandHandler.SimpleCommand;
 import de.btobastian.sdcf4j.Sdcf4jMessage;
 import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.JDA;
@@ -45,10 +47,14 @@ public class MessageParretExample extends ListenerAdapter{
 		}
           Sdcf4jMessage.MISSING_PERMISSIONS.setMessage("You're not my player! you can't tell me what to do!");
           CommandHandler h = new JDAHandler(jda);
+          h.setDefaultPrefix("/");
           h.addPermission("143929240440537089", "player");
+          
+          h.registerCommand(new HelpCommand(h));
           h.registerCommand(new InfoCommand());
           h.registerCommand(new PingCommand());
           h.registerCommand(new ShutdownCommand());
+          
             
         }
         catch (IllegalArgumentException e)

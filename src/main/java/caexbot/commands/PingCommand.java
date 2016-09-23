@@ -6,27 +6,27 @@ import de.btobastian.sdcf4j.CommandExecutor;
 
 public class PingCommand implements CommandExecutor {
 
-	@Command(aliases = {CaexBotReference.COMMAND_LEAD+" ping"}, description = "pong!")
+	@Command(aliases = {"ping"}, description = "pong!")
 	public String pingCommand(){
 		return "pong!";
 	}
 	
-	@Command(aliases = {(CaexBotReference.COMMAND_LEAD+"pong")}, description = "pong!")
+	@Command(aliases = {("pong")}, description = "ping!")
 	public String pongCommand(){
 		return "ping!";
 	}
 	
-	@Command(aliases = {CaexBotReference.COMMAND_LEAD+"ding"}, description = "pong!")
+	@Command(aliases = {"ding"}, description = "dong!")
 	public String dingCommand(){
 		return "dong!";
 	}
 	
-	@Command(aliases = {CaexBotReference.COMMAND_LEAD+"dong"}, description = "pong!")
+	@Command(aliases = {"dong"}, description = "ding!")
 	public String dongCommand(){
 		return "ding!";
 	}
 	
-	@Command(aliases = {CaexBotReference.COMMAND_LEAD+"derp"}, description = "pong!")
+	@Command(aliases = {"derp"}, description = "herp!")
 	public String derpCommand(){
 		return "dert de der!";
 	}
