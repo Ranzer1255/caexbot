@@ -1,7 +1,5 @@
 package caexbot;
 
-import java.nio.channels.ShutdownChannelGroupException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
@@ -15,8 +13,6 @@ import de.btobastian.sdcf4j.Sdcf4jMessage;
 import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageEmbedEvent;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
