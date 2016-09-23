@@ -10,7 +10,7 @@ import caexbot.references.CaexBotReference;
 
 public class InfoCommand implements CommandExecutor {
 
-    @Command(aliases = CaexBotReference.COMMAND_LEAD+"info", description = "Shows some information about the bot.", usage = "!info [author|time]")
+    @Command(aliases = "info", description = "Shows some information about the bot.", usage = "!info [author|time]")
     public String onInfoCommand(String[] args) {
         if (args.length > 1) { // more than 1 argument
             return "To many arguments!";
@@ -18,7 +18,8 @@ public class InfoCommand implements CommandExecutor {
         if (args.length == 0) { // !info
             return "- **Author:** Ranzer\n" +
                    "- **Language:** Java\n" +
-                   "- **Command-Lib:** sdcf4j";
+                   "- **Command-Lib:** sdcf4j\n" +
+                   "- **Github Rebo:** https://github.com/Sgmaniac1255/caexbot";
         }
         if (args.length == 1) { // 1 argument
             if (args[0].equals("author")) { // !info author
