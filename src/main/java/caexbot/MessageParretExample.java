@@ -10,7 +10,6 @@ import caexbot.commands.PingCommand;
 import caexbot.commands.ShutdownCommand;
 import caexbot.references.CaexBotReference;
 import de.btobastian.sdcf4j.CommandHandler;
-import de.btobastian.sdcf4j.CommandHandler.SimpleCommand;
 import de.btobastian.sdcf4j.Sdcf4jMessage;
 import de.btobastian.sdcf4j.handler.JDAHandler;
 import net.dv8tion.jda.JDA;
@@ -45,6 +44,7 @@ public class MessageParretExample extends ListenerAdapter{
           CommandHandler h = new JDAHandler(jda);
           h.setDefaultPrefix("/");
           h.addPermission("143929240440537089", "player");
+          h.addPermission("143929761385807872", "player");
           
           h.registerCommand(new HelpCommand(h));
           h.registerCommand(new InfoCommand());
