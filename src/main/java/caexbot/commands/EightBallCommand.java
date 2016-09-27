@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
-import net.dv8tion.jda.JDA;
 
 public class EightBallCommand implements CommandExecutor {
 	
