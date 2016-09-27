@@ -26,7 +26,7 @@ public class EightBallCommand implements CommandExecutor {
 		List<String> rtn = new ArrayList<String>();
 		
 		try {
-			Scanner br = new Scanner(new File(new File(".").getAbsolutePath(),"/src/main/resources/8BallAnswers.txt"));
+			Scanner br = new Scanner(new File("./src/main/resources/8BallAnswers.txt"));
 			while (br.hasNextLine()) {
 				rtn.add(br.nextLine());				
 			}
@@ -39,16 +39,6 @@ public class EightBallCommand implements CommandExecutor {
 		return rtn;
 		
 	}
-	
-//	private List<String> loadAnswers(){
-//		List<String> rtn = new ArrayList<>();
-//		
-//		rtn.add("It is certain");
-//		rtn.add("It is decidedly so");
-//		rtn.add("Without a doubt");
-//		
-//		return rtn;
-//	}
 	
 	@Command(aliases={"8ball"}, description="Answer life's questions")
 	public String eightBallCommand(){
