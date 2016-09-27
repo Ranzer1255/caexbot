@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import caexbot.commands.EightBallCommand;
 import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
 import caexbot.commands.PingCommand;
@@ -36,7 +37,7 @@ public class MessageParretExample extends ListenerAdapter{
                     .buildBlocking();
           jda.getAccountManager().setGame("with Gilmore");
 
-          jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
+//          jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
           for (User u : jda.getUsers()) {
 			System.out.printf("[%s] [%s]\n",u.getUsername(), u.getId());
 		}
@@ -50,6 +51,7 @@ public class MessageParretExample extends ListenerAdapter{
           h.registerCommand(new InfoCommand());
           h.registerCommand(new PingCommand());
           h.registerCommand(new ShutdownCommand());
+          h.registerCommand(new EightBallCommand());
           
             
         }
