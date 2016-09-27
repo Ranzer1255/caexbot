@@ -26,7 +26,7 @@ public class EightBallCommand implements CommandExecutor {
 		List<String> rtn = new ArrayList<String>();
 		
 		try {
-			Scanner br = new Scanner(new File(System.getProperty("user.home")+"/programing/java/workspace","/caexbot/src/main/resources/8BallAnswers.txt"));
+			Scanner br = new Scanner(new File(new File(".").getAbsolutePath(),"/src/main/resources/8BallAnswers.txt"));
 			while (br.hasNextLine()) {
 				rtn.add(br.nextLine());				
 			}
@@ -50,7 +50,7 @@ public class EightBallCommand implements CommandExecutor {
 //		return rtn;
 //	}
 	
-	@Command(aliases={"8ball"}, description="Answer live's questions")
+	@Command(aliases={"8ball"}, description="Answer life's questions")
 	public String eightBallCommand(){
 		return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
 	}
