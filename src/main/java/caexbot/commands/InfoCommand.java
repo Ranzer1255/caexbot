@@ -6,8 +6,6 @@ import de.btobastian.sdcf4j.CommandExecutor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import caexbot.references.CaexBotReference;
-
 public class InfoCommand implements CommandExecutor {
 
     @Command(aliases = "info", description = "Shows some information about the bot.", usage = "!info [author|time]")

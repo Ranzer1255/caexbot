@@ -1,7 +1,5 @@
 package caexbot.commands;
 
-import java.text.Format;
-
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import de.btobastian.sdcf4j.CommandHandler;

@@ -1,6 +1,5 @@
 package caexbot.commands;
 
-import caexbot.references.CaexBotReference;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 
