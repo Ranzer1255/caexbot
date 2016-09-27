@@ -35,9 +35,9 @@ public class MessageParretExample extends ListenerAdapter{
                     .setBotToken(CaexBotReference.TOKEN)
                     .addListener(new MessageParretExample())
                     .buildBlocking();
-          jda.getAccountManager().setGame("with Gilmore");
+          jda.getAccountManager().setGame("type /help ;)");
 
-//          jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
+          jda.getTextChannelById("222704069448433674").sendMessage("I LIVE!");
           for (User u : jda.getUsers()) {
 			System.out.printf("[%s] [%s]\n",u.getUsername(), u.getId());
 		}
