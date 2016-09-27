@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
+import net.dv8tion.jda.JDA;
 
 public class EightBallCommand implements CommandExecutor {
 	
@@ -41,7 +42,8 @@ public class EightBallCommand implements CommandExecutor {
 	}
 	
 	@Command(aliases={"8ball"}, description="Answer life's questions")
-	public String eightBallCommand(){
+	public String eightBallCommand(String args[]){
+		
 		return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
 	}
 }
