@@ -16,7 +16,6 @@ public class InfoCommand implements CommandExecutor {
         if (args.length == 0) { // !info
             return "- **Author:** Ranzer\n" +
                    "- **Language:** Java\n" +
-                   "- **Command-Lib:** sdcf4j\n" +
                    "- **Github Rebo:** https://github.com/Sgmaniac1255/caexbot";
         }
         if (args.length == 1) { // 1 argument

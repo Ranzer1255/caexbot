@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import de.btobastian.sdcf4j.Command;
-import de.btobastian.sdcf4j.CommandExecutor;
-
 public class EightBallCommand implements CommandExecutor {
 	
 	private List<String> answers;
