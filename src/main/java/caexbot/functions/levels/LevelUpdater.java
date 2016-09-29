@@ -1,4 +1,8 @@
-package caexbot.backgroundFunctions;
+package caexbot.functions.levels;
+
+import java.util.Map;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import net.dv8tion.jda.entities.Guild;
 import net.dv8tion.jda.entities.User;
@@ -7,6 +11,8 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
+	Map<Pair<Guild, User>, Integer> xp;
+	Pair<Guild,User> key;
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
@@ -27,6 +33,7 @@ public class LevelUpdater extends ListenerAdapter{
 	 */
 	private void addXP(Guild guild, User author) {
 
+		
 		
 	}
 

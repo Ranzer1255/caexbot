@@ -1,4 +1,4 @@
-package caexbot.backgroundFunctions;
+package caexbot.functions.background;
 
 import java.util.List;
 
