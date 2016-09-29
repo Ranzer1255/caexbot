@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.dv8tion.jda.events.Event;
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 public class EightBallCommand extends CaexCommand {
@@ -41,8 +42,8 @@ public class EightBallCommand extends CaexCommand {
 	}
 	
 	@Override
-	public void runCommand(MessageReceivedEvent e){
+	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
 		
-		eanswers.get(ThreadLocalRandom.current().nextInt(answers.size()));
+		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
 	}
 }
