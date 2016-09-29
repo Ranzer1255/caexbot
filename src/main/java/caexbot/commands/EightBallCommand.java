@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EightBallCommand implements CommandExecutor {
+import net.dv8tion.jda.events.Event;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
+public class EightBallCommand extends CaexCommand {
 	
 	private List<String> answers;
 	
@@ -37,9 +40,9 @@ public class EightBallCommand implements CommandExecutor {
 		
 	}
 	
-	@Command(aliases={"8ball"}, description="Answer life's questions")
-	public String eightBallCommand(String args[]){
+	@Override
+	public void runCommand(MessageReceivedEvent e){
 		
-		return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
+		eanswers.get(ThreadLocalRandom.current().nextInt(answers.size()));
 	}
 }
