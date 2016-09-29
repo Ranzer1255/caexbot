@@ -3,6 +3,7 @@ package caexbot.commands;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -57,5 +58,11 @@ public class EightBallCommand extends CaexCommand {
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
 		Logging.debug(this, "Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
 		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
+	}
+	
+	@Override
+	public List<String> getAlias(){
+		
+		return Arrays.asList("8ball", "8b");
 	}
 }

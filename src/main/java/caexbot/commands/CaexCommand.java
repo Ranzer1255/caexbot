@@ -1,5 +1,7 @@
 package caexbot.commands;
 
+import java.util.List;
+
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -17,4 +19,6 @@ public abstract class CaexCommand{
 	abstract public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event);
 	
 	abstract public String getUsage();
+	
+	abstract List<String> getAlias();
 }
