@@ -17,7 +17,7 @@ public class CaexConfiguration {
 
 	public boolean isDebug() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }
