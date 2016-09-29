@@ -12,22 +12,22 @@ public class Logging {
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss Z");
 
     public static void log(LogLevel level, String message) {
-        CaexConfiguration config = CaexConfiguration.getInstance();
+//        CaexConfiguration config = CaexConfiguration.getInstance();
 
         String line = String.format("[%s\t%s] %s\n", level.name(), getTimestamp(), message);
 
         System.out.print(line);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(config.getLogLocation(), true))) {
-            if (level == LogLevel.DEBUG && !config.isDebug()) {
-                return;
-            }
-
-            writer.write(line);
-        } catch (Exception ex) {
-            System.out.println("Cannot log to file.");
-            ex.printStackTrace();
-        }
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(config.getLogLocation(), true))) {
+//            if (level == LogLevel.DEBUG && !config.isDebug()) {
+//                return;
+//            }
+//
+//            writer.write(line);
+//        } catch (Exception ex) {
+//            System.out.println("Cannot log to file.");
+//            ex.printStackTrace();
+//        }
     }
 
     public static void debug(String message) {
