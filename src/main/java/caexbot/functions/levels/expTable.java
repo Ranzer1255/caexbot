@@ -13,16 +13,14 @@ public class expTable {
 	
 	private Map<Pair<Guild,User>, Integer> exp;
 	
-	private
-	
 	private expTable(){}
 	
 	public expTable getInstance(){
 
 		if(instance == null){
 			instance = new expTable();
-			
 		}
 		
+		return instance;
 	}
 }
