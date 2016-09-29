@@ -15,7 +15,7 @@ public class expTable {
 	
 	private expTable(){}
 	
-	public expTable getInstance(){
+	public static expTable getInstance(){
 
 		if(instance == null){
 			instance = new expTable();
