@@ -11,7 +11,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
-	Map<Pair<Guild, User>, Integer> xp;
+	expTable xp = expTable.;
 	Pair<Guild,User> key;
 
 	@Override
