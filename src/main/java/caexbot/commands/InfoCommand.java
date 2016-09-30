@@ -5,6 +5,7 @@ import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class InfoCommand extends CaexCommand {
 
 	@Override
 	List<String> getAlias() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return Arrays.asList("info");
 	}
 
 }
