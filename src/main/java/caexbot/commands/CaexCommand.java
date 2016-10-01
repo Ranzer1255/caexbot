@@ -20,5 +20,5 @@ public abstract class CaexCommand{
 	
 	abstract public String getUsage();
 	
-	abstract List<String> getAlias();
+	abstract public List<String> getAlias();
 }

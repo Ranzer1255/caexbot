@@ -1,9 +1,12 @@
 package caexbot.commands;
 
-import de.btobastian.sdcf4j.Command;
-import de.btobastian.sdcf4j.CommandExecutor;
+import java.util.List;
 
-public class PingCommand implements CommandExecutor {
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
+public class PingCommand extends CaexCommand {
 
 	@Command(aliases = {"ping"}, description = "pong!")
 	public String pingCommand(){
@@ -28,5 +31,23 @@ public class PingCommand implements CommandExecutor {
 	@Command(aliases = {"derp"}, description = "herp!")
 	public String derpCommand(){
 		return "dert de der!";
+	}
+
+	@Override
+	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getAlias() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
