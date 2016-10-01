@@ -2,8 +2,8 @@ package caexbot;
 
 import javax.security.auth.login.LoginException;
 
-import caexbot.backgroundFunctions.CommandListener;
-import caexbot.backgroundFunctions.LevelUpdater;
+import caexbot.functions.background.CommandListener;
+import caexbot.functions.levels.LevelUpdater;
 import caexbot.commands.EightBallCommand;
 import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
