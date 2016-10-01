@@ -19,7 +19,7 @@ public class expTable {
 	private Map<Pair<Guild,User>, UserLevel> exp;
 	
 	private expTable(){
-		save = new XPSaver(this, SAVE_LOCATION);
+//		save = new XPSaver(this, SAVE_LOCATION);
 		exp = new HashMap<>();
 	}
 	
@@ -45,7 +45,7 @@ public class expTable {
 		
 		exp.get(key).addXP(XP);
 		
-		save.save(this);
+//		save.save(this);
 		
 	}
 	
