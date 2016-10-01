@@ -17,9 +17,10 @@ public class CommandListener extends ListenerAdapter {
 	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
 	private String prefix = "!";
 	
-	public void addCommand(CaexCommand cmd){
+	public CommandListener addCommand(CaexCommand cmd){
 		
 		this.cmds.add(cmd);
+		return this;
 	}
 	
 	public String getPrefex() {
