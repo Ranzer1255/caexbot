@@ -1,32 +1,34 @@
 package caexbot.commands;
 
-import de.btobastian.sdcf4j.Command;
-import de.btobastian.sdcf4j.CommandExecutor;
+import java.util.Arrays;
+import java.util.List;
 
-public class PingCommand implements CommandExecutor {
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-	@Command(aliases = {"ping"}, description = "pong!")
-	public String pingCommand(){
+public class PingCommand extends CaexCommand {
+
+	@Override
+	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		
+		channel.sendMessage("pong!");	
+	}
+
+	@Override
+	public String getUsage() {
+		return prefix+"ping";
+	}
+
+	@Override
+	public List<String> getAlias() {
+		return Arrays.asList("ping");
+	}
+
+	@Override
+	public String getDescription() {
 		return "pong!";
 	}
-	
-	@Command(aliases = {("pong")}, description = "ping!")
-	public String pongCommand(){
-		return "ping!";
-	}
-	
-	@Command(aliases = {"ding"}, description = "dong!")
-	public String dingCommand(){
-		return "dong!";
-	}
-	
-	@Command(aliases = {"dong"}, description = "ding!")
-	public String dongCommand(){
-		return "ding!";
-	}
-	
-	@Command(aliases = {"derp"}, description = "herp!")
-	public String derpCommand(){
-		return "dert de der!";
-	}
+
+
 }

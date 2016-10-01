@@ -8,17 +8,27 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 public abstract class CaexCommand{
 
-	public static String CMD_PREFEX = "!";
+	public static String prefix = "!";
 	
 	public static void setPrefex(String prefex){
-		CMD_PREFEX = prefex;
+		prefix = prefex;
+	}
+	
+	public static String getPrefix() {
+		return prefix;
 	}
 
-	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){} //TODO
+	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
+		process(args, author, channel, event);
+	} //TODO
 	
 	abstract public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event);
 	
-	abstract public String getUsage();
+	abstract public List<String> getAlias();
 	
-	abstract List<String> getAlias();
+	abstract public String getDescription();
+	
+	abstract public String getUsage();
+
+
 }

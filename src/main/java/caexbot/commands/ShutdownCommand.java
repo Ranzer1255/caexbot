@@ -1,12 +1,33 @@
 package caexbot.commands;
 
-import de.btobastian.sdcf4j.Command;
-import de.btobastian.sdcf4j.CommandExecutor;
+import java.util.Arrays;
+import java.util.List;
 
-public class ShutdownCommand implements CommandExecutor {
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-	@Command(aliases={"sleep"}, description = "Kill Caex", requiredPermissions = "player")
-	public void shutdown(){
-		System.exit(0);
+public class ShutdownCommand extends CaexCommand {
+
+//	@Command(aliases={"sleep"}, description = "Kill Caex", requiredPermissions = "player")
+
+	@Override
+	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		//TODO
+	}
+
+	@Override
+	public String getUsage() {
+		return prefix+"sleep (requires permision)";
+	}
+
+	@Override
+	public List<String> getAlias() {
+		return Arrays.asList("sleep");
+	}
+
+	@Override
+	public String getDescription() {
+		return "kill Caex!";
 	}
 }
