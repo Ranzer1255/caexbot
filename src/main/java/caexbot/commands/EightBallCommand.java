@@ -48,8 +48,7 @@ public class EightBallCommand extends CaexCommand {
 		Logging.debug(this,"usage called");
 		StringBuilder sb = new StringBuilder();
 		
-		sb	.append("```")
-			.append("[").append(CaexCommand.CMD_PREFEX).append("8ball] <the burrning question in your heart, begging for an answer>");
+		sb.append(prefix).append("8ball <the burrning question in your heart, begging for an answer>");
 		
 		return sb.toString();
 	}
@@ -64,5 +63,10 @@ public class EightBallCommand extends CaexCommand {
 	public List<String> getAlias(){
 		
 		return Arrays.asList("8ball", "8b");
+	}
+
+	@Override
+	public String getDescription() {
+		return "Answers to your hearts most desired questions!";
 	}
 }

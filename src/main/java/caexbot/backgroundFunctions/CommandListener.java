@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
+import caexbot.util.Logging;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -15,7 +16,6 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 public class CommandListener extends ListenerAdapter {
 	
 	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
-	private String prefix = "!";
 	
 	public CommandListener addCommand(CaexCommand cmd){
 		
@@ -23,12 +23,14 @@ public class CommandListener extends ListenerAdapter {
 		return this;
 	}
 	
-	public String getPrefex() {
-		return prefix;
+	@Deprecated
+	public String getPrefix() {
+		return CaexCommand.getPrefix();
 	}
 
+	@Deprecated
 	public void setPrefex(String prefix) {
-		this.prefix = prefix;
+		CaexCommand.setPrefex(prefix);
 	}
 
 	@Override
@@ -37,11 +39,11 @@ public class CommandListener extends ListenerAdapter {
 		User author = event.getAuthor();
 		String message = event.getMessage().getRawContent();
 		
-		if(!message.startsWith(prefix)) return;
+		if(!message.startsWith(CaexCommand.getPrefix()))return;
 		
 		if (author != CaexBot.getJDA().getSelfInfo()) {
 			String[] args = message.split(" ");
-			String command = args[0];
+			String command = args[0].replace("!", "");
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
 			TextChannel channel = event.getTextChannel();
 			Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
@@ -57,9 +59,12 @@ public class CommandListener extends ListenerAdapter {
 					}
 				}.start();
 			}
-		}
+		} 
+	}
+
+	public List<CaexCommand> getCommands() {
 		
-		
+		return cmds;
 	}
 
 }
