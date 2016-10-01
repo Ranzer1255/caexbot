@@ -25,8 +25,7 @@ public class InfoCommand extends CaexCommand {
         if (args.length == 1) { // 1 argument
             if (args[0].equals("author")) { // !info author
             	channel.sendMessage("- **Name:** Ranzer\n" +
-            						"- **Age:** 27\n" +
-            						"- **Website:** http://www.github.com/sgmaniac1255");
+            						"- **Age:** 27\n");
             }
             if (args[0].equals("time")) { // !info time
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -39,14 +38,19 @@ public class InfoCommand extends CaexCommand {
 
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		return null;
+		return prefix+"info [author | time]";
 	}
 
 	@Override
-	List<String> getAlias() {
+	public List<String> getAlias() {
 
-		return Arrays.asList("info");
+		return Arrays.asList("info", "i");
+	}
+
+	@Override
+	public String getDescription() {
+		
+		return "Information about Caex and Author";
 	}
 
 }
