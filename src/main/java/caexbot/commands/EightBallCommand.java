@@ -3,14 +3,17 @@ package caexbot.commands;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import de.btobastian.sdcf4j.Command;
-import de.btobastian.sdcf4j.CommandExecutor;
+import caexbot.util.Logging;
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-public class EightBallCommand implements CommandExecutor {
+public class EightBallCommand extends CaexCommand {
 	
 	private List<String> answers;
 	
@@ -40,9 +43,30 @@ public class EightBallCommand implements CommandExecutor {
 		
 	}
 	
-	@Command(aliases={"8ball"}, description="Answer life's questions")
-	public String eightBallCommand(String args[]){
+	@Override
+	public String getUsage(){
+		Logging.debug(this,"usage called");
+		StringBuilder sb = new StringBuilder();
 		
-		return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
+		sb.append(prefix).append("8ball <the burrning question in your heart, begging for an answer>");
+		
+		return sb.toString();
+	}
+	
+	@Override
+	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
+		Logging.debug(this, "Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
+		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
+	}
+	
+	@Override
+	public List<String> getAlias(){
+		
+		return Arrays.asList("8ball", "8b");
+	}
+
+	@Override
+	public String getDescription() {
+		return "Answers to your hearts most desired questions!";
 	}
 }
