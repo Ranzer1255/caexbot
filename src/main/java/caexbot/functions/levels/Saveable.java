@@ -1,6 +1,6 @@
 package caexbot.functions.levels;
 
-public interface XPSaver {
+public interface Saveable {
 	
 	public void save();
 
