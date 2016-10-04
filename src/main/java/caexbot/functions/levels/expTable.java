@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import caexbot.database.CaexDB;
 import caexbot.util.Logging;
 
 import net.dv8tion.jda.entities.Guild;
@@ -19,8 +20,8 @@ public class expTable {
 	private Map<Pair<Guild,User>, UserLevel> exp;
 	
 	private expTable(){
-//		save = new XPSaver(this, SAVE_LOCATION);
 		exp = new HashMap<>();
+		exp.putAll(CaexDB.getLevels());
 	}
 	
 	public static expTable getInstance(){
