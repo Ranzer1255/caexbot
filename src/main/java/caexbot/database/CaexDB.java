@@ -24,7 +24,7 @@ public class CaexDB {
 	private static Connection getConnection(){
 		try {
 			if (connection == null || connection.isClosed()){
-				connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/caexdb", "Caexbot", "testing");
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/caexdb?useSSL=false", "Caexbot", "testing");
 			}
 			
 			return connection;
@@ -57,4 +57,31 @@ public class CaexDB {
 
         return tbl;
     }
+
+	public static void addRow(Pair<Guild, User> key, UserLevel u) {
+		try{
+			PreparedStatement stmt = getConnection().prepareStatement("insert into guild_levels (guild_id, user_id, xp) values (?,?,?);");
+			stmt.setString(1, key.getLeft().getId());
+			stmt.setString(2, key.getRight().getId());
+			stmt.setInt(3, u.getXP());
+			stmt.execute();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+
+	public static void addXP(Pair<Guild, User> key, int XP) {
+		try{
+			PreparedStatement stmt = getConnection().prepareStatement("update guild_levels set xp = (xp + ?) where guild_id = ? and user_id = ?;");
+			stmt.setInt(1, XP);
+			stmt.setString(2, key.getLeft().getId());
+			stmt.setString(3, key.getRight().getId());
+			stmt.execute();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+	}
 }

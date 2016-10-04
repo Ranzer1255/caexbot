@@ -17,4 +17,9 @@ public class UserLevel {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public int getXP() {
+		// TODO Auto-generated method stub
+		return experience;
+	}
 }

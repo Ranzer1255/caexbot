@@ -21,7 +21,7 @@ public class expTable {
 	
 	private expTable(){
 		exp = new HashMap<>();
-		exp.putAll(CaexDB.getLevels());
+		load();
 	}
 	
 	public static expTable getInstance(){
@@ -40,11 +40,14 @@ public class expTable {
 		Pair<Guild,User> key = new ImmutablePair<>(guild, author);
 		
 		if(!exp.containsKey(key)){
-			exp.put(key, new UserLevel(XP));
+			UserLevel u = new UserLevel(XP);
+			exp.put(key, u);
+			CaexDB.addRow(key,u);
 			return;
 		}
 		
 		exp.get(key).addXP(XP);
+		CaexDB.addXP(key,XP);
 		
 //		save.save(this);
 		
@@ -52,6 +55,6 @@ public class expTable {
 	
 	
 	public void load(){
-		
+		exp.putAll(CaexDB.getLevels());
 	}
 }
