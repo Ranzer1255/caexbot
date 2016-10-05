@@ -33,7 +33,6 @@ public class CaexBot {
 
 		JDABuilder build = new JDABuilder()
 				.addListener(commands)
-				.addListener(new LevelUpdater())
 				.setBotToken(config.getToken());
 
 		try {
@@ -43,6 +42,7 @@ public class CaexBot {
 			e.printStackTrace();
 		}
 		
+		JDA.addEventListener(new LevelUpdater());
 		JDA.getAccountManager().setGame("with Gilmore");
 	}
 
