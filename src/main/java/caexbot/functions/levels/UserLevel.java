@@ -10,16 +10,15 @@ public class UserLevel {
 	 * @param XP
 	 */
 	public UserLevel(int XP) {
-		// TODO Auto-generated constructor stub
+		experience = XP;
 	}
 
-	public void addXP(int xP) {
-		// TODO Auto-generated method stub
+	public void addXP(int XP) {
+		experience += XP;
 		
 	}
 
 	public int getXP() {
-		// TODO Auto-generated method stub
 		return experience;
 	}
 }
