@@ -1,7 +1,9 @@
 package caexbot.functions.levels;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import caexbot.database.CaexDB;
 import caexbot.util.Logging;
@@ -56,5 +58,12 @@ public class expTable {
 	public int getXP(Guild guild, User author) {
 		// TODO Auto-generated method stub
 		return exp.get(guild).get(author).getXP();
+	}
+
+	public List<Map.Entry<User, UserLevel>> getGuildRankings(Guild guild) {
+		
+		return exp.get(guild).entrySet().stream()
+				  .sorted(Map.Entry.comparingByValue())
+				  .collect(Collectors.toList());
 	}
 }

@@ -1,6 +1,6 @@
 package caexbot.functions.levels;
 
-public class UserLevel {
+public class UserLevel implements Comparable<UserLevel> {
 
 	private int experience;
 	private int level;
@@ -20,5 +20,16 @@ public class UserLevel {
 
 	public int getXP() {
 		return experience;
+	}
+
+	@Override
+	public int compareTo(UserLevel o) {
+		
+		if(this.getXP()<o.getXP())
+			return 1;
+		if(this.getXP()>o.getXP())
+			return -1;
+		return 0;
+		
 	}
 }
