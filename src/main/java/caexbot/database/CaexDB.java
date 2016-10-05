@@ -8,9 +8,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import caexbot.CaexBot;
 import caexbot.functions.levels.UserLevel;
 import net.dv8tion.jda.entities.Guild;

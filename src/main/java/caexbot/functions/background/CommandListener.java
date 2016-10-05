@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
-import caexbot.util.Logging;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;

@@ -11,7 +11,6 @@ import caexbot.commands.LevelCommand;
 import caexbot.commands.PingCommand;
 import caexbot.commands.ShutdownCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.util.Logging;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 
