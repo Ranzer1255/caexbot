@@ -55,4 +55,9 @@ public class expTable {
 	public void load(){
 		exp.putAll(CaexDB.getLevels());
 	}
+
+	public int getXP(Guild guild, User author) {
+		// TODO Auto-generated method stub
+		return exp.get(new ImmutablePair<Guild, User>(guild, author)).getXP();
+	}
 }
