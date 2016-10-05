@@ -3,9 +3,6 @@ package caexbot.functions.levels;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import caexbot.database.CaexDB;
 import caexbot.util.Logging;
 
@@ -15,7 +12,6 @@ import net.dv8tion.jda.entities.User;
 public class expTable {
 
 	private static expTable instance;
-	private Map<Pair<Guild,User>, UserLevel> exp2;
 	private Map<Guild, Map<User, UserLevel>> exp;
 	
 	private expTable(){
