@@ -1,5 +1,7 @@
 package caexbot.functions.levels;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.util.Logging;
@@ -11,6 +13,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 public class LevelUpdater extends ListenerAdapter{
 
 	public final static int XP_LOWBOUND = 15, XP_HIGHBOUND = 25;
+	private static List<User> messageTimeout = new ArrayList<>();
 	
 	expTable xp = expTable.getInstance();
 
@@ -19,8 +22,20 @@ public class LevelUpdater extends ListenerAdapter{
 		
 		if((event.getAuthor() != event.getJDA().getSelfInfo())&&!event.getAuthor().isBot()){
 		
-			
-			addXP(event.getGuild(), event.getAuthor());
+			if (!messageTimeout.contains(event.getAuthor())) {
+				addXP(event.getGuild(), event.getAuthor());
+				new Thread(){
+					public void run(){
+						messageTimeout.add(event.getAuthor());
+						try {
+							sleep(60000L);
+						} catch (InterruptedException e) {}//do nothing
+						messageTimeout.remove(event.getAuthor());
+					}
+				}.start();
+			}else{
+				Logging.debug(event.getAuthorName()+" is on time out");
+			}
 		}
 		
 	}
@@ -34,7 +49,7 @@ public class LevelUpdater extends ListenerAdapter{
 	 */
 	private void addXP(Guild guild, User author) {
 
-		Logging.debug(this, "adding XP to " + author.getUsername() + " on " + guild.getName());
+		Logging.debug("adding XP to " + author.getUsername() + " on " + guild.getName());
 		
 		xp.addXP(guild, author, getRandomXP());
 		
@@ -42,6 +57,7 @@ public class LevelUpdater extends ListenerAdapter{
 	}
 
 	private int getRandomXP() {
+		
 		return ThreadLocalRandom.current().nextInt(XP_LOWBOUND, XP_HIGHBOUND+1);
 	}
 
