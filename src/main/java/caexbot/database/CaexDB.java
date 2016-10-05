@@ -35,8 +35,8 @@ public class CaexDB {
 		}
 	}
 	
-	public static Map<Pair<Guild,User>, UserLevel> getLevels() {
-		Map<Pair<Guild,User>, UserLevel> tbl = new HashMap<>();
+	public static Map<Guild, Map<User,UserLevel>> getLevels() {
+		Map<Guild, Map<User,UserLevel>> tbl = new HashMap<>();
 
         try {
             PreparedStatement stmt = getConnection().prepareStatement("select * from guild_levels");
@@ -44,11 +44,14 @@ public class CaexDB {
 
             while (rs.next()) {
             	Guild g = CaexBot.getJDA().getGuildById(rs.getString(1));
-            	User u = CaexBot.getJDA().getUserById(rs.getString(2));
-            	Pair<Guild, User> key = new ImmutablePair<>(g, u);
+            	if (!tbl.containsKey(g))
+            		tbl.put(g, new HashMap<>());
             	
+            	User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
             	UserLevel xp = new UserLevel( rs.getInt(3));
-            	tbl.put(key, xp);
+            	
+            	
+            	tbl.get(g).put(u, xp);
             }
 
         } catch (Exception ex) {

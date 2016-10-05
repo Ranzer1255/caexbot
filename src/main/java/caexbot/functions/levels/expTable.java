@@ -40,18 +40,17 @@ public class expTable {
 		if(!subMap.containsKey(author)){
 			UserLevel u = new UserLevel(XP);
 			subMap.put(author, u);
-			CaexDB.addRow(guild,author,u);//TODO fix DB intergration
-			return;
+			CaexDB.addRow(guild,author,u);
 		}
 			
 				
 		subMap.get(author).addXP(XP);
-		CaexDB.addXP(guild, author,XP);//TODO fix DB intergration
+		CaexDB.addXP(guild, author,XP);
 		
 	}
 		
 	private void load(){
-//		exp.putAll(CaexDB.getLevels()); TODO fix DB integration
+		exp.putAll(CaexDB.getLevels()); 
 	}
 
 	public int getXP(Guild guild, User author) {
