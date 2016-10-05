@@ -58,11 +58,11 @@ public class CaexDB {
         return tbl;
     }
 
-	public static void addRow(Pair<Guild, User> key, UserLevel u) {
+	public static void addRow(Guild guild, User user, UserLevel u) {
 		try{
 			PreparedStatement stmt = getConnection().prepareStatement("insert into guild_levels (guild_id, user_id, xp) values (?,?,?);");
-			stmt.setString(1, key.getLeft().getId());
-			stmt.setString(2, key.getRight().getId());
+			stmt.setString(1, guild.getId());
+			stmt.setString(2, user.getId());
 			stmt.setInt(3, u.getXP());
 			stmt.execute();
 			
@@ -72,12 +72,12 @@ public class CaexDB {
 		
 	}
 
-	public static void addXP(Pair<Guild, User> key, int XP) {
+	public static void addXP(Guild guild, User user, int XP) {
 		try{
 			PreparedStatement stmt = getConnection().prepareStatement("update guild_levels set xp = (xp + ?) where guild_id = ? and user_id = ?;");
 			stmt.setInt(1, XP);
-			stmt.setString(2, key.getLeft().getId());
-			stmt.setString(3, key.getRight().getId());
+			stmt.setString(2, guild.getId());
+			stmt.setString(3, user.getId());
 			stmt.execute();
 		}catch (Exception e){
 			e.printStackTrace();
