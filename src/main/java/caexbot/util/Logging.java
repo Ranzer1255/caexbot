@@ -32,7 +32,7 @@ public class Logging {
     public static void log(Object caller, LogLevel level, String message) {
 //        CaexConfiguration config = CaexConfiguration.getInstance();
 
-        String line = String.format("[%s][%s\t%s] %s\n", caller.getClass().getCanonicalName(),level.name(), getTimestamp(), message);
+        String line = String.format("[%s][%s\t%s] %s\n", caller.getClass().getName(),level.name(), getTimestamp(), message);
 
         System.out.print(line);
 
