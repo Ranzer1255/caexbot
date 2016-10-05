@@ -15,8 +15,6 @@ import net.dv8tion.jda.entities.User;
 public class expTable {
 
 	private static expTable instance;
-	private static final String SAVE_LOCATION = "./src/main/resources/LevelSave";
-	private static XPSaver save;
 	private Map<Pair<Guild,User>, UserLevel> exp;
 	
 	private expTable(){
