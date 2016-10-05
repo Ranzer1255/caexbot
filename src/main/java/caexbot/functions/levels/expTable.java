@@ -33,7 +33,7 @@ public class expTable {
 
 	public void addXP(Guild guild, User author, int XP) {
 
-		Logging.debug(this, "Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
+		Logging.debug("Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
 		
 		Pair<Guild,User> key = new ImmutablePair<>(guild, author);
 		
