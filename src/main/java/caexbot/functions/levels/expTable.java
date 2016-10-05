@@ -15,7 +15,8 @@ import net.dv8tion.jda.entities.User;
 public class expTable {
 
 	private static expTable instance;
-	private Map<Pair<Guild,User>, UserLevel> exp;
+	private Map<Pair<Guild,User>, UserLevel> exp2;
+	private Map<Guild, Map<User, UserLevel>> exp;
 	
 	private expTable(){
 		exp = new HashMap<>();
@@ -35,29 +36,30 @@ public class expTable {
 
 		Logging.debug("Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
 		
-		Pair<Guild,User> key = new ImmutablePair<>(guild, author);
+		if(!exp.containsKey(guild))
+			exp.put(guild, new HashMap<>());
 		
-		if(!exp.containsKey(key)){
+		Map<User, UserLevel> subMap = exp.get(guild);
+		
+		if(!subMap.containsKey(author)){
 			UserLevel u = new UserLevel(XP);
-			exp.put(key, u);
-			CaexDB.addRow(key,u);
+			subMap.put(author, u);
+//			CaexDB.addRow(key,u);//TODO fix DB intergration
 			return;
 		}
-		
-		exp.get(key).addXP(XP);
-		CaexDB.addXP(key,XP);
-		
-//		save.save(this);
+			
+				
+		subMap.get(author).addXP(XP);
+//		CaexDB.addXP(key,XP);//TODO fix DB intergration
 		
 	}
-	
-	
-	public void load(){
-		exp.putAll(CaexDB.getLevels());
+		
+	private void load(){
+//		exp.putAll(CaexDB.getLevels()); TODO fix DB integration
 	}
 
 	public int getXP(Guild guild, User author) {
 		// TODO Auto-generated method stub
-		return exp.get(new ImmutablePair<Guild, User>(guild, author)).getXP();
+		return exp.get(guild).get(author).getXP();
 	}
 }
