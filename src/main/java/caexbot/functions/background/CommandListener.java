@@ -23,16 +23,6 @@ public class CommandListener extends ListenerAdapter {
 		return this;
 	}
 	
-	@Deprecated
-	public String getPrefix() {
-		return CaexCommand.getPrefix();
-	}
-
-	@Deprecated
-	public void setPrefex(String prefix) {
-		CaexCommand.setPrefex(prefix);
-	}
-
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
