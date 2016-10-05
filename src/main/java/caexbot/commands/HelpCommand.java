@@ -22,7 +22,7 @@ public class HelpCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		Logging.debug(this, "Help called");
+		Logging.debug("Help called");
 
 		StringBuilder sb = new StringBuilder();
 		
