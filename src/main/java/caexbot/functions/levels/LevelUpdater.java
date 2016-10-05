@@ -17,8 +17,9 @@ public class LevelUpdater extends ListenerAdapter{
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
 		
-		if((event.getAuthor() != event.getJDA().getSelfInfo())||!event.getAuthor().isBot()){
+		if((event.getAuthor() != event.getJDA().getSelfInfo())&&!event.getAuthor().isBot()){
 		
+			
 			addXP(event.getGuild(), event.getAuthor());
 		}
 		
