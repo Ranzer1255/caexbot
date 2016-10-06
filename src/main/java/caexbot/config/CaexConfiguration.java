@@ -7,7 +7,7 @@ public class CaexConfiguration {
 
 	
 	private CaexConfiguration(){
-		botToken = "MjI4MjE5OTEzNTkwOTMxNDY4.CtaTmA.JEbNdXoSXCMyWAte5ZgqP_IejI0";
+		botToken = "";
 		instance = this;
 	}
 	
