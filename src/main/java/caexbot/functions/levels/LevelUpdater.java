@@ -24,7 +24,8 @@ public class LevelUpdater extends ListenerAdapter{
 		if((event.getAuthor() != event.getJDA().getSelfInfo())&&!event.getAuthor().isBot()){
 		
 			if (!messageTimeout.contains(event.getAuthor())) {
-				addXP(event.getGuild(), event.getAuthor());
+				if(addXP(event.getGuild(), event.getAuthor()))
+					event.getChannel().sendMessage("Congrats "+event.getAuthor().getAsMention()+" you've advanced to Level: "+xp.getLevel(event.getGuild(), event.getAuthor()));
 				new Thread(){
 					public void run(){
 						messageTimeout.add(event.getAuthor());
@@ -46,11 +47,11 @@ public class LevelUpdater extends ListenerAdapter{
 	 * @param author
 	 * @return true if author leveled up.
 	 */
-	private void addXP(Guild guild, User author) {
+	private boolean addXP(Guild guild, User author) {
 
 		Logging.debug("adding XP to " + author.getUsername() + " on " + guild.getName());
 		
-		xp.addXP(guild, author, getRandomXP());
+		return xp.addXP(guild, author, getRandomXP());
 		
 		
 	}

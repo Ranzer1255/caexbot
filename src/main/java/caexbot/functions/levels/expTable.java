@@ -30,7 +30,7 @@ public class expTable {
 		return instance;
 	}
 
-	public void addXP(Guild guild, User author, int XP) {
+	public boolean addXP(Guild guild, User author, int XP) {
 
 		Logging.debug("Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
 		
@@ -46,9 +46,10 @@ public class expTable {
 		}
 			
 				
-		subMap.get(author).addXP(XP);
+		boolean rtn = subMap.get(author).addXP(XP);
 		CaexDB.addXP(guild, author,XP);
 		
+		return rtn;
 	}
 		
 	private void load(){

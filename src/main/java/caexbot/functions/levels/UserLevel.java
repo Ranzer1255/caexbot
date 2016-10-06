@@ -36,15 +36,21 @@ public class UserLevel implements Comparable<UserLevel> {
 		}
 	}
 
-	public void addXP(int XP) {
+	public boolean addXP(int XP) {
 		experience += XP;
-		if(experience>levels.get(level))
+		if(experience>levels.get(level)){
 			level++;
-		
+			return true;
+		}
+		return false;
 	}
 
 	public int getXP() {
 		return experience;
+	}
+
+	public int getLevel() {
+		return level;
 	}
 
 	@Override
@@ -56,9 +62,5 @@ public class UserLevel implements Comparable<UserLevel> {
 			return -1;
 		return 0;
 		
-	}
-
-	public int getLevel() {
-		return level;
 	}
 }
