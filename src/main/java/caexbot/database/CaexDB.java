@@ -18,10 +18,20 @@ public class CaexDB {
 
 	private static Connection connection;
 	
+	static {
+		try {
+			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS guild_levels (guild_id varchar(20) NOT NULL, user_id varchar(20) NOT NULL, xp int(11), PRIMARY KEY (guild_id, user_id));" );
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private static Connection getConnection(){
 		try {
 			if (connection == null || connection.isClosed()){
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/caexdb?useSSL=false", "Caexbot", "testing");
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/caexdb?useSSL=false", "caexbot", "testing");
 			}
 			
 			return connection;
