@@ -27,15 +27,23 @@
       <artifactId>JDA</artifactId>
       <version>2.2.1_360</version>
   	</dependency>
-  	
   	<dependency>
       <groupId>net.dv8tion</groupId>
       <artifactId>jda-player</artifactId>
       <version>0.2.2_18</version>
     </dependency>
-  	
-	<!-- The core module -->
-    <!-- The module for your prefered lib-->  	
+	<dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.39</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.7</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
+  
   <url>https://github.com/Sgmaniac1255/caexbot</url>
 </project>

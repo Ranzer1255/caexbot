@@ -1,4 +1,4 @@
-package caexbot.backgroundFunctions;
+package caexbot.functions.background;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
-import caexbot.util.Logging;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -23,16 +22,6 @@ public class CommandListener extends ListenerAdapter {
 		return this;
 	}
 	
-	@Deprecated
-	public String getPrefix() {
-		return CaexCommand.getPrefix();
-	}
-
-	@Deprecated
-	public void setPrefex(String prefix) {
-		CaexCommand.setPrefex(prefix);
-	}
-
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		

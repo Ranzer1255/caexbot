@@ -45,7 +45,7 @@ public class EightBallCommand extends CaexCommand {
 	
 	@Override
 	public String getUsage(){
-		Logging.debug(this,"usage called");
+		Logging.debug("usage called");
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(prefix).append("8ball <the burrning question in your heart, begging for an answer>");
@@ -55,7 +55,7 @@ public class EightBallCommand extends CaexCommand {
 	
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
-		Logging.debug(this, "Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
+		Logging.debug("Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
 		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
 	}
 	

@@ -2,15 +2,15 @@ package caexbot;
 
 import javax.security.auth.login.LoginException;
 
-import caexbot.backgroundFunctions.CommandListener;
-import caexbot.backgroundFunctions.LevelUpdater;
+import caexbot.functions.background.CommandListener;
+import caexbot.functions.levels.LevelUpdater;
 import caexbot.commands.EightBallCommand;
 import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
+import caexbot.commands.LevelCommand;
 import caexbot.commands.PingCommand;
 import caexbot.commands.ShutdownCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.util.Logging;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 
@@ -29,11 +29,11 @@ public class CaexBot {
 				.addCommand(new InfoCommand())
 				.addCommand(new PingCommand())
 				.addCommand(new EightBallCommand())
-				.addCommand(new ShutdownCommand());
+				.addCommand(new ShutdownCommand())
+				.addCommand(new LevelCommand());
 
 		JDABuilder build = new JDABuilder()
 				.addListener(commands)
-				.addListener(new LevelUpdater())
 				.setBotToken(config.getToken());
 
 		try {
@@ -43,6 +43,7 @@ public class CaexBot {
 			e.printStackTrace();
 		}
 		
+		JDA.addEventListener(new LevelUpdater());
 		JDA.getAccountManager().setGame("with Gilmore");
 	}
 
