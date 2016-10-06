@@ -23,6 +23,7 @@ public class CaexConfiguration {
 	private Boolean debug = false;
 	private String logPath = "/caexbot/logs/caex.log";
 	private File logLocation;
+	private String prefix = "!";
 	private String botToken = "token";
 	
 	private CaexConfiguration(){
@@ -76,6 +77,10 @@ public class CaexConfiguration {
 		return botToken;
 	}
 	
+	public String getPrefix() {
+		return prefix;
+	}
+
 	//setters
 	@CaexConfigItem(key="DBMS", type=String.class, _default="mysql")
 	public void setDatabaseManagementSystem(String databaseManagementSystem) {
@@ -108,6 +113,10 @@ public class CaexConfiguration {
 	@CaexConfigItem(key="debug", type=Boolean.class, _default="false")
 	public void setDebug(Boolean debug) {
 		this.debug = debug;
+	}
+	@CaexConfigItem(key="prefix", type=String.class, _default="!")
+	public void setPrefix(String prefix){
+		this.prefix=prefix;
 	}
 	@CaexConfigItem(key="botToken", type=String.class, _default="token")
 	public void setToken(String token){

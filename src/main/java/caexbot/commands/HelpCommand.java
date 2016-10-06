@@ -31,13 +31,13 @@ public class HelpCommand extends CaexCommand {
 			if(c.isPresent()){
 				CaexCommand cmd = c.get();
 				
-				sb.append(("**["+prefix)).append(cmd.getAlias()).append("]** \n")
+				sb.append(("**["+getPrefix())).append(cmd.getAlias()).append("]** \n")
 				  .append(cmd.getDescription()).append("\n")
 				  .append(cmd.getUsage());
 			}
 		}else{
 			for (CaexCommand cmd : cmds.getCommands()) {
-				sb.append(("**["+prefix));
+				sb.append(("**["+getPrefix()));
 				sb.append(cmd.getAlias().get(0));
 				sb.append("]** ");
 				sb.append(cmd.getUsage()+"\n");	
@@ -50,7 +50,7 @@ public class HelpCommand extends CaexCommand {
 	@Override
 	public String getUsage() {
 
-		return prefix+"help [command]";
+		return getPrefix()+"help [command]";
 	}
 
 	@Override

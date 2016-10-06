@@ -19,7 +19,7 @@ public class ShutdownCommand extends CaexCommand {
 
 	@Override
 	public String getUsage() {
-		return prefix+"sleep (requires permision)";
+		return getPrefix()+"sleep (requires permision)";
 	}
 
 	@Override
