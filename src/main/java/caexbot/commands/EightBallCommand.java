@@ -45,7 +45,6 @@ public class EightBallCommand extends CaexCommand {
 	
 	@Override
 	public String getUsage(){
-		Logging.debug("usage called");
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(getPrefix()).append("8ball <the burrning question in your heart, begging for an answer>");
