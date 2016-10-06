@@ -34,8 +34,6 @@ public class LevelUpdater extends ListenerAdapter{
 						messageTimeout.remove(event.getAuthor());
 					}
 				}.start();
-			}else{
-				Logging.debug(event.getAuthorName()+" is on time out");
 			}
 		}
 		
