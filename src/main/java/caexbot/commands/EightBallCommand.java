@@ -48,7 +48,7 @@ public class EightBallCommand extends CaexCommand {
 		Logging.debug("usage called");
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(prefix).append("8ball <the burrning question in your heart, begging for an answer>");
+		sb.append(getPrefix()).append("8ball <the burrning question in your heart, begging for an answer>");
 		
 		return sb.toString();
 	}

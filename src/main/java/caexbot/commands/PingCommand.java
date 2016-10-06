@@ -17,7 +17,7 @@ public class PingCommand extends CaexCommand {
 
 	@Override
 	public String getUsage() {
-		return prefix+"ping";
+		return getPrefix()+"ping";
 	}
 
 	@Override

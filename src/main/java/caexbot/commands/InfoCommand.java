@@ -38,7 +38,7 @@ public class InfoCommand extends CaexCommand {
 
 	@Override
 	public String getUsage() {
-		return prefix+"info [author | time]";
+		return getPrefix()+"info [author | time]";
 	}
 
 	@Override

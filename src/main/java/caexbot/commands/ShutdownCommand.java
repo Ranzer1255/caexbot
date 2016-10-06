@@ -9,17 +9,15 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 public class ShutdownCommand extends CaexCommand {
 
-//	@Command(aliases={"sleep"}, description = "Kill Caex", requiredPermissions = "player")
-
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		channel.sendMessage("if you insist boss.... *blerg*");
-//		System.exit(0);
+		System.exit(0);
 	}
 
 	@Override
 	public String getUsage() {
-		return prefix+"sleep (requires permision)";
+		return getPrefix()+"sleep (requires permision)";
 	}
 
 	@Override
@@ -30,5 +28,10 @@ public class ShutdownCommand extends CaexCommand {
 	@Override
 	public String getDescription() {
 		return "kill Caex!";
+	}
+	
+	@Override
+	public List<String> getRoleRequirements() {
+		return Arrays.asList("DMs");
 	}
 }
