@@ -10,6 +10,7 @@ import java.util.Map;
 
 import caexbot.CaexBot;
 import caexbot.functions.levels.UserLevel;
+import caexbot.util.Logging;
 import net.dv8tion.jda.entities.Guild;
 import net.dv8tion.jda.entities.User;
 
@@ -56,6 +57,7 @@ public class CaexDB {
             	
             	User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
             	UserLevel xp = new UserLevel( rs.getInt(3));
+            	Logging.debug(u.getUsername()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
             	
             	
             	tbl.get(g).put(u, xp);

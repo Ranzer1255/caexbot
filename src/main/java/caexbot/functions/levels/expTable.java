@@ -56,7 +56,6 @@ public class expTable {
 	}
 
 	public int getXP(Guild guild, User author) {
-		// TODO Auto-generated method stub
 		return exp.get(guild).get(author).getXP();
 	}
 
@@ -65,5 +64,9 @@ public class expTable {
 		return exp.get(guild).entrySet().stream()
 				  .sorted(Map.Entry.comparingByValue())
 				  .collect(Collectors.toList());
+	}
+
+	public int getLevel(Guild guild, User author) {
+		return exp.get(guild).get(author).getLevel();
 	}
 }

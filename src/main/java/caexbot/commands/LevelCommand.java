@@ -21,7 +21,7 @@ public class LevelCommand extends CaexCommand {
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current XP: %d", author.getAsMention(), expTable.getInstance().getXP(channel.getGuild(),author)));
+		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author)));
 		
 
 	}
@@ -55,7 +55,8 @@ public class LevelCommand extends CaexCommand {
 			String userName;
 			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
 					userName = entry.getKey().getUsername(); 
-			msg.append(userName).append(": ").append(entry.getValue().getXP()).append("xp\n");
+			msg.append(userName).append(": Level ").append(entry.getValue().getLevel())
+			   .append(", ").append(entry.getValue().getXP()).append("xp\n");
 		}
 		
 		return msg.toString();
