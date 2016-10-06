@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import caexbot.backgroundFunctions.CommandListener;
+import caexbot.functions.background.CommandListener;
 import caexbot.util.Logging;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -22,7 +22,7 @@ public class HelpCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		Logging.debug(this, "Help called");
+		Logging.debug("Help called");
 
 		StringBuilder sb = new StringBuilder();
 		
