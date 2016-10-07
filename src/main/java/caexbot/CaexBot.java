@@ -4,6 +4,8 @@ import javax.security.auth.login.LoginException;
 
 import caexbot.functions.background.CommandListener;
 import caexbot.functions.levels.LevelUpdater;
+import caexbot.util.Logging;
+import caexbot.commands.DiceCommand;
 import caexbot.commands.EightBallCommand;
 import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
@@ -20,7 +22,7 @@ public class CaexBot {
 	private static CommandListener commands = new CommandListener();
 
 	public static void main (String[] args){
-//		Logging.info(null, "Huu... Wha... who... Oh, I guess it's time to [start up]");	
+		Logging.info("Huu... Wha... who... Oh, I guess it's time to [start up]");	
 
 
 		CaexConfiguration config = CaexConfiguration.getInstance();
@@ -30,7 +32,8 @@ public class CaexBot {
 				.addCommand(new PingCommand())
 				.addCommand(new EightBallCommand())
 				.addCommand(new ShutdownCommand())
-				.addCommand(new LevelCommand());
+				.addCommand(new LevelCommand())
+				.addCommand(new DiceCommand());
 
 		JDABuilder build = new JDABuilder()
 				.addListener(commands)
