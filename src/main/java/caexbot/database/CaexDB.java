@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import caexbot.CaexBot;
+import caexbot.config.CaexConfiguration;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
 import net.dv8tion.jda.entities.Guild;
@@ -19,20 +20,28 @@ public class CaexDB {
 
 	private static Connection connection;
 	
-	static {
-		try {
-			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS guild_levels (guild_id varchar(20) NOT NULL, user_id varchar(20) NOT NULL, xp int(11), PRIMARY KEY (guild_id, user_id));" );
-			stmt.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS guild_levels (guild_id varchar(20) NOT NULL, user_id varchar(20) NOT NULL, xp int(11), PRIMARY KEY (guild_id, user_id));" );
+//			stmt.execute();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	private static Connection getConnection(){
+		CaexConfiguration config = CaexConfiguration.getInstance();
 		try {
 			if (connection == null || connection.isClosed()){
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/caexdb?useSSL=false", "caexbot", "testing");
+				String DBMS = config.getDatabaseManagementSystem();
+				String host = config.getDatabaseHostname();
+				Integer port = config.getDatabasePort();
+				String DB = config.getDatabaseName();
+				String user = config.getDatabaseUsername();
+				String pw = config.getDatabasePassword();
+				 
+				connection = DriverManager.getConnection(String.format("jdbc:%s://%s:%d/%s?useSSL=false",DBMS,host,port,DB), user, pw);
 			}
 			
 			return connection;
