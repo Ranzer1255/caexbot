@@ -70,6 +70,10 @@ public abstract class CaexCommand{
 		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE);
 		
 	}
+	
+	void invalidUsage(){
+		
+	}
 
 
 }
