@@ -36,7 +36,7 @@ public class LevelCommand extends CaexCommand {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "lists your level and experence.  Add \"rank\" the leaderboard.";
 	}
 
 	@Override
@@ -50,13 +50,13 @@ public class LevelCommand extends CaexCommand {
 		
 		List<Map.Entry<User, UserLevel>> rankings = expTable.getInstance().getGuildRankings(channel.getGuild());
 		
-		msg.append("Current Rankings are:\n\n");
+		msg.append("__***Current Leaderboard***__\n\n");
 		for (Map.Entry<User, UserLevel> entry : rankings) {
 			String userName;
 			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
 					userName = entry.getKey().getUsername(); 
-			msg.append(userName).append(": Level ").append(entry.getValue().getLevel())
-			   .append(", ").append(entry.getValue().getXP()).append("xp\n");
+			msg.append("__**").append(userName).append("**__:\t*Level:* **").append(entry.getValue().getLevel())
+			   .append("** with __").append(entry.getValue().getXP()).append("*xp*__\n\n");
 		}
 		
 		return msg.toString();

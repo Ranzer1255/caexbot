@@ -40,7 +40,7 @@ public class HelpCommand extends CaexCommand {
 				sb.append(("**["+getPrefix()));
 				sb.append(cmd.getAlias().get(0));
 				sb.append("]** ");
-				sb.append(cmd.getUsage()+"\n");	
+				sb.append(cmd.getDescription()+"\n");	
 			}
 			
 			channel.sendMessage(sb.toString());
@@ -60,6 +60,6 @@ public class HelpCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		return "Gives a list of avaliable commands\nGives a detailed breakdown of supplied command";
+		return "Gives a list of avaliable command";
 	}
 }
