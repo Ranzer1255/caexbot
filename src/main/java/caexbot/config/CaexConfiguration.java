@@ -106,7 +106,11 @@ public class CaexConfiguration {
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
-	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")
+	/**
+	 * if this item exists in the config file, Config loading will crash!
+	 * @param logLocation
+	 */
+	@CaexConfigItem(key="logLocation", type=File.class, _default="/caexbot/logs/caex.log")//TODO this is broken
 	public void setLogLocation(File logLocation) {
 		this.logLocation = logLocation;
 	}
@@ -146,6 +150,10 @@ public class CaexConfiguration {
 							method.invoke(this, value);
 							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
 							continue;
+						} else if (item.type() == File.class){//TODO this is broken and i dont know why
+							File value = new File((String) properties.get(item.key()));
+							method.invoke(this, value);
+							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
 						}
 
 						String value = (String) properties.get(item.key());
