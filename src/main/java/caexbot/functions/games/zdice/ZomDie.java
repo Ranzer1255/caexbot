@@ -1,6 +1,13 @@
 package caexbot.functions.games.zdice;
 
+
 public class ZomDie {
+	
+	private final Type type;
+
+	public ZomDie(Type type) {
+		this.type=type;
+	}
 
 	enum Type {
 		GREEN(3,1,2),
