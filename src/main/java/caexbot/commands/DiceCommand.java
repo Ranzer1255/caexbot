@@ -18,7 +18,7 @@ public class DiceCommand extends CaexCommand{
 		}
 		
 		try {
-			channel.sendMessage(author.getAsMention()+DiceParser.parseDiceString(args[0]).Result());
+			channel.sendMessage(author.getAsMention()+": "+DiceParser.parseDiceString(args[0]).Result());
 		} catch (IllegalArgumentException e) {
 			channel.sendMessage("I'm sorry i didn't uderstand \""+ e.getMessage()+"\" please use standard RPG format.");
 		}
