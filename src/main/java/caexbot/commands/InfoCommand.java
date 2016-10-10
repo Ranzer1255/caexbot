@@ -20,7 +20,7 @@ public class InfoCommand extends CaexCommand {
         if (args.length == 0) { // !info
             channel.sendMessage("- **Author:** Ranzer\n" +
             					"- **Language:** Java\n" +
-            					"- **Github Rebo:** https://github.com/Sgmaniac1255/caexbot");
+            					"- **Github Repo:** https://github.com/Sgmaniac1255/caexbot");
         }
         if (args.length == 1) { // 1 argument
             if (args[0].equals("author")) { // !info author
