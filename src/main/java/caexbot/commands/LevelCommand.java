@@ -50,7 +50,7 @@ public class LevelCommand extends CaexCommand {
 		
 		List<Map.Entry<User, UserLevel>> rankings = expTable.getInstance().getGuildRankings(channel.getGuild());
 		
-		msg.append("__***Current Leaderboard***__\n\n");
+		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		for (Map.Entry<User, UserLevel> entry : rankings) {
 			String userName;
 			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
