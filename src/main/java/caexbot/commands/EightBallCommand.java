@@ -30,13 +30,16 @@ public class EightBallCommand extends CaexCommand {
 		
 		try {
 			Scanner br = new Scanner(new File("./src/main/resources/8BallAnswers.txt"));
+			Logging.debug(String.valueOf(br.hasNextLine()));
 			while (br.hasNextLine()) {
-				rtn.add(br.nextLine());				
+				String read = br.nextLine();
+				rtn.add(read);
+				Logging.debug("read in 8ball answer: "+read);
 			}
 			br.close();
 		} catch ( Exception e ) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 		return rtn;
