@@ -3,7 +3,7 @@ package caexbot.functions.games.zdice.controlers;
 import caexbot.functions.games.zdice.Player;
 import net.dv8tion.jda.entities.User;
 
-public class UserPlayerAdapter implements Player {
+public class UserPlayerAdapter extends Player {
 
 	private final User USER;
 	
