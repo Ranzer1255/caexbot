@@ -1,7 +1,9 @@
 package caexbot.functions.games.zdice;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ZombieDiceGame {
 
@@ -17,22 +19,6 @@ public class ZombieDiceGame {
 		
 	}
 	
-	private List<ZomDie> buildDicePool() {
-		LinkedList<ZomDie> rtn = new LinkedList<ZomDie>();
-		
-		for (int i = 0; i < NUM_GREEN ; i++) {
-			rtn.add(new ZomDie(ZomDie.Type.GREEN));
-		}
-		for (int i = 0; i < NUM_YELLOW ; i++) {
-			rtn.add(new ZomDie(ZomDie.Type.YELLOW));
-		}
-		for (int i = 0; i < NUM_RED ; i++) {
-			rtn.add(new ZomDie(ZomDie.Type.RED));
-		}
-		
-		return rtn;
-	}
-
 	public static ZombieDiceGame getGame(){
 		
 		if (instance==null){
@@ -42,7 +28,42 @@ public class ZombieDiceGame {
 		return instance;
 	}
 	
-	public ZomDieHand getHand(){
-		return null; //TODO pull 3 dice from pool and return as hand
+	/*
+	 * the probability curve of this logic will be slightly off from the physical counterpart.
+	 * however i don't see it drastically effecting the game.
+	 */
+	public List<ZomDie> getDiceFromPool(int num){
+		List<ZomDie> rtn = new ArrayList<>();
+		
+		
+		for (int i = 0; i < num; i++) {
+			
+			if (dicePool.isEmpty()) {
+				rebuildPool();
+			}
+			rtn.add(dicePool.remove(ThreadLocalRandom.current().nextInt(dicePool.size())));
+		}
+		return rtn;
+	}
+
+	private List<ZomDie> buildDicePool() {
+		LinkedList<ZomDie> rtn = new LinkedList<ZomDie>();
+		
+		for (int i = 0; i < NUM_GREEN ; i++) {
+			rtn.add(new ZomDie(ZomDie.Color.GREEN));
+		}
+		for (int i = 0; i < NUM_YELLOW ; i++) {
+			rtn.add(new ZomDie(ZomDie.Color.YELLOW));
+		}
+		for (int i = 0; i < NUM_RED ; i++) {
+			rtn.add(new ZomDie(ZomDie.Color.RED));
+		}
+		
+		return rtn;
+	}
+
+	private void rebuildPool() {
+		dicePool = buildDicePool();
+		
 	}
 }
