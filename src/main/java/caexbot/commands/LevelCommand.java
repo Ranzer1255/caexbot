@@ -29,13 +29,11 @@ public class LevelCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("xp", "level");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "lists your level and experence.  Add \"rank\" the leaderboard.";
 	}
 

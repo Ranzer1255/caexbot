@@ -20,16 +20,6 @@ public class CaexDB {
 
 	private static Connection connection;
 	
-//	static {
-//		try {
-//			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS guild_levels (guild_id varchar(20) NOT NULL, user_id varchar(20) NOT NULL, xp int(11), PRIMARY KEY (guild_id, user_id));" );
-//			stmt.execute();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
 	private static Connection getConnection(){
 		CaexConfiguration config = CaexConfiguration.getInstance();
 		try {
@@ -46,8 +36,8 @@ public class CaexDB {
 			
 			return connection;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 			return null;
 		}
 	}
