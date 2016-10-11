@@ -42,8 +42,8 @@ public class CaexBot {
 		try {
 			JDA = build.buildBlocking();
 		} catch (LoginException | IllegalArgumentException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 		JDA.addEventListener(new LevelUpdater());
