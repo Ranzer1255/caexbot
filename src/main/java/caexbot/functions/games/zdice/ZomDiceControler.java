@@ -2,12 +2,12 @@ package caexbot.functions.games.zdice;
 
 /* 
  * this class will be the unit that takes in commands from Discord
- * and passes them to the Game. takes the responces from the game and interperets
+ * and passes them to the Game. takes the responses from the game and interprets
  * it into output via Discord
  * 
  * i may make discord integration into a subclass and make this abstract
  * 
- * (in MVC terms this is the Controler, while the discord Command structure is the View)
+ * (in MVC terms this is the Controller, while the discord Command structure is the View)
  */
 public abstract class ZomDiceControler {
 
