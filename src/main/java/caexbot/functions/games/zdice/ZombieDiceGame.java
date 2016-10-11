@@ -4,12 +4,19 @@ import caexbot.functions.games.zdice.controlers.ZomDiceController;
 
 public class ZombieDiceGame {
 	
+	private enum State{
+		PRE_GAME,PLAYING
+	}
+	
 	private ZomDiceController controller; 
-	private ZomDicePlayerList players = new ZomDicePlayerList();
-	private ZomDicePool dicePool = new ZomDicePool();
+	private ZomDicePlayerList players;
+	private ZomDicePool dicePool;
+	private State state;
 
 	public ZombieDiceGame(){
-		
+		dicePool = new ZomDicePool();
+		players = new ZomDicePlayerList();
+		state = State.PRE_GAME;
 	}
 	
 	public void addPlayer(Player p){
@@ -21,13 +28,15 @@ public class ZombieDiceGame {
 	}
 
 	public void start() {
-		// TODO Start game if not already running.
-		
+		if (state==State.PRE_GAME) {
+			this.state = State.PLAYING;
+			controller.announceGameStart();
+			controller.promptPlayer(players.nextPlayer());
+		}
 	}
 
-	public void setController(ZomDiceController Controller) {
+	public void setController(ZomDiceController controller) {
 		this.controller=controller;
-		
 	}
 	
 

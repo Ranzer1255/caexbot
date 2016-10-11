@@ -35,6 +35,10 @@ public abstract class ZomDiceController {
 	public void removePlayer(Player p){
 		game.removePlayer(p);
 	}
+
+	abstract public void announceGameStart();
+
+	abstract public void promptPlayer(Player nextPlayer);
 	
 	
 	
