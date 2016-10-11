@@ -10,15 +10,20 @@ public class ZombieDiceGame {
 	
 	private ZomDiceController controller; 
 	private ZomDicePlayerList players;
-	private ZomDicePool dicePool;
+	private Player activePlayer;
+	private Turn turn;
 	private State state;
 
 	public ZombieDiceGame(){
-		dicePool = new ZomDicePool();
 		players = new ZomDicePlayerList();
+		turn = new Turn();
 		state = State.PRE_GAME;
 	}
 	
+	public void setController(ZomDiceController controller) {
+		this.controller=controller;
+	}
+
 	public void addPlayer(Player p){
 		players.addPlayer(p);
 	}
@@ -31,13 +36,27 @@ public class ZombieDiceGame {
 		if (state==State.PRE_GAME) {
 			this.state = State.PLAYING;
 			controller.announceGameStart();
-			controller.promptPlayer(players.nextPlayer());
+			nextPlayer();
 		}
 	}
-
-	public void setController(ZomDiceController controller) {
-		this.controller=controller;
+	
+	public void roll(Player p){
+		if(state==State.PRE_GAME) return;
+		
+		if(!p.equals(activePlayer)){
+			controller.notActivePlayer();
+			return;
+		}
+		
+		controller.rollResult(turn.roll());
+		
 	}
+
+	private void nextPlayer() {
+		turn.startTurn(players.nextPlayer());
+		controller.promptPlayer(players.getCurrentPlayer());
+	}
+	
 	
 
 }

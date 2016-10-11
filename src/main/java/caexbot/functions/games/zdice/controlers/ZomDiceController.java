@@ -1,6 +1,7 @@
 package caexbot.functions.games.zdice.controlers;
 
 import caexbot.functions.games.zdice.Player;
+import caexbot.functions.games.zdice.RollResult;
 import caexbot.functions.games.zdice.ZombieDiceGame;
 
 /* 
@@ -39,6 +40,13 @@ public abstract class ZomDiceController {
 	abstract public void announceGameStart();
 
 	abstract public void promptPlayer(Player nextPlayer);
+	
+	abstract public void roll(Player p);
+
+	abstract public void notActivePlayer();
+	
+	abstract public void rollResult(RollResult result);
+	
 	
 	
 	
