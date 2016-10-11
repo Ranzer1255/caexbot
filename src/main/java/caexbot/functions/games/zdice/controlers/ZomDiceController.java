@@ -1,4 +1,7 @@
-package caexbot.functions.games.zdice;
+package caexbot.functions.games.zdice.controlers;
+
+import caexbot.functions.games.zdice.Player;
+import caexbot.functions.games.zdice.ZombieDiceGame;
 
 /* 
  * this class will be the unit that takes in commands from Discord
@@ -9,21 +12,28 @@ package caexbot.functions.games.zdice;
  * 
  * (in MVC terms this is the Controller, while the discord Command structure is the View)
  */
-public abstract class ZomDiceControler {
+public abstract class ZomDiceController {
 
-	private ZomDicePlayerList players = new ZomDicePlayerList();
+	ZombieDiceGame game;
+	
+	public ZomDiceController(){
+		game = new ZombieDiceGame();
+		game.setController(this);
+	}
 
 	/**
 	 * starts the game if players contains more than one participant. 
 	 */
-	public abstract void startGame();
+	public void startGame(){
+		game.start();
+	}
 	
 	public void addPlayer(Player p){
-		players.addPlayer(p);
+		game.addPlayer(p);
 	}
 
 	public void removePlayer(Player p){
-		players.removePlayer(p);
+		game.removePlayer(p);
 	}
 	
 	
