@@ -46,6 +46,8 @@ public abstract class ZomDiceController {
 	abstract public void notActivePlayer();
 	
 	abstract public void rollResult(RollResult result);
+
+	abstract public void endTurn(Player currentPlayer);
 	
 	
 	

@@ -1,18 +1,29 @@
 package caexbot.functions.games.zdice;
 
+import java.util.Iterator;
+
 import caexbot.functions.games.zdice.controlers.ZomDiceController;
 
 public class ZombieDiceGame {
 	
 	private enum State{
-		PRE_GAME,PLAYING
+		PRE_GAME,PLAYING, FINAL_ROUND
 	}
+
+	private static final int WINNING_SCORE = 13;
+
+	private static final int SHOTS_TO_END_TURN = 3;
 	
 	private ZomDiceController controller; 
 	private ZomDicePlayerList players;
 	private Player activePlayer;
 	private Turn turn;
 	private State state;
+
+	//final round fields
+	private Player gameEnder;// used to keep track of who ended the game for the final round.
+	private Player highScore;
+	private int highBrains;
 
 	public ZombieDiceGame(){
 		players = new ZomDicePlayerList();
@@ -36,7 +47,7 @@ public class ZombieDiceGame {
 		if (state==State.PRE_GAME) {
 			this.state = State.PLAYING;
 			controller.announceGameStart();
-			nextPlayer();
+			startNextTurn();
 		}
 	}
 	
@@ -47,15 +58,52 @@ public class ZombieDiceGame {
 			controller.notActivePlayer();
 			return;
 		}
+		RollResult result = turn.roll();
+		controller.rollResult(result);
+		if(result.getShots()>=SHOTS_TO_END_TURN)
+			endTurn();
 		
-		controller.rollResult(turn.roll());
+	}
+	
+	public void endTurn(){
+		turn.endTurn();
+		controller.endTurn(activePlayer);
+		if(state==State.FINAL_ROUND) {
+			startNextFinalTurn();
+			return;
+		}
+		if(activePlayer.getBrains()>= WINNING_SCORE){
+			startFinalRound();
+			return;
+		}
+		startNextTurn();
+	}
+
+	private void startNextFinalTurn() {
+		// TODO Final Round next player logic.
 		
 	}
 
-	private void nextPlayer() {
+	public void startNextTurn() {
 		turn.startTurn(players.nextPlayer());
-		controller.promptPlayer(players.getCurrentPlayer());
+		setActivePlayer(players.getCurrentPlayer());
 	}
+	
+	private void setActivePlayer(Player currentPlayer) {
+		activePlayer = currentPlayer;
+		controller.promptPlayer(activePlayer);
+		
+	}
+
+	private void startFinalRound() {
+		// TODO Final Round of Game-play
+		state=State.FINAL_ROUND;
+		gameEnder = activePlayer;
+		highScore = gameEnder;
+		highBrains = gameEnder.getBrains();
+		
+	}
+
 	
 	
 

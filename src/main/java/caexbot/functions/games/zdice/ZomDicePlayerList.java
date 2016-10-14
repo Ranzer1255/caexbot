@@ -1,7 +1,7 @@
 package caexbot.functions.games.zdice;
 
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * handles the list of players and tracks the current player.
@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 public class ZomDicePlayerList {
-	private LinkedList<Player> players = new LinkedList<>();
+	private Deque<Player> players = new LinkedList<>();
 	private Player currentPlayer;
 	
 	/**
@@ -49,7 +49,7 @@ public class ZomDicePlayerList {
 		return currentPlayer;
 	}
 	
-	public List<Player> getPlayerList(){
+	public Deque<Player> getPlayerList(){
 		return players;
 	}
 	

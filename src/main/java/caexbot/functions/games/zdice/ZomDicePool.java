@@ -51,4 +51,7 @@ public class ZomDicePool {
 	private void rebuildPool() {
 		dicePool = buildDicePool();	
 	}
+	public void reset() {
+		rebuildPool();		
+	}
 }
