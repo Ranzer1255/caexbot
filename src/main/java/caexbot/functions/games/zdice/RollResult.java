@@ -5,11 +5,17 @@ import java.util.List;
 
 import caexbot.functions.games.zdice.ZomDie.Side;
 
+/**
+ * a data collection for the controler and view to process to show the result of the die roll.
+ * 
+ * @author jrdillingham
+ *
+ */
 public class RollResult {
 	
 	private List<ZomDie> diceRolled;
 	private List<Side> sideResults = new ArrayList<>();
-	private int points,shots;
+	private int brains,shots;
 
 	public void diceRolled(List<ZomDie> hand) {
 		diceRolled=hand;
@@ -21,8 +27,8 @@ public class RollResult {
 		
 	}
 
-	public void addTotals(int pointsThisTurn, int shots) {
-		points=pointsThisTurn; this.shots=shots;
+	public void addTotals(int brainsThisTurn, int shots) {
+		brains=brainsThisTurn; this.shots=shots;
 		
 	}
 	
@@ -34,8 +40,8 @@ public class RollResult {
 		return sideResults;
 	}
 	
-	public int getPoints() {
-		return points;
+	public int getBrains() {
+		return brains;
 	}
 	public int getShots() {
 		return shots;

@@ -8,11 +8,11 @@ public abstract class Player {
 		
 	}
 	
-	public void addPoints(int p){
+	public void addBrains(int p){
 		points += p;
 	}
 
-	public int getPoints(){
+	public int getBrains(){
 		return points;
 	}
 

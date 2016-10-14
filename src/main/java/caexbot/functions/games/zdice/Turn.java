@@ -11,17 +11,20 @@ public class Turn {
 	private Player activePlayer;
 	private ZomDicePool dicePool;
 	
-	private int pointsThisTurn;
+	private int brains;
 	private int shots;
 	
 	public Turn(){
-
 		dicePool = new ZomDicePool();
 		hand=new ArrayList<>();
 	}
 	
 	public void startTurn(Player p){
 		activePlayer=p;
+		hand.clear();
+		dicePool.reset();
+		brains = 0;
+		shots=0;
 	}
 	
 	private void drawHand() {
@@ -47,7 +50,7 @@ public class Turn {
 			rtn.addDieResult(result);
 			switch (result){
 			case BRAIN:
-				pointsThisTurn++;
+				brains++;
 				i.remove();
 				break;
 			case RUN:
@@ -55,18 +58,15 @@ public class Turn {
 			case SHOT:
 				shots++;
 				i.remove();
-				if(shots>=3){
-					pointsThisTurn=0;
-					endTurn();
-				}
 				break;
 			}
-			rtn.addTotals(pointsThisTurn,shots);
+			rtn.addTotals(brains,shots);
 		}
 		return rtn;
 	}
-	
-	public void endTurn(){
-		activePlayer.addPoints(pointsThisTurn);
+
+	public void endTurn() {
+		activePlayer.addBrains(brains);
+		activePlayer = null;
 	}
 }
