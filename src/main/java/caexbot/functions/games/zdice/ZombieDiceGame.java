@@ -40,16 +40,23 @@ public class ZombieDiceGame {
 		players.removePlayer(p);
 	}
 
-	public void start() {
+	/**
+	 * 
+	 * @return true if the game was successfully started
+	 */
+	public boolean start() {
 		if (state==State.PRE_GAME) {
 			if (players.getPlayerList().size()>=MIN_PLAYERS) {
 				this.state = State.PLAYING;
-				controller.announceGameStart();
+				controller.announceGameStart(players.getPlayerList());
 				startNextTurn();
+				return true;
 			} else {
 				controller.needMorePlayers();
+				return false;
 			}
 		}
+		return false;
 	}
 	
 	private void setActivePlayer(Player currentPlayer) {

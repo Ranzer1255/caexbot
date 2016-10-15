@@ -1,5 +1,7 @@
 package caexbot.functions.games.zdice.controlers;
 
+import java.util.Deque;
+
 import caexbot.functions.games.zdice.Player;
 import caexbot.functions.games.zdice.RollResult;
 import caexbot.functions.games.zdice.ZombieDiceGame;
@@ -22,13 +24,6 @@ public abstract class ZomDiceController {
 		game.setController(this);
 	}
 
-	/**
-	 * starts the game if players contains more than one participant. 
-	 */
-	public void startGame(){
-		game.start();
-	}
-	
 	public void addPlayer(Player p){
 		game.addPlayer(p);
 	}
@@ -37,17 +32,30 @@ public abstract class ZomDiceController {
 		game.removePlayer(p);
 	}
 
-	abstract public void announceGameStart();
+	/**
+	 * starts the game if players contains more than one participant. 
+	 */
+	public boolean startGame(){
+		return game.start();
+	}
+	
+	abstract public void needMorePlayers();
+
+	abstract public void announceGameStart(Deque<Player> deque);
 
 	abstract public void promptPlayer(Player nextPlayer);
 	
-	abstract public void roll(Player p);
-
 	abstract public void notActivePlayer();
-	
+
+	public void roll(Player p){
+		game.roll(p);
+	}
+
 	abstract public void rollResult(RollResult result);
 
 	abstract public void endTurn(Player currentPlayer);
+
+	abstract public void announceGameEnd(Player[] highscoreTable);
 	
 	
 	
