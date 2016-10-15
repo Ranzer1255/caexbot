@@ -1,7 +1,5 @@
 package caexbot.functions.games.zdice;
 
-import java.util.Iterator;
-
 import caexbot.functions.games.zdice.controlers.ZomDiceController;
 
 public class ZombieDiceGame {
@@ -11,8 +9,8 @@ public class ZombieDiceGame {
 	}
 
 	private static final int WINNING_SCORE = 13;
-
 	private static final int SHOTS_TO_END_TURN = 3;
+	private static final int MIN_PLAYERS = 2;
 	
 	private ZomDiceController controller; 
 	private ZomDicePlayerList players;
@@ -23,7 +21,6 @@ public class ZombieDiceGame {
 	//final round fields
 	private Player gameEnder;// used to keep track of who ended the game for the final round.
 	private Player highScore;
-	private int highBrains;
 
 	public ZombieDiceGame(){
 		players = new ZomDicePlayerList();
@@ -45,12 +42,22 @@ public class ZombieDiceGame {
 
 	public void start() {
 		if (state==State.PRE_GAME) {
-			this.state = State.PLAYING;
-			controller.announceGameStart();
-			startNextTurn();
+			if (players.getPlayerList().size()>=MIN_PLAYERS) {
+				this.state = State.PLAYING;
+				controller.announceGameStart();
+				startNextTurn();
+			} else {
+				controller.needMorePlayers();
+			}
 		}
 	}
 	
+	private void setActivePlayer(Player currentPlayer) {
+		activePlayer = currentPlayer;
+		controller.promptPlayer(activePlayer);
+		
+	}
+
 	public void roll(Player p){
 		if(state==State.PRE_GAME) return;
 		
@@ -79,29 +86,41 @@ public class ZombieDiceGame {
 		startNextTurn();
 	}
 
-	private void startNextFinalTurn() {
-		// TODO Final Round next player logic.
-		
-	}
-
 	public void startNextTurn() {
-		turn.startTurn(players.nextPlayer());
-		setActivePlayer(players.getCurrentPlayer());
+		setActivePlayer(players.nextPlayer());
+		turn.startTurn(activePlayer);
 	}
 	
-	private void setActivePlayer(Player currentPlayer) {
-		activePlayer = currentPlayer;
-		controller.promptPlayer(activePlayer);
-		
-	}
-
 	private void startFinalRound() {
-		// TODO Final Round of Game-play
 		state=State.FINAL_ROUND;
 		gameEnder = activePlayer;
 		highScore = gameEnder;
-		highBrains = gameEnder.getBrains();
+	}
+
+	private void startNextFinalTurn() {
+		if(activePlayer.getBrains()>highScore.getBrains()){
+			highScore = activePlayer;
+		}
 		
+		players.nextPlayer();
+		if(players.getCurrentPlayer().equals(gameEnder)){
+			endGame();
+		} else{
+			setActivePlayer(players.getCurrentPlayer());
+			turn.startTurn(activePlayer);
+		}
+		
+	}
+
+	private void endGame() {
+		// TODO end of game logic
+		controller.announceGameEnd(
+				(Player[]) players.getPlayerList().stream()
+					.sorted((p1, p2) -> Integer.compare(p1.getBrains(), p2.getBrains()))
+					.toArray()
+				);
+		players.clear();
+		state= State.PRE_GAME;
 	}
 
 	

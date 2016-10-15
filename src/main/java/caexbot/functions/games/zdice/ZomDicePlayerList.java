@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * handles the list of players and tracks the current player.
- * @author jrdillingham
+ * @author Ranzer
  *
  */
 public class ZomDicePlayerList {
@@ -55,5 +55,10 @@ public class ZomDicePlayerList {
 	
 	public int numberOfPlayers(){
 		return players.size();
+	}
+
+	public void clear() {
+		players.clear();
+		currentPlayer = null;
 	}
 }
