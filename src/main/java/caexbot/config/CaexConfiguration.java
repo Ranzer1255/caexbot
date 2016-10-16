@@ -25,6 +25,7 @@ public class CaexConfiguration {
 	private File logLocation;
 	private String prefix = "!";
 	private String botToken = "token";
+	private String GoogleToken = "token";
 	
 	private CaexConfiguration(){
 		String home = System.getProperty("user.home");
@@ -77,6 +78,11 @@ public class CaexConfiguration {
 		return botToken;
 	}
 	
+	public String getGToken() {
+		// TODO Auto-generated method stub
+		return GoogleToken;
+	}
+
 	public String getPrefix() {
 		return prefix;
 	}
@@ -123,8 +129,12 @@ public class CaexConfiguration {
 		this.prefix=prefix;
 	}
 	@CaexConfigItem(key="botToken", type=String.class, _default="token")
-	public void setToken(String token){
+	public void setBotToken(String token){
 		this.botToken = token;
+	}
+	@CaexConfigItem(key="googleToken", type=String.class, _default="token")
+	public void setGoogleToken(String token){
+		this.GoogleToken=token;
 	}
 
 	public void load() {
