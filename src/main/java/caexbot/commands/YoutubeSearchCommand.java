@@ -9,7 +9,6 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
@@ -62,7 +61,6 @@ public class YoutubeSearchCommand extends CaexCommand {
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
@@ -75,14 +73,12 @@ public class YoutubeSearchCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		// TODO YT desc
-		return null;
+		return "Search YouTube for your Videos!";
 	}
 
 	@Override
 	public String getUsage() {
-		// TODO YT usage
-		return null;
+		return getPrefix()+getAlias().get(0) + " <your search terms>";
 	}
 
 }
