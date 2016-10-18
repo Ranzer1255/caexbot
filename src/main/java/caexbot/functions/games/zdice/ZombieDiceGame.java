@@ -32,12 +32,15 @@ public class ZombieDiceGame {
 		this.controller=controller;
 	}
 
-	public void addPlayer(Player p){
-		players.addPlayer(p);
+	public boolean addPlayer(Player p){
+		return players.addPlayer(p);
 	}
 
-	public void removePlayer(Player p){
-		players.removePlayer(p);
+	public boolean removePlayer(Player p){
+		if (p.equals(activePlayer)){
+			startNextTurn();// may cause issues if player leaves during final round.
+		}
+		return players.removePlayer(p);
 	}
 
 	/**

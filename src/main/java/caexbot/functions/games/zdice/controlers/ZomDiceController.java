@@ -24,12 +24,12 @@ public abstract class ZomDiceController {
 		game.setController(this);
 	}
 
-	public void addPlayer(Player p){
-		game.addPlayer(p);
+	public boolean addPlayer(Player p){
+		return game.addPlayer(p);
 	}
 
-	public void removePlayer(Player p){
-		game.removePlayer(p);
+	public boolean removePlayer(Player p){
+		return game.removePlayer(p);
 	}
 
 	/**

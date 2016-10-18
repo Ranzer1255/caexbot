@@ -48,4 +48,8 @@ public class ZomDie {
 		return rtn.get(ThreadLocalRandom.current().nextInt(rtn.size()));
 		
 	}
+	
+	public Color getColor(){
+		return color;
+	}
 }

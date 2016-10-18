@@ -19,8 +19,7 @@ public class ZomDicePlayerList {
 	 */
 	public boolean addPlayer(Player player){
 		if (!players.contains(player)) {
-			players.add(player);
-			return true;
+			return players.add(player);
 		}
 		return false;
 	}
@@ -29,8 +28,8 @@ public class ZomDicePlayerList {
 	 * removes a player from the Queue
 	 * @param player to be removed.
 	 */
-	public void removePlayer(Player player){
-		players.remove(player);
+	public boolean removePlayer(Player player){
+		return players.remove(player);
 	}
 	
 	/**

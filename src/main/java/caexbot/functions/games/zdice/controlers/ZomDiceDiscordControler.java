@@ -4,27 +4,36 @@ import java.util.Deque;
 
 import caexbot.functions.games.zdice.Player;
 import caexbot.functions.games.zdice.RollResult;
-import net.dv8tion.jda.JDA;
+import caexbot.functions.games.zdice.ZomDie;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 
-public class ZomDiceDiscordControler extends ZomDiceController {
+public class ZomDiceDiscordControler extends ZomDiceController{
 
-	private final JDA api;//not sure i'll need this
+	private static ZomDiceDiscordControler instanace;
+	
 	private TextChannel gameChannel;
 	
-	public ZomDiceDiscordControler(JDA view){
-		api = view;
-	}
-	public void startGameInChannel(TextChannel c){
-		if(startGame()){
-			gameChannel=c;
+	//constructor for singleton
+	private ZomDiceDiscordControler(){}
+	
+	public static ZomDiceDiscordControler getInstance(){
+		if( instanace == null){
+			instanace = new ZomDiceDiscordControler();
 		}
+		return instanace;
 	}
 	
-	public void addPlayer(TextChannel c, User u){
-		addPlayer(new UserPlayerAdapter(u));
-		c.sendMessage(u.getAsMention()+" You have been added.");
+	public void startGameInChannel(TextChannel c){
+		gameChannel = c;
+		startGame();
+	}
+	public boolean addPlayer(User u){
+		return addPlayer(new UserPlayerAdapter(u));
+	}
+	public boolean removePlayer(User u){
+		return game.removePlayer(new UserPlayerAdapter(u));
+		
 	}
 
 	@Override
@@ -51,7 +60,6 @@ public class ZomDiceDiscordControler extends ZomDiceController {
 
 	@Override
 	public void notActivePlayer() {
-		// TODO announce calling player isn't currently playing
 		
 	}
 
@@ -63,7 +71,24 @@ public class ZomDiceDiscordControler extends ZomDiceController {
 
 	@Override
 	public void rollResult(RollResult result) {
-		// TODO display results from roll
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("You rolled:\n");
+		for (ZomDie d : result.getDiceRolled()) {
+			sb.append(d.getColor().toString() + ", ");
+		}
+		sb.delete(sb.length()-2, sb.length()).append("\nfor a result of:\n");
+		
+		for (ZomDie.Side s: result.getSideResults()){
+			sb.append(s.name() +", ").append("\n");
+		}
+		sb.delete(sb.length()-2, sb.length());
+		
+		sb.append("your current brains earnd this turn are: " + result.getBrains()).append("\n");
+		sb.append("Your current Shots earnd this turn are: " + result.getShots()).append("\n");
+		sb.append("Roll again? (roll)/nEnd turn (end)");
+		
+		gameChannel.sendMessage(sb.toString());
 		
 	}
 
@@ -76,6 +101,17 @@ public class ZomDiceDiscordControler extends ZomDiceController {
 	@Override
 	public void announceGameEnd(Player[] highscoreTable) {
 		// TODO announce game end
+		
+		instanace = null;
+	}
+
+	public void setActiveChannel(TextChannel channel) {
+		gameChannel = channel;
+		
+	}
+
+	public void endTurn(User user) {
+		endTurn(new UserPlayerAdapter(user));
 		
 	}
 }

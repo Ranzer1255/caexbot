@@ -1,5 +1,6 @@
 package caexbot.commands;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -11,13 +12,13 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 public class ZomDiceCommand extends CaexCommand {
 
-	List<ZomDiceCommand> zomSubCommands;
+	List<CaexCommand> zomSubCommands = new ArrayList<>();
 	
 	public ZomDiceCommand() {
 		zomSubCommands.add(new ZomStartCommand());
 		zomSubCommands.add(new ZomJoinCommand());
 		zomSubCommands.add(new ZomRollCommand());
-		zomSubCommands.add(new ZomScoreCommand());
+		zomSubCommands.add(new ZomEndTurnCommand());
 	}
 	
 	@Override
@@ -26,7 +27,7 @@ public class ZomDiceCommand extends CaexCommand {
 			channel.sendMessage(author.getAsMention() + getUsage());
 		}
 		
-		Optional<ZomDiceCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
 			invalidUsage();
