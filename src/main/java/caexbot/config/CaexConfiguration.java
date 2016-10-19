@@ -115,7 +115,7 @@ public class CaexConfiguration {
 	 * if this item exists in the config file, Config loading will crash!
 	 * @param logLocation
 	 */
-	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")//TODO this is broken
+	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")
 	public void setLogLocation(String logLocation) {
 		this.logLocation =new File(System.getProperty("user.home"),logLocation);
 	}
@@ -159,10 +159,6 @@ public class CaexConfiguration {
 							method.invoke(this, value);
 							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
 							continue;
-						} else if (item.type() == File.class){//TODO this is broken and i dont know why
-							File value = new File((String) properties.get(item.key()));
-							method.invoke(this, value);
-							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
 						}
 
 						String value = (String) properties.get(item.key());
