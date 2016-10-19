@@ -1,7 +1,6 @@
 package caexbot.functions.games.zdice.controlers;
 
 import java.util.Deque;
-import java.util.Iterator;
 
 import caexbot.functions.games.zdice.Player;
 import caexbot.functions.games.zdice.RollResult;
