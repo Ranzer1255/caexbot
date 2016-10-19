@@ -62,8 +62,6 @@ public abstract class ZomDiceController {
 	abstract public void announceEndTurn(Player currentPlayer);
 
 	abstract public void announceGameEnd(Player[] players);
-	
-	
-	
-	
+
+	abstract public void announceFinalRound();	
 }

@@ -105,6 +105,7 @@ public class ZombieDiceGame {
 		state=State.FINAL_ROUND;
 		gameEnder = activePlayer;
 		highScore = gameEnder;
+		controller.announceFinalRound();
 		startNextFinalTurn();
 	}
 

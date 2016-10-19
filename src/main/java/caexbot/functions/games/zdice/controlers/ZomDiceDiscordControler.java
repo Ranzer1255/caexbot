@@ -116,4 +116,10 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 		gameChannel = channel;
 		
 	}
+
+	@Override
+	public void announceFinalRound() {
+		gameChannel.sendMessage("The final round has begun! Last chance to win!");
+		
+	}
 }
