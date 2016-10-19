@@ -23,4 +23,9 @@ public class ZomJoinCommand extends CaexSubCommand {
 	public List<String> getAlias(){
 		return Arrays.asList("join");
 	}
+
+	@Override
+	public String getDescription() {
+		return "Join the Game.";
+	}
 }

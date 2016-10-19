@@ -1,6 +1,7 @@
 package caexbot.functions.games.zdice.controlers;
 
 import java.util.Deque;
+import java.util.Iterator;
 
 import caexbot.functions.games.zdice.Player;
 import caexbot.functions.games.zdice.RollResult;
@@ -52,10 +53,15 @@ public abstract class ZomDiceController {
 	}
 
 	abstract public void rollResult(RollResult result);
+	
+	public void endTurn() {
+		game.endTurn();
+		
+	}
 
-	abstract public void endTurn(Player currentPlayer);
+	abstract public void announceEndTurn(Player currentPlayer);
 
-	abstract public void announceGameEnd(Player[] highscoreTable);
+	abstract public void announceGameEnd(Player[] players);
 	
 	
 	

@@ -20,8 +20,12 @@ public class ZomRollCommand extends CaexSubCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("roll", "r");
+	}
+
+	@Override
+	public String getDescription() {
+		return "Roll the dice.";
 	}
 
 }

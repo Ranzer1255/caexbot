@@ -60,12 +60,12 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 
 	@Override
 	public void notActivePlayer() {
-		
+		gameChannel.sendMessage("It's not yet your turn. Please wait");
 	}
 
 	@Override
 	public void needMorePlayers() {
-		// TODO announce in game channel that there are not enough players
+		gameChannel.sendMessage("There are not enough players yet to start the game.");
 		
 	}
 
@@ -75,43 +75,45 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 		
 		sb.append("You rolled:\n");
 		for (ZomDie d : result.getDiceRolled()) {
-			sb.append(d.getColor().toString() + ", ");
+			sb.append(d.getColor().name + ", ");
 		}
 		sb.delete(sb.length()-2, sb.length()).append("\nfor a result of:\n");
 		
 		for (ZomDie.Side s: result.getSideResults()){
-			sb.append(s.name() +", ").append("\n");
+			sb.append(s.name +", ").append("\n");
 		}
-		sb.delete(sb.length()-2, sb.length());
+		sb.delete(sb.length()-3, sb.length()-1);
 		
-		sb.append("your current brains earnd this turn are: " + result.getBrains()).append("\n");
-		sb.append("Your current Shots earnd this turn are: " + result.getShots()).append("\n");
-		sb.append("Roll again? (roll)/nEnd turn (end)");
+		sb.append("your current brains earned this turn are: " + result.getBrains()).append("\n");
+		sb.append("Your current Shots earned this turn are: " + result.getShots()).append("\n");
+		sb.append("Roll again? (roll)\nEnd turn (end)");
 		
 		gameChannel.sendMessage(sb.toString());
 		
 	}
 
 	@Override
-	public void endTurn(Player currentPlayer) {
-		// TODO end turn
-		
+	public void announceEndTurn(Player currentPlayer) {
+		gameChannel.sendMessage("Your turn is over.\n"+"you have **" +currentPlayer.getBrains()+"** brains.");
 	}
 
 	@Override
 	public void announceGameEnd(Player[] highscoreTable) {
-		// TODO announce game end
+		StringBuilder sb = new StringBuilder();
 		
+		sb.append("Game over!\n\n");
+		sb.append("Winner: "+((UserPlayerAdapter) highscoreTable[0]).getUser().getAsMention()+"\n\n");
+		sb.append("__Scores__\n");
+		for (int i = 0; i < highscoreTable.length; i++) {
+			sb.append(((UserPlayerAdapter) highscoreTable[i]).getUser().getAsMention()+": "+highscoreTable[i].getBrains()+"\n");
+		}
+		
+		gameChannel.sendMessage(sb.toString());
 		instanace = null;
 	}
 
 	public void setActiveChannel(TextChannel channel) {
 		gameChannel = channel;
-		
-	}
-
-	public void endTurn(User user) {
-		endTurn(new UserPlayerAdapter(user));
 		
 	}
 }

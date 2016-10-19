@@ -30,7 +30,7 @@ public class ZomDiceCommand extends CaexCommand {
 		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
-			invalidUsage();
+			channel.sendMessage(invalidUsage());
 			return;
 		}
 		
@@ -40,25 +40,38 @@ public class ZomDiceCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("zomdice","z","zdice","zd");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "play a game of Zombie Dice!";
 	}
 
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (String alias : getAlias()) {
+			sb.append(getPrefix()+alias+", ");
+		}
+		sb.append("] ");
+		
+		sb.append("<sub command>\n");
+		sb.append("__Sub Commands__\n");
+		for (CaexCommand cmd : zomSubCommands) {
+			sb.append("[");
+			for (String alias : getAlias()) {
+				sb.append(getPrefix()+alias+", ");
+			}
+			sb.append("] ").append(cmd.getDescription()).append("\n");
+		}
+		
+		return sb.toString();
 	}
 	
-	@Override
-	public void invalidUsage(){
-		// TODO fill in usage
+	public String invalidUsage(){
+		return "I'm sorry, i didn't understand\n" +getUsage();
 	}
 
 }

@@ -11,7 +11,5 @@ package caexbot.commands;
 public abstract class CaexSubCommand extends CaexCommand{
 
 	@Override
-	public String getDescription() {return null;}// NO-OP not needed
-	@Override
 	public String getUsage() {return null;}// NO-OP this is not needed
 }

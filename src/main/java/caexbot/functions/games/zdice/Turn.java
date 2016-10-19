@@ -41,7 +41,7 @@ public class Turn {
 		RollResult rtn = new RollResult();
 		
 		drawHand();
-		rtn.diceRolled(hand);
+		rtn.diceRolled(new ArrayList<>(hand));
 		Iterator<ZomDie> i = hand.iterator();
 		
 		while (i.hasNext()){
@@ -66,7 +66,10 @@ public class Turn {
 	}
 
 	public void endTurn() {
-		activePlayer.addBrains(brains);
+		if(shots < ZombieDiceGame.SHOTS_TO_END_TURN)
+			activePlayer.addBrains(brains);
+		else 
+			activePlayer.addBrains(0);
 		activePlayer = null;
 	}
 }

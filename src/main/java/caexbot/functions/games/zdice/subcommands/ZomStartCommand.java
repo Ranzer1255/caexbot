@@ -19,8 +19,12 @@ public class ZomStartCommand extends CaexSubCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("start");
+	}
+
+	@Override
+	public String getDescription() {
+		return "Start the game.";
 	}
 
 }

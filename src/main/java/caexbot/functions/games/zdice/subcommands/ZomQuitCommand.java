@@ -19,8 +19,12 @@ public class ZomQuitCommand extends CaexSubCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("quit","leave","q","l");
+	}
+
+	@Override
+	public String getDescription() {
+		return "Leave the game.";
 	}
 
 }

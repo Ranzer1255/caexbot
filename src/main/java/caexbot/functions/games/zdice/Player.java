@@ -16,6 +16,15 @@ public abstract class Player {
 		return points;
 	}
 
+	public int compare(Player p2) {
+		if (this.getBrains()==p2.getBrains())
+			return 0;
+		if (this.getBrains()>p2.getBrains())
+			return -1;
+		else 
+			return 1;
+	}
+
 	
 
 }

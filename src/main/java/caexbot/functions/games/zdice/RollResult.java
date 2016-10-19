@@ -6,9 +6,9 @@ import java.util.List;
 import caexbot.functions.games.zdice.ZomDie.Side;
 
 /**
- * a data collection for the controler and view to process to show the result of the die roll.
+ * a data collection for the controller and view to process to show the result of the die roll.
  * 
- * @author jrdillingham
+ * @author Ranzer
  *
  */
 public class RollResult {

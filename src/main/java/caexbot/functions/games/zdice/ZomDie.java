@@ -13,19 +13,27 @@ public class ZomDie {
 	}
 
 	public enum Color {
-		GREEN(3,1,2),
-		YELLOW(2,2,2),
-		RED(1,3,2);
+		GREEN(3,1,2,"Green"),
+		YELLOW(2,2,2,"Yellow"),
+		RED(1,3,2,"Red");
 		
 		public int brains,runs,shots;
+		public String name;
 		
-		Color(int B, int S, int R){
-			brains = B; runs = R; shots=S;
+		Color(int B, int S, int R, String n){
+			brains = B; runs = R; shots=S; name=n; 
 		}
 	}
 	
 	public enum Side {
-		BRAIN,RUN,SHOT
+		BRAIN("Brain"),
+		RUN("Run"),
+		SHOT("Shot");
+		
+		public String name;
+		Side(String name){
+			this.name=name;
+		}
 	}
 	
 	/**

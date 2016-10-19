@@ -14,14 +14,18 @@ public class ZomEndTurnCommand extends CaexSubCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		ZomDiceDiscordControler.getInstance().setActiveChannel(channel);
-		ZomDiceDiscordControler.getInstance().endTurn(author);
+		ZomDiceDiscordControler.getInstance().endTurn();
 		
 	}
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("end", "score", "done","e","s","d");
+	}
+
+	@Override
+	public String getDescription() {
+		return "End your turn.";
 	}
 
 }

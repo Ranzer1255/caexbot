@@ -8,9 +8,9 @@ public class ZombieDiceGame {
 		PRE_GAME,PLAYING, FINAL_ROUND
 	}
 
-	private static final int WINNING_SCORE = 13;
-	private static final int SHOTS_TO_END_TURN = 3;
-	private static final int MIN_PLAYERS = 2;
+	public static final int WINNING_SCORE = 13;
+	public static final int SHOTS_TO_END_TURN = 3;
+	public static final int MIN_PLAYERS = 2;
 	
 	private ZomDiceController controller; 
 	private ZomDicePlayerList players;
@@ -84,7 +84,7 @@ public class ZombieDiceGame {
 	
 	public void endTurn(){
 		turn.endTurn();
-		controller.endTurn(activePlayer);
+		controller.announceEndTurn(activePlayer);
 		if(state==State.FINAL_ROUND) {
 			startNextFinalTurn();
 			return;
@@ -105,6 +105,7 @@ public class ZombieDiceGame {
 		state=State.FINAL_ROUND;
 		gameEnder = activePlayer;
 		highScore = gameEnder;
+		startNextFinalTurn();
 	}
 
 	private void startNextFinalTurn() {
@@ -123,12 +124,9 @@ public class ZombieDiceGame {
 	}
 
 	private void endGame() {
-		// TODO end of game logic
 		controller.announceGameEnd(
-				(Player[]) players.getPlayerList().stream()
-					.sorted((p1, p2) -> Integer.compare(p1.getBrains(), p2.getBrains()))
-					.toArray()
-				);
+				players.getPlayerList().stream()
+					.sorted((p1, p2) -> p1.compare(p2)).toArray(Player[]::new));
 		players.clear();
 		state= State.PRE_GAME;
 	}
