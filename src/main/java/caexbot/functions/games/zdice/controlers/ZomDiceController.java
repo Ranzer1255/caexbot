@@ -40,6 +40,9 @@ public abstract class ZomDiceController {
 		return game.start();
 	}
 	
+	public int getScore(Player p){
+		return game.getPlayer(p).getBrains();
+	}
 	abstract public void needMorePlayers();
 
 	abstract public void announceGameStart(Deque<Player> deque);

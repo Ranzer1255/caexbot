@@ -132,6 +132,10 @@ public class ZombieDiceGame {
 		state= State.PRE_GAME;
 	}
 
+	public Player getPlayer(Player p) {
+		return players.getPlayer(p);
+	}
+
 	
 	
 

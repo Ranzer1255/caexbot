@@ -19,6 +19,7 @@ public class ZomDiceCommand extends CaexCommand {
 		zomSubCommands.add(new ZomJoinCommand());
 		zomSubCommands.add(new ZomRollCommand());
 		zomSubCommands.add(new ZomEndTurnCommand());
+		zomSubCommands.add(new ZomScoreCommand());
 	}
 	
 	@Override

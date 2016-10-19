@@ -60,4 +60,8 @@ public class ZomDicePlayerList {
 		players.clear();
 		currentPlayer = null;
 	}
+
+	public Player getPlayer(Player p) {
+		return ((LinkedList<Player>) players).get(((LinkedList<Player>) players).indexOf(p));
+	}
 }
