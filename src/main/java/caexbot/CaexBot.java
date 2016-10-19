@@ -13,6 +13,7 @@ import caexbot.commands.LevelCommand;
 import caexbot.commands.PingCommand;
 import caexbot.commands.ShutdownCommand;
 import caexbot.commands.YoutubeSearchCommand;
+import caexbot.commands.ZomDiceCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
@@ -35,7 +36,8 @@ public class CaexBot {
 				.addCommand(new ShutdownCommand())
 				.addCommand(new LevelCommand())
 				.addCommand(new DiceCommand())
-				.addCommand(new YoutubeSearchCommand());
+				.addCommand(new YoutubeSearchCommand())
+				.addCommand(new ZomDiceCommand());
 
 		JDABuilder build = new JDABuilder()
 				.addListener(commands)

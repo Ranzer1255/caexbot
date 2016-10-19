@@ -71,8 +71,8 @@ public abstract class CaexCommand{
 		
 	}
 	
-	void invalidUsage(){
-		
+	public String invalidUsage(){
+		return null;
 	}
 
 

@@ -55,4 +55,8 @@
     </dependency>
   </dependencies>
   <url>https://github.com/Sgmaniac1255/caexbot</url>
+  <issueManagement>
+  	<system>GitHub Issues</system>
+  	<url>https://github.com/Sgmaniac1255/caexbot/issues</url>
+  </issueManagement>
 </project>
