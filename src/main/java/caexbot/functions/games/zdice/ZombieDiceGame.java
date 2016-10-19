@@ -82,7 +82,12 @@ public class ZombieDiceGame {
 		
 	}
 	
-	public void endTurn(){
+	private void endTurn(){
+		endTurn(activePlayer);
+	}
+	
+	public void endTurn(Player p){
+		if (!p.equals(activePlayer)) return; // skip end turn call if not active player.
 		turn.endTurn();
 		controller.announceEndTurn(activePlayer);
 		if(state==State.FINAL_ROUND) {

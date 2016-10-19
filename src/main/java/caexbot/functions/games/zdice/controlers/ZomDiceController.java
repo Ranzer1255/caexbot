@@ -56,8 +56,8 @@ public abstract class ZomDiceController {
 
 	abstract public void rollResult(RollResult result);
 	
-	public void endTurn() {
-		game.endTurn();
+	public void endTurn(Player p) {
+		game.endTurn(p);
 		
 	}
 

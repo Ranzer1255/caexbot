@@ -57,6 +57,10 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 	public void roll(User p) {
 		roll(new UserPlayerAdapter(p));
 	}
+	
+	public void endTurn(User u){
+		endTurn(new UserPlayerAdapter(u));
+	}
 
 	@Override
 	public void notActivePlayer() {
