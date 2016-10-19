@@ -21,15 +21,15 @@ public class CaexConfiguration {
 	private String databaseUsername = "username";
 	private String databaseName = "caexdb";
 	private Boolean debug = false;
-	private String logPath = "/caexbot/logs/caex.log";
+	private String logPath = "/caexbot/logs/caex.log";//Default path for log Location
 	private File logLocation;
 	private String prefix = "!";
 	private String botToken = "token";
 	private String GoogleToken = "token";
 	
 	private CaexConfiguration(){
-		String home = System.getProperty("user.home");
-		setLogLocation(new File(home,logPath));
+
+		this.logLocation =new File(System.getProperty("user.home"),logPath);
 	}
 	
 	//getters
@@ -79,7 +79,6 @@ public class CaexConfiguration {
 	}
 	
 	public String getGToken() {
-		// TODO Auto-generated method stub
 		return GoogleToken;
 	}
 
@@ -116,9 +115,9 @@ public class CaexConfiguration {
 	 * if this item exists in the config file, Config loading will crash!
 	 * @param logLocation
 	 */
-	@CaexConfigItem(key="logLocation", type=File.class, _default="/caexbot/logs/caex.log")//TODO this is broken
-	public void setLogLocation(File logLocation) {
-		this.logLocation = logLocation;
+	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")//TODO this is broken
+	public void setLogLocation(String logLocation) {
+		this.logLocation =new File(System.getProperty("user.home"),logLocation);
 	}
 	@CaexConfigItem(key="debug", type=Boolean.class, _default="false")
 	public void setDebug(Boolean debug) {
