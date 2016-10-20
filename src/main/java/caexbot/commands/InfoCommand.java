@@ -38,7 +38,7 @@ public class InfoCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage() {//TODO change usage to conform to standard.
 		return getPrefix()+"info [author | time]";
 	}
 
