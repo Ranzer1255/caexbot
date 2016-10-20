@@ -1,5 +1,7 @@
 package caexbot;
 
+import java.awt.Color;
+
 import javax.security.auth.login.LoginException;
 
 import caexbot.functions.background.CommandListener;
@@ -17,6 +19,7 @@ import caexbot.commands.ZomDiceCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
+import net.dv8tion.jda.entities.Guild;
 
 public class CaexBot {
 	
@@ -52,6 +55,17 @@ public class CaexBot {
 		
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getAccountManager().setGame(config.getStatus());
+		
+		if(config.isDebug()){
+			for (Guild g : JDA.getGuilds()) {
+				g.getRolesByName("UberBot").get(0).getManager().setColor(new Color(0xb30000)).update();
+				JDA.getAccountManager().setGame("in Testing Mode");
+			}
+		}else {
+			for (Guild g: JDA.getGuilds()){
+				g.getRolesByName("UberBot").get(0).getManager().setColor(new Color(0xa2760a)).update();
+			}
+		}
 	}
 
 	public static JDA getJDA(){
