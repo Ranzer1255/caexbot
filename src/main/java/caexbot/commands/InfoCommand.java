@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import caexbot.util.StringUtil;
+
 public class InfoCommand extends CaexCommand {
 
 	@Override
@@ -39,7 +41,18 @@ public class InfoCommand extends CaexCommand {
 
 	@Override
 	public String getUsage() {//TODO change usage to conform to standard.
-		return getPrefix()+"info [author | time]";
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ")
+			.append("<sub_command>\n");
+		
+		sb.append("__Sub Commands__\n")
+		  .append("**default:** all about Caex.\n")
+		  .append("**[author]** author and contributers to CaexBot.\n")
+		  .append("**[time]** tell the current time.");
+		
+		return sb.toString();
+
 	}
 
 	@Override

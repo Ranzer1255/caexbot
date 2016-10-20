@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import caexbot.functions.background.CommandListener;
 import caexbot.util.Logging;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -25,24 +26,26 @@ public class HelpCommand extends CaexCommand {
 		StringBuilder sb = new StringBuilder();
 		
 		if(args.length==1){
+			Logging.debug("help with arg (" +args[0]+")");
 			Optional<CaexCommand> c = cmds.getCommands().stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+			Logging.debug(String.valueOf(c.isPresent()));
 			if(c.isPresent()){
 				CaexCommand cmd = c.get();
 				
-				sb.append(("**["+getPrefix())).append(cmd.getAlias()).append("]** \n")
-				  .append(cmd.getDescription()).append("\n")
-				  .append(cmd.getUsage());
+				sb.append("**Alias:** ")	 .append("[").append(StringUtil.cmdArrayToString(cmd.getAlias(), ", ")).append("]\n")
+				  .append("**Description** ").append(cmd.getDescription()).append("\n")
+				  .append("**Usage: **")	 .append(cmd.getUsage());
 			}
 		}else{
 			for (CaexCommand cmd : cmds.getCommands()) {
-				sb.append(("**["+getPrefix()));
-				sb.append(cmd.getAlias().get(0));
-				sb.append("]** ");
+				sb.append("**[");
+				sb.append(StringUtil.cmdArrayToString(cmd.getAlias(), ", "));
+				sb.append("]:** ");
 				sb.append(cmd.getDescription()+"\n");	
 			}
 			
-			channel.sendMessage(sb.toString());
 		}
+		channel.sendMessage(sb.toString());
 	}
 
 	@Override
