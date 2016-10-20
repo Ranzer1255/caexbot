@@ -34,7 +34,7 @@ public class HelpCommand extends CaexCommand {
 				
 				sb.append("**Alias:** ")	 .append("[").append(StringUtil.cmdArrayToString(cmd.getAlias(), ", ")).append("]\n")
 				  .append("**Description** ").append(cmd.getDescription()).append("\n")
-				  .append("**Usage: **")	 .append(cmd.getUsage());
+				  .append("**Usage:** ")	 .append(cmd.getUsage());
 			}
 		}else{
 			for (CaexCommand cmd : cmds.getCommands()) {

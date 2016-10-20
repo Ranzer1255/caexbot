@@ -14,7 +14,7 @@ public class StringUtil {
 			if(i==alias.size()-1){
 				sb.append(alias.get(i));
 			} else {
-				sb.append(alias.get(i));
+				sb.append(alias.get(i)).append(delmiter);
 			}
 		}
 		

@@ -46,10 +46,10 @@ public class InfoCommand extends CaexCommand {
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ")
 			.append("<sub_command>\n");
 		
-		sb.append("__Sub Commands__\n")
-		  .append("**default:** all about Caex.\n")
-		  .append("**[author]** author and contributers to CaexBot.\n")
-		  .append("**[time]** tell the current time.");
+		sb.append("        __Sub Commands__\n")
+		  .append("**    default:** all about Caex.\n")
+		  .append("**    [author]** author and contributers to CaexBot.\n")
+		  .append("**    [time]** tell the current time.");
 		
 		return sb.toString();
 

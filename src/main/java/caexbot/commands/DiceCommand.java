@@ -41,11 +41,11 @@ public class DiceCommand extends CaexCommand{
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Standard RPG Dice format>\n");
-		sb.append("__Examples__\n");
+		sb.append("  __Examples__\n");
 		sb.append("```\n"
-				+ "1d20\n"
-				+ "1d6+3\n"
-				+ "3d10\n"
+				+ "  1d20\n"
+				+ "  1d6+3\n"
+				+ "  3d10\n"
 				+ "```");
 		
 		return sb.toString();
