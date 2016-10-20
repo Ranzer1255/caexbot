@@ -120,10 +120,6 @@ public class CaexConfiguration {
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
-	/**
-	 * if this item exists in the config file, Config loading will crash!
-	 * @param logLocation
-	 */
 	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")
 	public void setLogLocation(String logLocation) {
 		this.logLocation =new File(System.getProperty("user.home"),logLocation);
