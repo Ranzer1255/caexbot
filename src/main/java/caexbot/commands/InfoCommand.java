@@ -26,7 +26,7 @@ public class InfoCommand extends CaexCommand {
             if (args[0].equals("author")) { // !info author
             	channel.sendMessage("- **Name:** Ranzer\n" +
             						"- **Age:** 27\n"+
-            						"- **Artwork: Mellie\n");
+            						"- **Artwork:** Mellie\n");
             }
             if (args[0].equals("time")) { // !info time
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
