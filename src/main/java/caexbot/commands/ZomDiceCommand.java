@@ -62,7 +62,7 @@ public class ZomDiceCommand extends CaexCommand {
 		sb.append("__Sub Commands__\n");
 		for (CaexCommand cmd : zomSubCommands) {
 			sb.append("[");
-			for (String alias : getAlias()) {
+			for (String alias : cmd.getAlias()) {
 				sb.append(getPrefix()+alias+", ");
 			}
 			sb.append("] ").append(cmd.getDescription()).append("\n");

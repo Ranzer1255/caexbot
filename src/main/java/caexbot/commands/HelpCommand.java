@@ -17,8 +17,6 @@ public class HelpCommand extends CaexCommand {
 	public HelpCommand(CommandListener cmds) {
 		this.cmds=cmds;
 	}
-	
-//	(aliases={"help"}, description="Show a list of commands")
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
