@@ -51,7 +51,7 @@ public class CaexBot {
 		}
 		
 		JDA.addEventListener(new LevelUpdater());
-		JDA.getAccountManager().setGame("with Gilmore");
+		JDA.getAccountManager().setGame(config.getStatus());
 	}
 
 	public static JDA getJDA(){

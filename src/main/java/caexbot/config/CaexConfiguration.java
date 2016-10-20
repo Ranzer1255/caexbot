@@ -26,6 +26,7 @@ public class CaexConfiguration {
 	private String prefix = "!";
 	private String botToken = "token";
 	private String GoogleToken = "token";
+	private String statusMessage = "with Gilmore!";
 	
 	private CaexConfiguration(){
 
@@ -40,6 +41,10 @@ public class CaexConfiguration {
 			instance.load();
 		}
 		return instance;
+	}
+
+	public String getStatus() {
+		return statusMessage;
 	}
 
 	public String getDatabaseManagementSystem() {
@@ -87,6 +92,10 @@ public class CaexConfiguration {
 	}
 
 	//setters
+	@CaexConfigItem(key="statusMessage", type=String.class,_default="with Gilmore!")
+	public void setStatus(String status) {
+		this.statusMessage = status;
+	}
 	@CaexConfigItem(key="DBMS", type=String.class, _default="mysql")
 	public void setDatabaseManagementSystem(String databaseManagementSystem) {
 		this.databaseManagementSystem = databaseManagementSystem;
@@ -169,8 +178,7 @@ public class CaexConfiguration {
 			}
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("Configuration file '%s' not found, writing default configuration values.", CONFIG_PATH));
-			String home = System.getProperty("user.home");
-			File configurationFile = new File(home, CONFIG_PATH);
+			File configurationFile = new File(System.getProperty("user.home"), CONFIG_PATH);
 			configurationFile.getParentFile().mkdirs();
 			try {
 				configurationFile.createNewFile();
