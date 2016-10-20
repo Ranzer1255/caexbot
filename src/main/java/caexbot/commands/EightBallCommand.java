@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.util.Logging;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -47,15 +48,6 @@ public class EightBallCommand extends CaexCommand {
 	}
 	
 	@Override
-	public String getUsage(){
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(getPrefix()).append("8ball <the burrning question in your heart, begging for an answer>");
-		
-		return sb.toString();
-	}
-	
-	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
 		Logging.debug("Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
 		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
@@ -70,5 +62,14 @@ public class EightBallCommand extends CaexCommand {
 	@Override
 	public String getDescription() {
 		return "Answers to your hearts most desired questions!";
+	}
+
+	@Override
+	public String getUsage(){
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<the burrning question in your heart, begging for an answer>");
+		
+		return sb.toString();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -34,13 +35,21 @@ public class LevelCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		return "lists your level and experence.  Add \"rank\" the leaderboard.";
+		return "lists your level and experence.";
 	}
 
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Sub Command>\n");
+		sb.append("__Sub Commands__\n");
+		sb.append("**default:** lists your XP and Level\n")
+		  .append("**[rank]** see current standings for the server");
+		
+
+		
+		return sb.toString();
 	}
 
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
