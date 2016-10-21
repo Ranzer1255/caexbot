@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import caexbot.functions.games.zdice.subcommands.*;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -52,20 +53,14 @@ public class ZomDiceCommand extends CaexCommand {
 	@Override
 	public String getUsage() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		for (String alias : getAlias()) {
-			sb.append(getPrefix()+alias+", ");
-		}
-		sb.append("] ");
+		
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ");
 		
 		sb.append("<sub command>\n");
-		sb.append("__Sub Commands__\n");
+		sb.append("    __Sub Commands__\n");
 		for (CaexCommand cmd : zomSubCommands) {
-			sb.append("[");
-			for (String alias : cmd.getAlias()) {
-				sb.append(getPrefix()+alias+", ");
-			}
-			sb.append("] ").append(cmd.getDescription()).append("\n");
+			sb.append("  **<").append(StringUtil.arrayToString(cmd.getAlias(), ", "));
+			sb.append(">** ").append(cmd.getDescription()).append("\n");
 		}
 		
 		return sb.toString();
