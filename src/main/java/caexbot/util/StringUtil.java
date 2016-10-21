@@ -20,5 +20,19 @@ public class StringUtil {
 		
 		return sb.toString();
 	}
+	
+	public static String arrayToString(List<String> alias, String delmiter) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < alias.size(); i++) {
+			if(i==alias.size()-1){
+				sb.append(alias.get(i));
+			} else {
+				sb.append(alias.get(i)).append(delmiter);
+			}
+		}
+		
+		return sb.toString();
+	}
 
 }
