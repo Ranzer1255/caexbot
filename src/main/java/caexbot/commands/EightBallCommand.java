@@ -1,18 +1,13 @@
 package caexbot.commands;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.mysql.jdbc.log.Log;
 
-import caexbot.CaexBot;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
@@ -34,18 +29,12 @@ public class EightBallCommand extends CaexCommand {
 
 		List<String> rtn = new ArrayList<String>();
 		try {
-			InputStream resourceAsStream = getClass().getResourceAsStream("");
-			BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
+			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("8BallAnswers.txt")));
 			String line=null;
-			boolean test = (line = br.readLine())!= null;
-			Logging.debug(String.valueOf(test));
-			while (test) {
-				test = (line = br.readLine())!= null;
-				Logging.debug(String.valueOf(test));
+			while ((line = br.readLine())!= null) {
 				rtn.add(line);
 				Logging.debug("read in 8ball answer: "+line);
 			}
-			Logging.debug(line);
 			br.close();
 		} catch ( Exception e ) {
 			Logging.error(e.getMessage());
