@@ -199,4 +199,8 @@ public class CaexConfiguration {
 
 	}
 
+	public String getRole() {
+		return "UberBot";//TODO add this to the Config file
+	}
+
 }
