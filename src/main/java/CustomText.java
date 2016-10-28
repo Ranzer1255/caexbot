@@ -28,6 +28,7 @@ public class CustomText {
 		for(User u:JDA.getUsers()){
 			System.out.println(String.format("%s: %s", u.getUsername(), u.getAsMention()));
 		}
+		JDA.getTextChannelsByName("general").get(0).sendMessage("I am the Player's chosen, i address whom i please!");
 		
 		System.exit(0);
 	}
