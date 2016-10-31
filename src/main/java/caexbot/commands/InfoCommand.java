@@ -40,7 +40,7 @@ public class InfoCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {//TODO change usage to conform to standard.
+	public String getUsage() {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ")
