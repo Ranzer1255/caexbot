@@ -27,6 +27,7 @@ public class CaexConfiguration {
 	private String botToken = "token";
 	private String GoogleToken = "token";
 	private String statusMessage = "with Gilmore!";
+	private String roleName = "UberBot";
 	
 	private CaexConfiguration(){
 
@@ -91,6 +92,10 @@ public class CaexConfiguration {
 		return prefix;
 	}
 
+	public String getRole() {
+		return roleName;
+	}
+
 	//setters
 	@CaexConfigItem(key="statusMessage", type=String.class,_default="with Gilmore!")
 	public void setStatus(String status) {
@@ -139,6 +144,10 @@ public class CaexConfiguration {
 	@CaexConfigItem(key="googleToken", type=String.class, _default="token")
 	public void setGoogleToken(String token){
 		this.GoogleToken=token;
+	}
+	@CaexConfigItem(key="roleName", type=String.class, _default="UberBot")
+	public void setRole(String role){
+		this.roleName=role;
 	}
 
 	public void load() {
@@ -197,10 +206,6 @@ public class CaexConfiguration {
 		}
 
 
-	}
-
-	public String getRole() {
-		return "UberBot";//TODO add this to the Config file
 	}
 
 }
