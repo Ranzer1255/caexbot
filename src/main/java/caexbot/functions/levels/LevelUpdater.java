@@ -13,7 +13,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
-	private static final long MESSAGE_TIMEOUT = 1000L;
+	private static final long MESSAGE_TIMEOUT = 60000L;
 	private final static int XP_LOWBOUND = 15, XP_HIGHBOUND = 25;
 	private static List<User> messageTimeout = new ArrayList<>();
 	
