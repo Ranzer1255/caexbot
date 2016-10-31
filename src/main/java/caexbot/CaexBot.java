@@ -9,6 +9,7 @@ import caexbot.functions.levels.LevelUpdater;
 import caexbot.util.Logging;
 import caexbot.commands.DiceCommand;
 import caexbot.commands.EightBallCommand;
+import caexbot.commands.FacepalmCommand;
 import caexbot.commands.HelpCommand;
 import caexbot.commands.InfoCommand;
 import caexbot.commands.LevelCommand;
@@ -33,12 +34,13 @@ public class CaexBot {
 		CaexConfiguration config = CaexConfiguration.getInstance();
 
 		commands.addCommand(new HelpCommand(commands))
-				.addCommand(new InfoCommand())
-				.addCommand(new PingCommand())
-				.addCommand(new EightBallCommand())
-				.addCommand(new ShutdownCommand())
-				.addCommand(new LevelCommand())
 				.addCommand(new DiceCommand())
+				.addCommand(new EightBallCommand())
+				.addCommand(new FacepalmCommand())
+				.addCommand(new InfoCommand())
+				.addCommand(new LevelCommand())
+				.addCommand(new PingCommand())
+				.addCommand(new ShutdownCommand())
 				.addCommand(new YoutubeSearchCommand())
 				.addCommand(new ZomDiceCommand());
 
