@@ -43,9 +43,9 @@ public class LevelCommand extends CaexCommand {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Sub Command>\n");
-		sb.append("__Sub Commands__\n");
-		sb.append("**default:** lists your XP and Level\n")
-		  .append("**[rank]** see current standings for the server");
+		sb.append("        __Sub Commands__\n");
+		sb.append("**    default:** lists your XP and Level\n")
+		  .append("**    [rank]** see current standings for the server");
 		
 
 		
