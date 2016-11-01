@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -26,14 +27,12 @@ public class FacepalmCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		// TODO Facepalm description
-		return null;
+		return "Facepalm....";
 	}
 
 	@Override
 	public String getUsage() {
-		// TODO Facepalm Usage
-		return null;
+		return String.format("**[%s]** %s", StringUtil.cmdArrayToString(getAlias(), ", "), getDescription());
 	}
 
 }
