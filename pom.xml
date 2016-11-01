@@ -18,6 +18,11 @@
       <id>sdcf4j-repo</id>
   	  <url>http://repo.bastian-oppermann.de</url>
 	</repository>
+	<repository>
+      <id>sedmelluq</id>
+      <name>sedmelluq</name>
+      <url>http://maven.sedmelluq.com/</url>
+    </repository>
   </repositories>
 
   
@@ -27,6 +32,11 @@
       <artifactId>JDA</artifactId>
       <version>2.2.1_353</version>
   	</dependency>
+ 	<dependency>
+      <groupId>com.sedmelluq</groupId>
+      <artifactId>lavaplayer</artifactId>
+      <version>1.1.2</version>
+    </dependency>
   	
 
         <dependency>
