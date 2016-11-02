@@ -60,12 +60,12 @@ public class CaexBot {
 		
 		if(config.isDebug()){
 			for (Guild g : JDA.getGuilds()) {
-				g.getRolesByName("UberBot").get(0).getManager().setColor(new Color(0xb30000)).update();
+				g.getRolesByName(config.getRole()).get(0).getManager().setColor(new Color(0xb30000)).update();
 				JDA.getAccountManager().setGame("in Testing Mode");
 			}
 		}else {
 			for (Guild g: JDA.getGuilds()){
-				g.getRolesByName("UberBot").get(0).getManager().setColor(new Color(0xa2760a)).update();
+				g.getRolesByName(config.getRole()).get(0).getManager().setColor(new Color(0xa2760a)).update();
 			}
 		}
 	}
