@@ -20,7 +20,7 @@ public class GuildPlayerManager {
 	
 	private AudioPlayerManager pm;
 
-	private static Map<Guild, AudioPlayer> players;
+	private static Map<Guild, TrackQueue> queues;
 	private static GuildPlayerManager instance;
 
 	private GuildPlayerManager() {
@@ -34,6 +34,14 @@ public class GuildPlayerManager {
 		if (instance == null)
 			instance = new GuildPlayerManager();
 		return instance;
+	}
+
+	public TrackQueue getQueue(Guild guild) {
+		TrackQueue rtn = queues.get(guild);
+		if (rtn == null){
+			//TODO make queue
+		}
+		return rtn;
 	}
 	
 	
