@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.util.Logging;
 import net.dv8tion.jda.entities.Guild;
+import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
@@ -24,8 +25,7 @@ public class LevelUpdater extends ListenerAdapter{
 		if((event.getAuthor() != event.getJDA().getSelfInfo())&&!event.getAuthor().isBot()){
 		
 			if (!messageTimeout.contains(event.getAuthor())) {
-				if(addXP(event.getGuild(), event.getAuthor()))
-					event.getChannel().sendMessage("Congrats "+event.getAuthor().getAsMention()+" you've advanced to Level: "+xp.getLevel(event.getGuild(), event.getAuthor()));
+				addXP(event.getGuild(), event.getAuthor(),event.getChannel());
 				new Thread(){
 					public void run(){
 						messageTimeout.add(event.getAuthor());
@@ -45,13 +45,12 @@ public class LevelUpdater extends ListenerAdapter{
 	 * 
 	 * @param guild 
 	 * @param author
-	 * @return true if author leveled up.
 	 */
-	private boolean addXP(Guild guild, User author) {
+	private void addXP(Guild guild, User author, TextChannel channel) {
 
 		Logging.debug("adding XP to " + author.getUsername() + " on " + guild.getName());
 		
-		return xp.addXP(guild, author, getRandomXP());
+		xp.addXP(guild, author, getRandomXP(),channel);
 		
 		
 	}

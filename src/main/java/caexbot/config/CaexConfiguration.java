@@ -21,14 +21,17 @@ public class CaexConfiguration {
 	private String databaseUsername = "username";
 	private String databaseName = "caexdb";
 	private Boolean debug = false;
-	private String logPath = "/caexbot/logs/caex.log";
+	private String logPath = "/caexbot/logs/caex.log";//Default path for log Location
 	private File logLocation;
 	private String prefix = "!";
 	private String botToken = "token";
+	private String GoogleToken = "token";
+	private String statusMessage = "with Gilmore!";
+	private String roleName = "UberBot";
 	
 	private CaexConfiguration(){
-		String home = System.getProperty("user.home");
-		setLogLocation(new File(home,logPath));
+
+		this.logLocation =new File(System.getProperty("user.home"),logPath);
 	}
 	
 	//getters
@@ -39,6 +42,10 @@ public class CaexConfiguration {
 			instance.load();
 		}
 		return instance;
+	}
+
+	public String getStatus() {
+		return statusMessage;
 	}
 
 	public String getDatabaseManagementSystem() {
@@ -77,11 +84,23 @@ public class CaexConfiguration {
 		return botToken;
 	}
 	
+	public String getGToken() {
+		return GoogleToken;
+	}
+
 	public String getPrefix() {
 		return prefix;
 	}
 
+	public String getRole() {
+		return roleName;
+	}
+
 	//setters
+	@CaexConfigItem(key="statusMessage", type=String.class,_default="with Gilmore!")
+	public void setStatus(String status) {
+		this.statusMessage = status;
+	}
 	@CaexConfigItem(key="DBMS", type=String.class, _default="mysql")
 	public void setDatabaseManagementSystem(String databaseManagementSystem) {
 		this.databaseManagementSystem = databaseManagementSystem;
@@ -107,8 +126,8 @@ public class CaexConfiguration {
 		this.databaseName = databaseName;
 	}
 	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")
-	public void setLogLocation(File logLocation) {
-		this.logLocation = logLocation;
+	public void setLogLocation(String logLocation) {
+		this.logLocation =new File(System.getProperty("user.home"),logLocation);
 	}
 	@CaexConfigItem(key="debug", type=Boolean.class, _default="false")
 	public void setDebug(Boolean debug) {
@@ -119,8 +138,16 @@ public class CaexConfiguration {
 		this.prefix=prefix;
 	}
 	@CaexConfigItem(key="botToken", type=String.class, _default="token")
-	public void setToken(String token){
+	public void setBotToken(String token){
 		this.botToken = token;
+	}
+	@CaexConfigItem(key="googleToken", type=String.class, _default="token")
+	public void setGoogleToken(String token){
+		this.GoogleToken=token;
+	}
+	@CaexConfigItem(key="roleName", type=String.class, _default="UberBot")
+	public void setRole(String role){
+		this.roleName=role;
 	}
 
 	public void load() {
@@ -156,8 +183,7 @@ public class CaexConfiguration {
 			}
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("Configuration file '%s' not found, writing default configuration values.", CONFIG_PATH));
-			String home = System.getProperty("user.home");
-			File configurationFile = new File(home, CONFIG_PATH);
+			File configurationFile = new File(System.getProperty("user.home"), CONFIG_PATH);
 			configurationFile.getParentFile().mkdirs();
 			try {
 				configurationFile.createNewFile();
@@ -172,7 +198,6 @@ public class CaexConfiguration {
 				w.close();
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (Exception ex) {

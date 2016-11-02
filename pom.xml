@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ranzer.caexbot</groupId>
   <artifactId>caexbot</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name> Caex Bot for Discord</name>
   <description>Bot for Ranzer's Playground Discord Server</description>
 
@@ -18,6 +18,11 @@
       <id>sdcf4j-repo</id>
   	  <url>http://repo.bastian-oppermann.de</url>
 	</repository>
+	<repository>
+      <id>sedmelluq</id>
+      <name>sedmelluq</name>
+      <url>http://maven.sedmelluq.com/</url>
+    </repository>
   </repositories>
 
   
@@ -32,7 +37,12 @@
       <artifactId>jda-player</artifactId>
       <version>0.2.2_18</version>
     </dependency>
-	<dependency>
+ 	<dependency>
+      <groupId>com.sedmelluq</groupId>
+      <artifactId>lavaplayer</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.39</version>
@@ -43,7 +53,21 @@
       <version>2.7</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.google.api-client</groupId>
+    	<artifactId>google-api-client</artifactId>
+    	<version>1.22.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.google.apis</groupId>
+    	<artifactId>google-api-services-youtube</artifactId>
+    	<version>v3-rev178-1.22.0</version>
+    </dependency>
   </dependencies>
   
   <url>https://github.com/Sgmaniac1255/caexbot</url>
+  <issueManagement>
+  	<system>GitHub Issues</system>
+  	<url>https://github.com/Sgmaniac1255/caexbot/issues</url>
+  </issueManagement>
 </project>
