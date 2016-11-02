@@ -32,11 +32,6 @@
       <artifactId>JDA</artifactId>
       <version>2.2.1_360</version>
   	</dependency>
-  	<dependency>
-      <groupId>net.dv8tion</groupId>
-      <artifactId>jda-player</artifactId>
-      <version>0.2.2_18</version>
-    </dependency>
  	<dependency>
       <groupId>com.sedmelluq</groupId>
       <artifactId>lavaplayer</artifactId>
