@@ -4,18 +4,12 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import net.dv8tion.jda.entities.Guild;
 
 import java.util.Map;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration.ResamplingQuality;
-import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-
 public class GuildPlayerManager {
 	
 	private AudioPlayerManager pm;
@@ -23,7 +17,7 @@ public class GuildPlayerManager {
 	private static Map<Guild, TrackQueue> queues;
 	private static GuildPlayerManager instance;
 
-	private GuildPlayerManager() {
+	public GuildPlayerManager() {
 		pm = new DefaultAudioPlayerManager();
 		pm.getConfiguration().setResamplingQuality(ResamplingQuality.LOW);
 		pm.registerSourceManager(new YoutubeAudioSourceManager());

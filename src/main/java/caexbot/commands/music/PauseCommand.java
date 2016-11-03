@@ -7,13 +7,15 @@ import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-public class PlayCommand extends CaexCommand {
+public class PauseCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		/*TODO play command process
-		 * join voice channel of requested user
-		 * start first track in queue for requested guild
+
+		/*TODO Pause Command process
+		 * Pause current playing track.
+		 * if not playing 
+		 * 		do nothing
 		 */
 
 	}

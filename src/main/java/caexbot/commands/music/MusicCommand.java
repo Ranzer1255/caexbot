@@ -15,13 +15,16 @@ public class MusicCommand extends CaexCommand {
 	List<CaexCommand> subCommands;
 	
 	public MusicCommand() {
+		
 		subCommands = new ArrayList<>();
 		subCommands.add(new QueueCommand());
 		subCommands.add(new PlayCommand());
 		subCommands.add(new PauseCommand());
 		subCommands.add(new StopCommand());
-		subCommands.add(new Skipcommand());
+		subCommands.add(new SkipCommand());
 		subCommands.add(new VolCommand());
+		
+		
 	}
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -46,8 +49,7 @@ public class MusicCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Play music!";
 	}
 
 	@Override
