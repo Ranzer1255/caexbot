@@ -8,18 +8,18 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
  * @author Ranzer
  *
  */
-public interface TrackQueue {
+public class TrackQueue {
 
 	/**
 	 * adds one track to the queue to be played.
 	 * 
 	 * @param track track to be added to the queue
 	 */
-	public void add(AudioTrack track);
+	public void add(AudioTrack track){}//TODO
 	
 	/**
 	 * 
 	 * @return next track in the queue using FIFO order
 	 */
-	public AudioTrack remove();
+	public AudioTrack remove(){return null;} //TODO
 }
