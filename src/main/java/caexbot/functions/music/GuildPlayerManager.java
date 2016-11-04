@@ -17,7 +17,7 @@ public class GuildPlayerManager {
 	private static Map<Guild, TrackQueue> queues;
 	private static GuildPlayerManager instance;
 
-	public GuildPlayerManager() {
+	private GuildPlayerManager() {
 		pm = new DefaultAudioPlayerManager();
 		pm.getConfiguration().setResamplingQuality(ResamplingQuality.LOW);
 		pm.registerSourceManager(new YoutubeAudioSourceManager());
@@ -38,5 +38,8 @@ public class GuildPlayerManager {
 		return rtn;
 	}
 	
+	public AudioPlayerManager getPlayerManager(){
+		return pm;
+	}
 	
 }
