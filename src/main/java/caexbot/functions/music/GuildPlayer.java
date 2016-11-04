@@ -3,7 +3,6 @@ package caexbot.functions.music;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
-import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -13,26 +12,29 @@ import caexbot.util.Logging;
 import net.dv8tion.jda.audio.AudioSendHandler;
 import net.dv8tion.jda.entities.Guild;
 
-import java.util.Map;
-
 import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration.ResamplingQuality;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	
 	private static AudioPlayerManager pm = intPlayerManager();
 
+	private Guild guild;
 	private TrackQueue queue;
 	private TrackLoader loader;
 	private AudioPlayer player;
 	
-	public GuildPlayer() {
+	public GuildPlayer(Guild guild) {
 		player = pm.createPlayer();
 		player.addListener(this);
 		queue = new TrackQueue();
-		loader = new TrackLoader(queue);
+		loader = new TrackLoader(queue,getPlayerManager());
+		this.guild= guild;
+		guild.getAudioManager().setSendingHandler(this);
 		
 	}
-
+	
+	//construction helper methods
 	private static AudioPlayerManager intPlayerManager() {
 		Logging.info("creating PlayerManager");
 		AudioPlayerManager rtn = new DefaultAudioPlayerManager();
@@ -42,10 +44,22 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		return rtn;
 	}
 	
-	public AudioPlayerManager getPlayerManager(){
+	//static getter method
+	public static AudioPlayerManager getPlayerManager(){
 		return pm;
 	}
 
+	//music controls
+	/**
+	 * Start first song in queue
+	 */
+	public void play(){
+		//TODO play
+	}
+	
+	
+	
+	//AudioSendHandler methods
 	@Override
 	public boolean canProvide() {
 		// TODO make canProvide

@@ -10,7 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import caexbot.commands.CaexSubCommand;
 import caexbot.commands.search.YouTubeSearcher;
-import caexbot.functions.music.GuildPlayerManager;
+import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.TrackQueue;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -35,38 +35,7 @@ public class QueueCommand extends CaexSubCommand {
 		YouTubeSearcher yts = new YouTubeSearcher();
 		String videoID = yts.searchForVideo(queryBuilder.toString());
 		
-		if (videoID!=null) {
-			GuildPlayerManager.getInstance().getPlayerManager().loadItem(videoID, new AudioLoadResultHandler() {
-				
-				@Override
-				public void trackLoaded(AudioTrack track) {
-					GuildPlayerManager.getInstance().getQueue(event.getGuild()).add(track);
-					
-				}
-				
-				@Override
-				public void playlistLoaded(AudioPlaylist playlist) {
-					TrackQueue queue = GuildPlayerManager.getInstance().getQueue(event.getGuild());
-					for (AudioTrack track : playlist.getTracks()) {
-						queue.add(track);
-					}
-					
-				}
-				
-				@Override
-				public void noMatches() {
-					channel.sendMessage(NO_VIDEO_FOUND)	;			
-				}
-				
-				@Override
-				public void loadFailed(FriendlyException exception) {
-					// TODO LoadFailed exception handling
-					
-				}
-			});
-		} else {
-			channel.sendMessage(NO_VIDEO_FOUND);
-		}
+		
 	}
 
 	@Override
