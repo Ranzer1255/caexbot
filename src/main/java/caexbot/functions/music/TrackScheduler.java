@@ -9,6 +9,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
+//TODO this might not be needed
 public class TrackScheduler extends AudioEventAdapter {
 
 	private Queue<AudioTrack> queue = new LinkedList<>();
