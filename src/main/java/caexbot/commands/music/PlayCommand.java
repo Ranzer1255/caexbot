@@ -1,5 +1,6 @@
 package caexbot.commands.music;
 
+import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
@@ -15,19 +16,19 @@ public class PlayCommand extends CaexCommand {
 		 * join voice channel of requested user
 		 * start first track in queue for requested guild
 		 */
+		
+//		event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceStatusOfUser(author).getChannel());
 
 	}
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList("play","p");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Start playing the first song in queue";
 	}
 
 	@Override
