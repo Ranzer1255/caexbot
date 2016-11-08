@@ -32,7 +32,7 @@ public class InfoCommand extends CaexCommand {
             						"- **Artwork:** Mellie\n");
             }
             if (args[0].equals("time")) { // !info time
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a z(Z)");
                 Date currentDate = new Date(System.currentTimeMillis());
                 channel.sendMessage("It's " + format.format(currentDate));
             }
