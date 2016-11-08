@@ -5,7 +5,7 @@ package caexbot.commands;
  * 
  * <P>this class should NOT be used for any commands that <link>HelpCommand</link> will see
  * 
- * @author jrdillingham
+ * @author Ranzer
  *
  */
 public abstract class CaexSubCommand extends CaexCommand{
