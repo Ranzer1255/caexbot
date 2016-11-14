@@ -50,7 +50,7 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 	@Override
 	public void promptPlayer(Player nextPlayer) {
 		gameChannel.sendMessage(
-				((UserPlayerAdapter) nextPlayer).getUser().getAsMention()+" it is now your turn");
+				((UserPlayerAdapter) nextPlayer).getUser().getAsMention()+" it is now your turn").queue();
 		
 	}
 
