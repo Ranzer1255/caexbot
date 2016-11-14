@@ -56,9 +56,9 @@ public class YoutubeSearchCommand extends CaexCommand {
 			if (resultList.size()>0){
 				StringBuilder youtubeURL = new StringBuilder().append(YOUTUBE_BASE_STRING)
 						.append(resultList.get(0).getId().getVideoId());
-				channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString());
+				channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
 			} else {
-				channel.sendMessage("I'm sorry, i didnt find anything");
+				channel.sendMessage("I'm sorry, i didnt find anything").queue();
 			}
 			
 		} catch (IOException e) {

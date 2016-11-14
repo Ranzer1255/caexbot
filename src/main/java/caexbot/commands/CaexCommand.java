@@ -73,7 +73,7 @@ public abstract class CaexCommand{
 	}
 
 	private void noPermission(MessageReceivedEvent event) {
-		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE);
+		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE).queue();
 		
 	}
 	

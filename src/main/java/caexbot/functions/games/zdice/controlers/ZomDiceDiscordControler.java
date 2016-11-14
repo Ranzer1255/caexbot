@@ -44,7 +44,7 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 			sb.append(", ");
 		}
 		sb.append("The game has started.");
-		gameChannel.sendMessage(sb.toString());
+		gameChannel.sendMessage(sb.toString()).queue();
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 
 	@Override
 	public void notActivePlayer() {
-		gameChannel.sendMessage("It's not yet your turn. Please wait");
+		gameChannel.sendMessage("It's not yet your turn. Please wait").queue();
 	}
 
 	@Override
 	public void needMorePlayers() {
-		gameChannel.sendMessage("There are not enough players yet to start the game.");
+		gameChannel.sendMessage("There are not enough players yet to start the game.").queue();
 		
 	}
 
@@ -92,13 +92,13 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 		sb.append("Your current Shots earned this turn are: " + result.getShots()).append("\n");
 		sb.append("Roll again? (roll)\nEnd turn (end)");
 		
-		gameChannel.sendMessage(sb.toString());
+		gameChannel.sendMessage(sb.toString()).queue();
 		
 	}
 
 	@Override
 	public void announceEndTurn(Player currentPlayer) {
-		gameChannel.sendMessage("Your turn is over.\n"+"you have **" +currentPlayer.getBrains()+"** brains.");
+		gameChannel.sendMessage("Your turn is over.\n"+"you have **" +currentPlayer.getBrains()+"** brains.").queue();
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 			sb.append(((UserPlayerAdapter) highscoreTable[i]).getUser().getAsMention()+": "+highscoreTable[i].getBrains()+"\n");
 		}
 		
-		gameChannel.sendMessage(sb.toString());
+		gameChannel.sendMessage(sb.toString()).queue();
 		instanace = null;
 	}
 
@@ -123,7 +123,7 @@ public class ZomDiceDiscordControler extends ZomDiceController{
 
 	@Override
 	public void announceFinalRound() {
-		gameChannel.sendMessage("The final round has begun! Last chance to win!");
+		gameChannel.sendMessage("The final round has begun! Last chance to win!").queue();
 		
 	}
 }

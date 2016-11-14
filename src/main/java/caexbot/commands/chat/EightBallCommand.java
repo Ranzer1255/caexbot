@@ -48,7 +48,7 @@ public class EightBallCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
 		Logging.debug("Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
-		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
+		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
 	}
 	
 	@Override

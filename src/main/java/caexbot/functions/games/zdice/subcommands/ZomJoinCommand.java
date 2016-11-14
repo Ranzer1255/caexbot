@@ -14,9 +14,9 @@ public class ZomJoinCommand extends CaexSubCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(ZomDiceDiscordControler.getInstance().addPlayer(author))
-			channel.sendMessage(author.getAsMention() + ", you have been added to the game");
+			channel.sendMessage(author.getAsMention() + ", you have been added to the game").queue();
 		else
-			channel.sendMessage(author.getAsMention() +", you're already on the list");
+			channel.sendMessage(author.getAsMention() +", you're already on the list").queue();
 	}
 	
 	@Override

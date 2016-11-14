@@ -15,7 +15,7 @@ public class ZomScoreCommand extends CaexSubCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		int brains = ZomDiceDiscordControler.getInstance().getScore(new UserPlayerAdapter(author));
-		channel.sendMessage(String.format("%s: your score is **%d** Brains!", author.getAsMention(), brains));
+		channel.sendMessage(String.format("%s: your score is **%d** Brains!", author.getAsMention(), brains)).queue();
 	}
 
 	@Override

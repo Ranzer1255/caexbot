@@ -13,7 +13,7 @@ public class PingCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		
-		channel.sendMessage("pong!");	
+		channel.sendMessage("pong!").queue();	
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class InfoCommand extends CaexCommand {
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		
 		if (args.length > 1) { // more than 1 argument
-            channel.sendMessage("To many arguments!");
+            channel.sendMessage("To many arguments!").queue();;
         }
         if (args.length == 0) { // !info
             channel.sendMessage("- **Author:** Ranzer\n" +
@@ -34,7 +34,7 @@ public class InfoCommand extends CaexCommand {
             if (args[0].equals("time")) { // !info time
                 SimpleDateFormat format = new SimpleDateFormat("hh:mm a z(Z)");
                 Date currentDate = new Date(System.currentTimeMillis());
-                channel.sendMessage("It's " + format.format(currentDate));
+                channel.sendMessage("It's " + format.format(currentDate)).queue();
             }
         }
 		

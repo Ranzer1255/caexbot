@@ -27,13 +27,13 @@ public class ZomDiceCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(args.length!=1){
-			channel.sendMessage(author.getAsMention() + getUsage());
+			channel.sendMessage(author.getAsMention() + getUsage()).queue();
 		}
 		
 		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
-			channel.sendMessage(invalidUsage());
+			channel.sendMessage(invalidUsage()).queue();
 			return;
 		}
 		

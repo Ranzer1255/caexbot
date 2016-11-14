@@ -19,11 +19,11 @@ public class LevelCommand extends CaexCommand {
 
 		if (args.length>0){
 			if (args[0].equals("rank")){
-				channel.sendMessage(rankMessage(args,author,channel,event));
+				channel.sendMessage(rankMessage(args,author,channel,event)).queue();
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author)));
+		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
 		
 
 	}

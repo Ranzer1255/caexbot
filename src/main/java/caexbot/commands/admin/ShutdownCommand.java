@@ -12,7 +12,7 @@ public class ShutdownCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		channel.sendMessage("if you insist boss.... *blerg*");
+		channel.sendMessage("if you insist boss.... *blerg*").queue();
 		System.exit(0);
 	}
 

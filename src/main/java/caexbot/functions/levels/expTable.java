@@ -47,7 +47,7 @@ public class expTable {
 			
 				
 		if(subMap.get(author).addXP(XP))
-			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(guild, author)+"**");
+			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(guild, author)+"**").queue();
 		CaexDB.addXP(guild, author,XP);
 	}
 		

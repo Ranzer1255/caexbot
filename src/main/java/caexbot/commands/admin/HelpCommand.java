@@ -46,7 +46,7 @@ public class HelpCommand extends CaexCommand {
 			}
 			
 		}
-		channel.sendMessage(sb.toString());
+		channel.sendMessage(sb.toString()).queue();
 	}
 
 	@Override
