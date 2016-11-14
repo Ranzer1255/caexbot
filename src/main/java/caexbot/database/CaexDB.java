@@ -56,7 +56,7 @@ public class CaexDB {
             	
             	User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
             	UserLevel xp = new UserLevel( rs.getInt(3));
-            	Logging.debug(u.getUsername()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
+            	Logging.debug(u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
             	
             	
             	tbl.get(g).put(u, xp);

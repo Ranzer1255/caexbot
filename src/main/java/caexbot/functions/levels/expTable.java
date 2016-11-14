@@ -32,7 +32,7 @@ public class expTable {
 
 	public void addXP(Guild guild, User author, int XP, TextChannel channel) {
 
-		Logging.debug("Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
+		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
 		
 		if(!exp.containsKey(guild))
 			exp.put(guild, new HashMap<>());

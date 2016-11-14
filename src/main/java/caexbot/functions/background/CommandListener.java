@@ -30,7 +30,7 @@ public class CommandListener extends ListenerAdapter {
 		
 		if(!message.startsWith(CaexCommand.getPrefix()))return;
 		
-		if (author != CaexBot.getJDA().getSelfInfo()) {
+		if (author != CaexBot.getJDA().getSelfUser()) {
 			String[] args = message.split(" ");
 			String command = args[0].replace(CaexCommand.getPrefix(), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
