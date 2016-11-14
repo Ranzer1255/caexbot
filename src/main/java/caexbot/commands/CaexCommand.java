@@ -44,7 +44,7 @@ public abstract class CaexCommand{
 	private boolean hasPermission(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
 			return hasRoleRequirements(args, author,channel,event);
-		for (Role role : event.getGuild().getRolesForUser(author)) {
+		for (Role role : event.getGuild().getMember(author).getRoles()) {
 			if(role.getPermissions().contains(getPermissionRequirements())){
 				return true;
 			}
@@ -55,7 +55,7 @@ public abstract class CaexCommand{
 	private boolean hasRoleRequirements(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(getRoleRequirements()==null)
 			return true;
-		for(Role role : event.getGuild().getRolesForUser(author)){
+		for(Role role : event.getGuild().getMember(author).getRoles()){
 			if(getRoleRequirements().contains(role.getName()))
 				return true;
 		}
