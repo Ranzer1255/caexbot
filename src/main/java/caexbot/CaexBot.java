@@ -24,6 +24,7 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.impl.GameImpl;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class CaexBot {
 	
@@ -53,7 +54,7 @@ public class CaexBot {
 
 		try {
 			JDA = build.buildBlocking();
-		} catch (LoginException | IllegalArgumentException | InterruptedException e) {
+		} catch (LoginException | IllegalArgumentException | InterruptedException | RateLimitedException e) {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
@@ -63,12 +64,12 @@ public class CaexBot {
 		
 		if(config.isDebug()){
 			for (Guild g : JDA.getGuilds()) {
-				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).update();
+				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).queue();
 				JDA.getPresence().setGame(Game.of("in Testing Mode"));
 			}
 		}else {
 			for (Guild g: JDA.getGuilds()){
-				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).update();
+				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
 			}
 		}
 	}
