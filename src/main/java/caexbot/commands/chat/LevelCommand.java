@@ -60,11 +60,13 @@ public class LevelCommand extends CaexCommand {
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		for (Map.Entry<User, UserLevel> entry : rankings) {
-			String userName;
-			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
-					userName = entry.getKey().getUsername(); 
-			msg.append("__**").append(userName).append("**__:\t*Level:* **").append(entry.getValue().getLevel())
-			   .append("** with __").append(entry.getValue().getXP()).append("*xp*__\n\n");
+			msg.append(
+				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n\n", 
+					channel.getGuild().getMember(entry.getKey()).getEffectiveName(), 
+					entry.getValue().getLevel(),
+					entry.getValue().getXP()
+				)
+			);
 		}
 		
 		return msg.toString();
