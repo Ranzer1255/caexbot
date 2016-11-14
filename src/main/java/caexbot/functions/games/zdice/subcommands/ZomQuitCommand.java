@@ -5,9 +5,9 @@ import java.util.List;
 
 import caexbot.commands.CaexSubCommand;
 import caexbot.functions.games.zdice.controlers.ZomDiceDiscordControler;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ZomQuitCommand extends CaexSubCommand {
 

@@ -8,9 +8,9 @@ import java.util.Optional;
 import caexbot.commands.CaexCommand;
 import caexbot.functions.games.zdice.subcommands.*;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ZomDiceCommand extends CaexCommand {
 

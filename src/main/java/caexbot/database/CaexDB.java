@@ -12,8 +12,8 @@ import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
-import net.dv8tion.jda.entities.Guild;
-import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.User;
 
 
 public class CaexDB {

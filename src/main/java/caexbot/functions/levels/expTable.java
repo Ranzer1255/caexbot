@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import caexbot.database.CaexDB;
 import caexbot.util.Logging;
-import net.dv8tion.jda.entities.Guild;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 
 public class expTable {
 
