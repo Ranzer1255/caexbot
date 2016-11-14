@@ -3,11 +3,11 @@ package caexbot.commands;
 import java.util.List;
 
 import caexbot.config.CaexConfiguration;
-import net.dv8tion.jda.Permission;
-import net.dv8tion.jda.entities.Role;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class CaexCommand{
 
@@ -44,7 +44,7 @@ public abstract class CaexCommand{
 	private boolean hasPermission(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
 			return hasRoleRequirements(args, author,channel,event);
-		for (Role role : event.getGuild().getRolesForUser(author)) {
+		for (Role role : event.getGuild().getMember(author).getRoles()) {
 			if(role.getPermissions().contains(getPermissionRequirements())){
 				return true;
 			}
@@ -55,7 +55,7 @@ public abstract class CaexCommand{
 	private boolean hasRoleRequirements(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(getRoleRequirements()==null)
 			return true;
-		for(Role role : event.getGuild().getRolesForUser(author)){
+		for(Role role : event.getGuild().getMember(author).getRoles()){
 			if(getRoleRequirements().contains(role.getName()))
 				return true;
 		}
@@ -73,7 +73,7 @@ public abstract class CaexCommand{
 	}
 
 	private void noPermission(MessageReceivedEvent event) {
-		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE);
+		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE).queue();
 		
 	}
 	

@@ -8,9 +8,9 @@ import java.util.Optional;
 import caexbot.commands.CaexCommand;
 import caexbot.functions.games.zdice.subcommands.*;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ZomDiceCommand extends CaexCommand {
 
@@ -27,13 +27,13 @@ public class ZomDiceCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(args.length!=1){
-			channel.sendMessage(author.getAsMention() + getUsage());
+			channel.sendMessage(author.getAsMention() + getUsage()).queue();
 		}
 		
 		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
-			channel.sendMessage(invalidUsage());
+			channel.sendMessage(invalidUsage()).queue();
 			return;
 		}
 		

@@ -7,10 +7,10 @@ import java.util.Optional;
 
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
 	
@@ -30,7 +30,7 @@ public class CommandListener extends ListenerAdapter {
 		
 		if(!message.startsWith(CaexCommand.getPrefix()))return;
 		
-		if (author != CaexBot.getJDA().getSelfInfo()) {
+		if (author != CaexBot.getJDA().getSelfUser()) {
 			String[] args = message.split(" ");
 			String command = args[0].replace(CaexCommand.getPrefix(), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);

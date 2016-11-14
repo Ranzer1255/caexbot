@@ -4,16 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PingCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		
-		channel.sendMessage("pong!");	
+		channel.sendMessage("pong!").queue();	
 	}
 
 	@Override

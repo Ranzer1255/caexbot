@@ -18,9 +18,12 @@ import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
-import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.JDABuilder;
-import net.dv8tion.jda.entities.Guild;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class CaexBot {
 	
@@ -44,28 +47,28 @@ public class CaexBot {
 				.addCommand(new YoutubeSearchCommand())
 				.addCommand(new ZomDiceCommand());
 
-		JDABuilder build = new JDABuilder()
+		JDABuilder build = new JDABuilder(AccountType.BOT)
 				.addListener(commands)
-				.setBotToken(config.getToken());
+				.setToken(config.getToken());
 
 		try {
 			JDA = build.buildBlocking();
-		} catch (LoginException | IllegalArgumentException | InterruptedException e) {
+		} catch (LoginException | IllegalArgumentException | InterruptedException | RateLimitedException e) {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
 		
 		JDA.addEventListener(new LevelUpdater());
-		JDA.getAccountManager().setGame(config.getStatus());
+		JDA.getPresence().setGame(Game.of(config.getStatus()));
 		
 		if(config.isDebug()){
 			for (Guild g : JDA.getGuilds()) {
-				g.getRolesByName(config.getRole()).get(0).getManager().setColor(new Color(0xb30000)).update();
-				JDA.getAccountManager().setGame("in Testing Mode");
+				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).queue();
+				JDA.getPresence().setGame(Game.of("in Testing Mode"));
 			}
 		}else {
 			for (Guild g: JDA.getGuilds()){
-				g.getRolesByName(config.getRole()).get(0).getManager().setColor(new Color(0xa2760a)).update();
+				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
 			}
 		}
 	}

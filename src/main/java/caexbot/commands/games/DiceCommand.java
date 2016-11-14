@@ -6,9 +6,9 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.functions.dice.DiceParser;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DiceCommand extends CaexCommand{
 
@@ -20,9 +20,9 @@ public class DiceCommand extends CaexCommand{
 		}
 		
 		try {
-			channel.sendMessage(author.getAsMention()+": "+DiceParser.parseDiceString(args[0]).Result());
+			channel.sendMessage(author.getAsMention()+": "+DiceParser.parseDiceString(args[0]).Result()).queue();
 		} catch (IllegalArgumentException e) {
-			channel.sendMessage("I'm sorry i didn't uderstand \""+ e.getMessage()+"\" please use standard RPG format.");
+			channel.sendMessage("I'm sorry i didn't uderstand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
 		}
 		
 	}

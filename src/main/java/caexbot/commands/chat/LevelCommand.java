@@ -8,9 +8,9 @@ import caexbot.commands.CaexCommand;
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelCommand extends CaexCommand {
 
@@ -19,11 +19,11 @@ public class LevelCommand extends CaexCommand {
 
 		if (args.length>0){
 			if (args[0].equals("rank")){
-				channel.sendMessage(rankMessage(args,author,channel,event));
+				channel.sendMessage(rankMessage(args,author,channel,event)).queue();
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author)));
+		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
 		
 
 	}
@@ -60,11 +60,13 @@ public class LevelCommand extends CaexCommand {
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		for (Map.Entry<User, UserLevel> entry : rankings) {
-			String userName;
-			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
-					userName = entry.getKey().getUsername(); 
-			msg.append("__**").append(userName).append("**__:\t*Level:* **").append(entry.getValue().getLevel())
-			   .append("** with __").append(entry.getValue().getXP()).append("*xp*__\n\n");
+			msg.append(
+				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n\n", 
+					channel.getGuild().getMember(entry.getKey()).getEffectiveName(), 
+					entry.getValue().getLevel(),
+					entry.getValue().getXP()
+				)
+			);
 		}
 		
 		return msg.toString();
