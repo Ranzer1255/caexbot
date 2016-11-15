@@ -32,7 +32,7 @@ public class CommandListener extends ListenerAdapter {
 		
 		if (author != CaexBot.getJDA().getSelfUser()) {
 			String[] args = message.split(" ");
-			String command = args[0].replace(CaexCommand.getPrefix(), "").toLowerCase();
+			String command = args[0].replace(CaexCommand.getPrefix(event.getGuild()), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
 			TextChannel channel = event.getTextChannel();
 			Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
