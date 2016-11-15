@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+
+//TODO check on JDA shutdown
 public class ShutdownCommand extends CaexCommand {
 
 	@Override
