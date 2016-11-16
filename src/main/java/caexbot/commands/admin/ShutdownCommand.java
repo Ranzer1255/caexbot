@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -18,8 +19,8 @@ public class ShutdownCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
-		return getPrefix()+"sleep (requires permision)";
+	public String getUsage(Guild g) {
+		return getPrefix(g)+"sleep (requires permision)";
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.functions.dice.DiceParser;
 import caexbot.util.StringUtil;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -16,7 +17,7 @@ public class DiceCommand extends CaexCommand{
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
 		if(!(args.length==1)){
-			invalidUsage();
+			invalidUsage(event.getGuild());
 		}
 		
 		try {
@@ -38,10 +39,10 @@ public class DiceCommand extends CaexCommand{
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Standard RPG Dice format>\n");
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<Standard RPG Dice format>\n");
 		sb.append("  __Examples__\n");
 		sb.append("```\n"
 				+ "  1d20\n"
@@ -50,6 +51,12 @@ public class DiceCommand extends CaexCommand{
 				+ "```");
 		
 		return sb.toString();
+	}
+	
+	@Override
+	public String invalidUsage(Guild g) {
+		// TODO make invalidUsage
+		return super.invalidUsage(g);
 	}
 
 }

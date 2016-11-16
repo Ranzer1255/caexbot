@@ -15,6 +15,7 @@ import com.google.api.services.youtube.model.SearchResult;
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -78,8 +79,8 @@ public class YoutubeSearchCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
-		return getPrefix()+getAlias().get(0) + " <your search terms>";
+	public String getUsage(Guild g) {
+		return getPrefix(g)+getAlias().get(0) + " <your search terms>";//TODO match usage format
 	}
 
 }

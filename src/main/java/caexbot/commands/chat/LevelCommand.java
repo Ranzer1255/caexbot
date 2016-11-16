@@ -8,6 +8,7 @@ import caexbot.commands.CaexCommand;
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -40,10 +41,10 @@ public class LevelCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Sub Command>\n");
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<Sub Command>\n");
 		sb.append("        __Sub Commands__\n");
 		sb.append("**    default:** lists your XP and Level\n")
 		  .append("**    [rank]** see current standings for the server");
