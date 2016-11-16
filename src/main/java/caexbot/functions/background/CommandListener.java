@@ -17,7 +17,6 @@ public class CommandListener extends ListenerAdapter {
 	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
 	
 	public CommandListener addCommand(CaexCommand cmd){
-		
 		this.cmds.add(cmd);
 		return this;
 	}

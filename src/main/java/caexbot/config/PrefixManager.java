@@ -20,4 +20,10 @@ public class PrefixManager {
 		prefixes.put(key,prefix);
 		CaexDB.savePrefix(key,prefix);
 	}
+	
+	public static void removePrefix(Guild key){
+		prefixes.remove(key);
+		CaexDB.removePrefix(key);
+		
+	}
 }

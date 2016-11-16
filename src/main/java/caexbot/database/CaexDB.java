@@ -63,7 +63,8 @@ public class CaexDB {
 			}
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Logging.error(ex.getMessage());
+			Logging.log(ex);
 		}
 
 		return tbl;
@@ -78,7 +79,8 @@ public class CaexDB {
 			stmt.execute();
 			
 		} catch (Exception e){
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 	}
@@ -91,7 +93,8 @@ public class CaexDB {
 			stmt.setString(3, user.getId());
 			stmt.execute();
 		}catch (Exception e){
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 	}
@@ -104,7 +107,8 @@ public class CaexDB {
 			stmt.setString(3, prefix);
 			stmt.execute();
 		}catch (Exception e){
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 	}
@@ -123,9 +127,23 @@ public class CaexDB {
 			}
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Logging.error(ex.getMessage());
+			Logging.log(ex);
 		}
 
 		return rtn;
+	}
+
+	public static void removePrefix(Guild key) {
+		PreparedStatement stmt;
+		try {
+			stmt = getConnection().prepareStatement("delete from guild_prefix where guild_id = ?;");
+			stmt.setString(1, key.getId());
+			
+		} catch (SQLException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+		
 	}
 }
