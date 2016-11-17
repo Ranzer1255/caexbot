@@ -41,33 +41,34 @@ public class CaexDB {
 			return null;
 		}
 	}
-	
+
 	public static Map<Guild, Map<User,UserLevel>> getLevels() {
 		Map<Guild, Map<User,UserLevel>> tbl = new HashMap<>();
 
-        try {
-            PreparedStatement stmt = getConnection().prepareStatement("select * from guild_levels");
-            ResultSet rs = stmt.executeQuery();
+		try {
+			PreparedStatement stmt = getConnection().prepareStatement("select * from guild_levels");
+			ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-            	Guild g = CaexBot.getJDA().getGuildById(rs.getString(1));
-            	if (!tbl.containsKey(g))
-            		tbl.put(g, new HashMap<>());
-            	
-            	User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
-            	UserLevel xp = new UserLevel( rs.getInt(3));
-            	Logging.debug(u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
-            	
-            	
-            	tbl.get(g).put(u, xp);
-            }
+			while (rs.next()) {
+				Guild g = CaexBot.getJDA().getGuildById(rs.getString(1));
+				if (!tbl.containsKey(g))
+					tbl.put(g, new HashMap<>());
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+				User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
+				UserLevel xp = new UserLevel( rs.getInt(3));
+				Logging.debug(u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
 
-        return tbl;
-    }
+
+				tbl.get(g).put(u, xp);
+			}
+
+		} catch (Exception ex) {
+			Logging.error(ex.getMessage());
+			Logging.log(ex);
+		}
+
+		return tbl;
+	}
 
 	public static void addRow(Guild guild, User user, UserLevel u) {
 		try{
@@ -78,7 +79,8 @@ public class CaexDB {
 			stmt.execute();
 			
 		} catch (Exception e){
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 	}
@@ -91,7 +93,56 @@ public class CaexDB {
 			stmt.setString(3, user.getId());
 			stmt.execute();
 		}catch (Exception e){
-			e.printStackTrace();
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+		
+	}
+
+	public static void savePrefix(Guild key, String prefix) {
+		try{
+			PreparedStatement stmt = getConnection().prepareStatement("insert into guild_prefix values (?,?) on duplicate key update prefix=?;");
+			stmt.setString(1, key.getId());
+			stmt.setString(2, prefix);
+			stmt.setString(3, prefix);
+			stmt.execute();
+		}catch (Exception e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+		
+	}
+	
+	public static Map<Guild,String> loadPrefixes(){
+		Map<Guild,String> rtn = new HashMap<>();
+		
+		try {
+			PreparedStatement stmt = getConnection().prepareStatement("select * from guild_prefix");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Guild g = CaexBot.getJDA().getGuildById(rs.getString(1));
+				String p = rs.getString(2);             	
+				rtn.put(g, p);
+			}
+
+		} catch (Exception ex) {
+			Logging.error(ex.getMessage());
+			Logging.log(ex);
+		}
+
+		return rtn;
+	}
+
+	public static void removePrefix(Guild key) {
+		PreparedStatement stmt;
+		try {
+			stmt = getConnection().prepareStatement("delete from guild_prefix where guild_id = ?;");
+			stmt.setString(1, key.getId());
+			
+		} catch (SQLException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
 		}
 		
 	}

@@ -1,5 +1,6 @@
 package caexbot.commands.admin;
 
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -41,10 +42,10 @@ public class InfoCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ")
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ")
 			.append("<sub_command>\n");
 		
 		sb.append("        __Sub Commands__\n")

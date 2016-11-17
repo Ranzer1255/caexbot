@@ -10,6 +10,7 @@ import caexbot.util.Logging;
 import caexbot.commands.admin.HelpCommand;
 import caexbot.commands.admin.InfoCommand;
 import caexbot.commands.admin.PingCommand;
+import caexbot.commands.admin.PrefixCommand;
 import caexbot.commands.admin.ShutdownCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
@@ -45,7 +46,8 @@ public class CaexBot {
 				.addCommand(new PingCommand())
 				.addCommand(new ShutdownCommand())
 				.addCommand(new YoutubeSearchCommand())
-				.addCommand(new ZomDiceCommand());
+				.addCommand(new ZomDiceCommand())
+				.addCommand(new PrefixCommand());
 
 		JDABuilder build = new JDABuilder(AccountType.BOT)
 				.addListener(commands)

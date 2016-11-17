@@ -3,14 +3,15 @@ package caexbot.util;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import net.dv8tion.jda.core.entities.Guild;
 
 public class StringUtil {
 
-	public static String cmdArrayToString(List<String> alias, String delmiter) {
+	public static String cmdArrayToString(List<String> alias, String delmiter, Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
 		for (int i = 0; i < alias.size(); i++) {
-			sb.append(CaexCommand.getPrefix());
+			sb.append(CaexCommand.getPrefix(g));
 			if(i==alias.size()-1){
 				sb.append(alias.get(i));
 			} else {

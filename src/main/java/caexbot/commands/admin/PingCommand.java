@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -17,8 +18,8 @@ public class PingCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
-		return getPrefix()+"ping";
+	public String getUsage(Guild g) {
+		return getPrefix(g)+"ping";
 	}
 
 	@Override

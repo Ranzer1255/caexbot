@@ -31,7 +31,7 @@ public class CustomText {
 		for(User u:JDA.getUsers()){
 			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
 		}
-		JDA.getTextChannelsByName("general",false).get(0).sendMessage("Talking with JDA 3.0!").queue();
+		JDA.getTextChannelById("184657525990359041").sendMessage("STFU " +JDA.getUserById("143929240440537089").getAsMention() ).queue();
 		JDA.getPresence().setGame(Game.of("The Game!"));
 		
 		System.exit(0);
