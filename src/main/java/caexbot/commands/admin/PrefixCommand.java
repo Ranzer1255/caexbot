@@ -6,7 +6,7 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.config.PrefixManager;
-import net.dv8tion.jda.core.JDA;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -26,6 +26,7 @@ public class PrefixCommand extends CaexCommand {
 		case 1:
 			PrefixManager.setPrefix(event.getGuild(), args[0]);
 			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", args[0])).queue();
+			return;
 		default:			
 			channel.sendMessage("Hey, i can't listen for more than one thing ;)").queue();
 			return;
@@ -39,14 +40,12 @@ public class PrefixCommand extends CaexCommand {
 
 	@Override
 	public String getDescription() {
-		// TODO make getDescription
-		return null;
+		return "Set prefix for the Guild (requires Administrator permision)";
 	}
 
 	@Override
 	public String getUsage(Guild g) {
-		// TODO make getUsage
-		return null;
+		return String.format("**[%s]** <prefix to set to> [blank to reset to default] ", StringUtil.cmdArrayToString(getAlias(), ", "	, g));
 	}
 	
 	@Override
