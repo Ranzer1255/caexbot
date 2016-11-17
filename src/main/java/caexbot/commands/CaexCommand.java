@@ -2,7 +2,6 @@ package caexbot.commands;
 
 import java.util.List;
 
-import caexbot.config.CaexConfiguration;
 import caexbot.config.PrefixManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
