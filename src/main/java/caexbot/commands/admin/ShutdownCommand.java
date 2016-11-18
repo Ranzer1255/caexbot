@@ -5,10 +5,12 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
+import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.exceptions.PermissionException;
 
 public class ShutdownCommand extends CaexCommand {
 
@@ -19,6 +21,13 @@ public class ShutdownCommand extends CaexCommand {
 			return;
 		}
 		channel.sendMessage("if you insist boss.... *blerg*").queue();
+		for (Guild g : event.getJDA().getGuilds()) {
+			try{
+				g.getPublicChannel().sendMessage("I've got to go.... /n*casts teleport and vanishes*").queue();
+			}catch(PermissionException e){
+				Logging.error("i can't talk here sorry: "+e.getLocalizedMessage());
+			}
+		}
 		event.getJDA().shutdown();
 		System.exit(0);
 	}
