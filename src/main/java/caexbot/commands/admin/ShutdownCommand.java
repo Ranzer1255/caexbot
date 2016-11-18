@@ -23,7 +23,7 @@ public class ShutdownCommand extends CaexCommand {
 		channel.sendMessage("if you insist boss.... *blerg*").queue();
 		for (Guild g : event.getJDA().getGuilds()) {
 			try{
-				g.getPublicChannel().sendMessage("I've got to go.... /n*casts teleport and vanishes*").queue();
+				g.getPublicChannel().sendMessage("I've got to go.... \n*casts teleport and vanishes*").queue();
 			}catch(PermissionException e){
 				Logging.error("i can't talk here sorry: "+e.getLocalizedMessage());
 			}
