@@ -14,7 +14,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DraconicTranslateCommand extends CaexCommand {
 
-	private static final String DICT = "/caex/draconic/dict.txt";
+	private static final String DICT = "/caexbot/draconic/dict.txt";
 	private DraconicTranslator trans;
 	
 	public DraconicTranslateCommand() {
