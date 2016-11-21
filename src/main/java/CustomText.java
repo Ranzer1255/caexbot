@@ -1,6 +1,9 @@
 import javax.security.auth.login.LoginException;
 
+import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.config.CaexConfiguration;
+import caexbot.functions.background.CommandListener;
+import caexbot.util.DraconicTranslator;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -24,15 +27,13 @@ public class CustomText {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
-		
-		for(TextChannel tc:JDA.getTextChannels()){
-			System.out.println(String.format("%s: %s", tc.getName(), tc.getId()));
-		}
-		for(User u:JDA.getUsers()){
-			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
-		}
-		JDA.getTextChannelById("184657525990359041").sendMessage("STFU " +JDA.getUserById("143929240440537089").getAsMention() ).queue();
-		JDA.getPresence().setGame(Game.of("The Game!"));
+//		
+//		for(TextChannel tc:JDA.getTextChannels()){
+//			System.out.println(String.format("%s: %s", tc.getName(), tc.getId()));
+//		}
+//		for(User u:JDA.getUsers()){
+//			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
+//		}
 		
 		System.exit(0);
 	}
