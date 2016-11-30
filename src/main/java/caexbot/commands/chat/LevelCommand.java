@@ -32,7 +32,7 @@ public class LevelCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("xp", "level");
+		return Arrays.asList("xp", "level", "tawura_authot");
 	}
 
 	@Override

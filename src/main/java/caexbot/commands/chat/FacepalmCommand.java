@@ -33,7 +33,7 @@ public class FacepalmCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("facepalm","fp");
+		return Arrays.asList("facepalm","fp", "ehaism_cha'sid");
 	}
 
 	@Override

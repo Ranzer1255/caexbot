@@ -39,7 +39,7 @@ public class ShutdownCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("sleep");
+		return Arrays.asList("vdri");
 	}
 
 	@Override

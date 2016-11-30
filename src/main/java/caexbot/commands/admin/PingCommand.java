@@ -24,7 +24,7 @@ public class PingCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("ping");
+		return Arrays.asList("ping", "relgr");
 	}
 
 	@Override

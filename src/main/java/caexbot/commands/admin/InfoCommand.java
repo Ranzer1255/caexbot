@@ -60,7 +60,7 @@ public class InfoCommand extends CaexCommand {
 	@Override
 	public List<String> getAlias() {
 
-		return Arrays.asList("info", "i");
+		return Arrays.asList("info", "i", "vucot");
 	}
 
 	@Override

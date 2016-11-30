@@ -58,7 +58,7 @@ public class HelpCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("help", "h");
+		return Arrays.asList("help", "h", "letoclo");
 	}
 
 	@Override
