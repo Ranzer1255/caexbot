@@ -64,17 +64,18 @@ public class CaexBot {
 		
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
-		
-		if(config.isDebug()){
-			for (Guild g : JDA.getGuilds()) {
-				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).queue();
-				JDA.getPresence().setGame(Game.of("in Testing Mode"));
-			}
-		}else {
-			for (Guild g: JDA.getGuilds()){
-				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
-			}
-		}
+	
+//		color controls buggy and unreliable ATM
+//		if(config.isDebug()){
+//			for (Guild g : JDA.getGuilds()) {
+//				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).queue();
+//				JDA.getPresence().setGame(Game.of("in Testing Mode"));
+//			}
+//		}else {
+//			for (Guild g: JDA.getGuilds()){
+//				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
+//			}
+//		}
 	}
 
 	public static JDA getJDA(){

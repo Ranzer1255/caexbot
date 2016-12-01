@@ -51,10 +51,18 @@ public class CaexDB {
 
 			while (rs.next()) {
 				Guild g = CaexBot.getJDA().getGuildById(rs.getString(1));
+				if (g==null){
+					deleteGuild(rs.getString(1));
+					continue;
+				}
 				if (!tbl.containsKey(g))
 					tbl.put(g, new HashMap<>());
 
-				User u = CaexBot.getJDA().getUserById(rs.getString(2));            	
+				User u = CaexBot.getJDA().getUserById(rs.getString(2));
+				if (u==null){
+					deleteUser(rs.getString(2));
+					continue;
+				}
 				UserLevel xp = new UserLevel( rs.getInt(3));
 				Logging.debug(u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
 
@@ -68,6 +76,16 @@ public class CaexDB {
 		}
 
 		return tbl;
+	}
+
+	private static void deleteGuild(String g) {
+		Logging.info(String.format("Guild %s no longer exists, removing entries from DB", g));
+		//TODO 
+	}
+
+	private static void deleteUser(String u) {
+		Logging.info(String.format("User_ID %s no longer exists, removing entries from DB", u));
+		//TODO
 	}
 
 	public static void addRow(Guild guild, User user, UserLevel u) {
