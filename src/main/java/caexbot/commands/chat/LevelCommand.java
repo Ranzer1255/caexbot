@@ -65,7 +65,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 		for (Map.Entry<User, UserLevel> entry : rankings) {
 			if(index++>=10) break;
 			msg.append(
-				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n\n", 
+				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
 					channel.getGuild().getMember(entry.getKey()).getEffectiveName(), 
 					entry.getValue().getLevel(),
 					entry.getValue().getXP()
