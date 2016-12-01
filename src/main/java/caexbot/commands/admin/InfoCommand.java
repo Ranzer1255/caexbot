@@ -25,7 +25,8 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
         if (args.length == 0) { // !info
             channel.sendMessage("- **Author:** Ranzer\n" +
             					"- **Language:** Java\n" +
-            					"- **Github Repo:** https://github.com/Sgmaniac1255/caexbot").queue();
+            					"- **Github Repo:** https://github.com/Sgmaniac1255/caexbot\n" + 
+            					"**Version: 1.1.0").queue();
         }
         if (args.length == 1) { // 1 argument
             if (args[0].equals("author")) { // !info author
