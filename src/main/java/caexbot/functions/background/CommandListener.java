@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
