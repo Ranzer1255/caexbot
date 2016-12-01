@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
@@ -13,7 +14,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class LevelCommand extends CaexCommand {
+public class LevelCommand extends CaexCommand implements DraconicCommand{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -32,7 +33,7 @@ public class LevelCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("xp", "level", "tawura_authot");
+		return Arrays.asList("xp", "level");
 	}
 
 	@Override
@@ -73,5 +74,11 @@ public class LevelCommand extends CaexCommand {
 		}
 		
 		return msg.toString();
+	}
+
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("tawura_authot");
 	}
 }

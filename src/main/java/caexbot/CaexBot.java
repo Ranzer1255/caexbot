@@ -26,14 +26,26 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
 public class CaexBot {
 	
 	private static JDA JDA;
-	private static CommandListener commands = new CommandListener();
+	private static CommandListener commands;
 
 	public static void main (String[] args){
-		Logging.info("Huu... Wha... who... Oh, I guess it's time to [start up]");	
-
-
+		Logging.info("Huu... Wha... who... Oh, I guess it's time to [start up]");
+		
 		CaexConfiguration config = CaexConfiguration.getInstance();
+		
+		JDABuilder build = new JDABuilder(AccountType.BOT)
+				.setToken(config.getToken());
+		
+		try {
+			JDA = build.buildBlocking();
+		} catch (LoginException | IllegalArgumentException | InterruptedException | RateLimitedException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
 
+
+		commands = new CommandListener(JDA);
+		
 		commands.addCommand(new HelpCommand(commands))
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
@@ -47,17 +59,7 @@ public class CaexBot {
 				.addCommand(new ZomDiceCommand())
 				.addCommand(new PrefixCommand());
 
-		JDABuilder build = new JDABuilder(AccountType.BOT)
-				.addListener(commands)
-				.setToken(config.getToken());
-
-		try {
-			JDA = build.buildBlocking();
-		} catch (LoginException | IllegalArgumentException | InterruptedException | RateLimitedException e) {
-			Logging.error(e.getMessage());
-			Logging.log(e);
-		}
-		
+		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
@@ -72,6 +74,7 @@ public class CaexBot {
 //				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
 //			}
 //		}
+		Logging.info("Done Loading and ready to go!");
 	}
 
 	public static JDA getJDA(){

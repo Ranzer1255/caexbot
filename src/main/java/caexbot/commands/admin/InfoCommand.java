@@ -11,9 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.util.StringUtil;
 
-public class InfoCommand extends CaexCommand {
+public class InfoCommand extends CaexCommand implements DraconicCommand{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -60,13 +61,18 @@ public class InfoCommand extends CaexCommand {
 	@Override
 	public List<String> getAlias() {
 
-		return Arrays.asList("info", "i", "vucot");
+		return Arrays.asList("info", "i");
 	}
 
 	@Override
 	public String getDescription() {
 		
 		return "Information about Caex and Author";
+	}
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("vucot");
 	}
 
 }

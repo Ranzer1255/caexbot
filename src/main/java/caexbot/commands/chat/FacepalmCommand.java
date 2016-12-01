@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class FacepalmCommand extends CaexCommand {
+public class FacepalmCommand extends CaexCommand implements DraconicCommand{
 
 	private String[] facepalms ={
 			"*%s is ashamed for you*",
@@ -33,7 +34,7 @@ public class FacepalmCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("facepalm","fp", "ehaism_cha'sid");
+		return Arrays.asList("facepalm","fp");
 	}
 
 	@Override
@@ -44,6 +45,11 @@ public class FacepalmCommand extends CaexCommand {
 	@Override
 	public String getUsage(Guild g) {
 		return String.format("**[%s]** %s", StringUtil.cmdArrayToString(getAlias(), ", ",g), getDescription());
+	}
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("ehaism_cha'sid");
 	}
 
 }

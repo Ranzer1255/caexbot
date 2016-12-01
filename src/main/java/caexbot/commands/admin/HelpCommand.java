@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.functions.background.CommandListener;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
@@ -13,7 +14,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class HelpCommand extends CaexCommand {
+public class HelpCommand extends CaexCommand implements DraconicCommand{
 
 	private CommandListener cmds;
 	
@@ -58,11 +59,16 @@ public class HelpCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("help", "h", "letoclo");
+		return Arrays.asList("help", "h");
 	}
 
 	@Override
 	public String getDescription() {
 		return "Gives a list of avaliable command";
+	}
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("letoclo");
 	}
 }

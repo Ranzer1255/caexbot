@@ -82,4 +82,8 @@ public abstract class CaexCommand{
 		return null;
 	}
 
+	public CaexCommand getCommand() {
+		return this;
+	}
+
 }
