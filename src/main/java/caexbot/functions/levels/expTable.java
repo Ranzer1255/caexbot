@@ -30,43 +30,11 @@ public class expTable {
 		return instance;
 	}
 
-	public void addXP(Guild guild, User author, int XP, TextChannel channel) {
 
-		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
-		
-		if(!exp.containsKey(guild))
-			exp.put(guild, new HashMap<>());
-		
-		Map<User, UserLevel> subMap = exp.get(guild);
-		
-		if(!subMap.containsKey(author)){
-			UserLevel u = new UserLevel(XP);
-			subMap.put(author, u);
-			CaexDB.addRow(guild,author,u);
-		}
-			
-				
-		if(subMap.get(author).addXP(XP))
-			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(guild, author)+"**").queue();
-		CaexDB.addXP(guild, author,XP);
-	}
 		
 	private void load(){
 		exp.putAll(CaexDB.getLevels()); 
 	}
 
-	public int getXP(Guild guild, User author) {
-		return exp.get(guild).get(author).getXP();
-	}
-
-	public List<Map.Entry<User, UserLevel>> getGuildRankings(Guild guild) {
-		
-		return exp.get(guild).entrySet().stream()
-				  .sorted(Map.Entry.comparingByValue())
-				  .collect(Collectors.toList());
-	}
-
-	public int getLevel(Guild guild, User author) {
-		return exp.get(guild).get(author).getLevel();
-	}
+	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.config.PrefixManager;
+import caexbot.config.GuildManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -20,11 +20,11 @@ public class PrefixCommand extends CaexCommand {
 		
 		switch (args.length){
 		case 0:
-			PrefixManager.removePrefix(event.getGuild());
+			GuildManager.removePrefix(event.getGuild());
 			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexConfiguration.getInstance().getPrefix())).queue();
 			return;
 		case 1:
-			PrefixManager.setPrefix(event.getGuild(), args[0]);
+			GuildManager.setPrefix(event.getGuild(), args[0]);
 			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", args[0])).queue();
 			return;
 		default:			

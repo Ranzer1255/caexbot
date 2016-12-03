@@ -2,7 +2,7 @@ package caexbot.commands;
 
 import java.util.List;
 
-import caexbot.config.PrefixManager;
+import caexbot.config.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Role;
@@ -16,7 +16,7 @@ public abstract class CaexCommand{
 	private static final String NO_PERMISSION_MESSAGE = "You're not my player! You can't tell me what to do!";
 
 	public static String getPrefix(Guild guild) {
-		return PrefixManager.getPrefix(guild);
+		return GuildManager.getPrefix(guild);
 	}
 
 	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
