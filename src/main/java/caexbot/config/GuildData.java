@@ -55,6 +55,10 @@ public class GuildData {
 		return guildXP.get(author).getLevel();
 	}
 	
+	public int getXP(User u){
+		return guildXP.get(u).getXP();
+	}
+
 	//prefix methods
 	public String getPrefix() {
 		return prefix;
@@ -63,10 +67,6 @@ public class GuildData {
 		this.prefix = prefix;
 
 		CaexDB.savePrefix(guild, prefix);
-	}
-	
-	public int getXP(User u){
-		return guildXP.get(u).getXP();
 	}
 	
 	public void removePrefix() {
