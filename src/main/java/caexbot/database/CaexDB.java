@@ -80,12 +80,26 @@ public class CaexDB {
 
 	private static void deleteGuild(String g) {
 		Logging.info(String.format("Guild %s no longer exists, removing entries from DB", g));
-		//TODO 
+		try{
+			PreparedStatement stmt = getConnection().prepareStatement("delete from guild_levels where guild_id = ?");
+			stmt.setString(1, g);
+			stmt.execute();
+		} catch (Exception e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
 	}
 
 	private static void deleteUser(String u) {
 		Logging.info(String.format("User_ID %s no longer exists, removing entries from DB", u));
-		//TODO
+		try{
+			PreparedStatement stmt = getConnection().prepareStatement("delete from guild_levels where user_id = ?");
+			stmt.setString(1, u);
+			stmt.execute();
+		} catch (Exception e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
 	}
 
 	public static void addRow(Guild guild, User user, UserLevel u) {
