@@ -17,9 +17,14 @@ public class GuildManager {
 //	private static Map<Guild, String> prefixes = CaexDB.loadPrefixes();
 	
 	public static GuildData getGuildData(Guild key){
+		
+		if(!guildData.containsKey(key)){
+			buildGuildData(key);
+		}
+		
 		return guildData.get(key);
 	}
-	
+
 	//convenance passthrough methods
 	public static String getPrefix(Guild key){
 		if (guildData.get(key).getPrefix()==null){
@@ -38,6 +43,11 @@ public class GuildManager {
 		
 	}
 	
+	private static void buildGuildData(Guild guild) {
+		//TODO save to DB here? or in GuildData?
+		guildData.put(guild, new GuildData(guild));
+	}
+
 	private static void load(){
 		//TODO load from DB
 	}
