@@ -155,7 +155,7 @@ public class CaexDB {
 	public static void removePrefix(Guild key) {
 		PreparedStatement stmt;
 		try {
-			stmt = getConnection().prepareStatement("delete from guild_prefix where guild_id = ?;");
+			stmt = getConnection().prepareStatement("delete from guild_prefix where guild_id = '?';");
 			stmt.setString(1, key.getId());
 			
 		} catch (SQLException e) {
