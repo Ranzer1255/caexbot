@@ -1,7 +1,8 @@
-package caexbot.config;
+package caexbot.data;
 
 import java.util.Map;
 
+import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
 import net.dv8tion.jda.core.entities.Guild;
 

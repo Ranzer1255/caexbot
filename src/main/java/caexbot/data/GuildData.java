@@ -1,4 +1,4 @@
-package caexbot.config;
+package caexbot.data;
 
 import java.util.HashMap;
 import java.util.List;

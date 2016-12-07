@@ -5,7 +5,7 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.config.GuildManager;
+import caexbot.data.GuildManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
