@@ -21,7 +21,7 @@ public abstract class CaexCommand{
 	}
 
 	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
-		if (author.getId()!=CaexConfiguration.getInstance().getOwner()) { //override all permission checks if its me
+		if (!author.getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
 			if (!hasPermission(args, author, channel, event)) {
 				noPermission(event);
 				return;
