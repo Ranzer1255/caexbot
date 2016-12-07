@@ -27,7 +27,6 @@ public class CaexConfiguration {
 	private String botToken = "token";
 	private String GoogleToken = "token";
 	private String statusMessage = "with Gilmore!";
-	private String roleName = "UberBot";
 	private String owner = "userID";
 	
 	private CaexConfiguration(){
@@ -93,10 +92,6 @@ public class CaexConfiguration {
 		return prefix;
 	}
 
-	public String getRole() {
-		return roleName;
-	}
-
 	public String getOwner() {
 		return this.owner;
 	}
@@ -149,10 +144,6 @@ public class CaexConfiguration {
 	@CaexConfigItem(key="googleToken", type=String.class, _default="token")
 	public void setGoogleToken(String token){
 		this.GoogleToken=token;
-	}
-	@CaexConfigItem(key="roleName", type=String.class, _default="UberBot")
-	public void setRole(String role){
-		this.roleName=role;
 	}
 	@CaexConfigItem(key="owner",type=String.class, _default = "143929240440537089")
 	public void setOwner(String owner){
