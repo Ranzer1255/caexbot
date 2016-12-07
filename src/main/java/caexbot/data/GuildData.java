@@ -23,6 +23,7 @@ public class GuildData {
 		guildXP = new HashMap<>();
 	}
 	
+	
 	//xp methods
 	public void addXP(User author, int XP, TextChannel channel) {
 
@@ -59,6 +60,7 @@ public class GuildData {
 		return guildXP.get(u).getXP();
 	}
 
+	
 	//prefix methods
 	public String getPrefix() {
 		return prefix;
@@ -70,7 +72,8 @@ public class GuildData {
 	}
 	
 	public void removePrefix() {
-		//TODO delete prefix
+		this.prefix=null;
+		CaexDB.removePrefix(guild);
 	}
 	
 	

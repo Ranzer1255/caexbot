@@ -17,6 +17,7 @@ import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
+import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -42,7 +43,10 @@ public class CaexBot {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
-
+		
+		//load static classes
+		GuildManager.init();
+		
 
 		commands = new CommandListener(JDA);
 		

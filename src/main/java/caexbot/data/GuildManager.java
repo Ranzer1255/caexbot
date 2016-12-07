@@ -8,11 +8,14 @@ import net.dv8tion.jda.core.entities.Guild;
 
 /**
  * container for all the guild data objects
+ * may have a conflict with JDA GuildManager... we'll see
+ * 
  * @author Ranzer
  *
  */
 public class GuildManager {
 	
+	private static boolean loaded = false;
 	private static Map<Guild, GuildData> guildData;
 
 //	private static Map<Guild, String> prefixes = CaexDB.loadPrefixes();
@@ -49,7 +52,15 @@ public class GuildManager {
 		guildData.put(guild, new GuildData(guild));
 	}
 
-	private static void load(){
-		//TODO load from DB
+	public static void init(){
+		if(!loaded){
+			load();
+			loaded = true;
+		}
+	}
+
+	private static void load() {
+		//Load from DB
+		
 	}
 }
