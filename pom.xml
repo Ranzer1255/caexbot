@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ranzer.caexbot</groupId>
   <artifactId>caexbot</artifactId>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <name> Caex Bot for Discord</name>
   <description>Bot for Ranzer's Playground Discord Server</description>
 
