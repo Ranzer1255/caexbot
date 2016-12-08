@@ -1,5 +1,6 @@
 package caexbot.data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import caexbot.config.CaexConfiguration;
@@ -16,7 +17,7 @@ import net.dv8tion.jda.core.entities.Guild;
 public class GuildManager {
 	
 	private static boolean loaded = false;
-	private static Map<Guild, GuildData> guildData;
+	private static Map<Guild, GuildData> guildData = new HashMap<>();
 
 //	private static Map<Guild, String> prefixes = CaexDB.loadPrefixes();
 	
@@ -29,29 +30,29 @@ public class GuildManager {
 		return guildData.get(key);
 	}
 
-	//convenance passthrough methods
-	public static String getPrefix(Guild key){
-		if (guildData.get(key).getPrefix()==null){
-			return CaexConfiguration.getInstance().getPrefix();
-		}
-		return guildData.get(key).getPrefix();
-	}
-	
-	public static void setPrefix(Guild key, String prefix){
-		guildData.get(key).setPrefix(prefix);
-	}
-	
-	public static void removePrefix(Guild key){
-		guildData.get(key).removePrefix();
-		CaexDB.removePrefix(key);
-		
-	}
-	
 	private static void buildGuildData(Guild guild) {
 		//TODO save to DB here? or in GuildData?
 		guildData.put(guild, new GuildData(guild));
 	}
 
+	//convenance passthrough methods
+	public static String getPrefix(Guild key){
+		if (getGuildData(key).getPrefix()==null){
+			return CaexConfiguration.getInstance().getPrefix();
+		}
+		return getGuildData(key).getPrefix();
+	}
+	
+	public static void setPrefix(Guild key, String prefix){
+		getGuildData(key).setPrefix(prefix);
+	}
+	
+	public static void removePrefix(Guild key){
+		getGuildData(key).removePrefix();
+		CaexDB.removePrefix(key);
+		
+	}
+	
 	public static void init(){
 		if(!loaded){
 			load();

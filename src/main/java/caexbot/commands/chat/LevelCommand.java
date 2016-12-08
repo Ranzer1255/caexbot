@@ -27,15 +27,15 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 				return;
 			}
 		}
-
+		
 		
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
 			.setColor(event.getMember().getColor())
 			.setThumbnail(author.getAvatarUrl())
 			.setTitle("XP Breakdown")
-			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getLevel(author)), true)
-			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getXP(author)), true);
+			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
+			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
 		
 		MessageBuilder mb = new MessageBuilder();
 		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
