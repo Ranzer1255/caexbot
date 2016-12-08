@@ -42,7 +42,7 @@ public class CommandListener extends ListenerAdapter {
 
 	protected void findCommand(MessageReceivedEvent event, User author, String message) {
 		
-		if (author != CaexBot.getJDA().getSelfUser()) {
+		if (!author.isBot()) {
 			String[] args = message.split(" ");
 			String command = args[0].replace(CaexCommand.getPrefix(event.getGuild()), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
