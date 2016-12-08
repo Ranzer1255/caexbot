@@ -6,6 +6,7 @@ import java.util.Map;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
+import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
@@ -25,7 +26,11 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
+		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d",
+				author.getAsMention(),
+				GuildManager.getGuildData(event.getGuild()).getLevel(author),
+				GuildManager.getGuildData(event.getGuild()).getXP(author))
+		).queue();
 		
 
 	}
@@ -58,7 +63,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder msg = new StringBuilder();
 		
-		List<Map.Entry<User, UserLevel>> rankings = expTable.getInstance().getGuildRankings(channel.getGuild());
+		List<Map.Entry<User, UserLevel>> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		int index=0;

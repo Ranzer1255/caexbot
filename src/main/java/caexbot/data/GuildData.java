@@ -40,10 +40,6 @@ public class GuildData {
 			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(author)+"**").queue();
 		CaexDB.addXP(guild, author,XP);
 	}
-	
-	public int getXP(Guild guild, User author) {
-		return guildXP.get(author).getXP();
-	}
 
 	public List<Map.Entry<User, UserLevel>> getGuildRankings() {
 		
