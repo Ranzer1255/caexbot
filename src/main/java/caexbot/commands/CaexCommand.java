@@ -3,6 +3,7 @@ package caexbot.commands;
 import java.util.List;
 
 import caexbot.data.GuildManager;
+import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Role;
@@ -20,11 +21,12 @@ public abstract class CaexCommand{
 	}
 
 	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
-		if(!hasPermission(args,author,channel,event)){
-			noPermission(event);
-			return;
+		if (!author.getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
+			if (!hasPermission(args, author, channel, event)) {
+				noPermission(event);
+				return;
+			} 
 		}
-		
 		process(args, author, channel, event);
 	}
 	

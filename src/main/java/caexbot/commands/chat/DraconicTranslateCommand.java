@@ -1,5 +1,6 @@
 package caexbot.commands.chat;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.util.DraconicTranslator;
 import caexbot.util.StringUtil;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -28,8 +31,17 @@ public class DraconicTranslateCommand extends CaexCommand {
 	}
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		EmbedBuilder eb = new EmbedBuilder();
+		MessageBuilder mb = new MessageBuilder();
 		
-		channel.sendMessage(String.format("**[%s]** here ya go\n*%s*", author.getAsMention(), trans.translate(args, true))).queue();
+		eb.setAuthor("Draconic Translation", "http://draconic.twilightrealm.com/", null);
+		eb.setFooter("Powered by Draconic Translator from Twilight Realm", null);
+		eb.setColor(new Color(0xa0760a));
+		eb.addField("Common:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
+		eb.addField("Draconic", trans.translate(args, true), false);
+		
+		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+//		channel.sendMessage(String.format("**[%s]** here ya go\n*%s*", author.getAsMention(), trans.translate(args, true))).queue();
 
 	}
 

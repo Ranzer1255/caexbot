@@ -8,8 +8,9 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
 import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
-import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -26,12 +27,20 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d",
-				author.getAsMention(),
-				GuildManager.getGuildData(event.getGuild()).getLevel(author),
-				GuildManager.getGuildData(event.getGuild()).getXP(author))
-		).queue();
+
 		
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
+			.setColor(event.getMember().getColor())
+			.setThumbnail(author.getAvatarUrl())
+			.setTitle("XP Breakdown")
+			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getLevel(author)), true)
+			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getXP(author)), true);
+		
+		MessageBuilder mb = new MessageBuilder();
+		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+	
+//		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
 
 	}
 
