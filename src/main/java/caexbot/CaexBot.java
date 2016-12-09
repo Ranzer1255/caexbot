@@ -21,6 +21,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class CaexBot {
@@ -63,17 +64,17 @@ public class CaexBot {
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
-//		color controls buggy and unreliable ATM
-//		if(config.isDebug()){
-//			for (Guild g : JDA.getGuilds()) {
-//				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xb30000)).queue();
-//				JDA.getPresence().setGame(Game.of("in Testing Mode"));
-//			}
-//		}else {
-//			for (Guild g: JDA.getGuilds()){
-//				g.getRolesByName(config.getRole(), false).get(0).getManager().setColor(new Color(0xa2760a)).queue();
-//			}
-//		}
+		//color controls buggy and unreliable ATM
+		if(config.isDebug()){
+			for (Guild g : JDA.getGuilds()) {
+				g.getController().setNickname(g.getMember(JDA.getSelfUser()), "Caex (Debug Mode)").queue();
+				JDA.getPresence().setGame(Game.of("in Testing Mode"));
+			}
+		} else {
+			for(Guild g: JDA.getGuilds()){
+				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
+			}
+		}
 		Logging.info("Done Loading and ready to go!");
 	}
 

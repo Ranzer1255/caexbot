@@ -21,12 +21,14 @@ public class ShutdownCommand extends CaexCommand {
 			return;
 		}
 		channel.sendMessage("if you insist boss.... *blerg*").queue();
-		for (Guild g : event.getJDA().getGuilds()) {
-			try{
-				g.getPublicChannel().sendMessage("I've got to go.... \n*casts teleport and vanishes*").queue();
-			}catch(PermissionException e){
-				Logging.error("i can't talk here sorry: "+e.getLocalizedMessage());
-			}
+		if (args.length>0&&args[0].equals("alert")) {
+			for (Guild g : event.getJDA().getGuilds()) {
+				try {
+					g.getPublicChannel().sendMessage("I've got to go.... \n*casts teleport and vanishes*").queue();
+				} catch (PermissionException e) {
+					Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
+				}
+			} 
 		}
 		event.getJDA().shutdown();
 		System.exit(0);
