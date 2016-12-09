@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import caexbot.database.CaexDB;
 import caexbot.util.Logging;
-import net.dv8tion.jda.entities.Guild;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 
 public class expTable {
 
@@ -32,7 +32,7 @@ public class expTable {
 
 	public void addXP(Guild guild, User author, int XP, TextChannel channel) {
 
-		Logging.debug("Adding "+ XP + "XP to "+ author.getUsername()+":"+guild.getName());
+		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
 		
 		if(!exp.containsKey(guild))
 			exp.put(guild, new HashMap<>());
@@ -47,7 +47,7 @@ public class expTable {
 			
 				
 		if(subMap.get(author).addXP(XP))
-			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(guild, author)+"**");
+			channel.sendMessage("**Well met __"+author.getAsMention()+"__!** you've advanced to Level: **"+getLevel(guild, author)+"**").queue();
 		CaexDB.addXP(guild, author,XP);
 	}
 		

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.util.Logging;
-import net.dv8tion.jda.entities.Guild;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
@@ -22,7 +22,7 @@ public class LevelUpdater extends ListenerAdapter{
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
 		
-		if((event.getAuthor() != event.getJDA().getSelfInfo())&&!event.getAuthor().isBot()){
+		if((event.getAuthor() != event.getJDA().getSelfUser())&&!event.getAuthor().isBot()){
 		
 			if (!messageTimeout.contains(event.getAuthor())) {
 				addXP(event.getGuild(), event.getAuthor(),event.getChannel());
@@ -48,7 +48,7 @@ public class LevelUpdater extends ListenerAdapter{
 	 */
 	private void addXP(Guild guild, User author, TextChannel channel) {
 
-		Logging.debug("adding XP to " + author.getUsername() + " on " + guild.getName());
+		Logging.debug("adding XP to " + author.getName() + " on " + guild.getName());
 		
 		xp.addXP(guild, author, getRandomXP(),channel);
 		

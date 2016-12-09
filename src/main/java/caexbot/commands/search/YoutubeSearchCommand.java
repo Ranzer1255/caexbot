@@ -5,9 +5,10 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.util.Logging;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class YoutubeSearchCommand extends CaexCommand {
 
@@ -26,14 +27,16 @@ public class YoutubeSearchCommand extends CaexCommand {
 		}
 		String videoID = yts.searchForVideo(queryBuilder.toString());
 		
+
 		Logging.debug(queryBuilder.toString()+" : " +videoID);
 		
 		if(videoID!=null){
 			StringBuilder youtubeURL = new StringBuilder();
 			youtubeURL.append(YOUTUBE_BASE_STRING).append(videoID);
-			channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString());
+			channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
 		} else {
-			channel.sendMessage("I'm sorry, i didn't find anything");			
+			channel.sendMessage("I'm sorry, i didn't find anything").queue();			
+
 		}
 
 		
@@ -51,8 +54,8 @@ public class YoutubeSearchCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
-		return getPrefix()+getAlias().get(0) + " <your search terms>";
+	public String getUsage(Guild g) {
+		return getPrefix(g)+getAlias().get(0) + " <your search terms>";//TODO match usage format
 	}
 
 }

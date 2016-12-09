@@ -7,18 +7,26 @@ import java.util.Optional;
 
 import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.hooks.ListenerAdapter;
+import caexbot.commands.DraconicCommand;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
 	
 	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
+	private DraconicListener dl;
+	
+	public CommandListener(JDA jda) {
+		dl = new DraconicListener(this);
+		jda.addEventListener(dl);
+	}
 	
 	public CommandListener addCommand(CaexCommand cmd){
-		
 		this.cmds.add(cmd);
+		if (cmd instanceof DraconicCommand) dl.addCommand((DraconicCommand)cmd);
 		return this;
 	}
 	
@@ -28,11 +36,15 @@ public class CommandListener extends ListenerAdapter {
 		User author = event.getAuthor();
 		String message = event.getMessage().getRawContent();
 		
-		if(!message.startsWith(CaexCommand.getPrefix()))return;
+		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()).toLowerCase()))return;
+		findCommand(event, author, message); 
+	}
+
+	protected void findCommand(MessageReceivedEvent event, User author, String message) {
 		
-		if (author != CaexBot.getJDA().getSelfInfo()) {
+		if (!author.isBot()) {
 			String[] args = message.split(" ");
-			String command = args[0].replace(CaexCommand.getPrefix(), "").toLowerCase();
+			String command = args[0].replace(CaexCommand.getPrefix(event.getGuild()), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
 			TextChannel channel = event.getTextChannel();
 			Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
@@ -40,15 +52,20 @@ public class CommandListener extends ListenerAdapter {
 			if(c.isPresent()){
 				CaexCommand cmd = c.get();
 				
-				new Thread() {
-					@Override
-					public void run(){
-						cmd.runCommand(finalArgs, author, channel, event);
-						interrupt();
-					}
-				}.start();
+				callCommand(event, author, finalArgs, channel, cmd);
 			}
-		} 
+		}
+	}
+
+	protected void callCommand(MessageReceivedEvent event, User author, String[] finalArgs, TextChannel channel,
+			CaexCommand cmd) {
+		new Thread() {
+			@Override
+			public void run(){
+				cmd.runCommand(finalArgs, author, channel, event);
+				interrupt();
+			}
+		}.start();
 	}
 
 	public List<CaexCommand> getCommands() {

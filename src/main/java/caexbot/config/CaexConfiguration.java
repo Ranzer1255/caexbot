@@ -27,7 +27,7 @@ public class CaexConfiguration {
 	private String botToken = "token";
 	private String GoogleToken = "token";
 	private String statusMessage = "with Gilmore!";
-	private String roleName = "UberBot";
+	private String owner = "userID";
 	
 	private CaexConfiguration(){
 
@@ -92,8 +92,8 @@ public class CaexConfiguration {
 		return prefix;
 	}
 
-	public String getRole() {
-		return roleName;
+	public String getOwner() {
+		return this.owner;
 	}
 
 	//setters
@@ -145,9 +145,9 @@ public class CaexConfiguration {
 	public void setGoogleToken(String token){
 		this.GoogleToken=token;
 	}
-	@CaexConfigItem(key="roleName", type=String.class, _default="UberBot")
-	public void setRole(String role){
-		this.roleName=role;
+	@CaexConfigItem(key="owner",type=String.class, _default = "143929240440537089")
+	public void setOwner(String owner){
+		this.owner = owner; 
 	}
 
 	public void load() {
@@ -204,7 +204,6 @@ public class CaexConfiguration {
 			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIG_PATH));
 			ex.printStackTrace();
 		}
-
 
 	}
 

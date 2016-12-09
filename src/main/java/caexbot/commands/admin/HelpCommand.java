@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.functions.background.CommandListener;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class HelpCommand extends CaexCommand {
+public class HelpCommand extends CaexCommand implements DraconicCommand{
 
 	private CommandListener cmds;
 	
@@ -33,26 +35,26 @@ public class HelpCommand extends CaexCommand {
 			if(c.isPresent()){
 				CaexCommand cmd = c.get();
 				
-				sb.append("**Alias:** ")	 .append("[").append(StringUtil.cmdArrayToString(cmd.getAlias(), ", ")).append("]\n")
+				sb.append("**Alias:** ")	 .append("[").append(StringUtil.cmdArrayToString(cmd.getAlias(), ", ",event.getGuild())).append("]\n")
 				  .append("**Description** ").append(cmd.getDescription()).append("\n")
-				  .append("**Usage:** ")	 .append(cmd.getUsage());
+				  .append("**Usage:** ")	 .append(cmd.getUsage(event.getGuild()));
 			}
 		}else{
 			for (CaexCommand cmd : cmds.getCommands()) {
 				sb.append("**[");
-				sb.append(StringUtil.cmdArrayToString(cmd.getAlias(), ", "));
+				sb.append(StringUtil.cmdArrayToString(cmd.getAlias(), ", ",event.getGuild()));
 				sb.append("]:** ");
 				sb.append(cmd.getDescription()+"\n");	
 			}
 			
 		}
-		channel.sendMessage(sb.toString());
+		channel.sendMessage(sb.toString()).queue();
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 
-		return getPrefix()+"help [command]";
+		return getPrefix(g)+"help [command]";
 	}
 
 	@Override
@@ -63,5 +65,10 @@ public class HelpCommand extends CaexCommand {
 	@Override
 	public String getDescription() {
 		return "Gives a list of avaliable command";
+	}
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("letoclo");
 	}
 }

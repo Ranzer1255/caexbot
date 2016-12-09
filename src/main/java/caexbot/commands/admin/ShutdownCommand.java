@@ -4,35 +4,46 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import caexbot.config.CaexConfiguration;
+import caexbot.util.Logging;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.exceptions.PermissionException;
 
 public class ShutdownCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		channel.sendMessage("if you insist boss.... *blerg*");
+		if (author!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
+			noPermission(event);
+			return;
+		}
+		channel.sendMessage("if you insist boss.... *blerg*").queue();
+		for (Guild g : event.getJDA().getGuilds()) {
+			try{
+				g.getPublicChannel().sendMessage("I've got to go.... \n*casts teleport and vanishes*").queue();
+			}catch(PermissionException e){
+				Logging.error("i can't talk here sorry: "+e.getLocalizedMessage());
+			}
+		}
+		event.getJDA().shutdown();
 		System.exit(0);
 	}
 
 	@Override
-	public String getUsage() {
-		return getPrefix()+"sleep (requires permision)";
+	public String getUsage(Guild g) {
+		return getPrefix(g)+"sleep (requires permision)";
 	}
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("sleep");
+		return Arrays.asList("vdri");
 	}
 
 	@Override
 	public String getDescription() {
 		return "kill Caex!";
-	}
-	
-	@Override
-	public List<String> getRoleRequirements() {
-		return Arrays.asList("DMs");
 	}
 }

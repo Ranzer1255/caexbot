@@ -10,9 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import caexbot.commands.CaexCommand;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class EightBallCommand extends CaexCommand {
 	
@@ -48,7 +49,7 @@ public class EightBallCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
 		Logging.debug("Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
-		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size())));
+		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
 	}
 	
 	@Override
@@ -63,10 +64,10 @@ public class EightBallCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage(){
+	public String getUsage(Guild g){
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<the burrning question in your heart, begging for an answer>");
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<the burrning question in your heart, begging for an answer>");
 		
 		return sb.toString();
 	}

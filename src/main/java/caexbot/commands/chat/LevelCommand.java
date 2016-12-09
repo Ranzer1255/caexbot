@@ -5,25 +5,41 @@ import java.util.List;
 import java.util.Map;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.DraconicCommand;
 import caexbot.functions.levels.UserLevel;
 import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class LevelCommand extends CaexCommand {
+public class LevelCommand extends CaexCommand implements DraconicCommand{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
 		if (args.length>0){
 			if (args[0].equals("rank")){
-				channel.sendMessage(rankMessage(args,author,channel,event));
+				channel.sendMessage(rankMessage(args,author,channel,event)).queue();
 				return;
 			}
 		}
-		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author)));
+		
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
+			.setColor(event.getMember().getColor())
+			.setThumbnail(author.getAvatarUrl())
+			.setTitle("XP Breakdown")
+			.addField("XP", String.format("%dxp", expTable.getInstance().getXP(event.getGuild(), author)), true)
+			.addField("Level", String.format("Lvl: %d", expTable.getInstance().getLevel(event.getGuild(), author)), true);
+		
+		MessageBuilder mb = new MessageBuilder();
+		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+	
+//		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
 		
 
 	}
@@ -40,10 +56,10 @@ public class LevelCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ")).append("]** ").append("<Sub Command>\n");
+		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<Sub Command>\n");
 		sb.append("        __Sub Commands__\n");
 		sb.append("**    default:** lists your XP and Level\n")
 		  .append("**    [rank]** see current standings for the server");
@@ -59,14 +75,24 @@ public class LevelCommand extends CaexCommand {
 		List<Map.Entry<User, UserLevel>> rankings = expTable.getInstance().getGuildRankings(channel.getGuild());
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
+		int index=0;
 		for (Map.Entry<User, UserLevel> entry : rankings) {
-			String userName;
-			if ((userName = channel.getGuild().getNicknameForUser(entry.getKey())) == null)
-					userName = entry.getKey().getUsername(); 
-			msg.append("__**").append(userName).append("**__:\t*Level:* **").append(entry.getValue().getLevel())
-			   .append("** with __").append(entry.getValue().getXP()).append("*xp*__\n\n");
+			if(index++>=10) break;
+			msg.append(
+				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
+					channel.getGuild().getMember(entry.getKey()).getEffectiveName(), 
+					entry.getValue().getLevel(),
+					entry.getValue().getXP()
+				)
+			);
 		}
 		
 		return msg.toString();
+	}
+
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("tawura_authot");
 	}
 }
