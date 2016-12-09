@@ -22,4 +22,9 @@ public class TrackQueue {
 	 * @return next track in the queue using FIFO order
 	 */
 	public AudioTrack remove(){return null;} //TODO
+
+	public boolean isEmpty() {
+		// TODO make isEmpty
+		return true;
+	}
 }
