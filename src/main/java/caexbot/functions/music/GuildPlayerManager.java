@@ -3,7 +3,7 @@ package caexbot.functions.music;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.dv8tion.jda.entities.Guild;
+import net.dv8tion.jda.core.entities.Guild;
 
 public class GuildPlayerManager {
 

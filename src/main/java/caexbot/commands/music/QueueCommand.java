@@ -3,28 +3,20 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-
 import caexbot.commands.CaexSubCommand;
 import caexbot.commands.search.YouTubeSearcher;
-import caexbot.functions.music.GuildPlayer;
-import caexbot.functions.music.TrackQueue;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 
 public class QueueCommand extends CaexSubCommand {
 
 	private static final String NO_VIDEO_FOUND = "i'm sorry I didn't find that"; 
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, User author, TextChannel channel, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 
 		if (args.length<1) {
-			invalidUsage();
+			invalidUsage(event.getGuild());
 			return;
 		}
 		

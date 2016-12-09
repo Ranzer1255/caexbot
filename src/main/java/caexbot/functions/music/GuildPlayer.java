@@ -1,5 +1,7 @@
 package caexbot.functions.music;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration.ResamplingQuality;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
@@ -9,11 +11,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
 import caexbot.util.Logging;
-import net.dv8tion.jda.audio.AudioSendHandler;
-import net.dv8tion.jda.entities.Guild;
-
-import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration.ResamplingQuality;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import net.dv8tion.jda.core.audio.AudioSendHandler;
+import net.dv8tion.jda.core.entities.Guild;
 
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	

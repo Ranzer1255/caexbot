@@ -3,9 +3,10 @@ package caexbot.commands.music;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class StopCommand extends CaexCommand {
 
@@ -32,7 +33,7 @@ public class StopCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage() {
+	public String getUsage(Guild g) {
 		// TODO Auto-generated method stub
 		return null;
 	}
