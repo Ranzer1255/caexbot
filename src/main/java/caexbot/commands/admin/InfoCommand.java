@@ -34,7 +34,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 			  .setTitle("A Discord Chatbot")
 			  .setDescription("Written by Ranzer")
 			  .setThumbnail(bot.getAvatarUrl())
-			  .addField("Version", "1.2.1", true)
+			  .addField("Version", "1.2.2", true)
 			  .addField("Language", "Java", true)
 			  .addField("Artwork", "Mellie", false)
 			  .addField("Invite me!", inviteLinkBuilder(bot), true)
