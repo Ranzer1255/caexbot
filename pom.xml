@@ -11,28 +11,19 @@
       <name>jcenter-bintray</name>
       <url>http://jcenter.bintray.com</url>
     </repository>
-    
-    <repository>
-      <!-- The repo for the sdcf4j -->
-      <id>sdcf4j-repo</id>
-  	  <url>http://repo.bastian-oppermann.de</url>
-	</repository>
 	<repository>
       <id>sedmelluq</id>
       <name>sedmelluq</name>
       <url>http://maven.sedmelluq.com/</url>
     </repository>
-        <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
   </repositories>
   
   <dependencies>
-  	<dependency>
-    	<groupId>com.github.DV8FromTheWorld</groupId>
-    	<artifactId>JDA</artifactId>
-    	<version>audio-SNAPSHOT</version>
+
+	<dependency>
+		<groupId>net.dv8tion</groupId>
+		<artifactId>JDA</artifactId>
+		<version>3.0.BETA_104</version>	
 	</dependency>
 
  	<dependency>
