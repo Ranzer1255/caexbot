@@ -8,13 +8,16 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 public class TrackLoader implements AudioLoadResultHandler {
 
+	TrackQueue queue;
+	
 	public TrackLoader(TrackQueue queue, AudioPlayerManager playerManager) {
-		// TODO Auto-generated constructor stub
+		this.queue = queue;
 	}
 
 	@Override
 	public void trackLoaded(AudioTrack track) {
-		// TODO make trackLoaded
+		System.out.println("adding song to queue");
+		queue.add(track);
 		
 	}
 

@@ -37,12 +37,19 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	public void play(){
 		//TODO play
 		if(queue.isEmpty()){
-			//TODO nothing to play
+			System.out.println("queue is empty");//TODO clear
+			return;
 		}
 		
 		player.playTrack(queue.remove());
+		player.setPaused(false);
 		
 		
+	}
+	
+	public void queue(String song){
+		System.out.println(song);
+		pm.loadItem(song, loader);
 	}
 	
 	
@@ -67,6 +74,6 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	//AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-	    // TODO onTrackEnd play next in queue
+	    play();
 	  }
 }

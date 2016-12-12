@@ -3,11 +3,13 @@ import javax.security.auth.login.LoginException;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.functions.background.CommandListener;
+import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.DraconicTranslator;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
@@ -34,6 +36,10 @@ public class CustomText {
 //		for(User u:JDA.getUsers()){
 //			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
 //		}
+		
+		for(Guild g:JDA.getGuilds()){
+			System.out.println(g.getName());
+		}
 		
 		System.exit(0);
 	}

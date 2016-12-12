@@ -15,6 +15,7 @@ import caexbot.commands.chat.FacepalmCommand;
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.ZomDiceCommand;
+import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.AccountType;
@@ -58,7 +59,8 @@ public class CaexBot {
 				.addCommand(new ShutdownCommand())
 				.addCommand(new YoutubeSearchCommand())
 				.addCommand(new ZomDiceCommand())
-				.addCommand(new PrefixCommand());
+				.addCommand(new PrefixCommand())
+				.addCommand(new MusicCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());

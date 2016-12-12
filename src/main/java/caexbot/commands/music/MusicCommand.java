@@ -18,17 +18,18 @@ public class MusicCommand extends CaexCommand {
 	public MusicCommand() {
 		
 		subCommands = new ArrayList<>();
-		subCommands.add(new QueueCommand());
+//		subCommands.add(new QueueCommand());
 		subCommands.add(new PlayCommand());
-		subCommands.add(new PauseCommand());
-		subCommands.add(new StopCommand());
-		subCommands.add(new SkipCommand());
-		subCommands.add(new VolCommand());
+//		subCommands.add(new PauseCommand());
+//		subCommands.add(new StopCommand());
+//		subCommands.add(new SkipCommand());
+//		subCommands.add(new VolCommand());
 		
 		
 	}
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		System.out.println("in muisc");
 		if(args.length!=1){
 			channel.sendMessage(author.getAsMention() + getUsage(event.getGuild()));
 		}
