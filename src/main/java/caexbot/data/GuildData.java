@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
@@ -21,9 +22,34 @@ public class GuildData {
 	public GuildData(Guild guild) {
 		this.guild=guild;
 		guildXP = new HashMap<>();
+		if(!loadFromDB())
+			save();
 	}
 	
 	
+	private void save() {
+		guildXP=new HashMap<>();
+		
+	}
+	
+	/**
+	 * load guild data from DB
+	 * 
+	 * @return false if guild isn't in DB
+	 */
+	private boolean loadFromDB() {
+		
+		prefix = CaexDB.loadPrefixes().get(guild);//TODO re-implement prefix from DB
+		guildXP = CaexDB.getLevels().get(guild);//TODO re-implement level map from DB
+		
+		if(prefix!=null&&guildXP!=null)
+			return true;
+		else
+			return false;
+		
+	}
+
+
 	//xp methods
 	public void addXP(User author, int XP, TextChannel channel) {
 
@@ -59,8 +85,12 @@ public class GuildData {
 	
 	//prefix methods
 	public String getPrefix() {
+		if (prefix==null){
+			return CaexConfiguration.getInstance().getPrefix();
+		}
 		return prefix;
 	}
+	
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 

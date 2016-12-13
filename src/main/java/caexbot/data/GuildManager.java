@@ -16,7 +16,6 @@ import net.dv8tion.jda.core.entities.Guild;
  */
 public class GuildManager {
 	
-	private static boolean loaded = false;
 	private static Map<Guild, GuildData> guildData = new HashMap<>();
 
 //	private static Map<Guild, String> prefixes = CaexDB.loadPrefixes();
@@ -31,15 +30,12 @@ public class GuildManager {
 	}
 
 	private static void buildGuildData(Guild guild) {
-		//TODO save to DB here? or in GuildData?
 		guildData.put(guild, new GuildData(guild));
 	}
 
 	//convenance passthrough methods
 	public static String getPrefix(Guild key){
-		if (getGuildData(key).getPrefix()==null){
-			return CaexConfiguration.getInstance().getPrefix();
-		}
+
 		return getGuildData(key).getPrefix();
 	}
 	
@@ -53,15 +49,4 @@ public class GuildManager {
 		
 	}
 	
-	public static void init(){
-		if(!loaded){
-			load();
-			loaded = true;
-		}
-	}
-
-	private static void load() {
-		//Load from DB
-		
-	}
 }
