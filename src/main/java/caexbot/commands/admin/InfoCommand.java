@@ -25,6 +25,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 		MessageBuilder mb = new MessageBuilder();
 
 		if (args.length > 1) { // more than 1 argument
+
 			channel.sendMessage("To many arguments!").queue();
 		}
 		if (args.length == 0) { // !info
