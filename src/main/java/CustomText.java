@@ -2,9 +2,6 @@
 import javax.security.auth.login.LoginException;
 
 import caexbot.config.CaexConfiguration;
-import caexbot.functions.background.CommandListener;
-import caexbot.functions.music.GuildPlayerManager;
-import caexbot.util.DraconicTranslator;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -33,14 +30,6 @@ public class CustomText {
 //			
 //			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
 //		}
-		for(Guild g:JDA.getGuilds()){
-			System.out.println(g.getName());
-		}
-		System.out.println(JDA.getGuilds().size());
-		
-		for(Guild g:JDA.getGuilds()){
-			System.out.println(g.getName());
-		}
 		
 		System.exit(0);
 	}

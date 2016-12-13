@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -21,16 +22,11 @@ public class PlayCommand extends CaexCommand {
 		 */
 		System.out.println("in play command");
 		AudioManager am = event.getGuild().getAudioManager();
-		
 		am.openAudioConnection(event.getGuild().getMember(author).getVoiceState().getChannel());
-		System.out.println("joining channel "+event.getGuild().getMember(author).getVoiceState().getChannel().getName());
-
-		GuildPlayerManager.getPlayer(event.getGuild()).queue("dQw4w9WgXcQ");
-		GuildPlayerManager.getPlayer(event.getGuild()).play();
-//		System.out.println("leaveing channel");
-//		am.closeAudioConnection();
-		
-
+		GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
+		gp.queue("fmI_Ndrxy14");
+		while(gp.getQueue().isEmpty()){/*wait*/}
+		gp.start();
 	}
 
 	@Override
