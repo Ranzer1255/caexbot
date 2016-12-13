@@ -25,6 +25,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 		MessageBuilder mb = new MessageBuilder();
 
 		if (args.length > 1) { // more than 1 argument
+
 			channel.sendMessage("To many arguments!").queue();
 		}
 		if (args.length == 0) { // !info
@@ -34,7 +35,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 			  .setTitle("A Discord Chatbot")
 			  .setDescription("Written by Ranzer")
 			  .setThumbnail(bot.getAvatarUrl())
-			  .addField("Version", "1.2.2", true)
+			  .addField("Version", "2.0.0", true)
 			  .addField("Language", "Java", true)
 			  .addField("Artwork", "Mellie", false)
 			  .addField("Invite me!", inviteLinkBuilder(bot), true)

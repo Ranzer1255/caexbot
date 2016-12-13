@@ -5,6 +5,7 @@ import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
+
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class CustomText {
@@ -27,8 +28,13 @@ public class CustomText {
 //			System.out.println(String.format("%s: %s", tc.getName(), tc.getId()));
 //		}
 //		for(User u:JDA.getUsers()){
+//			
 //			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
 //		}
+		for(Guild g:JDA.getGuilds()){
+			System.out.println(g.getName());
+		}
+		System.out.println(JDA.getGuilds().size());
 		
 		System.exit(0);
 	}
