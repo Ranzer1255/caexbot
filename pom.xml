@@ -5,6 +5,7 @@
   <version>1.2.2</version>
   <name> Caex Bot for Discord</name>
   <description>Bot for Ranzer's Playground Discord Server</description>
+  
 
   <repositories>
     <repository>
@@ -12,19 +13,12 @@
       <name>jcenter-bintray</name>
       <url>http://jcenter.bintray.com</url>
     </repository>
-    
-    <repository>
-      <!-- The repo for the sdcf4j -->
-      <id>sdcf4j-repo</id>
-  	  <url>http://repo.bastian-oppermann.de</url>
-	</repository>
 	<repository>
       <id>sedmelluq</id>
       <name>sedmelluq</name>
       <url>http://maven.sedmelluq.com/</url>
     </repository>
   </repositories>
-
   
   <dependencies>
   	<dependency>
@@ -37,21 +31,16 @@
       <artifactId>lavaplayer</artifactId>
       <version>1.1.23</version>
     </dependency>
-  	
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.5</version>
-        </dependency>    
-
-  	
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>6.0.5</version>
+    </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.8.0</version>
     </dependency>
-
     <dependency>
     	<groupId>com.google.api-client</groupId>
     	<artifactId>google-api-client</artifactId>
@@ -63,9 +52,12 @@
     	<version>v3-rev180-1.22.0</version>
     </dependency>
   </dependencies>
+  
   <url>https://github.com/Sgmaniac1255/caexbot</url>
+  
   <issueManagement>
   	<system>GitHub Issues</system>
   	<url>https://github.com/Sgmaniac1255/caexbot/issues</url>
   </issueManagement>
+ 
 </project>
