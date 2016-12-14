@@ -31,11 +31,7 @@ public class CustomText {
 //			
 //			System.out.println(String.format("%s: %s", u.getName(), u.getAsMention()));
 //		}
-		for(Guild g:JDA.getGuilds()){
-			System.out.println(g.getName());
-		}
-		System.out.println(JDA.getGuilds().size());
-		
+		JDA.getTextChannelById("184657525990359041").sendMessage("wait, Alexis isn't a bot? *thinks he might have a chance*").queue();
 		System.exit(0);
 	}
 
