@@ -29,8 +29,8 @@ public class DraconicListener extends ListenerAdapter{
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
-		if(!event.getMessage().getRawContent().startsWith(CaexCommand.getPrefix(event.getGuild()))) return;
-		
+		if(!event.getMessage().getRawContent().toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()))) 
+			return;
 		
 		if (event.getAuthor() != CaexBot.getJDA().getSelfUser()) {
 			String[] args = event.getMessage().getRawContent().split(" ");

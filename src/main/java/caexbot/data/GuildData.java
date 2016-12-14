@@ -92,6 +92,8 @@ public class GuildData {
 	}
 	
 	public void setPrefix(String prefix) {
+		prefix = prefix.toLowerCase();
+		
 		this.prefix = prefix;
 
 		CaexDB.savePrefix(guild, prefix);
