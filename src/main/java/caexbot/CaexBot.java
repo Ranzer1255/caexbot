@@ -43,7 +43,7 @@ public class CaexBot {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
-
+		
 
 		commands = new CommandListener(JDA);
 		

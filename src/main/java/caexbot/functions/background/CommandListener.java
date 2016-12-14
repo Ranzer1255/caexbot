@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.core.JDA;

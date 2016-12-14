@@ -6,8 +6,8 @@ import java.util.Map;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
+import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
-import caexbot.functions.levels.expTable;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
@@ -28,19 +28,19 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 			}
 		}
 		
+		
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
 			.setColor(event.getMember().getColor())
 			.setThumbnail(author.getAvatarUrl())
 			.setTitle("XP Breakdown")
-			.addField("XP", String.format("%dxp", expTable.getInstance().getXP(event.getGuild(), author)), true)
-			.addField("Level", String.format("Lvl: %d", expTable.getInstance().getLevel(event.getGuild(), author)), true);
+			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
+			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
 		
 		MessageBuilder mb = new MessageBuilder();
 		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 	
 //		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
-		
 
 	}
 
@@ -72,7 +72,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder msg = new StringBuilder();
 		
-		List<Map.Entry<User, UserLevel>> rankings = expTable.getInstance().getGuildRankings(channel.getGuild());
+		List<Map.Entry<User, UserLevel>> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		int index=0;
