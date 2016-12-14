@@ -63,6 +63,12 @@ public class DraconicTranslator {
 		
 		for (String string : body) 
 		{
+			if(string.isEmpty())
+			{
+				rtn += " ";
+				continue;
+			}
+			
 			boolean isUpper = Character.isUpperCase(string.charAt(0));
 			
 			regexString = string.replaceAll("[^a-zA-Z]", "");
