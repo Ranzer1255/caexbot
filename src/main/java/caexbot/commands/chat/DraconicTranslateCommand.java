@@ -20,13 +20,11 @@ public class DraconicTranslateCommand extends CaexCommand {
 	private static final String DICT = "/caexbot/draconic/dict.txt";
 	private DraconicTranslator trans;
 	
-	public DraconicTranslateCommand() {
-		
+	public DraconicTranslateCommand() 
+	{	
 		File dict;
 		dict = new File(System.getProperty("user.home"),DICT);
 
-		
-		
 		trans = new DraconicTranslator(dict);
 	}
 	@Override

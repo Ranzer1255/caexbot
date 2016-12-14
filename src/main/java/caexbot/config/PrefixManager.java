@@ -17,6 +17,10 @@ public class PrefixManager {
 	}
 	
 	public static void setPrefix(Guild key, String prefix){
+		
+		//this way we will only know about the lower case prefix
+		prefix = prefix.toLowerCase();
+		
 		prefixes.put(key,prefix);
 		CaexDB.savePrefix(key,prefix);
 	}
@@ -24,6 +28,5 @@ public class PrefixManager {
 	public static void removePrefix(Guild key){
 		prefixes.remove(key);
 		CaexDB.removePrefix(key);
-		
 	}
 }

@@ -36,7 +36,8 @@ public class CommandListener extends ListenerAdapter {
 		User author = event.getAuthor();
 		String message = event.getMessage().getRawContent();
 		
-		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()).toLowerCase()))return;
+		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild())))
+			return;
 		findCommand(event, author, message); 
 	}
 
@@ -44,7 +45,7 @@ public class CommandListener extends ListenerAdapter {
 		
 		if (!author.isBot()) {
 			String[] args = message.split(" ");
-			String command = args[0].replace(CaexCommand.getPrefix(event.getGuild()), "").toLowerCase();
+			String command = args[0].toLowerCase().replace(CaexCommand.getPrefix(event.getGuild()), "");
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
 			TextChannel channel = event.getTextChannel();
 			Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
