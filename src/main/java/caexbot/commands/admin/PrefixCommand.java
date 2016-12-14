@@ -25,7 +25,7 @@ public class PrefixCommand extends CaexCommand {
 			return;
 		case 1:
 			GuildManager.setPrefix(event.getGuild(), args[0]);
-			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", args[0])).queue();
+			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", GuildManager.getPrefix(event.getGuild()))).queue();
 			return;
 		default:			
 			channel.sendMessage("Hey, i can't listen for more than one thing ;)").queue();
