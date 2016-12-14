@@ -3,7 +3,7 @@
   <groupId>com.ranzer.caexbot</groupId>
 
   <artifactId>caexbot</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <name> Caex Bot for Discord</name>
   <description>Bot for Ranzer's Playground Discord Server</description>
   
@@ -25,12 +25,12 @@
   	<dependency>
   	  <groupId>net.dv8tion</groupId>
       <artifactId>JDA</artifactId>
-      <version>3.0.BETA_103</version>
+      <version>3.0.BETA_105</version>
   	</dependency>
  	<dependency>
       <groupId>com.sedmelluq</groupId>
       <artifactId>lavaplayer</artifactId>
-      <version>1.1.23</version>
+      <version>1.1.25</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -52,6 +52,27 @@
     	<artifactId>google-api-services-youtube</artifactId>
     	<version>v3-rev180-1.22.0</version>
     </dependency>
+    <dependency>
+    	<groupId>org.jsoup</groupId>
+    	<artifactId>jsoup</artifactId>
+    	<version>1.9.2</version>
+    </dependency>
+    <dependency>
+    	<groupId>junit</groupId>
+    	<artifactId>junit</artifactId>
+    	<version>4.12</version>
+    	<scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-lang3</artifactId>
+    	<version>3.5</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-collections4</artifactId>
+    	<version>4.1</version>
+    </dependency>
   </dependencies>
   
   <url>https://github.com/Sgmaniac1255/caexbot</url>
@@ -60,5 +81,34 @@
   	<system>GitHub Issues</system>
   	<url>https://github.com/Sgmaniac1255/caexbot/issues</url>
   </issueManagement>
+  
+  <properties>
+   <maven.compiler.source>1.8</maven.compiler.source>
+   <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.ranzer.caexbot.CaexBot</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build> 
 </project>

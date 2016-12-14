@@ -12,6 +12,7 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
+import caexbot.config.CaexConfiguration;
 import caexbot.util.StringUtil;
 
 public class InfoCommand extends CaexCommand implements DraconicCommand{
@@ -35,7 +36,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 			  .setTitle("A Discord Chatbot")
 			  .setDescription("Written by Ranzer")
 			  .setThumbnail(bot.getAvatarUrl())
-			  .addField("Version", "2.0.0", true)
+			  .addField("Version", CaexConfiguration.getInstance().getVersion(), true)
 			  .addField("Language", "Java", true)
 			  .addField("Artwork", "Mellie", false)
 			  .addField("Invite me!", inviteLinkBuilder(bot), true)
