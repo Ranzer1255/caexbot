@@ -3,6 +3,7 @@ package caexbot.commands.music;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -18,6 +19,7 @@ public class StopCommand extends CaexCommand {
 		 * leave voice channel
 		 */
 
+		GuildPlayerManager.getPlayer(event.getGuild()).stop();
 	}
 
 	@Override
