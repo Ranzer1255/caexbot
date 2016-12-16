@@ -15,15 +15,18 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.VoiceChannel;
+
 /*
  * TODO make commands listeners to this.
  * this will throw events when tracks change and what not. the listener will handle sending messages
  * to discord. 
  */
+import net.dv8tion.jda.core.managers.AudioManager;
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	
 	private AudioPlayerManager pm;
-	private Guild guild;
+	private AudioManager guildAM;
 	private TrackQueue queue;
 	private TrackLoader loader;
 	private AudioPlayer player;
@@ -35,11 +38,16 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		player.addListener(this);
 		queue = new TrackQueue();
 		loader = new TrackLoader(queue,this.pm);
-		this.guild= guild;
-		guild.getAudioManager().setSendingHandler(this);
+		guildAM = guild.getAudioManager();
+		guildAM.setSendingHandler(this);
 		
 	}
 
+	public void join(VoiceChannel channel){
+		guildAM.openAudioConnection(channel);
+	}
+	
+	
 	public void queue(String song){
 		System.out.println(song);
 		pm.loadItem(song, loader);
@@ -82,7 +90,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		//TODO player stopped event
 		player.setPaused(true);
 		player.stopTrack();
-		guild.getAudioManager().closeAudioConnection();
+		guildAM.closeAudioConnection();
 		
 	}
 
@@ -177,5 +185,9 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		public boolean isEmpty() {
 			return queue.isEmpty();
 		}
+	}
+
+	public enum EventType {
+		QUEUED, PAUSED, SKIPPED, VOLUME, STOPPED, JOIN
 	}
 }
