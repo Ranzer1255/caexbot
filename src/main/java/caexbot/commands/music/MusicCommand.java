@@ -18,6 +18,7 @@ public class MusicCommand extends CaexCommand {
 	public MusicCommand() {
 		
 		subCommands = new ArrayList<>();
+		subCommands.add(new JoinCommand());
 		subCommands.add(new QueueCommand());
 		subCommands.add(new PlayCommand());
 		subCommands.add(new PauseCommand());

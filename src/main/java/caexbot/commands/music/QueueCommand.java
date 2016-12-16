@@ -16,18 +16,17 @@ public class QueueCommand extends CaexSubCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 
-//		if (args.length<1) {
-//			invalidUsage(event.getGuild());
-//			return;
-//		}
-//		
-//		StringBuilder queryBuilder = new StringBuilder();
-//		for (int i = 0; i < args.length; i++) {
-//			queryBuilder.append(args[i]);
-//		} 
-//		YouTubeSearcher yts = new YouTubeSearcher();
-//		String videoID = yts.searchForVideo(queryBuilder.toString());
-		GuildPlayerManager.getPlayer(event.getGuild()).queue("dQw4w9WgXcQ");
+		if (args.length<1) {
+			invalidUsage(event.getGuild());
+			return;
+		}
+		
+		StringBuilder queryBuilder = new StringBuilder();
+		for (int i = 0; i < args.length; i++) {
+			queryBuilder.append(args[i]);
+		} 
+		YouTubeSearcher yts = new YouTubeSearcher();
+		String videoID = yts.searchForVideo(queryBuilder.toString());
 		
 	}
 
