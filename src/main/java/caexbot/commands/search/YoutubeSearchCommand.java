@@ -31,6 +31,14 @@ public class YoutubeSearchCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder queryBuilder = new StringBuilder();
+		String timestamp=null;
+		if(args[0].startsWith("-")){
+			if(args[0].substring(1, args[0].length()).equals("time")){
+				timestamp = args[1];
+				args=Arrays.copyOfRange(args, 2, args.length);
+			}
+		}
+		
 		for (int i = 0; i < args.length; i++) {
 			queryBuilder.append(args[i]).append(" ");
 		}
@@ -57,6 +65,9 @@ public class YoutubeSearchCommand extends CaexCommand {
 			if (resultList.size()>0){
 				StringBuilder youtubeURL = new StringBuilder().append(YOUTUBE_BASE_STRING)
 						.append(resultList.get(0).getId().getVideoId());
+				if(timestamp!=null){
+					youtubeURL.append(String.format("?t=%s", timestamp));
+				}
 				channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
 			} else {
 				channel.sendMessage("I'm sorry, i didnt find anything").queue();
