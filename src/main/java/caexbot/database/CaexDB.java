@@ -64,7 +64,7 @@ public class CaexDB {
 					continue;
 				}
 				UserLevel xp = new UserLevel( rs.getInt(3));
-				Logging.debug(u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
+				Logging.debug(g.getName()+";"+u.getName()+": xp"+Integer.toString(xp.getXP())+" Lvl"+Integer.toString(xp.getLevel()));
 
 
 				tbl.get(g).put(u, xp);

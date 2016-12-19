@@ -55,34 +55,40 @@ public class DraconicTranslator {
 
 	}
 	
-	public String translate(String[] body, boolean english){
-		String rtn = "", temp;
-		for (String string : body) {
-			boolean isUpper = Character.isUpperCase(string.charAt(0));
-			if (english) {
-				if (map.containsKey(string.toLowerCase())) {
-					temp = map.get(string.toLowerCase());
-					if (isUpper) {
-						temp = temp.replaceFirst(temp.substring(0, 1), temp.substring(0, 1).toUpperCase());
-					}
-				} else {
-					temp = string;
-				}
-			} else {
-				if (map.inverseBidiMap().containsKey(string.toLowerCase())) {
-					temp = map.inverseBidiMap().get(string.toLowerCase());
-					if (isUpper) {
-						temp = temp.replaceFirst(temp.substring(0, 1), temp.substring(0, 1).toUpperCase());
-					}
-				} else {
-					temp = string;
-				}
-			}
-			rtn += temp + " ";
-		}
-		rtn = rtn.trim();
-		return rtn;
+	public String translate(String[] body, boolean english)
+	{
+		String rtn = "", temp, regexString;
 		
+		BidiMap<String, String> tempMap = english ? map : map.inverseBidiMap();
+		
+		for (String string : body) 
+		{
+			if(string.isEmpty())
+			{
+				rtn += " ";
+				continue;
+			}
+			
+			boolean isUpper = Character.isUpperCase(string.charAt(0));
+			
+			regexString = string.replaceAll("[^a-zA-Z]", "");
+			
+			if (tempMap.containsKey(regexString.toLowerCase())) 
+			{
+				temp = map.get(regexString.toLowerCase());
+				
+				if (isUpper)
+					temp = temp.replaceFirst(temp.substring(0, 1), temp.substring(0, 1).toUpperCase());
+			} 
+			else 
+			{
+				temp = regexString;
+			}
+			
+			rtn += string.replace(regexString, temp) + " ";
+		}
+		
+		return rtn.trim();
 	}
 
 	public String translate(String body, boolean english) {

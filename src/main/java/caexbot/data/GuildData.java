@@ -42,7 +42,7 @@ public class GuildData {
 		prefix = CaexDB.loadPrefixes().get(guild);//TODO re-implement prefix from DB
 		guildXP = CaexDB.getLevels().get(guild);//TODO re-implement level map from DB
 		
-		if(prefix!=null&&guildXP!=null)
+		if(prefix!=null||guildXP!=null)
 			return true;
 		else
 			return false;
@@ -92,6 +92,8 @@ public class GuildData {
 	}
 	
 	public void setPrefix(String prefix) {
+		prefix = prefix.toLowerCase();
+		
 		this.prefix = prefix;
 
 		CaexDB.savePrefix(guild, prefix);

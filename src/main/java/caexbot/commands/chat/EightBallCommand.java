@@ -30,7 +30,7 @@ public class EightBallCommand extends CaexCommand {
 
 		List<String> rtn = new ArrayList<String>();
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("8BallAnswers.txt")));
+			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/8BallAnswers.txt")));
 			String line=null;
 			while ((line = br.readLine())!= null) {
 				rtn.add(line);

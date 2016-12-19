@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
@@ -28,7 +29,17 @@ public class CaexConfiguration {
 	private String GoogleToken = "token";
 	private String statusMessage = "with Gilmore!";
 	private String owner = "userID";
+	private String version = "Test_Build";
 	
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		System.out.printf("[CaexConfig] setVersion: (%s)\n", version);
+		this.version = version;
+	}
+
 	private CaexConfiguration(){
 
 		this.logLocation =new File(System.getProperty("user.home"),logPath);
@@ -152,6 +163,8 @@ public class CaexConfiguration {
 
 	public void load() {
 
+		loadVersionFromJAR(); 
+		
 		try {
 			String home = System.getProperty("user.home");
 			File configurationFile = new File(home, CONFIG_PATH);
@@ -204,7 +217,24 @@ public class CaexConfiguration {
 			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIG_PATH));
 			ex.printStackTrace();
 		}
+		
+		
 
 	}
-
+	
+	private void loadVersionFromJAR(){
+		Properties pom = new Properties();
+				try {
+					InputStream in = getClass().getResourceAsStream("/META-INF/maven/com.ranzer.caexbot/caexbot/pom.properties");
+					if(in==null){
+						setVersion("TESTING_VERSION");
+						return;
+					}
+					pom.load(in);
+					setVersion(pom.getProperty("version"));
+					
+				} catch (IOException e) {
+					setVersion("TESTING_VERSION");
+				}
+	}
 }
