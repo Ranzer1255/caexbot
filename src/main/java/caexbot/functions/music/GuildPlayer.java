@@ -32,6 +32,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	private TrackLoader loader;
 	private AudioPlayer player;
 	private AudioFrame lastFrame;
+	private boolean loading;
 	
 	public GuildPlayer(AudioPlayerManager pm, Guild guild) {
 		this.pm = pm;
@@ -62,6 +63,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		String videoID = yts.searchForVideo(song);
 		
 		System.out.println(videoID);
+		loading = true;
 		pm.loadItem(videoID, loader);
 	}
 
@@ -85,6 +87,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	 */
 	public void playNext(){
 		//TODO next song event
+		while(loading){try {Thread.sleep(5);} catch (InterruptedException e) {}};
+		
 		if(queue.isEmpty()){
 			stop();
 			return;
@@ -159,6 +163,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		public void trackLoaded(AudioTrack track) {
 			//TODO track added event
 			queue.add(track);
+			loading = false;
 			
 		}
 
@@ -169,6 +174,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 			for (AudioTrack track : playlist.getTracks()) {
 				queue.add(track);
 			}
+			loading = false;
 			
 		}
 

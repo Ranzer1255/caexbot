@@ -22,17 +22,17 @@ public class PlayCommand extends CaexCommand {
 		 */
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){
-			channel.sendMessage("searching...").queue();
+//			channel.sendMessage("searching...").queue();//breadcrumb
 			player.queue(StringUtil.arrayToString(Arrays.asList(args), " "));
 		}
 		
 		if(!player.isConnected()){
-			channel.sendMessage("joining...").queue();
+//			channel.sendMessage("joining...").queue();//breadcrumb
 			player.join(event.getGuild().getMember(author).getVoiceState().getChannel());
 		}
 		
 		player.start();
-		channel.sendMessage("playing...").queue();
+//		channel.sendMessage("playing...").queue();//bread crumb
 	}
 
 	@Override
