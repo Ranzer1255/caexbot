@@ -26,7 +26,7 @@ public class YoutubeSearchCommand extends CaexCommand {
 			queryBuilder.append(args[i]).append(" ");
 		}
 		String videoID = yts.searchForVideo(queryBuilder.toString());
-		
+
 
 		Logging.debug(queryBuilder.toString()+" : " +videoID);
 		
@@ -36,6 +36,7 @@ public class YoutubeSearchCommand extends CaexCommand {
 			channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
 		} else {
 			channel.sendMessage("I'm sorry, i didn't find anything").queue();			
+
 
 		}
 
