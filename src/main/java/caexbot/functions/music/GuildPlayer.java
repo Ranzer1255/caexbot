@@ -213,6 +213,9 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 			queue.add(track);
 		}
 		
+		/**
+		 * clears the queue
+		 */
 		public void clear() {
 			queue.clear();
 			
@@ -229,10 +232,5 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		public boolean isEmpty() {
 			return queue.isEmpty();
 		}
-	}
-
-	//this isn't used at this time
-	public enum EventType {
-		QUEUED, PAUSED, SKIPPED, VOLUME, STOPPED, JOIN
 	}
 }
