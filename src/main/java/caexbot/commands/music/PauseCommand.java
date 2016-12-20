@@ -28,7 +28,6 @@ public class PauseCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("pause");
 	}
 

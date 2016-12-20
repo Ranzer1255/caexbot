@@ -14,17 +14,14 @@ public class SkipCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		/*TODO skip process
-		 * skip to next track in queue
-		 * if not playing do nothing
-		 */
 
-		GuildPlayerManager.getPlayer(event.getGuild()).playNext();
+		if(GuildPlayerManager.getPlayer(event.getGuild()).isPlaying()){
+			GuildPlayerManager.getPlayer(event.getGuild()).playNext();
+		}
 	}
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("skip");
 	}
 

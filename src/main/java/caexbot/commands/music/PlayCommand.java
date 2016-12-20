@@ -16,10 +16,7 @@ public class PlayCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		/*TODO add in extra ease of life bits
-		 * add in song if given
-		 * auto join audio channel if not in one
-		 */
+
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){
 //			channel.sendMessage("searching...").queue();//breadcrumb

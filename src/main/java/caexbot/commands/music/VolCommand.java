@@ -14,9 +14,7 @@ public class VolCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		/*TODO volume process
-		 * adjust volume
-		 */
+
 		if(args.length==0){
 			return;//TODO bitch at user for not telling us anything ;)
 		}
@@ -30,7 +28,6 @@ public class VolCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("vol");
 	}
 

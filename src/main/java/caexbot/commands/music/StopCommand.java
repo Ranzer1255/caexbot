@@ -15,17 +15,11 @@ public class StopCommand extends CaexCommand {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
-		/*TODO StopCommand Process
-		 * stop current track
-		 * leave voice channel
-		 */
-
 		GuildPlayerManager.getPlayer(event.getGuild()).stop();
 	}
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("stop");
 	}
 

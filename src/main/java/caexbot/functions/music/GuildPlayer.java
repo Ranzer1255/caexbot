@@ -68,7 +68,6 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	}
 
 	public TrackQueue getQueue() {
-		// TODO make getQueue
 		return queue;
 	}
 
@@ -121,6 +120,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	}
 
 	
+	public boolean isPlaying() {
+		return !player.isPaused();
+	}
+
 	//AudioSendHandler methods
 	@Override
 	public boolean canProvide() {
