@@ -27,9 +27,15 @@ public class CaexDB {
 				String DBMS = config.getDatabaseManagementSystem();
 				String host = config.getDatabaseHostname();
 				Integer port = config.getDatabasePort();
-				String DB = config.getDatabaseName();
 				String user = config.getDatabaseUsername();
 				String pw = config.getDatabasePassword();
+				
+				String DB;
+				if (config.isDebug()) {
+					DB = config.getTestDatabaseName();
+				} else {
+					DB = config.getDatabaseName();					
+				}
 				 
 				connection = DriverManager.getConnection(String.format("jdbc:%s://%s:%d/%s?useSSL=false",DBMS,host,port,DB), user, pw);
 			}

@@ -34,8 +34,13 @@ public class CaexBot {
 		
 		CaexConfiguration config = CaexConfiguration.getInstance();
 		
-		JDABuilder build = new JDABuilder(AccountType.BOT)
-				.setToken(config.getToken());
+		
+		JDABuilder build;
+		if (config.isDebug()) {
+			build = new JDABuilder(AccountType.BOT).setToken(config.getTestToken());
+		} else {			
+			build = new JDABuilder(AccountType.BOT).setToken(config.getToken());
+		}
 		
 		try {
 			JDA = build.buildBlocking();
@@ -67,7 +72,7 @@ public class CaexBot {
 		//color controls buggy and unreliable ATM
 		if(config.isDebug()){
 			for (Guild g : JDA.getGuilds()) {
-				g.getController().setNickname(g.getMember(JDA.getSelfUser()), "Caex (Debug Mode)").queue();
+				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
 				JDA.getPresence().setGame(Game.of("in Testing Mode"));
 			}
 		} else {

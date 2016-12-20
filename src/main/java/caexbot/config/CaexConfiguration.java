@@ -21,25 +21,18 @@ public class CaexConfiguration {
 	private String databasePassword = "password";
 	private String databaseUsername = "username";
 	private String databaseName = "caexdb";
+	private String testDatabaseName = "cekipdb";
 	private Boolean debug = false;
 	private String logPath = "/caexbot/logs/caex.log";//Default path for log Location
 	private File logLocation;
 	private String prefix = "!";
 	private String botToken = "token";
+	private String testToken = "token";
 	private String GoogleToken = "token";
 	private String statusMessage = "with Gilmore!";
 	private String owner = "userID";
 	private String version = "Test_Build";
 	
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		System.out.printf("[CaexConfig] setVersion: (%s)\n", version);
-		this.version = version;
-	}
-
 	private CaexConfiguration(){
 
 		this.logLocation =new File(System.getProperty("user.home"),logPath);
@@ -83,6 +76,10 @@ public class CaexConfiguration {
 		return databaseName;
 	}
 
+	public String getTestDatabaseName() {
+		return testDatabaseName;
+	}
+
 	public File getLogLocation() {
 		return this.logLocation;
 	}
@@ -95,6 +92,10 @@ public class CaexConfiguration {
 		return botToken;
 	}
 	
+	public String getTestToken() {
+		return testToken;
+	}
+
 	public String getGToken() {
 		return GoogleToken;
 	}
@@ -105,6 +106,10 @@ public class CaexConfiguration {
 
 	public String getOwner() {
 		return this.owner;
+	}
+
+	public String getVersion() {
+		return version;
 	}
 
 	//setters
@@ -136,6 +141,10 @@ public class CaexConfiguration {
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
+	@CaexConfigItem(key="testDBName", type=String.class, _default="cekipdb")
+	public void setTestDatabaseName(String testDatabaseName) {
+		this.testDatabaseName = testDatabaseName;
+	}
 	@CaexConfigItem(key="logLocation", type=String.class, _default="/caexbot/logs/caex.log")
 	public void setLogLocation(String logLocation) {
 		this.logLocation =new File(System.getProperty("user.home"),logLocation);
@@ -152,6 +161,10 @@ public class CaexConfiguration {
 	public void setBotToken(String token){
 		this.botToken = token;
 	}
+	@CaexConfigItem(key="testToken", type=String.class, _default="token")
+	public void setTestToken(String token) {
+		testToken=token;
+	}
 	@CaexConfigItem(key="googleToken", type=String.class, _default="token")
 	public void setGoogleToken(String token){
 		this.GoogleToken=token;
@@ -159,6 +172,11 @@ public class CaexConfiguration {
 	@CaexConfigItem(key="owner",type=String.class, _default = "143929240440537089")
 	public void setOwner(String owner){
 		this.owner = owner; 
+	}
+
+	public void setVersion(String version) {
+		System.out.printf("[CaexConfig] setVersion: (%s)\n", version);
+		this.version = version;
 	}
 
 	public void load() {
