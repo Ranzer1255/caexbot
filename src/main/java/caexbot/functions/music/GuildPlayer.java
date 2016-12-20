@@ -13,6 +13,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
+import caexbot.commands.search.YouTubeSearcher;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -42,6 +43,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		guildAM.setSendingHandler(this);
 		
 	}
+	
+	public boolean isConnected(){
+		return guildAM.isConnected();
+	}
 
 	public void join(VoiceChannel channel){
 		guildAM.openAudioConnection(channel);
@@ -49,8 +54,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	
 	
 	public void queue(String song){
-		System.out.println(song);
-		pm.loadItem(song, loader);
+		
+		YouTubeSearcher yts = new YouTubeSearcher();
+		String videoID = yts.searchForVideo(song);
+		
+		System.out.println(videoID);
+		pm.loadItem(videoID, loader);
 	}
 
 	public TrackQueue getQueue() {
@@ -90,8 +99,13 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		//TODO player stopped event
 		player.setPaused(true);
 		player.stopTrack();
+		queue.clear();
 		guildAM.closeAudioConnection();
 		
+	}
+	
+	public void vol(int vol){
+		player.setVolume(vol);
 	}
 
 	//AudioSendHandler methods
@@ -174,6 +188,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 			queue.add(track);
 		}
 		
+		public void clear() {
+			queue.clear();
+			
+		}
+
 		/**
 		 * 
 		 * @return next track in the queue using FIFO order
@@ -189,5 +208,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 
 	public enum EventType {
 		QUEUED, PAUSED, SKIPPED, VOLUME, STOPPED, JOIN
+	}
+
+	public void pause() {
+		player.setPaused(!player.isPaused());
+		
 	}
 }

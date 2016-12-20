@@ -6,27 +6,33 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.AudioManager;
 
 public class PlayCommand extends CaexCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		/*TODO play command process
-		 * join voice channel of requested user
-		 * start first track in queue for requested guild
+		/*TODO add in extra ease of life bits
+		 * add in song if given
+		 * auto join audio channel if not in one
 		 */
-		System.out.println("in play command");
-		AudioManager am = event.getGuild().getAudioManager();
-		am.openAudioConnection(event.getGuild().getMember(author).getVoiceState().getChannel());
-		GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
-		gp.queue("fmI_Ndrxy14");
-		while(gp.getQueue().isEmpty()){/*wait*/}
-		gp.start();
+		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
+		if(args.length>0){
+			channel.sendMessage("searching...").queue();
+			player.queue(StringUtil.arrayToString(Arrays.asList(args), " "));
+		}
+		
+		if(!player.isConnected()){
+			channel.sendMessage("joining...").queue();
+			player.join(event.getGuild().getMember(author).getVoiceState().getChannel());
+		}
+		
+		player.start();
+		channel.sendMessage("playing...").queue();
 	}
 
 	@Override

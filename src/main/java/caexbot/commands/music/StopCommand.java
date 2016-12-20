@@ -1,5 +1,6 @@
 package caexbot.commands.music;
 
+import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
@@ -25,7 +26,7 @@ public class StopCommand extends CaexCommand {
 	@Override
 	public List<String> getAlias() {
 		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList("stop");
 	}
 
 	@Override
