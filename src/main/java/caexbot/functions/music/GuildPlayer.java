@@ -52,7 +52,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		guildAM.openAudioConnection(channel);
 	}
 	
-	
+	/**
+	 * searches Youtube for a song and adds it to the queue
+	 * @param song
+	 */
 	public void queue(String song){
 		
 		YouTubeSearcher yts = new YouTubeSearcher();
@@ -108,6 +111,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		player.setVolume(vol);
 	}
 
+	public void pause() {
+		player.setPaused(!player.isPaused());
+		
+	}
+
+	
 	//AudioSendHandler methods
 	@Override
 	public boolean canProvide() {
@@ -125,12 +134,19 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		return true;
 	}
 	
+	
 	//AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
 	    playNext();
 	  }
 	
+	/**
+	 * Loads tracks into the queue for the guild
+	 * 
+	 * @author Ranzer
+	 *
+	 */
 	private class TrackLoader implements AudioLoadResultHandler {
 
 		TrackQueue queue;
@@ -206,12 +222,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		}
 	}
 
+	//this isn't used at this time
 	public enum EventType {
 		QUEUED, PAUSED, SKIPPED, VOLUME, STOPPED, JOIN
-	}
-
-	public void pause() {
-		player.setPaused(!player.isPaused());
-		
 	}
 }
