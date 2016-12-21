@@ -1,6 +1,7 @@
 package caexbot.functions.music;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
@@ -14,6 +15,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import caexbot.commands.search.YouTubeSearcher;
+import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -76,9 +78,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	 * start the queue
 	 */
 	public void start() {
-		//TODO player started event
-		player.setPaused(false);
-		playNext();
+		if (player.isPaused()) {
+			//TODO player started event
+			player.setPaused(false);
+			playNext();
+		}
 	}
 	
 	/**
@@ -145,7 +149,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	//AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-	    playNext();
+	    if(endReason==AudioTrackEndReason.FINISHED)
+	    	playNext();
 	  }
 	
 	/**
@@ -204,6 +209,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	public class TrackQueue {
 
 		Queue<AudioTrack> queue = new LinkedList<>();
+		
+		public List<AudioTrack> getQueue(){
+			return (LinkedList<AudioTrack>)queue;
+		}
+		
 		/**
 		 * adds one track to the queue to be played.
 		 * 
@@ -230,6 +240,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		} 
 
 		public boolean isEmpty() {
+			Logging.debug(String.format("value of queue.isEmpty(): %s", queue.isEmpty()));
 			return queue.isEmpty();
 		}
 	}
