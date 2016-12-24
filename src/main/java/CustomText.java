@@ -23,6 +23,9 @@ public class CustomText {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
+		for(Guild g:JDA.getGuilds()){
+			System.out.println(g.getName());
+		}
 //		
 //		for(TextChannel tc:JDA.getTextChannels()){
 //			System.out.println(String.format("%s: %s", tc.getName(), tc.getId()));

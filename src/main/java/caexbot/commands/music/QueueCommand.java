@@ -19,7 +19,9 @@ public class QueueCommand extends CaexSubCommand {
 	public void process(String[] args, User author, TextChannel channel, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
 			
-			System.out.println("Currently playing: " + GuildPlayerManager.getPlayer(event.getGuild()).getPlayingTrack().getInfo().title);
+			System.out.print("Currently playing: ");
+			String cp =  GuildPlayerManager.getPlayer(event.getGuild()).getPlayingTrack()!=null ?  GuildPlayerManager.getPlayer(event.getGuild()).getPlayingTrack().getInfo().title : "null";
+			System.out.println(cp);
 			System.out.println("Queue:");
 			int i=1;
 			for(AudioTrack t: GuildPlayerManager.getPlayer(event.getGuild()).getQueue().getQueue()){

@@ -78,7 +78,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	 * start the queue
 	 */
 	public void start() {
-		if (player.isPaused()||player.getPlayingTrack()!=null) {
+//		System.out.println(player.isPaused() +" : "+ player.getPlayingTrack().getInfo().title);
+		if (player.isPaused()||player.getPlayingTrack()==null) {
 			//TODO player started event
 			player.setPaused(false);
 			playNext();
@@ -109,6 +110,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		//TODO player stopped event
 		player.setPaused(true);
 		player.stopTrack();
+//		player.playTrack(null);
 		queue.clear();
 		guildAM.closeAudioConnection();
 		
