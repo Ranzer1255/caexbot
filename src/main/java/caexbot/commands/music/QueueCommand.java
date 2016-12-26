@@ -26,7 +26,7 @@ public class QueueCommand extends CaexSubCommand {
 			
 			if(gp.getPlayingTrack()!=null){
 				eb.setAuthor("Currently Playing", null, null);
-				eb.setTitle(gp.getPlayingTrack().getInfo().title+" by "+gp.getPlayingTrack().getInfo().author);
+				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nhttp://youtu.be/"+gp.getPlayingTrack().getIdentifier()+" by "+gp.getPlayingTrack().getInfo().author);
 				StringBuilder sb = new StringBuilder();
 				
 				sb.append("Queue:\n");
@@ -34,7 +34,7 @@ public class QueueCommand extends CaexSubCommand {
 				long runtime = 0;
 				for (AudioTrack track : gp.getQueue().getQueue()) {
 					if(i>10) break;
-					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, "youtu.be/"+track.getIdentifier()));
+					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, "http://youtu.be/"+track.getIdentifier()));
 				}
 				eb.setDescription(sb.toString());
 				
