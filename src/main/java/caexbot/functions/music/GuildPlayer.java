@@ -57,16 +57,22 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	
 	/**
 	 * searches Youtube for a song and adds it to the queue
-	 * @param song
+	 * @param search
 	 */
-	public void queue(String song){
+	public void queueSearch(String search){
 		
 		YouTubeSearcher yts = new YouTubeSearcher();
-		String videoID = yts.searchForVideo(song);
+		String videoID = yts.searchForVideo(search);
 		
 		System.out.println(videoID);
 		loading = true;
 		pm.loadItem(videoID, loader);
+	}
+	
+	public void queueID(String songID){
+		System.out.println(songID);
+		loading = true;
+		pm.loadItem(songID, loader);
 	}
 
 	public TrackQueue getQueue() {
@@ -97,7 +103,6 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 			stop();
 			return;
 		}
-		
 		player.playTrack(queue.remove());
 		
 		
@@ -180,7 +185,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		@Override
 		public void playlistLoaded(AudioPlaylist playlist) {
 			//TODO playlist added event
-
+			System.out.println("loading Playlist: " + playlist.getName());
 			for (AudioTrack track : playlist.getTracks()) {
 				queue.add(track);
 			}
@@ -198,6 +203,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 		public void loadFailed(FriendlyException exception) {
 			// TODO make loadFailed
 			
+			System.out.println(exception.getMessage());//Temp BreadCrumb
 		}
 
 	}

@@ -20,7 +20,7 @@ public class PlayCommand extends CaexCommand {
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){
 //			channel.sendMessage("searching...").queue();//breadcrumb
-			player.queue(StringUtil.arrayToString(Arrays.asList(args), " "));
+			player.queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
 		}
 		
 		if(!player.isConnected()){
