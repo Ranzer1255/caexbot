@@ -22,6 +22,7 @@
   
   <dependencies>
   	<dependency>
+  	  <groupId>net.dv8tion</groupId>
       <artifactId>JDA</artifactId>
       <version>3.0.BETA2_118</version>
   	</dependency>
