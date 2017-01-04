@@ -11,22 +11,16 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class PingCommand extends CaexCommand implements DraconicCommand{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		Date startTime = new Date();
-		try {
-			Message pong = channel.sendMessage("pong!").block();
-			Date endTime = new Date();
-			long lag = endTime.getTime()-startTime.getTime();
-			pong.editMessage(pong.getContent()+" `"+lag+"ms`").queue();
-		} catch (RateLimitedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Message pong = channel.sendMessage("pong!").complete();
+		Date endTime = new Date();
+		long lag = endTime.getTime()-startTime.getTime();
+		pong.editMessage(pong.getContent()+" `"+lag+"ms`").queue();
 		
 //		Date startTime2 = new Date();
 //		channel.sendMessage("pong again! ").queue(pong -> {
