@@ -9,5 +9,6 @@ package caexbot.commands;
 @Deprecated
 public abstract class CaexSubCommand extends CaexCommand{
 
-
+	@Deprecated
+	abstract public String getDescription();
 }
