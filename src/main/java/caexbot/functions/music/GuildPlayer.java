@@ -15,6 +15,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import caexbot.commands.search.YouTubeSearcher;
+import caexbot.functions.music.GuildPlayer.Event;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
@@ -28,6 +29,10 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.managers.AudioManager;
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	
+	public enum Event {
+		START, NEXT, STOP, TRACK_LOAD, PLAYLIST_LOAD, CHANNEL_JOIN, PAUSE
+	}
+
 	private AudioPlayerManager pm;
 	private AudioManager guildAM;
 	private TrackQueue queue;
@@ -53,6 +58,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 
 	public void join(VoiceChannel channel){
 		guildAM.openAudioConnection(channel);
+		notifyOfEvent(Event.CHANNEL_JOIN);
 	}
 	
 	/**
@@ -86,7 +92,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	public void start() {
 //		System.out.println(player.isPaused() +" : "+ player.getPlayingTrack().getInfo().title);
 		if (player.isPaused()||player.getPlayingTrack()==null) {
-			//TODO player started event
+			notifyOfEvent(Event.START);
 			player.setPaused(false);
 			playNext();
 		}
@@ -96,7 +102,6 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	 * Play the next song in the queue
 	 */
 	public void playNext(){
-		//TODO next song event
 		while(loading){try {Thread.sleep(5);} catch (InterruptedException e) {}};
 		
 		if(queue.isEmpty()){
@@ -104,6 +109,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 			return;
 		}
 		player.playTrack(queue.remove());
+		notifyOfEvent(Event.NEXT);
 		
 		
 	}
@@ -112,12 +118,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 	 * stop playing and end the current song
 	 */
 	public void stop() {
-		//TODO player stopped event
 		player.setPaused(true);
 		player.stopTrack();
-//		player.playTrack(null);
 		queue.clear();
 		guildAM.closeAudioConnection();
+		notifyOfEvent(Event.STOP);
 		
 	}
 	
@@ -127,12 +132,18 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 
 	public void pause() {
 		player.setPaused(!player.isPaused());
+		notifyOfEvent(Event.PAUSE);
 		
 	}
 
 	
 	public boolean isPlaying() {
 		return !player.isPaused();
+	}
+
+	private void notifyOfEvent(Event start) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	//AudioSendHandler methods
@@ -176,16 +187,15 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler{
 
 		@Override
 		public void trackLoaded(AudioTrack track) {
-			//TODO track added event
 			queue.add(track);
+			notifyOfEvent(Event.TRACK_LOAD);
 			loading = false;
 			
 		}
 
 		@Override
 		public void playlistLoaded(AudioPlaylist playlist) {
-			//TODO playlist added event
-			System.out.println("loading Playlist: " + playlist.getName());
+			notifyOfEvent(Event.PLAYLIST_LOAD);
 			for (AudioTrack track : playlist.getTracks()) {
 				queue.add(track);
 			}

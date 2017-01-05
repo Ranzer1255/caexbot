@@ -24,11 +24,19 @@ public class QueueCommand extends CaexSubCommand {
 			GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
 			EmbedBuilder eb = new EmbedBuilder();
 			
+			eb.setAuthor("Currently Playing", null, null);
 			if(gp.getPlayingTrack()!=null){
-				eb.setAuthor("Currently Playing", null, null);
 				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nhttp://youtu.be/"+gp.getPlayingTrack().getIdentifier()+" by "+gp.getPlayingTrack().getInfo().author);
-				StringBuilder sb = new StringBuilder();
+			} else {
+				eb.setTitle("Nothing Playing");
+			}
+			
+			if(gp.getQueue().getQueue().isEmpty()){
 				
+				eb.setDescription("Nothing in Queue!");
+				
+			} else {	
+				StringBuilder sb = new StringBuilder();
 				sb.append("Queue:\n");
 				int i = 1;
 				long runtime = 0;
@@ -48,18 +56,6 @@ public class QueueCommand extends CaexSubCommand {
 			MessageBuilder mb = new MessageBuilder();
 			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			
-			String cp =  gp.getPlayingTrack()!=null ?  gp.getPlayingTrack().getInfo().title : "null";
-			System.out.print("Currently playing: ");
-			System.out.println(cp);
-			System.out.println("Queue:");
-			int i=1;
-			for(AudioTrack t: GuildPlayerManager.getPlayer(event.getGuild()).getQueue().getQueue()){
-				
-				System.out.println(i +": "+t.getIdentifier()+" "+t.getInfo().title);
-				i++;
-			}
-//			invalidUsage(event.getGuild());
-			return;
 		}
 		if (args[0].startsWith(getPrefix(event.getGuild()))) {//test code TODO handle this better
 			GuildPlayerManager.getPlayer(event.getGuild()).queueID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));

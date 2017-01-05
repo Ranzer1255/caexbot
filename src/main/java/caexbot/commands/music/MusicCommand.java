@@ -13,6 +13,9 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class MusicCommand extends CaexCommand {
 
+	public static final String JOIN = "Joining Channel %s";
+	public static final String ADD = "Adding song to queue:\n%s";
+	
 	List<CaexCommand> subCommands;
 	
 	public MusicCommand() {

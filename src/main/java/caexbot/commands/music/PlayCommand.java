@@ -25,6 +25,7 @@ public class PlayCommand extends CaexCommand {
 		
 		if(!player.isConnected()){
 //			channel.sendMessage("joining...").queue();//breadcrumb
+			channel.sendMessage(String.format(MusicCommand.JOIN, event.getGuild().getMember(author).getVoiceState().getChannel().getName())).queue();
 			player.join(event.getGuild().getMember(author).getVoiceState().getChannel());
 		}
 		

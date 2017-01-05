@@ -29,6 +29,7 @@ public class JoinCommand extends CaexCommand{
 		
 		if(join!=null){	
 			GuildPlayerManager.getPlayer(event.getGuild()).join(join);
+			channel.sendMessage(String.format(MusicCommand.JOIN, join.getName() )).queue(); 
 		}
 	}
 
