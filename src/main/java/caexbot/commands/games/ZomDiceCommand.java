@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.subcommands.*;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
@@ -13,7 +15,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class ZomDiceCommand extends CaexCommand {
+public class ZomDiceCommand extends CaexCommand implements Describable{
 
 	List<CaexCommand> zomSubCommands = new ArrayList<>();
 	
@@ -48,10 +50,16 @@ public class ZomDiceCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "play a game of Zombie Dice!";
 	}
 
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
+	
 	@Override
 	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
@@ -59,13 +67,18 @@ public class ZomDiceCommand extends CaexCommand {
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ", g)).append("]** ");
 		
 		sb.append("<sub command>\n");
-		sb.append("    __Sub Commands__\n");
-		for (CaexCommand cmd : zomSubCommands) {
-			sb.append("  **<").append(StringUtil.arrayToString(cmd.getAlias(), ", "));
-			sb.append(">** ").append(cmd.getDescription()).append("\n");
-		}
+//		sb.append("    __Sub Commands__\n"); TODO conform to new framework of Describabe for subcommands
+//		for (CaexCommand cmd : zomSubCommands) {
+//			sb.append("  **<").append(StringUtil.arrayToString(cmd.getAlias(), ", "));
+//			sb.append(">** ").append(cmd.getDescription()).append("\n");
+//		}
 		
 		return sb.toString();
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.GAME;
 	}
 	
 	@Override
