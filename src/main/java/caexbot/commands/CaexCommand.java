@@ -33,17 +33,6 @@ public abstract class CaexCommand{
 	abstract public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event);
 	
 	abstract public List<String> getAlias();
-	/**
-	 * 
-	 * @return one line short description of command
-	 */
-	abstract public String getDescription();
-	/**
-	 * breakdown of usage, can be multi-line with 2 space indents
-	 * @return breakdown of usage 
-	 */
-	abstract public String getUsage(Guild g);
-
 	private boolean hasPermission(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
 			return hasRoleRequirements(args, author,channel,event);

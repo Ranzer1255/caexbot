@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
@@ -12,7 +14,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class FacepalmCommand extends CaexCommand implements DraconicCommand{
+public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
 
 	private String[] facepalms ={
 			"*%s is ashamed for you*",
@@ -38,18 +40,28 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand{
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Facepalm....";
 	}
 
 	@Override
-	public String getUsage(Guild g) {
-		return String.format("**[%s]** %s", StringUtil.cmdArrayToString(getAlias(), ", ",g), getDescription());
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
+	@Override
+	public String getUsage(Guild g) {//TODO change this formatting
+		return String.format("**[%s]** %s", StringUtil.cmdArrayToString(getAlias(), ", ",g), getShortDescription());
 	}
 
 	@Override
 	public List<String> getDraconicAlias() {
 		return Arrays.asList("ehaism_cha'sid");
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.CHAT;
 	}
 
 }

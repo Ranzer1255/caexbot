@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.functions.dice.DiceParser;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
@@ -11,7 +13,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class DiceCommand extends CaexCommand{
+public class DiceCommand extends CaexCommand implements Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -34,10 +36,16 @@ public class DiceCommand extends CaexCommand{
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Roll the Dice! Standard RPG dice format";
 	}
 
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
+	
 	@Override
 	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
@@ -51,6 +59,11 @@ public class DiceCommand extends CaexCommand{
 				+ "```");
 		
 		return sb.toString();
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.CHAT;
 	}
 	
 	@Override
