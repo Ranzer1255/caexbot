@@ -8,6 +8,7 @@ public interface Describable {
 
 	public Catagory getCatagory();
 	
+	public String getName();
 	public List<String> getAlias();
 	public String getUsage(Guild g);
 	public String getShortDescription();

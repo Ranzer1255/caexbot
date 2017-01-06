@@ -76,5 +76,9 @@ public abstract class CaexCommand{
 	public CaexCommand getCommand() {
 		return this;
 	}
+	
+	public String getName(){
+		return getAlias().get(0);
+	}
 
 }
