@@ -3,7 +3,6 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
@@ -12,7 +11,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PlayCommand extends CaexCommand {
+public class PlayCommand extends MusicCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
