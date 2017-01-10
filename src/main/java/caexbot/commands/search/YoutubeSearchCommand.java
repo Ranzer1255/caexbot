@@ -88,7 +88,7 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getShortDescription() {
-		return "Search YouTube for your Videos!";
+		return "Search YouTube for Videos!";
 	}
 
 	@Override
