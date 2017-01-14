@@ -11,11 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.util.StringUtil;
 
-public class InfoCommand extends CaexCommand implements DraconicCommand{
+public class InfoCommand extends CaexCommand implements DraconicCommand, Describable{
 
 	private static final String REQUIRED_PERMISSIONS = "70372416";
 
@@ -123,7 +125,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 
 		return "Information about Caex and Author";
 	}
@@ -131,6 +133,17 @@ public class InfoCommand extends CaexCommand implements DraconicCommand{
 	@Override
 	public List<String> getDraconicAlias() {
 		return Arrays.asList("vucot");
+	}
+
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.ADMIN;
+	}
+
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
 	}
 
 }

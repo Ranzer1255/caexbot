@@ -35,17 +35,7 @@ public class ShutdownCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getUsage(Guild g) {
-		return getPrefix(g)+"sleep (requires permision)";
-	}
-
-	@Override
 	public List<String> getAlias() {
 		return Arrays.asList("vdri");
-	}
-
-	@Override
-	public String getDescription() {
-		return "kill Caex!";
 	}
 }

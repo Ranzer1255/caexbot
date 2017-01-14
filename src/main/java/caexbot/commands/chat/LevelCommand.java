@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
@@ -16,7 +18,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class LevelCommand extends CaexCommand implements DraconicCommand{
+public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -51,10 +53,16 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "lists your level and experence.";
 	}
-
+	
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
+	
 	@Override
 	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
@@ -67,6 +75,11 @@ public class LevelCommand extends CaexCommand implements DraconicCommand{
 
 		
 		return sb.toString();
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.CHAT;
 	}
 
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
