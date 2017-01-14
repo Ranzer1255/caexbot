@@ -6,7 +6,6 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
 import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -20,7 +19,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * @author Ranzer
  *
  */
-public class JoinCommand extends CaexCommand{
+public class JoinCommand extends MusicCommand{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -29,7 +28,7 @@ public class JoinCommand extends CaexCommand{
 		
 		if(join!=null){	
 			GuildPlayerManager.getPlayer(event.getGuild()).join(join);
-			channel.sendMessage(String.format(MusicCommand.JOIN, join.getName() )).queue(); 
+//			channel.sendMessage(String.format(MusicCommand.JOIN, join.getName() )).queue(); 
 		}
 	}
 

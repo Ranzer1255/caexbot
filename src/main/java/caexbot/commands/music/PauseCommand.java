@@ -3,14 +3,14 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
+
 import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PauseCommand extends CaexCommand {
+public class PauseCommand extends MusicCommand {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -20,7 +20,7 @@ public class PauseCommand extends CaexCommand {
 		 * if not playing 
 		 * 		do nothing
 		 */
-
+		setMusicChannel(channel);
 		GuildPlayerManager.getPlayer(event.getGuild()).pause();
 		
 		 

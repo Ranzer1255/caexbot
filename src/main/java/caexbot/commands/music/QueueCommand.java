@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
-import caexbot.commands.CaexSubCommand;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
@@ -14,7 +13,7 @@ import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 
-public class QueueCommand extends CaexSubCommand {
+public class QueueCommand extends MusicCommand {
 
 //	private static final String NO_VIDEO_FOUND = "i'm sorry I didn't find that"; //TODO use this
 
