@@ -51,8 +51,8 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 	
 	@Override
 	public String getLongDescription() {
-		return getShortDescription();//TODO
-	};
+		return getShortDescription();
+	}
 
 	@Override
 	public List<String> getDraconicAlias() {

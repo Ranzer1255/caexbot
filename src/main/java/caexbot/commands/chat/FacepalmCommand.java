@@ -46,12 +46,16 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(getShortDescription()).append("\n\n");
+		sb.append("Caex will pull a random facepalming emote from his hat and serve it up for you...\ngroan to your heart's content");
+		
+		return sb.toString();
 	}
 	@Override
-	public String getUsage(Guild g) {//TODO change this formatting
-		return String.format("**[%s]** %s", StringUtil.cmdArrayToString(getAlias(), ", ",g), getShortDescription());
+	public String getUsage(Guild g) {
+		return String.format("**%s%s**", getPrefix(g),getName());
 	}
 
 	@Override

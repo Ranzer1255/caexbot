@@ -48,7 +48,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 				eb.setDescription(d.getLongDescription());
 				eb.setColor(d.getCatagory().COLOR);
 				eb.addField("Usage",d.getUsage(event.getGuild()),false);
-				eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? StringUtil.arrayToString(d.getAlias().subList(1, d.getAlias().size()), ", "):"*none*", true );
+				eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? StringUtil.cmdArrayToString(d.getAlias().subList(1, d.getAlias().size()), ", ",event.getGuild()):"*none*", true );
 				eb.addField("Catagory", d.getCatagory().toString(), true);
 				
 				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
