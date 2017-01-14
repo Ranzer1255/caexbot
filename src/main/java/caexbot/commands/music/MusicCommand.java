@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
-import caexbot.data.GuildManager;
+import caexbot.commands.Describable;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class MusicCommand extends CaexCommand {
+/*
+ * TODO redesign music so that its not a subcommand list
+ * i want to just do !join and not !music join ect.
+ */
+public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	public static final String JOIN = "Joining Channel %s";
 	public static final String ADD = "Adding song to queue:\n%s";
@@ -58,18 +62,20 @@ public class MusicCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Play music!";
 	}
-
+	
+	@Override
+	public String getLongDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public String getUsage(Guild g) {
 		// TODO make getUsage
 		return null;
 	}
 
-	protected void setMusicChannel(TextChannel channel) {
-		GuildManager.getGuildData(channel.getGuild()).setMusicChannel(channel);
-
-	}
 }
