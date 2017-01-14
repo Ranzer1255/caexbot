@@ -3,6 +3,7 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
+import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
@@ -11,7 +12,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PlayCommand extends MusicCommand {
+public class PlayCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -38,8 +39,14 @@ public class PlayCommand extends MusicCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Start playing the first song in queue";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

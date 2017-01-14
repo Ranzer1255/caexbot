@@ -5,15 +5,17 @@ import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
+import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 
-public class QueueCommand extends MusicCommand {
+public class QueueCommand extends AbstractMusicCommand implements Describable {
 
 //	private static final String NO_VIDEO_FOUND = "i'm sorry I didn't find that"; //TODO use this
 
@@ -62,9 +64,7 @@ public class QueueCommand extends MusicCommand {
 			GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
 			channel.sendMessage("Video added").queue();//TODO handle confirmation differently (event handling in music player)
 		}
-		
-		
-		
+	
 	}
 
 	@Override
@@ -73,8 +73,20 @@ public class QueueCommand extends MusicCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Add song to the play queue";
 	}
+	
+	@Override
+	public String getLongDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getUsage(Guild g) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
