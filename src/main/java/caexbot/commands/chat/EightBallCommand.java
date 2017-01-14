@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
@@ -15,7 +17,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class EightBallCommand extends CaexCommand {
+public class EightBallCommand extends CaexCommand implements Describable{
 	
 	private List<String> answers;
 	
@@ -59,8 +61,13 @@ public class EightBallCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Answers to your hearts most desired questions!";
+	}
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
 	}
 
 	@Override
@@ -70,5 +77,10 @@ public class EightBallCommand extends CaexCommand {
 		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<the burrning question in your heart, begging for an answer>");
 		
 		return sb.toString();
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.CHAT;
 	}
 }

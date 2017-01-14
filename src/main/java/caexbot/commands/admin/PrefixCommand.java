@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
 import caexbot.util.StringUtil;
@@ -13,7 +15,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PrefixCommand extends CaexCommand {
+public class PrefixCommand extends CaexCommand implements Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -39,10 +41,15 @@ public class PrefixCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "Set prefix for the Guild (requires Administrator permision)";
 	}
 
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
 	@Override
 	public String getUsage(Guild g) {
 		return String.format("**[%s]** <prefix to set to> [blank to reset to default] ", StringUtil.cmdArrayToString(getAlias(), ", "	, g));
@@ -53,5 +60,9 @@ public class PrefixCommand extends CaexCommand {
 		
 		return Permission.ADMINISTRATOR;
 	}
-
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.ADMIN;
+	}
 }

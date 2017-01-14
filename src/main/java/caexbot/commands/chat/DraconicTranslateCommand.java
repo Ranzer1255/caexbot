@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.util.DraconicTranslator;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -15,7 +17,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class DraconicTranslateCommand extends CaexCommand {
+public class DraconicTranslateCommand extends CaexCommand implements Describable{
 
 	private static final String DICT = "/caexbot/draconic/dict.txt";
 	private DraconicTranslator trans;
@@ -49,8 +51,14 @@ public class DraconicTranslateCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "I speak Draconic! What do you want to know how to say?";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
 	}
 
 	@Override
@@ -60,5 +68,9 @@ public class DraconicTranslateCommand extends CaexCommand {
 				StringUtil.cmdArrayToString(getAlias(), ", ",g));
 		
 	}
-
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.CHAT;
+	}
 }

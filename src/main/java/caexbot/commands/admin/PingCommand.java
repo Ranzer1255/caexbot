@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
@@ -12,7 +14,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PingCommand extends CaexCommand implements DraconicCommand{
+public class PingCommand extends CaexCommand implements DraconicCommand, Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
@@ -43,13 +45,23 @@ public class PingCommand extends CaexCommand implements DraconicCommand{
 	}
 
 	@Override
-	public String getDescription() {
+	public String getShortDescription() {
 		return "pong!";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		return getShortDescription();
 	}
 
 	@Override
 	public List<String> getDraconicAlias() {
 		return Arrays.asList("relgar");
+	}
+
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.ADMIN;
 	}
 
 

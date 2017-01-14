@@ -4,13 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
+import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class YoutubeSearchCommand extends CaexCommand {
+public class YoutubeSearchCommand extends CaexCommand implements Describable{
 
 	private static final String YOUTUBE_BASE_STRING = "https://youtu.be/";
 	private YouTubeSearcher yts;
@@ -50,13 +53,24 @@ public class YoutubeSearchCommand extends CaexCommand {
 	}
 
 	@Override
-	public String getDescription() {
-		return "Search YouTube for your Videos!";
+	public String getShortDescription() {
+		return "Search YouTube for Videos!";
 	}
 
 	@Override
+	public String getLongDescription() {
+		// TODO make getLongDescription
+		return getShortDescription();
+	}
+	
+	@Override
 	public String getUsage(Guild g) {
 		return getPrefix(g)+getAlias().get(0) + " <your search terms>";//TODO match usage format
+	}
+	
+	@Override
+	public Catagory getCatagory() {
+		return Catagory.SEARCH;
 	}
 
 }
