@@ -6,6 +6,7 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -24,7 +25,9 @@ public class ShutdownCommand extends CaexCommand {
 		if (args.length>0&&args[0].equals("alert")) {
 			for (Guild g : event.getJDA().getGuilds()) {
 				try {
-					g.getPublicChannel().sendMessage("I've got to go.... \n*casts teleport and vanishes*").queue();
+					g.getPublicChannel().sendMessage("I've got to go.... \n" + 
+				((args.length>1)?StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1, args.length)), " ")+"\n":"")+
+				"*casts teleport and vanishes*").queue();
 				} catch (PermissionException e) {
 					Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
 				}
