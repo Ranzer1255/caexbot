@@ -38,17 +38,17 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		
 		//single command help line
 		if(args.length==1){
-			EmbedBuilder eb = new EmbedBuilder();
 			Logging.debug("help with arg (" +args[0]+")");
 			Optional<Describable> opt = getDescribables().stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 			Logging.debug(String.valueOf(opt.isPresent()));
 			if(opt.isPresent()){
+				EmbedBuilder eb = new EmbedBuilder();
 				Describable d = opt.get();
 				eb.setAuthor(d.getName(), null, null);
 				eb.setDescription(d.getLongDescription());
 				eb.setColor(d.getCatagory().COLOR);
 				eb.addField("Usage",d.getUsage(event.getGuild()),false);
-				eb.addField("Other Aliases", StringUtil.arrayToString(d.getAlias().subList(1, d.getAlias().size()), ", "), true );
+				eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? StringUtil.arrayToString(d.getAlias().subList(1, d.getAlias().size()), ", "):"*none*", true );
 				eb.addField("Catagory", d.getCatagory().toString(), true);
 				
 				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
@@ -58,26 +58,30 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		//full command list	
 		}else{
 			
-			Map<Catagory, List<Describable>> sorted = new HashMap<>();
+			Map<Catagory, List<Describable>> catagorized = new HashMap<>();
 			
-			for (Describable d : getDescribables()) {//TODO catagrize commands via Catagory
-				if(sorted.get(d.getCatagory())==null){
-					sorted.put(d.getCatagory(), new ArrayList<>());
+			for (Describable d : getDescribables()) {//TODO sort Categories alphabetically 
+				if(catagorized.get(d.getCatagory())==null){
+					catagorized.put(d.getCatagory(), new ArrayList<>());
 				}
-				sorted.get(d.getCatagory()).add(d);				
+				catagorized.get(d.getCatagory()).add(d);				
 			}	
+			StringBuilder sb = new StringBuilder();
+			EmbedBuilder eb = new EmbedBuilder();
 			
-			for (Catagory cat : sorted.keySet()) {
-				EmbedBuilder eb = new EmbedBuilder();
-				eb.setAuthor(cat.NAME, null, null);
-				eb.setColor(cat.COLOR);
-				for (Describable d : sorted.get(cat)) {
-					eb.addField(d.getName(), d.getShortDescription(), false);
+			eb.setAuthor("Full Command List", null, null);
+			eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
+			
+			for (Catagory cat : catagorized.keySet()) {
+				sb.append(String.format("**__%s__**\n", cat.NAME));
+				for (Describable d : catagorized.get(cat)) {
+					sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));
 				}
-				mb.setEmbed(eb.build());
-				channel.sendMessage(mb.build()).queue();
+				sb.append("\n");
 			}
-			
+			eb.setDescription(sb.toString());
+			mb.setEmbed(eb.build());
+			channel.sendMessage(mb.build()).queue();
 		}
 	}
 
