@@ -32,6 +32,31 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.10</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <showConsoleWindow>false</showConsoleWindow>
+          <platforms>
+            <platform>windows</platform>
+          </platforms>
+          <programs>
+            <program>
+              <mainClass>caexbot.CaexBot</mainClass>
+              <id>StartCaex</id>
+            </program>
+          </programs>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <repositories>
