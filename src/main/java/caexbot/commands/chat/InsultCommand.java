@@ -35,10 +35,8 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			channel.sendMessage(sb.toString()).queue();
 			
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -66,14 +64,13 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public String getUsage(Guild g) {
-		// TODO make getUsage
-		return null;
+		return getPrefix(g)+getName()+" [@user/users you want to insult]";
 	}
 
 	@Override
 	public String getLongDescription() {
 		// TODO make getLongDescription
-		return null;
+		return getShortDescription();
 	}
 
 }
