@@ -1,12 +1,14 @@
 package caexbot.functions.levels;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class UserLevel implements Comparable<UserLevel> {
 
 	private static final int NUM_LEVELS = 20;
 	private int experience;
 	private int level;
+	private Date lastXP;
 	private static ArrayList<Integer> levels= new ArrayList<>();
 	
 	static{
@@ -38,6 +40,7 @@ public class UserLevel implements Comparable<UserLevel> {
 
 	public boolean addXP(int XP) {
 		experience += XP;
+		lastXP=new Date();
 		if(experience>levels.get(level)){
 			level++;
 			return true;
@@ -62,5 +65,9 @@ public class UserLevel implements Comparable<UserLevel> {
 			return -1;
 		return 0;
 		
+	}
+
+	public Date getLastXPTime() {
+		return lastXP;
 	}
 }
