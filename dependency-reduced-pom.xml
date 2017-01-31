@@ -4,7 +4,7 @@
   <groupId>com.ranzer.caexbot</groupId>
   <artifactId>caexbot</artifactId>
   <name>Caex Bot for Discord</name>
-  <version>2.2.2</version>
+  <version>2.3.0</version>
   <description>Bot for Ranzer's Playground Discord Server</description>
   <url>https://github.com/Sgmaniac1255/caexbot</url>
   <issueManagement>

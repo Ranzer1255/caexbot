@@ -69,13 +69,13 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public String getLongDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "in progress please bear with me";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
 		// TODO make getUsage
-		return null;
+		return "in progress....";
 	}
 
 }

@@ -129,6 +129,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			return;
 		}
 		player.playTrack(queue.remove());
+		player.setPaused(false);
 
 	}
 
@@ -222,6 +223,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		@Override
 		public void noMatches() {
 			// TODO make noMatches
+			
+			System.out.println("no match?");
 
 		}
 

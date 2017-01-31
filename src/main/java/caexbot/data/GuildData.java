@@ -12,6 +12,7 @@ import caexbot.functions.levels.UserLevel;
 import caexbot.functions.music.MusicEventListener;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
+import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -155,6 +156,10 @@ public class GuildData {
 			
 			if(event instanceof MusicJoinEvent){
 				getMusicChannel().sendMessage(String.format(MusicCommand.JOIN, ((MusicJoinEvent) event).getChannelJoined().getName())).queue();
+			}
+			
+			else if (event instanceof MusicStartEvent){
+				getMusicChannel().sendMessage("Starting the music :wink:").queue();
 			}
 			
 			else{
