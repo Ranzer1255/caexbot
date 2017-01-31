@@ -32,6 +32,7 @@ public class LevelUpdater extends ListenerAdapter{
 							sleep(MESSAGE_TIMEOUT);
 						} catch (InterruptedException e) {}//do nothing
 						messageTimeout.remove(event.getAuthor());
+						interrupt();
 					}
 				}.start();
 			}

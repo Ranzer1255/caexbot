@@ -1,16 +1,7 @@
 package caexbot.commands.search;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.SearchListResponse;
-import com.google.api.services.youtube.model.SearchResult;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
@@ -25,60 +16,35 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class YoutubeSearchCommand extends CaexCommand implements Describable{
 
 	private static final String YOUTUBE_BASE_STRING = "https://youtu.be/";
-	private CaexConfiguration config;
+	private YouTubeSearcher yts;
 	
 	public YoutubeSearchCommand() {
-		config = CaexConfiguration.getInstance();
+		yts = new YouTubeSearcher();
 	}
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder queryBuilder = new StringBuilder();
-		String timestamp=null;
-		if(args[0].startsWith("-")){
-			if(args[0].substring(1, args[0].length()).equals("time")){
-				timestamp = args[1];
-				args=Arrays.copyOfRange(args, 2, args.length);
-			}
-		}
 		
 		for (int i = 0; i < args.length; i++) {
 			queryBuilder.append(args[i]).append(" ");
 		}
-		String query = queryBuilder.toString();
-		Logging.debug(query);
+		String videoID = yts.searchForVideo(queryBuilder.toString());
 
-		YouTube yt = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
-			
-			@Override
-			public void initialize(HttpRequest request) throws IOException {}//no-op
-		}).setApplicationName("CaexBot").build();
+
+		Logging.debug(queryBuilder.toString()+" : " +videoID);
 		
-		try {
-			YouTube.Search.List search = yt.search().list("snippet");
-			search.setKey(config.getGToken());
-			search.setQ(query);
-			search.setType("video");
-			
-			SearchListResponse response = search.execute();
-			List<SearchResult> resultList = response.getItems();
-			for (SearchResult searchResult : resultList) {
-				Logging.debug(searchResult.getId().getKind()+" "+searchResult.getSnippet().getTitle());
-			}
-			if (resultList.size()>0){
-				StringBuilder youtubeURL = new StringBuilder().append(YOUTUBE_BASE_STRING)
-						.append(resultList.get(0).getId().getVideoId());
-				if(timestamp!=null){
-					youtubeURL.append(String.format("?t=%s", timestamp));
-				}
-				channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
-			} else {
-				channel.sendMessage("I'm sorry, i didnt find anything").queue();
-			}
-			
-		} catch (IOException e) {
-			Logging.error(e.getMessage());
-			Logging.log(e);
+		if(videoID!=null){
+			StringBuilder youtubeURL = new StringBuilder();
+			youtubeURL.append(YOUTUBE_BASE_STRING).append(videoID);
+			channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
+		} else {
+			channel.sendMessage("I'm sorry, i didn't find anything").queue();			
+
+
 		}
+
+		
+
 	}
 
 	@Override
