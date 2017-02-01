@@ -12,6 +12,8 @@ import caexbot.functions.levels.UserLevel;
 import caexbot.functions.music.MusicEventListener;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
+import caexbot.functions.music.events.MusicLoadEvent;
+import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
@@ -159,7 +161,16 @@ public class GuildData {
 			}
 			
 			else if (event instanceof MusicStartEvent){
-				getMusicChannel().sendMessage("Starting the music :wink:").queue();
+				getMusicChannel().sendMessage(String.format(MusicCommand.NOW_PLAYING, "youtu.be/"+((MusicStartEvent) event).getSong().getIdentifier())).queue();
+			}
+			
+			else if (event instanceof MusicSkipEvent){
+				getMusicChannel().sendMessage("Skipping the rest of the Current song :stuck_out_tongue:").queue();
+			}
+			
+			else if (event instanceof MusicLoadEvent){
+				getMusicChannel().sendMessage(String.format("Loaded %s sucssesfuly\n%s", 
+						((MusicLoadEvent) event).getSong().getInfo().title, "youtu.be/"+((MusicLoadEvent) event).getSong().getIdentifier())).queue();
 			}
 			
 			else{

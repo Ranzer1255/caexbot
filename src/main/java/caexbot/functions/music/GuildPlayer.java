@@ -18,6 +18,8 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import caexbot.commands.search.YouTubeSearcher;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
+import caexbot.functions.music.events.MusicLoadEvent;
+import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
@@ -205,7 +207,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		@Override
 		public void trackLoaded(AudioTrack track) {
 			queue.add(track);
-//			notifyOfEvent(Event.TRACK_LOAD); TODO
+			notifyOfEvent(new MusicLoadEvent(track));
 			loading = false;
 
 		}

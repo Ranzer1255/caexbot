@@ -20,6 +20,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	public static final String JOIN = "Joining Channel %s";
 	public static final String ADD = "Adding song to queue:\n%s";
+	public static final String NOW_PLAYING = "Now playing:\n%s";
 
 	private static List<CaexCommand> subCommands;
 
