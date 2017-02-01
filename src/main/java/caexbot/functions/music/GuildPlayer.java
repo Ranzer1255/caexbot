@@ -21,6 +21,7 @@ import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
@@ -214,7 +215,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		@Override
 		public void playlistLoaded(AudioPlaylist playlist) {
-//			notifyOfEvent(Event.PLAYLIST_LOAD);  TODO
+			notifyOfEvent(new PlaylistLoadEvent(playlist));
+			
 			for (AudioTrack track : playlist.getTracks()) {
 				queue.add(track);
 			}

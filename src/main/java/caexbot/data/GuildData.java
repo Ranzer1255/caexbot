@@ -15,6 +15,7 @@ import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -171,6 +172,11 @@ public class GuildData {
 			else if (event instanceof MusicLoadEvent){
 				getMusicChannel().sendMessage(String.format("Loaded %s sucssesfuly\n%s", 
 						((MusicLoadEvent) event).getSong().getInfo().title, "youtu.be/"+((MusicLoadEvent) event).getSong().getIdentifier())).queue();
+			}
+			
+			else if (event instanceof PlaylistLoadEvent){
+				getMusicChannel().sendMessage(String.format("Loaded Playlist: %s",
+						((PlaylistLoadEvent) event).getList().getName())).queue();
 			}
 			
 			else{
