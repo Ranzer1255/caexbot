@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import javax.swing.plaf.multi.MultiScrollPaneUI;
+
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
@@ -19,9 +21,11 @@ import caexbot.commands.search.YouTubeSearcher;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
+import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
+import caexbot.functions.music.events.VolumeChangeEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
@@ -148,10 +152,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	}
 
 	public void vol(int vol) {
+		notifyOfEvent(new VolumeChangeEvent(vol));
 		player.setVolume(vol);
 	}
 
 	public void pause() {
+		notifyOfEvent(new MusicPausedEvent(player.isPaused()));
 		player.setPaused(!player.isPaused());
 
 	}
