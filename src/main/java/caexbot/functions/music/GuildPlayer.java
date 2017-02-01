@@ -1,6 +1,7 @@
 package caexbot.functions.music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -18,7 +19,13 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import caexbot.commands.search.YouTubeSearcher;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
+import caexbot.functions.music.events.MusicLoadEvent;
+import caexbot.functions.music.events.MusicPausedEvent;
+import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.PlaylistLoadEvent;
+import caexbot.functions.music.events.ShuffleEvent;
+import caexbot.functions.music.events.VolumeChangeEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
@@ -129,6 +136,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			return;
 		}
 		player.playTrack(queue.remove());
+		player.setPaused(false);
 
 	}
 
@@ -144,12 +152,20 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	}
 
 	public void vol(int vol) {
+		notifyOfEvent(new VolumeChangeEvent(vol));
 		player.setVolume(vol);
 	}
 
 	public void pause() {
+		notifyOfEvent(new MusicPausedEvent(player.isPaused()));
 		player.setPaused(!player.isPaused());
 
+	}
+
+	public void shuffle() {
+		notifyOfEvent(new ShuffleEvent());
+		queue.shuffle();
+		
 	}
 
 	public boolean isPlaying() {
@@ -204,14 +220,15 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		@Override
 		public void trackLoaded(AudioTrack track) {
 			queue.add(track);
-//			notifyOfEvent(Event.TRACK_LOAD); TODO
+			notifyOfEvent(new MusicLoadEvent(track));
 			loading = false;
 
 		}
 
 		@Override
 		public void playlistLoaded(AudioPlaylist playlist) {
-//			notifyOfEvent(Event.PLAYLIST_LOAD);  TODO
+			notifyOfEvent(new PlaylistLoadEvent(playlist));
+			
 			for (AudioTrack track : playlist.getTracks()) {
 				queue.add(track);
 			}
@@ -222,6 +239,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		@Override
 		public void noMatches() {
 			// TODO make noMatches
+			
+			System.out.println("no match?");
 
 		}
 
@@ -246,6 +265,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		public List<AudioTrack> getQueue() {
 			return (LinkedList<AudioTrack>) queue;
+		}
+
+		public void shuffle() {
+			Collections.shuffle((List<?>) queue);
+			
 		}
 
 		/**

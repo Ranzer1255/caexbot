@@ -1,3 +1,4 @@
 /target/
 /caexBot.jar
 src/main/java/CustomText.java
+/dependency-reduced-pom.xml

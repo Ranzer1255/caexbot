@@ -29,7 +29,6 @@ public class JoinCommand extends AbstractMusicCommand implements Describable{
 		
 		if(join!=null){	
 			GuildPlayerManager.getPlayer(event.getGuild()).join(join);
-//			channel.sendMessage(String.format(MusicCommand.JOIN, join.getName() )).queue(); 
 		}
 	}
 

@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import caexbot.commands.music.MusicCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
 import caexbot.functions.levels.UserLevel;
-import caexbot.functions.music.MusicEventListener;
-import caexbot.functions.music.events.MusicEvent;
-import caexbot.functions.music.events.MusicJoinEvent;
+import caexbot.functions.music.MusicListener;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -133,37 +130,6 @@ public class GuildData {
 	 */
 	public void setMusicChannel(TextChannel musicChannel) {
 		this.musicListener.setMusicChannel(musicChannel);
-	}
-
-	public class MusicListener implements MusicEventListener{
-		private TextChannel musicChannel;
-	
-		public MusicListener() {
-		}
-	
-		public TextChannel getMusicChannel() {
-			return musicChannel;
-		}
-	
-		public void setMusicChannel(TextChannel musicChannel) {
-			this.musicChannel = musicChannel;
-		}
-
-		@Override
-		public void handleEvent(MusicEvent event) {
-			
-			
-			if(event instanceof MusicJoinEvent){
-				getMusicChannel().sendMessage(String.format(MusicCommand.JOIN, ((MusicJoinEvent) event).getChannelJoined().getName())).queue();
-			}
-			
-			else{
-				getMusicChannel().sendMessage("This music event isn't hanndled yet.... Yell at ranzer ("+event.getClass().getSimpleName()+")").queue();
-			
-			}
-			
-			
-		}
 	}
 	
 	

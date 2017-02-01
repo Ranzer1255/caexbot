@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ranzer.caexbot</groupId>
   <artifactId>caexbot</artifactId>
-  <version>2.2.1_AudioDev</version>
+  <version>2.4.2</version>
   <name> Caex Bot for Discord</name>
   <description>Bot for Ranzer's Playground Discord Server</description>
   
@@ -24,12 +24,12 @@
   	<dependency>
   	  <groupId>net.dv8tion</groupId>
       <artifactId>JDA</artifactId>
-      <version>3.0.BETA2_118</version>
+      <version>3.0.BETA2_123</version>
   	</dependency>
  	<dependency>
       <groupId>com.sedmelluq</groupId>
       <artifactId>lavaplayer</artifactId>
-      <version>1.1.36</version>
+      <version>1.1.45</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -87,27 +87,53 @@
   </properties>
  
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>2.4.3</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>caexbot.CaexBot</mainClass>
-                </transformer>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build> 
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>caexbot.CaexBot</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<showConsoleWindow>false</showConsoleWindow>
+					<platforms>
+						<platform>windows</platform>
+					</platforms>
+					<programs>
+						<program>
+							<mainClass>caexbot.CaexBot</mainClass>
+							<id>StartCaex</id>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

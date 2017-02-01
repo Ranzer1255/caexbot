@@ -20,6 +20,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	public static final String JOIN = "Joining Channel %s";
 	public static final String ADD = "Adding song to queue:\n%s";
+	public static final String NOW_PLAYING = "Now playing:\n%s";
 
 	private static List<CaexCommand> subCommands;
 
@@ -32,6 +33,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		subCommands.add(new StopCommand());
 		subCommands.add(new SkipCommand());
 		subCommands.add(new VolCommand());
+		subCommands.add(new ShuffleCommand());
 	}
 
 	public MusicCommand() {
@@ -69,13 +71,13 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public String getLongDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "in progress please bear with me";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
 		// TODO make getUsage
-		return null;
+		return "in progress....";
 	}
 
 }
