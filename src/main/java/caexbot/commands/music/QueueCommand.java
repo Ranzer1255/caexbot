@@ -62,7 +62,6 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				GuildPlayerManager.getPlayer(event.getGuild()).queueID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));
 			} else {
 				GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
-				channel.sendMessage("Video added").queue();//TODO handle confirmation differently (event handling in music player)
 			}
 		}
 	

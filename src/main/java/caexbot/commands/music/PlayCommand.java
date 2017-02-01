@@ -19,18 +19,14 @@ public class PlayCommand extends AbstractMusicCommand implements Describable{
 
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){
-//			channel.sendMessage("searching...").queue();//breadcrumb
 			player.queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
 		}
 		
 		if(!player.isConnected()){
-//			channel.sendMessage("joining...").queue();//breadcrumb
-			channel.sendMessage(String.format(MusicCommand.JOIN, event.getGuild().getMember(author).getVoiceState().getChannel().getName())).queue();
 			player.join(event.getGuild().getMember(author).getVoiceState().getChannel());
 		}
 		
 		player.start();
-//		channel.sendMessage("playing...").queue();//bread crumb
 	}
 
 	@Override
