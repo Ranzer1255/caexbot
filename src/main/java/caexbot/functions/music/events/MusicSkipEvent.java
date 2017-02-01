@@ -4,8 +4,12 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 public class MusicSkipEvent extends MusicEvent {
 
+	private AudioTrack skippedTrack;
 	public MusicSkipEvent(AudioTrack track) {
-		// TODO Auto-generated constructor stub
+		skippedTrack = track;
 	}
-
+	
+	public AudioTrack getSkippedTrack() {
+		return skippedTrack;
+	}
 }
