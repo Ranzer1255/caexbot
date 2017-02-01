@@ -1,3 +1,0 @@
-TODOs 
-Refactor commands using Strategy Pattern!
-	implement subcommands and invalidUsage via the stratagy pattern
