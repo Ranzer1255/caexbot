@@ -1,8 +1,6 @@
-package caexbot.functions.music;
+package caexbot.functions.music.events;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-
-import caexbot.functions.music.events.MusicEvent;
 
 public class MusicSkipEvent extends MusicEvent {
 
