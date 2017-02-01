@@ -6,7 +6,6 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
-import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;

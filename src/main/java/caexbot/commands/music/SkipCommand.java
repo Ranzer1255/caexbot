@@ -3,7 +3,6 @@ package caexbot.commands.music;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.Guild;
