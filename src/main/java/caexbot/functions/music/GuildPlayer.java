@@ -1,6 +1,7 @@
 package caexbot.functions.music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -25,6 +26,7 @@ import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
+import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
@@ -162,6 +164,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 	}
 
+	public void shuffle() {
+		notifyOfEvent(new ShuffleEvent());
+		queue.shuffle();
+		
+	}
+
 	public boolean isPlaying() {
 		return !player.isPaused();
 	}
@@ -259,6 +267,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		public List<AudioTrack> getQueue() {
 			return (LinkedList<AudioTrack>) queue;
+		}
+
+		public void shuffle() {
+			Collections.shuffle((List<?>) queue);
+			
 		}
 
 		/**
