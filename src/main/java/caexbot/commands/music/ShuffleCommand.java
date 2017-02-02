@@ -18,8 +18,7 @@ public class ShuffleCommand extends AbstractMusicCommand {
 
 	@Override
 	public List<String> getAlias() {
-		// TODO Auto-generated method stub
-		return Arrays.asList("Shuffle");
+		return Arrays.asList("shuffle");
 	}
 
 }
