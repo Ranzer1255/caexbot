@@ -26,12 +26,14 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		StringBuilder sb = new StringBuilder();
 		
 		for ( User u : event.getMessage().getMentionedUsers()) {
-			if(u.getId()==CaexConfiguration.getInstance().getOwner()){
-				channel.sendMessage("You want me to insult him?!?!.... \n I'm sorry but i can't insult him.... he'll kill me").queue();
+			System.out.println(u.getId());
+			if(u.getId().equals(CaexConfiguration.getInstance().getOwner())){
+				channel.sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
 				continue;
 			}
 			sb.append(u.getAsMention()+", ");
 		}
+		if(sb.length()==0) return;//don't throw an insult if no one was tagged.
 		try {
 			Document doc = Jsoup.parse(new URL("http://www.insultgenerator.org"), 3000);
 			String insult = doc.getElementsByClass("wrap").get(0).html().replace("<br>", "").replace("\n", "");
