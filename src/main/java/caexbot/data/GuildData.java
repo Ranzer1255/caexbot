@@ -23,6 +23,7 @@ public class GuildData {
 	 */
 	private MusicListener musicListener = new MusicListener();
 	private Map<User, UserLevel> guildXP;
+	private List<TextChannel> exemptXPChannels;
 	
 	public GuildData(Guild guild) {
 		this.guild=guild;
