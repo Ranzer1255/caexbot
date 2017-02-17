@@ -55,7 +55,7 @@ public class CaexBot {
 		commands = new CommandListener(JDA);
 		
 		commands.addCommand(new HelpCommand(commands))
-				.addCommand(new InsultCommand())
+//				.addCommand(new InsultCommand()) //dissabled as the generating site is down
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())
