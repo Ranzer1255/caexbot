@@ -19,7 +19,7 @@ public class GuildData {
 	private Guild guild;
 	private String prefix;
 	/*
-	 * this is in guild data because it will eventualy be a setting that can be set by a guild admin
+	 * this is in guild data because it will eventually be a setting that can be set by a guild admin
 	 */
 	private MusicListener musicListener = new MusicListener();
 	private Map<User, UserLevel> guildXP;
