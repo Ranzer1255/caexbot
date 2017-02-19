@@ -49,6 +49,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	private boolean loading;
 
 	private List<MusicEventListener> listeners = new ArrayList<>();
+	private MusicListener musicListener;//This may move or become a different implementation
 
 	public GuildPlayer(AudioPlayerManager pm, Guild guild) {
 		this.pm = pm;
@@ -58,6 +59,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		loader = new TrackLoader(queue, this.pm);
 		guildAM = guild.getAudioManager();
 		guildAM.setSendingHandler(this);
+		musicListener = new MusicListener(guild);
+		addListener(musicListener);
 
 	}
 
