@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
 import caexbot.functions.levels.UserLevel;
-import caexbot.functions.music.MusicListener;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -21,7 +20,7 @@ public class GuildData {
 	/*
 	 * this is in guild data because it will eventually be a setting that can be set by a guild admin
 	 */
-	private MusicListener musicListener = new MusicListener();
+
 	private Map<User, UserLevel> guildXP;
 	
 	public GuildData(Guild guild) {
@@ -108,18 +107,12 @@ public class GuildData {
 		this.prefix=null;
 		CaexDB.removePrefix(guild);
 	}
-
-	public MusicListener getMusicListener() {
-		return musicListener;
-	}
-
-
 	/**
 	 * 
 	 * @return last used channel for music
 	 */
 	public TextChannel getMusicChannel() {
-		return musicListener.getMusicChannel();
+		return null;//TODO pull from DB
 	}
 	
 	
@@ -129,7 +122,7 @@ public class GuildData {
 	 * @param musicChannel
 	 */
 	public void setMusicChannel(TextChannel musicChannel) {
-		this.musicListener.setMusicChannel(musicChannel);
+		//TODO push to DB
 	}
 	
 	
