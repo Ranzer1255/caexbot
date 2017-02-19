@@ -9,7 +9,6 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 
-import caexbot.data.GuildManager;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 
@@ -22,7 +21,6 @@ public class GuildPlayerManager {
 		GuildPlayer rtn = players.get(k);
 		if(rtn == null){
 			rtn = new GuildPlayer(pm, k);
-			rtn.addListener(GuildManager.getGuildData(k).getMusicListener());
 			players.put(k, rtn);
 		}
 		return rtn;
