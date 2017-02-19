@@ -1,9 +1,5 @@
 package caexbot.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import caexbot.database.CaexDB;
 import net.dv8tion.jda.core.entities.Guild;
 
 /**
