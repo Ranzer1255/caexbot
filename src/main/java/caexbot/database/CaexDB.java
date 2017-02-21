@@ -20,7 +20,7 @@ public class CaexDB {
 
 	private static Connection connection;
 	
-	private static Connection getConnection(){
+	public static Connection getConnection(){
 		CaexConfiguration config = CaexConfiguration.getInstance();
 		try {
 			if (connection == null || connection.isClosed()){

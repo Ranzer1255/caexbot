@@ -1,6 +1,8 @@
 package caexbot.data;
 
-import java.util.HashMap;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,41 +18,12 @@ import net.dv8tion.jda.core.entities.User;
 public class GuildData {
 
 	private Guild guild;
-	private String prefix;
 	/*
 	 * this is in guild data because it will eventually be a setting that can be set by a guild admin
 	 */
-
-	private Map<User, UserLevel> guildXP;
 	
 	public GuildData(Guild guild) {
 		this.guild=guild;
-		guildXP = new HashMap<>();
-		if(!loadFromDB())
-			save();
-	}
-	
-	
-	private void save() {
-		guildXP=new HashMap<>();
-		
-	}
-	
-	/**
-	 * load guild data from DB
-	 * 
-	 * @return false if guild isn't in DB
-	 */
-	private boolean loadFromDB() {
-		
-		prefix = CaexDB.loadPrefixes().get(guild);//TODO re-implement prefix from DB
-		guildXP = CaexDB.getLevels().get(guild);//TODO re-implement level map from DB
-		
-		if(prefix!=null||guildXP!=null)
-			return true;
-		else
-			return false;
-		
 	}
 
 
@@ -89,6 +62,22 @@ public class GuildData {
 	
 	//prefix methods
 	public String getPrefix() {
+		String prefix=null;
+		
+		try {
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement("select prefix from guild where guild_id = ?");
+			stmt.setString(1, guild.getId());
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				prefix=rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if (prefix==null){
 			return CaexConfiguration.getInstance().getPrefix();
 		}
@@ -96,15 +85,35 @@ public class GuildData {
 	}
 	
 	public void setPrefix(String prefix) {
-		prefix = prefix.toLowerCase();
-		
-		this.prefix = prefix;
-
-		CaexDB.savePrefix(guild, prefix);
+		if (prefix!=null) {
+			prefix = prefix.toLowerCase();
+			try {
+				PreparedStatement stmt = CaexDB.getConnection()
+						.prepareStatement("insert into guild_prefix values (?,?) on duplicate key update prefix=?;");
+				stmt.setString(1, guild.getId());
+				stmt.setString(2, prefix);
+				stmt.setString(3, prefix);
+				stmt.execute();
+			} catch (Exception e) {
+				Logging.error(e.getMessage());
+				Logging.log(e);
+			} 
+		} else {
+			removePrefix();
+		}
 	}
 	
 	public void removePrefix() {
-		this.prefix=null;
+		
+		try {
+			PreparedStatement stmt = CaexDB.getConnection()
+					.prepareStatement("delete from guild where guild_id = ?;");
+			stmt.setString(1, guild.getId());
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		CaexDB.removePrefix(guild);
 	}
 	/**

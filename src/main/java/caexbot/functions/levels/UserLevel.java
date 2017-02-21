@@ -33,7 +33,7 @@ public class UserLevel implements Comparable<UserLevel> {
 		return getLevel(getXP());
 	}
 	
-	private int getLevel(int xp){
+	public static int getLevel(int xp){
 		int rtn = 1;
 		boolean found=false;
 		while(!found){
@@ -46,7 +46,7 @@ public class UserLevel implements Comparable<UserLevel> {
 		return rtn-1;
 	}
 	
-	public int calcXPForLevel(int level){
+	static public int calcXPForLevel(int level){
 		if (level == 1){
 			return 0;
 		} else {
