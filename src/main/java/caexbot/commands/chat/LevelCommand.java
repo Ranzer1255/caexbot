@@ -35,7 +35,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
 			.setColor(event.getMember().getColor())
 			.setThumbnail(author.getAvatarUrl())
-			.setTitle("XP Breakdown")
+			.setTitle("XP Breakdown",null)
 			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
 			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
 		
