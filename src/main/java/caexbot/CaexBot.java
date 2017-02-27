@@ -19,6 +19,7 @@ import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
+import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -71,6 +72,8 @@ public class CaexBot {
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
+		JDA.addEventListener(new GuildManager());
+		
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
 		//color controls buggy and unreliable ATM
