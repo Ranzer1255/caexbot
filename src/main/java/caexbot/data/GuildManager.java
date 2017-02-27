@@ -119,6 +119,8 @@ public class GuildManager extends ListenerAdapter{
 		List<Guild> guilds = CaexBot.getJDA().getGuilds();
 		for(Guild g:guilds){
 			try {
+				
+				//TODO this hits the DB with a qurery for every guild on startup.... may optimize this later
 				PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 						"insert into guild(guild_id) values (?) on duplicate key update guild_id = guild_id"
 				);
