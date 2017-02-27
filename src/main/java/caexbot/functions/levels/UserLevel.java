@@ -1,28 +1,22 @@
 package caexbot.functions.levels;
 
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.User;
+
 public class UserLevel implements Comparable<UserLevel> {
 
-	private int experience;
-	private int level;
+	final private int experience;
+	final private Member member;
 	
 	/**
 	 * create new UserLevel with initial Expereience
 	 * @param XP
 	 */
-	public UserLevel(int XP) {
+	public UserLevel(Member m, int XP) {
 		experience = XP;
+		member=m;
 		
-		level=getLevel(XP);
-		
-	}
-
-	public boolean addXP(int XP) {
-		experience += XP;
-		if(getLevel()>level){
-			level=getLevel();
-			return true;
-		}
-		return false;
 	}
 
 	public int getXP() {
@@ -33,6 +27,18 @@ public class UserLevel implements Comparable<UserLevel> {
 		return getLevel(getXP());
 	}
 	
+	public Member getMember(){
+		return member;
+	}
+	
+	public User getUser() {
+		return member.getUser();
+	}
+
+	public Guild getGuild() {
+		return member.getGuild();
+	}
+
 	public static int getLevel(int xp){
 		int rtn = 1;
 		boolean found=false;
