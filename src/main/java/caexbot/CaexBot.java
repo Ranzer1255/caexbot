@@ -55,7 +55,7 @@ public class CaexBot {
 		commands = new CommandListener(JDA);
 		
 		commands.addCommand(new HelpCommand(commands))
-//				.addCommand(new InsultCommand()) //dissabled as the generating site is down
+//				.addCommand(new InsultCommand()) //disabled as the generating site is down
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())
@@ -83,7 +83,8 @@ public class CaexBot {
 			for(Guild g: JDA.getGuilds()){
 				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
 			}
-		}
+		}		
+		
 		Logging.info("Done Loading and ready to go!");
 	}
 
