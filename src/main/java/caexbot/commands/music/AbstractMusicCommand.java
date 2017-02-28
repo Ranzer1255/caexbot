@@ -2,7 +2,6 @@ package caexbot.commands.music;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
-import caexbot.data.GuildManager;
 import caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.core.entities.TextChannel;
 
