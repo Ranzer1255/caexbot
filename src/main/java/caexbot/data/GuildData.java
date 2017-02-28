@@ -127,7 +127,7 @@ public class GuildData {
 			prefix = prefix.toLowerCase();
 			try {
 				PreparedStatement stmt = CaexDB.getConnection()
-						.prepareStatement("insert into guild_prefix values (?,?) on duplicate key update prefix=?;");
+						.prepareStatement("insert into guild (guild_id, prefix) values (?,?) on duplicate key update prefix=?;");
 				stmt.setString(1, guild.getId());
 				stmt.setString(2, prefix);
 				stmt.setString(3, prefix);
@@ -159,6 +159,7 @@ public class GuildData {
 	 * @return last used channel for music
 	 */
 	public TextChannel getMusicChannel() {
+		
 		return null;//TODO pull from DB
 	}
 	

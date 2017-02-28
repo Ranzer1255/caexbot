@@ -69,6 +69,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		listeners.add(listener);
 	}
 
+	public MusicListener getMusicListener() {
+		return musicListener;
+	}
+
 	private void notifyOfEvent(MusicEvent event) {
 
 		for (MusicEventListener l : listeners) {

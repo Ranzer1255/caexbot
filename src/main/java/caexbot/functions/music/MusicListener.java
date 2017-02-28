@@ -13,17 +13,25 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 public class MusicListener implements MusicEventListener{
 	private Guild guild;
+	private TextChannel lastMusicChannel;
 
 	public MusicListener(Guild g) {
 		guild = g;
 	}
 
 	public TextChannel getMusicChannel() {
-		return GuildManager.getGuildData(guild).getMusicChannel();
+		TextChannel mc = GuildManager.getGuildData(guild).getMusicChannel();
+		
+		if (mc==null){
+			mc = lastMusicChannel;
+		}
+		
+		return mc;
 	}
 
 	public void setMusicChannel(TextChannel musicChannel) {
-		GuildManager.getGuildData(guild).setMusicChannel(musicChannel);
+//		GuildManager.getGuildData(guild).setMusicChannel(musicChannel); TODO move this to an administraton command
+		lastMusicChannel=musicChannel;
 	}
 
 	@Override
