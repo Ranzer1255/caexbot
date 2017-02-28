@@ -2,7 +2,6 @@ package caexbot.commands.chat;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
@@ -35,7 +34,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
 			.setColor(event.getMember().getColor())
 			.setThumbnail(author.getAvatarUrl())
-			.setTitle("XP Breakdown")
+			.setTitle("XP Breakdown",null)
 			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
 			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
 		
@@ -85,17 +84,17 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder msg = new StringBuilder();
 		
-		List<Map.Entry<User, UserLevel>> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
+		List<UserLevel> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
 		
 		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		int index=0;
-		for (Map.Entry<User, UserLevel> entry : rankings) {
+		for (UserLevel entry : rankings) {
 			if(index++>=10) break;
 			msg.append(
 				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
-					channel.getGuild().getMember(entry.getKey()).getEffectiveName(), 
-					entry.getValue().getLevel(),
-					entry.getValue().getXP()
+					entry.getMember().getEffectiveName(), 
+					entry.getLevel(),
+					entry.getXP()
 				)
 			);
 		}

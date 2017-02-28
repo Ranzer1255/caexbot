@@ -1,26 +1,37 @@
 package caexbot.functions.music;
 
 import caexbot.commands.music.MusicCommand;
+import caexbot.data.GuildManager;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class MusicListener implements MusicEventListener{
-	private TextChannel musicChannel;
+	private Guild guild;
+	private TextChannel lastMusicChannel;
 
-	public MusicListener() {
+	public MusicListener(Guild g) {
+		guild = g;
 	}
 
 	public TextChannel getMusicChannel() {
-		return musicChannel;
+		TextChannel mc = GuildManager.getGuildData(guild).getMusicChannel();
+		
+		if (mc==null){
+			mc = lastMusicChannel;
+		}
+		
+		return mc;
 	}
 
 	public void setMusicChannel(TextChannel musicChannel) {
-		this.musicChannel = musicChannel;
+//		GuildManager.getGuildData(guild).setMusicChannel(musicChannel); TODO move this to an administraton command
+		lastMusicChannel=musicChannel;
 	}
 
 	@Override
