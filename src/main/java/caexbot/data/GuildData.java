@@ -31,8 +31,9 @@ public class GuildData {
 		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
 		
 		try{
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement("insert into member (guild_id, user_id, xp) values (?,?,?)"
-																		   + "on duplicate key update xp=xp+?;");
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					"insert into member (guild_id, user_id, xp) values (?,?,?)"
+					+ "on duplicate key update xp=xp+?;");
 			stmt.setString(1, guild.getId());
 			stmt.setString(2, author.getId());
 			stmt.setInt(3, XP);
@@ -68,8 +69,8 @@ public class GuildData {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue getting GuildRankings");
+			Logging.log(e);
 		}
 		
 		return ranking;
@@ -90,8 +91,9 @@ public class GuildData {
 			return rs.getInt(1);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			Logging.error("issue getting user's XP");
+			Logging.log(e);
 			return -1;
 		}
 		
@@ -103,7 +105,9 @@ public class GuildData {
 		String prefix=null;
 		
 		try {
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement("select prefix from guild where guild_id = ?");
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					"select prefix from guild where guild_id = ?"
+			);
 			stmt.setString(1, guild.getId());
 			ResultSet rs = stmt.executeQuery();
 			
@@ -112,8 +116,9 @@ public class GuildData {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			Logging.error("issue getting Prefix");
+			Logging.log(e);
 		}
 		
 		if (prefix==null){
@@ -127,7 +132,10 @@ public class GuildData {
 			prefix = prefix.toLowerCase();
 			try {
 				PreparedStatement stmt = CaexDB.getConnection()
-						.prepareStatement("insert into guild (guild_id, prefix) values (?,?) on duplicate key update prefix=?;");
+						.prepareStatement(
+						"insert into guild (guild_id, prefix) values (?,?) "
+						+ "on duplicate key update prefix=?;"
+				);
 				stmt.setString(1, guild.getId());
 				stmt.setString(2, prefix);
 				stmt.setString(3, prefix);
@@ -149,28 +157,57 @@ public class GuildData {
 			stmt.setString(1, guild.getId());
 			stmt.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			Logging.error("issue removeing prefix");
+			Logging.log(e);
 		}
 		CaexDB.removePrefix(guild);
 	}
 	/**
 	 * 
-	 * @return last used channel for music
+	 * @return admin defined channel for music
 	 */
 	public TextChannel getMusicChannel() {
 		
-		return null;//TODO pull from DB
+		try {
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				"select def_chan_music from guild where guild_id = ?;"	
+			);
+			
+			stmt.setString(1, guild.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			rs.next();
+			return CaexBot.getJDA().getTextChannelById(rs.getString(1));
+			
+			
+		} catch (SQLException e) {
+			Logging.error("prob getting def_chan_music");
+			Logging.log(e);
+			return null;
+		}
 	}
 	
 	
 
 	/**
-	 * used to set the last channel used for music
+	 * used to set the default text channel used for music
 	 * @param musicChannel
 	 */
 	public void setMusicChannel(TextChannel musicChannel) {
-		//TODO push to DB
+		try {
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					"update guild set def_chan_music=? where guild_id=?"
+			);
+			
+			stmt.setString(1, musicChannel.getId());
+			stmt.setString(2, musicChannel.getGuild().getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
