@@ -38,7 +38,8 @@ public class GuildData {
 			stmt.setString(2, author.getId());
 			stmt.setInt(3, XP);
 			stmt.setInt(4, XP);
-			stmt.execute();
+			stmt.executeUpdate();
+			stmt.close();
 			
 		} catch (Exception e){
 			Logging.error(e.getMessage());
@@ -67,7 +68,7 @@ public class GuildData {
 				ranking.add(new UserLevel(member, rs.getInt(3)));
 			}
 			
-			
+			stmt.close();
 		} catch (SQLException e) {
 			Logging.error("issue getting GuildRankings");
 			Logging.log(e);
@@ -88,7 +89,10 @@ public class GuildData {
 					String.format("select xp from member where guild_id = %s and user_id=%s;",guild.getId(), u.getId())
 					).executeQuery();
 			rs.next();
-			return rs.getInt(1);
+			int rtn = rs.getInt(1);
+			rs.close();
+			
+			return rtn;
 			
 		} catch (SQLException e) {
 
@@ -114,7 +118,7 @@ public class GuildData {
 			while(rs.next()){
 				prefix=rs.getString(1);
 			}
-			
+			stmt.close();
 		} catch (SQLException e) {
 
 			Logging.error("issue getting Prefix");
@@ -139,7 +143,8 @@ public class GuildData {
 				stmt.setString(1, guild.getId());
 				stmt.setString(2, prefix);
 				stmt.setString(3, prefix);
-				stmt.execute();
+				stmt.executeUpdate();
+				stmt.close();
 			} catch (Exception e) {
 				Logging.error(e.getMessage());
 				Logging.log(e);
@@ -153,15 +158,15 @@ public class GuildData {
 		
 		try {
 			PreparedStatement stmt = CaexDB.getConnection()
-					.prepareStatement("delete from guild where guild_id = ?;");
+					.prepareStatement("update guild set prefix = null where guild_id = ?;");
 			stmt.setString(1, guild.getId());
-			stmt.execute();
+			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 
 			Logging.error("issue removeing prefix");
 			Logging.log(e);
 		}
-		CaexDB.removePrefix(guild);
 	}
 	/**
 	 * 
@@ -179,7 +184,9 @@ public class GuildData {
 			ResultSet rs = stmt.executeQuery();
 			
 			rs.next();
-			return CaexBot.getJDA().getTextChannelById(rs.getString(1));
+			String rtn = rs.getString(1);
+			stmt.close();
+			return CaexBot.getJDA().getTextChannelById(rtn);
 			
 			
 		} catch (SQLException e) {
@@ -204,6 +211,7 @@ public class GuildData {
 			stmt.setString(1, musicChannel.getId());
 			stmt.setString(2, musicChannel.getGuild().getId());
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -213,13 +221,33 @@ public class GuildData {
 
 	private void deleteMember(String guild, String user) {
 		try {
-			CaexDB.getConnection().prepareStatement(
-				String.format("delete from member where guild_id = %s and user_id = %s",
-						guild, user
-			)).execute();
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					"delete from member where guild_id = ? and user_id = ?"
+			);
+			
+			stmt.setString(1, guild);
+			stmt.setString(2, user);
+			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+
+	public boolean xpExempt(TextChannel channel) {
+		try {
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					"select perm_xp from text_channel where text_channel_id = ?"
+			);
+			stmt.setString(1, channel.getId());
+			ResultSet rs = stmt.executeQuery();
+			
+		
+			
+		} catch (SQLException e){
+			
 		}
 	}
 	

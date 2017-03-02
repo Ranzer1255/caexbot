@@ -21,21 +21,24 @@ public class LevelUpdater extends ListenerAdapter{
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
 		
-		if((event.getAuthor() != event.getJDA().getSelfUser())&&!event.getAuthor().isBot()){
-		
-			if (!messageTimeout.contains(event.getAuthor())) {
-				addXP(event.getGuild(), event.getAuthor(),event.getChannel());
-				new Thread(){
-					public void run(){
-						messageTimeout.add(event.getAuthor());
-						try {
-							sleep(MESSAGE_TIMEOUT);
-						} catch (InterruptedException e) {}//do nothing
-						messageTimeout.remove(event.getAuthor());
-						interrupt();
-					}
-				}.start();
-			}
+		if (!GuildManager.getGuildData(event.getGuild()).xpExempt(event.getChannel())) {
+			if ((event.getAuthor() != event.getJDA().getSelfUser()) && !event.getAuthor().isBot()) {
+
+				if (!messageTimeout.contains(event.getAuthor())) {
+					addXP(event.getGuild(), event.getAuthor(), event.getChannel());
+					new Thread() {
+						public void run() {
+							messageTimeout.add(event.getAuthor());
+							try {
+								sleep(MESSAGE_TIMEOUT);
+							} catch (InterruptedException e) {
+							} //do nothing
+							messageTimeout.remove(event.getAuthor());
+							interrupt();
+						}
+					}.start();
+				}
+			} 
 		}
 		
 	}
