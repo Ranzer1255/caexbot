@@ -237,18 +237,27 @@ public class GuildData {
 
 
 	public boolean xpExempt(TextChannel channel) {
+		
+		boolean rtn = true;
+		
 		try {
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-					"select perm_xp from text_channel where text_channel_id = ?"
+					"select perm_xp from text_channel where channel_id = ?"
 			);
 			stmt.setString(1, channel.getId());
 			ResultSet rs = stmt.executeQuery();
 			
-		
+			while (rs.next()){
+				rtn = rs.getBoolean(1);
+			}
+			stmt.close();
 			
 		} catch (SQLException e){
-			
+			Logging.error("problem getting xp permmisions");
+			Logging.log(e);
 		}
+		
+		return rtn;
 	}
 	
 	

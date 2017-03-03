@@ -12,14 +12,13 @@ import caexbot.commands.admin.ShutdownCommand;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
-//import caexbot.commands.chat.InsultCommand;
+//import caexbot.commands.chat.InsultCommand;0
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -56,7 +55,7 @@ public class CaexBot {
 		commands = new CommandListener(JDA);
 		
 		commands.addCommand(new HelpCommand(commands))
-//				.addCommand(new InsultCommand()) //disabled as the generating site is down
+//				.addCommand(new InsultCommand()) //dissabled as the generating site is down
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())
@@ -72,8 +71,6 @@ public class CaexBot {
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
-		JDA.addEventListener(new GuildManager());
-		
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
 		//color controls buggy and unreliable ATM
@@ -86,8 +83,7 @@ public class CaexBot {
 			for(Guild g: JDA.getGuilds()){
 				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
 			}
-		}		
-		
+		}
 		Logging.info("Done Loading and ready to go!");
 	}
 
