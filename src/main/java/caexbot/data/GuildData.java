@@ -259,6 +259,12 @@ public class GuildData {
 		
 		return rtn;
 	}
+
+
+	public ChannelData getChannel(TextChannel channel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
