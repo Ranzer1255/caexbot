@@ -35,7 +35,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 			User bot = event.getJDA().getSelfUser();
 			eb.setAuthor("Caex Hewa", "https://github.com/Sgmaniac1255/caexbot", bot.getAvatarUrl())
 			  .setColor(event.getGuild().getMember(bot).getColor())
-			  .setTitle("A Discord Chatbot")
+			  .setTitle("A Discord Chatbot",null)
 			  .setDescription("Written by Ranzer")
 			  .setThumbnail(bot.getAvatarUrl())
 			  .addField("Version", CaexConfiguration.getInstance().getVersion(), true)
@@ -52,7 +52,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 				User bot = event.getJDA().getSelfUser();
 				eb.setAuthor("Caex Hewa", "https://github.com/Sgmaniac1255/caexbot", bot.getAvatarUrl())
 				  .setColor(event.getGuild().getMember(bot).getColor())
-				  .setTitle("A Discord Chatbot")
+				  .setTitle("A Discord Chatbot",null)
 				  .setDescription("Written by Ranzer")
 				  .setThumbnail(bot.getAvatarUrl());
 				eb.addField("Guilds", String.valueOf(event.getJDA().getGuilds().size()), false)

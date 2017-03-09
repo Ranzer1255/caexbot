@@ -27,9 +27,9 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 			
 			eb.setAuthor("Currently Playing", null, null);
 			if(gp.getPlayingTrack()!=null){
-				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nhttp://youtu.be/"+gp.getPlayingTrack().getIdentifier()+" by "+gp.getPlayingTrack().getInfo().author);
+				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nby "+gp.getPlayingTrack().getInfo().author,"http://youtu.be/"+gp.getPlayingTrack().getIdentifier());
 			} else {
-				eb.setTitle("Nothing Playing");
+				eb.setTitle("Nothing Playing",null);
 			}
 			
 			if(gp.getQueue().getQueue().isEmpty()){
