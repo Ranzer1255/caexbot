@@ -34,7 +34,7 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		
 		if (args[0].equals("com")){
-			fromDraconic(args, channel);
+			fromDraconic(Arrays.copyOfRange(args, 1,args.length), channel);
 			return;
 		}
 		
