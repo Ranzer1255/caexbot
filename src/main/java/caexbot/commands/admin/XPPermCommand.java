@@ -19,8 +19,14 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
+		if (args.length==0){
+			channel.sendMessage("This channel's XP setting is currently: "+
+					GuildManager.getGuildData(event.getGuild()).getChannel(channel).getXPPerm()).queue();
+			return;
+		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
-			channel.sendMessage(getUsage(event.getGuild()));
+			channel.sendMessage("I'm sorry i didn't understand that please follow the usage\n"
+								+getUsage(event.getGuild())).queue();
 			return;
 		}
 		
@@ -41,7 +47,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getAlias().get(0)+" <true|false>`";
+		return "`"+getPrefix(g)+getAlias().get(0)+" [{true|false}]`";
 	}
 
 	@Override
@@ -53,9 +59,10 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	public String getLongDescription() {
 		// TODO Auto-generated method stub
 		return "This command sets the xp earning permmision for the channel within Caex\n"
-				+ "True: users will earn xp in this channel\n"
-				+ "False: users will not earn XP\n"
-				+ "default value is set to " + ChannelData.DEFAULT_XP_SETTING;
+				+ "leaving the value blank will return the current setting for this Channel\n"
+				+ "**True:** users will earn xp in this channel\n"
+				+ "**False:** users will not earn XP\n"
+				+ "**Default Value:** " + ChannelData.DEFAULT_XP_SETTING;
 	}
 
 	@Override
