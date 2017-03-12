@@ -4,6 +4,6 @@ public interface ChannelData {
 
 	public void setXPPerm(boolean earnEXP);
 	
-	public boolean  
+	public boolean getXPPerm(); 
 
 }
