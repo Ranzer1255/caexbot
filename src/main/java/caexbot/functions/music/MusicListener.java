@@ -20,7 +20,7 @@ public class MusicListener implements MusicEventListener{
 	}
 
 	public TextChannel getMusicChannel() {
-		TextChannel mc = GuildManager.getGuildData(guild).getMusicChannel();
+		TextChannel mc = GuildManager.getGuildData(guild).getDefaultMusicChannel();
 		
 		if (mc==null){
 			mc = lastMusicChannel;
