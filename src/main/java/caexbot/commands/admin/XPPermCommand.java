@@ -17,10 +17,20 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		boolean earnEXP = true;
-		if (args)
+
+		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
+			channel.sendMessage(getUsage(event.getGuild()));
+			return;
+		}
 		
-		GuildManager.getGuildData(event.getGuild()).getChannel(channel).setXPPerm(earnEXP);
+		GuildManager.getGuildData(event.getGuild()).getChannel(channel).setXPPerm(Boolean.parseBoolean(args[0]));
+		
+		if(Boolean.parseBoolean(args[0])){
+			channel.sendMessage("You will now earn XP in this channel").queue();
+		} else {
+			channel.sendMessage("you will now __not__ earn XP in this channel").queue();
+		}
+		
 	}
 
 	@Override
@@ -37,7 +47,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	@Override
 	public String getShortDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Set xp earnings for current text channel";
 	}
 
 	@Override
