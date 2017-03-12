@@ -273,7 +273,7 @@ public class GuildData {
 					stmt.setString(1, channel.getId());
 					ResultSet rs = stmt.executeQuery();
 					
-					boolean rtn =ChannelData.DEFAULT_SETTING;
+					boolean rtn =ChannelData.DEFAULT_XP_SETTING;
 					while (rs.next()) {
 						rtn = rs.getBoolean(1);
 					}

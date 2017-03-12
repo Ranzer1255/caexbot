@@ -6,6 +6,7 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
+import caexbot.data.ChannelData;
 import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -40,20 +41,21 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
+		return "`"+getPrefix(g)+getAlias().get(0)+" <true|false>`";
 	}
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
 		return "Set xp earnings for current text channel";
 	}
 
 	@Override
 	public String getLongDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "This command sets the xp earning permmision for the channel within Caex\n"
+				+ "True: users will earn xp in this channel\n"
+				+ "False: users will not earn XP\n"
+				+ "default value is set to " + ChannelData.DEFAULT_XP_SETTING;
 	}
 
 	@Override
