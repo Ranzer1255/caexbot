@@ -36,7 +36,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 //		StringBuilder sb = new StringBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
-		//single command help line
+		//single command help line TODO add to the embed a permissions section if any are required
 		if(args.length==1){
 			Logging.debug("help with arg (" +args[0]+")");
 			Optional<Describable> opt = getDescribables().stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();

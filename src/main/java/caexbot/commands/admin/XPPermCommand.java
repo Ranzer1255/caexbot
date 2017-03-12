@@ -57,7 +57,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		// TODO Auto-generated method stub
+		// TODO add mention that this command requires administrator role
 		return "This command sets the xp earning permmision for the channel within Caex\n"
 				+ "leaving the value blank will return the current setting for this Channel\n"
 				+ "**True:** users will earn xp in this channel\n"
