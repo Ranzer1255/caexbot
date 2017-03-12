@@ -266,14 +266,17 @@ public class GuildData {
 			public boolean getXPPerm() {
 				try {
 					PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-							"select perm_xp from text_channel"
+							"select perm_xp from text_channel "
 							+ "where channel_id = ?;"
 					);
 					
 					stmt.setString(1, channel.getId());
 					ResultSet rs = stmt.executeQuery();
 					
-					boolean rtn = rs.getBoolean(1);
+					boolean rtn =ChannelData.DEFAULT_SETTING;
+					while (rs.next()) {
+						rtn = rs.getBoolean(1);
+					}
 					stmt.close();
 					return rtn;
 					
@@ -287,6 +290,4 @@ public class GuildData {
 			
 		};
 	}
-	
-	
 }
