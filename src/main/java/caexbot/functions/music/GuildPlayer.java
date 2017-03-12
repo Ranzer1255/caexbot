@@ -30,12 +30,6 @@ import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
-
-/*
- * TODO make commands listeners to this.
- * this will throw events when tracks change and what not. the listener will handle sending messages
- * to discord. 
- */
 import net.dv8tion.jda.core.managers.AudioManager;
 
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {

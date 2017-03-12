@@ -17,8 +17,6 @@ import net.dv8tion.jda.core.entities.User;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
 
-//	private static final String NO_VIDEO_FOUND = "i'm sorry I didn't find that"; //TODO use this
-
 	@Override
 	public void process(String[] args, User author, TextChannel channel, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {

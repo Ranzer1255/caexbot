@@ -67,7 +67,6 @@ public class GuildManager extends ListenerAdapter{
 	
 	@Override
 	public void onGuildLeave(GuildLeaveEvent event) {
-		// TODO Auto-generated method stub
 		super.onGuildLeave(event);
 		
 		try{
@@ -84,14 +83,13 @@ public class GuildManager extends ListenerAdapter{
 			Logging.debug(String.format("%d rows updated", stmt.executeUpdate()));
 			
 		} catch (SQLException e){
-			//TODO
-			e.printStackTrace();
+			Logging.error("issue removiing guild from DB: " +event.getGuild().getName());
+			Logging.log(e);
 		}
 	}
 	
 	@Override
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
-		// TODO Auto-generated method stub
 		super.onGuildMemberLeave(event);
 		
 		try {
@@ -108,8 +106,8 @@ public class GuildManager extends ListenerAdapter{
 					event.getGuild().getId()));
 			Logging.debug(String.format("%d rows updated", stmt.executeUpdate()));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue removing user from the DB");
+			Logging.log(e);
 		}
 		
 		
@@ -130,8 +128,8 @@ public class GuildManager extends ListenerAdapter{
 				
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logging.error("issue adding new guilds to the DB");
+				Logging.log(e);
 			}
 		}
 	}
@@ -148,8 +146,8 @@ public class GuildManager extends ListenerAdapter{
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("problem removing old guilds from DB");
+			Logging.log(e);
 		}
 	}
 
@@ -165,8 +163,8 @@ public class GuildManager extends ListenerAdapter{
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue updating members");
+			Logging.log(e);
 		}
 		
 	}
