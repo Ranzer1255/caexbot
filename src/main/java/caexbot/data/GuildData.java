@@ -172,7 +172,7 @@ public class GuildData {
 	 * 
 	 * @return admin defined channel for music
 	 */
-	public TextChannel getMusicChannel() {
+	public TextChannel getDefaultMusicChannel() {
 		
 		try {
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
@@ -202,7 +202,7 @@ public class GuildData {
 	 * used to set the default text channel used for music
 	 * @param musicChannel
 	 */
-	public void setMusicChannel(TextChannel musicChannel) {
+	public void setDefaultMusicChannel(TextChannel musicChannel) {
 		try {
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"update guild set def_chan_music=? where guild_id=?"
@@ -213,8 +213,8 @@ public class GuildData {
 			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("problem setting defualt music channel");
+			Logging.log(e);
 		}
 	}
 
@@ -230,40 +230,62 @@ public class GuildData {
 			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-
-	public boolean xpExempt(TextChannel channel) {
-		
-		boolean rtn = true;
-		
-		try {
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-					"select perm_xp from text_channel where channel_id = ?"
-			);
-			stmt.setString(1, channel.getId());
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()){
-				rtn = rs.getBoolean(1);
-			}
-			stmt.close();
-			
-		} catch (SQLException e){
-			Logging.error("problem getting xp permmisions");
+			Logging.error("Problem deleteing member");
 			Logging.log(e);
 		}
-		
-		return rtn;
 	}
 
-
 	public ChannelData getChannel(TextChannel channel) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ChannelData(){
+
+			@Override
+			public void setXPPerm(boolean earnEXP) {
+				try {
+					PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+							  "insert into text_channel (channel_id, guild_id, perm_xp) "
+							+ "values (?,?,?) "
+							+ "on duplicate key update perm_xp = ?;"
+					);
+					
+					stmt.setString(1, channel.getId());
+					stmt.setString(2, channel.getGuild().getId());
+					stmt.setBoolean(3, earnEXP);
+					stmt.setBoolean(4, earnEXP);
+					
+					stmt.executeUpdate();
+					stmt.close();
+					
+				} catch (SQLException e) {
+					Logging.error("problem setting xp perm");
+					Logging.log(e);
+				}
+				
+			}
+
+			@Override
+			public boolean getXPPerm() {
+				try {
+					PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+							"select perm_xp from text_channel"
+							+ "where channel_id = ?;"
+					);
+					
+					stmt.setString(1, channel.getId());
+					ResultSet rs = stmt.executeQuery();
+					
+					boolean rtn = rs.getBoolean(1);
+					stmt.close();
+					return rtn;
+					
+					
+				} catch (SQLException e) {
+					Logging.error("problem getting XP perm");
+					Logging.log(e);
+					return true;
+				}
+			}
+			
+		};
 	}
 	
 	
