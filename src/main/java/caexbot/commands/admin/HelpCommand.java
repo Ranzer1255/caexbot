@@ -45,9 +45,9 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 				EmbedBuilder eb = new EmbedBuilder();
 				Describable d = opt.get();
 				eb.setAuthor(d.getName(), null, null);
-				eb.setDescription(d.getLongDescription());
+				eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long descript wip");
 				eb.setColor(d.getCatagory().COLOR);
-				eb.addField("Usage",d.getUsage(event.getGuild()),false);
+				eb.addField("Usage",d.getUsage(event.getGuild())!=null?d.getUsage(event.getGuild()):"usage wip",false);
 				eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? StringUtil.cmdArrayToString(d.getAlias().subList(1, d.getAlias().size()), ", ",event.getGuild()):"*none*", true );
 				eb.addField("Catagory", d.getCatagory().toString(), true);
 				
