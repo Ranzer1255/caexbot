@@ -9,7 +9,6 @@ import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
-import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -40,8 +39,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		MessageBuilder mb = new MessageBuilder();
 		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
-	
-//		channel.sendMessage(String.format("%s: Current Lvl: %d XP: %d", author.getAsMention(), expTable.getInstance().getLevel(channel.getGuild(),author),expTable.getInstance().getXP(channel.getGuild(),author))).queue();
 
 	}
 
@@ -58,22 +55,13 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return "This command returns the caller's current XP and level.\n"
+				+ "With the `rank` option, this command will return the top 10 users in the guild";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<Sub Command>\n");
-		sb.append("        __Sub Commands__\n");
-		sb.append("**    default:** lists your XP and Level\n")
-		  .append("**    [rank]** see current standings for the server");
-		
-
-		
-		return sb.toString();
+		return "`"+getPrefix(g)+getAlias().get(0)+" [rank]`";
 	}
 	
 	@Override
@@ -81,6 +69,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		return Catagory.CHAT;
 	}
 
+	//TODO make this an embed
 	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		StringBuilder msg = new StringBuilder();
 		
