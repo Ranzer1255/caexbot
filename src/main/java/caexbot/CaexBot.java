@@ -9,6 +9,7 @@ import caexbot.commands.admin.InfoCommand;
 import caexbot.commands.admin.PingCommand;
 import caexbot.commands.admin.PrefixCommand;
 import caexbot.commands.admin.ShutdownCommand;
+import caexbot.commands.admin.XPPermCommand;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
@@ -67,6 +68,7 @@ public class CaexBot {
 				.addCommand(new YoutubeSearchCommand())
 				.addCommand(new ZomDiceCommand())
 				.addCommand(new PrefixCommand())
+				.addCommand(new XPPermCommand())
 				.addCommand(new MusicCommand());
 
 		JDA.addEventListener(commands);
