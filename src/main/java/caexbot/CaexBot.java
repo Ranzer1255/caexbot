@@ -39,6 +39,7 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
  * 
  * other prefix used by this bot include:
  *  <insert 3 random prefixes from the DB>
+ *  
  */
 public class CaexBot {
 	
