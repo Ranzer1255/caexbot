@@ -27,6 +27,19 @@ import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
+
+/*
+ * TODO add prefix announcement via mention
+ * 
+ * if a message contains both a mention to the bot and the word "prefix" caex will reply with the following
+ * 
+ * My prefix on this guild is `<prefix>`
+ * if you are an admin and would like to change this,
+ * use the command `<prefix>set-prefix new prefix`
+ * 
+ * other prefix used by this bot include:
+ *  <insert 3 random prefixes from the DB>
+ */
 public class CaexBot {
 	
 	private static JDA JDA;
