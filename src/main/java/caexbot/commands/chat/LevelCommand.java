@@ -12,6 +12,7 @@ import caexbot.functions.levels.UserLevel;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -34,8 +35,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			.setColor(event.getMember().getColor())
 			.setThumbnail(author.getAvatarUrl())
 			.setTitle("XP Breakdown",null)
-			.addField("XP", String.format("%dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
-			.addField("Level", String.format("Lvl: %d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
+			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
+			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
 		
 		MessageBuilder mb = new MessageBuilder();
 		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
@@ -70,25 +71,41 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	}
 
 	//TODO make this an embed
-	private String rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		StringBuilder msg = new StringBuilder();
+	private Message rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+//		StringBuilder msg = new StringBuilder();
+		
+		EmbedBuilder eb = new EmbedBuilder();
+		
+		eb.setAuthor("Current Leaderboard", null, null);
+		eb.setDescription("XP is in beta and is likely to be reset");
+		eb.setColor(getCatagory().COLOR);
+		eb.setThumbnail("http://i1.kym-cdn.com/entries/icons/original/000/021/324/photo.jpg");
+		
 		
 		List<UserLevel> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
 		
-		msg.append("__***Current Leaderboard***__\nall XP is beta and will be reset\n\n");
+//		msg.append("__***?Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		int index=0;
 		for (UserLevel entry : rankings) {
 			if(index++>=10) break;
-			msg.append(
-				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
-					entry.getMember().getEffectiveName(), 
-					entry.getLevel(),
-					entry.getXP()
-				)
+			eb.addField(
+					"**"+index+": **"+entry.getMember().getEffectiveName(), 
+					String.format("*Level:* **%s**\n%,dxp", 
+							entry.getLevel(),
+							entry.getXP()
+					), 
+					true
 			);
+//			msg.append(
+//				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
+//					entry.getMember().getEffectiveName(), 
+//					entry.getLevel(),
+//					entry.getXP()
+//				)
+//			);
 		}
 		
-		return msg.toString();
+		return new MessageBuilder().setEmbed(eb.build()).build();
 	}
 
 
