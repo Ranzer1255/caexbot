@@ -75,7 +75,7 @@ public class DraconicTranslator {
 			
 			if (tempMap.containsKey(regexString.toLowerCase())) 
 			{
-				temp = map.get(regexString.toLowerCase());
+				temp = tempMap.get(regexString.toLowerCase());
 				
 				if (isUpper)
 					temp = temp.replaceFirst(temp.substring(0, 1), temp.substring(0, 1).toUpperCase());

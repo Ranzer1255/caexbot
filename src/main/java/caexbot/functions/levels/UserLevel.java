@@ -1,51 +1,22 @@
 package caexbot.functions.levels;
 
-import java.util.ArrayList;
-import java.util.Date;
+
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.User;
 
 public class UserLevel implements Comparable<UserLevel> {
 
-	private static final int NUM_LEVELS = 20;
-	private int experience;
-	private int level;
-	private Date lastXP;
-	private static ArrayList<Integer> levels= new ArrayList<>();
+	final private int experience;
+	final private Member member;
 	
-	static{
-		for (int i = 0; i < NUM_LEVELS+1; i++) {
-			if (i==0)
-				levels.add(0);
-			else{
-				levels.add(levels.get(i-1)+((i)*1000));
-			}
-		}
-		System.out.println(levels.toString());
-	}
 	/**
 	 * create new UserLevel with initial Expereience
 	 * @param XP
 	 */
-	public UserLevel(int XP) {
+	public UserLevel(Member m, int XP) {
 		experience = XP;
-		
-		for (int i=0;i<levels.size();i++) {
-			if(levels.get(i).intValue()<experience)
-				continue;
-			if(levels.get(i).intValue()>=experience){
-				this.level = i;
-				break;
-			}
-		}
-	}
-
-	public boolean addXP(int XP) {
-		experience += XP;
-		lastXP=new Date();
-		if(experience>levels.get(level)){
-			level++;
-			return true;
-		}
-		return false;
+		member=m;
 	}
 
 	public int getXP() {
@@ -53,7 +24,41 @@ public class UserLevel implements Comparable<UserLevel> {
 	}
 
 	public int getLevel() {
-		return level;
+		return getLevel(getXP());
+	}
+	
+	public Member getMember(){
+		return member;
+	}
+	
+	public User getUser() {
+		return member.getUser();
+	}
+
+	public Guild getGuild() {
+		return member.getGuild();
+	}
+
+	public static int getLevel(int xp){
+		int rtn = 1;
+		boolean found=false;
+		while(!found){
+			rtn+=1;
+			if (xp<calcXPForLevel(rtn)){
+				found=true;
+			}
+			
+		}
+		return rtn-1;
+	}
+	
+	static public int calcXPForLevel(int level){
+		if (level == 1){
+			return 0;
+		} else {
+			return calcXPForLevel(level-1)+((level-1)*1000);
+		}
+		
 	}
 
 	@Override

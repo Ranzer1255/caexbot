@@ -36,4 +36,22 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String calcTime(long runtime) {
+		StringBuilder rtn = new StringBuilder();
+		
+		long hrs = runtime / 3600;
+		long mins = (runtime % 3600)/60;
+		long secs = runtime % 60; 
+		
+		if(hrs >0){
+			rtn.append(hrs + " Hours ");
+		}
+		if(mins>0){
+			rtn.append(mins + " Minutes ");
+		}
+		rtn.append(secs + " Seconds");
+		
+		return rtn.toString();
+	}
+
 }

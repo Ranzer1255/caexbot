@@ -29,8 +29,32 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 
 		trans = new DraconicTranslator(dict);
 	}
+	
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+		
+		if (args[0].equals("com")){
+			fromDraconic(Arrays.copyOfRange(args, 1,args.length), channel);
+			return;
+		}
+		
+		toDraconic(args, channel);
+	}
+	
+	private void fromDraconic(String[] args, TextChannel channel) {
+		EmbedBuilder eb = new EmbedBuilder();
+		MessageBuilder mb = new MessageBuilder();
+		
+		eb.setAuthor("Draconic Translation", "http://draconic.twilightrealm.com/", null);
+		eb.setFooter("Powered by Draconic Translator from Twilight Realm", null);
+		eb.setColor(new Color(0xa0760a));
+		eb.addField("Draconic:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
+		eb.addField("Common:", trans.translate(args, false), false);
+		
+		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+	}
+
+	private void toDraconic(String[] args, TextChannel channel) {
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
@@ -41,8 +65,6 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 		eb.addField("Draconic", trans.translate(args, true), false);
 		
 		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
-//		channel.sendMessage(String.format("**[%s]** here ya go\n*%s*", author.getAsMention(), trans.translate(args, true))).queue();
-
 	}
 
 	@Override

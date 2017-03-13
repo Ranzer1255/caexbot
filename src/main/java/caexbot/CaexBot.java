@@ -9,13 +9,15 @@ import caexbot.commands.admin.InfoCommand;
 import caexbot.commands.admin.PingCommand;
 import caexbot.commands.admin.PrefixCommand;
 import caexbot.commands.admin.ShutdownCommand;
+import caexbot.commands.admin.XPPermCommand;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
-import caexbot.commands.chat.InsultCommand;
+//import caexbot.commands.chat.InsultCommand;0
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.ZomDiceCommand;
+import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.AccountType;
@@ -25,6 +27,20 @@ import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
+
+/*
+ * TODO add prefix announcement via mention
+ * 
+ * if a message contains both a mention to the bot and the word "prefix" caex will reply with the following
+ * 
+ * My prefix on this guild is `<prefix>`
+ * if you are an admin and would like to change this,
+ * use the command `<prefix>set-prefix new prefix`
+ * 
+ * other prefix used by this bot include:
+ *  <insert 3 random prefixes from the DB>
+ *  
+ */
 public class CaexBot {
 	
 	private static JDA JDA;
@@ -54,7 +70,7 @@ public class CaexBot {
 		commands = new CommandListener(JDA);
 		
 		commands.addCommand(new HelpCommand(commands))
-				.addCommand(new InsultCommand())
+//				.addCommand(new InsultCommand()) //dissabled as the generating site is down
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())
@@ -65,7 +81,9 @@ public class CaexBot {
 				.addCommand(new ShutdownCommand())
 				.addCommand(new YoutubeSearchCommand())
 				.addCommand(new ZomDiceCommand())
-				.addCommand(new PrefixCommand());
+				.addCommand(new PrefixCommand())
+				.addCommand(new XPPermCommand())
+				.addCommand(new MusicCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
