@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import caexbot.CaexBot;
@@ -24,25 +25,22 @@ public class GuildData {
 		this.guild=guild;
 	}
 
-
-	public UserLevel getUserLevel(User author) {
-		return guildXP.get(author);
-	}
-
-
 	//xp methods
 	public void addXP(User author, int XP, TextChannel channel) {
 
 		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
 		
 		try{
+			Date timestamp = new Date();
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-					"insert into member (guild_id, user_id, xp) values (?,?,?)"
-					+ "on duplicate key update xp=xp+?;");
+				   	  "insert into member (guild_id, user_id, xp, last_xp) values (?,?,?,?)"
+					+ "on duplicate key update xp=xp+?,last_xp=?;");
 			stmt.setString(1, guild.getId());
 			stmt.setString(2, author.getId());
 			stmt.setInt(3, XP);
-			stmt.setInt(4, XP);
+			stmt.setLong(4, timestamp.getTime());
+			stmt.setInt(5, XP);
+			stmt.setLong(6, timestamp.getTime());
 			stmt.executeUpdate();
 			stmt.close();
 			
@@ -80,6 +78,33 @@ public class GuildData {
 		}
 		
 		return ranking;
+	}
+
+	public UserLevel getUserLevel(User author) {
+		
+		try {
+			UserLevel rtn=null;
+			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					  "select guild_id, user_id, xp, last_xp from member "
+					+ "where user_id = ?;"
+			);
+			stmt.setString(1, author.getId());
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()){
+				rtn = new UserLevel(
+						CaexBot.getJDA().getGuildById(rs.getString(1)).getMemberById(rs.getString(2)),
+						rs.getInt(3),
+						rs.getLong(4)
+				);
+			}
+			stmt.close();
+			return rtn;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public int getLevel(User author) {

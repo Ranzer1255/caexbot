@@ -14,13 +14,17 @@ public class LevelUpdater extends ListenerAdapter{
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
+		GuildData gd = GuildManager.getGuildData(event.getGuild());
 
-		if((event.getAuthor() != event.getJDA().getSelfUser())&&!event.getAuthor().isBot()){
-		GuildData gd= GuildManager.getGuildData(event.getGuild());
-			if ((System.currentTimeMillis() - gd.getUserLevel(event.getAuthor()).getLastXPTime().getTime())>MESSAGE_TIMEOUT) {
-				GuildManager.getGuildData(event.getGuild()).addXP(event.getAuthor(), getRandomXP(),event.getChannel());
+		if (gd.getChannel(event.getChannel()).getXPPerm()) {
+			if ((event.getAuthor() != event.getJDA().getSelfUser()) && !event.getAuthor().isBot()) {
+				if ((System.currentTimeMillis()
+						- gd.getUserLevel(event.getAuthor()).getLastXPTime().getTime()) > MESSAGE_TIMEOUT) {
+					GuildManager.getGuildData(event.getGuild()).addXP(event.getAuthor(), getRandomXP(),
+							event.getChannel());
 
-			}
+				}
+			} 
 		}
 		
 	}
