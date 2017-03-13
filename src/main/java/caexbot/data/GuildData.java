@@ -25,6 +25,11 @@ public class GuildData {
 	}
 
 
+	public UserLevel getUserLevel(User author) {
+		return guildXP.get(author);
+	}
+
+
 	//xp methods
 	public void addXP(User author, int XP, TextChannel channel) {
 
