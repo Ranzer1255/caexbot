@@ -51,7 +51,7 @@ public class MusicListener implements MusicEventListener{
 		}
 		
 		else if (event instanceof MusicLoadEvent){
-			getMusicChannel().sendMessage(String.format("Loaded %s sucssesfuly\n%s", 
+			getMusicChannel().sendMessage(String.format("Loaded %s successfully\n%s", 
 					((MusicLoadEvent) event).getSong().getInfo().title, "http://youtu.be/"+((MusicLoadEvent) event).getSong().getIdentifier())).queue();
 		}
 		
