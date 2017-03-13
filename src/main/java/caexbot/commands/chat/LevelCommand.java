@@ -55,8 +55,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	
 	@Override
 	public String getLongDescription() {
-		return "This command returns the caller's current XP and level.\n"
-				+ "With the `rank` option, this command will return the top 10 users in the guild";
+		return "This command returns the caller's current XP and level.\n\n"
+				+ "`rank` option: This command will return the top 10 users in the guild";
 	}
 	
 	@Override
