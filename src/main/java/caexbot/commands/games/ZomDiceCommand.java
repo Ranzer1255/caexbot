@@ -9,7 +9,6 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.subcommands.*;
-import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -25,6 +24,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 		zomSubCommands.add(new ZomRollCommand());
 		zomSubCommands.add(new ZomEndTurnCommand());
 		zomSubCommands.add(new ZomScoreCommand());
+		zomSubCommands.add(new ZomQuitCommand());
 	}
 	
 	@Override
@@ -56,23 +56,32 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		StringBuilder sb = new StringBuilder();
+		
+		
+		sb.append(getShortDescription() +"\n\n");
+		
+		for (CaexCommand cmd : zomSubCommands) {
+			sb.append(
+				String.format("`%s`: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
+			);
+		}
+		
+		sb.append("Zombie Dice's rules can be found [Here](https://github.com/Sgmaniac1255/caexbot/wiki/Zombie-Dice)");
+		return sb.toString();
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ", g)).append("]** ");
-		
-		sb.append("<sub command>\n");
-//		sb.append("    __Sub Commands__\n"); TODO conform to new framework of Describabe for subcommands
-//		for (CaexCommand cmd : zomSubCommands) {
-//			sb.append("  **<").append(StringUtil.arrayToString(cmd.getAlias(), ", "));
-//			sb.append(">** ").append(cmd.getDescription()).append("\n");
-//		}
-		
+		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
+		for(CaexCommand cmd : zomSubCommands){
+			sb.append(String.format("%s | ", cmd.getName()));
+		}
+		sb.delete(sb.length()-3,sb.length());
+		sb.append("}`");
+				
 		return sb.toString();
 	}
 	

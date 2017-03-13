@@ -70,14 +70,32 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	
 	@Override
 	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return "in progress please bear with me";
+		StringBuilder sb = new StringBuilder();
+		
+		
+		sb.append(getShortDescription() +"\n\n");
+		
+		for (CaexCommand cmd : subCommands) {
+			sb.append(
+				String.format("`%s`: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
+			);
+		}
+		
+		return sb.toString();
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		// TODO make getUsage
-		return "in progress....";
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
+		for(CaexCommand cmd : subCommands){
+			sb.append(String.format("%s | ", cmd.getName()));
+		}
+		sb.delete(sb.length()-3,sb.length());
+		sb.append("}`");
+				
+		return sb.toString();
 	}
 
 }

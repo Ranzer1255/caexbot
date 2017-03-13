@@ -19,6 +19,12 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+/**
+ * the host website i was pulling insults from has gone down... this is disabled indefenantly.
+ * @author jrdillingham
+ *
+ */
+@Deprecated
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 
 	@Override

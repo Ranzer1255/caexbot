@@ -11,7 +11,6 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.util.Logging;
-import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -66,17 +65,12 @@ public class EightBallCommand extends CaexCommand implements Describable{
 	}
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return "Looks to the future to give you the answer from the standard 8ball choices.\n";
 	}
 
 	@Override
 	public String getUsage(Guild g){
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<the burrning question in your heart, begging for an answer>");
-		
-		return sb.toString();
+		return "`"+getPrefix(g)+getName()+" [<Your question>]`";
 	}
 	
 	@Override

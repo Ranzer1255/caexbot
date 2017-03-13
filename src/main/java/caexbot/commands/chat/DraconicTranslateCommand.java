@@ -79,15 +79,15 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 	
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return "Translates a word or phrase from Common (english) to Draconic.\n\n"
+				+ "`com`: will translate a word or phrase in Draconic back into Common (english)\n\n"
+				+ "This Translator is powered by [Twilight Realm](http://draconic.twilightrealm.com/)";
 	}
 
 	@Override
 	public String getUsage(Guild g) {
 		
-		return String.format("**[%s]** <Common-Tongne(english) phrase>",
-				StringUtil.cmdArrayToString(getAlias(), ", ",g));
+		return "`"+getPrefix(g)+getName()+" [com] <translation phrase>`";
 		
 	}
 	

@@ -15,7 +15,6 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.util.StringUtil;
 
 public class InfoCommand extends CaexCommand implements DraconicCommand, Describable{
 
@@ -105,16 +104,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public String getUsage(Guild g) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ")
-		.append("<sub_command>\n");
-
-		sb.append("        __Sub Commands__\n")
-		  .append("**    default:** all about Caex.\n")
-		  .append("**    [stats]** basic live stats of Caex.\n");
-
-		return sb.toString();
+		return "`"+getPrefix(g)+getName()+" [stats]`";
 
 	}
 
@@ -142,8 +132,8 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return    "This command gives detailed information about the bot\n\n"
+				+ "`stats`: displays misc. stats reported by JDA";
 	}
 
 }
