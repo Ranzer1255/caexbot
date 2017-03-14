@@ -116,8 +116,9 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		
+		return getShortDescription()+"\n\n"
+				+ "when given a command as an agrument, `help` will generate a help page for that command and return it";
 	}
 
 	private List<Describable> getDescribables(){
