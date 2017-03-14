@@ -101,8 +101,8 @@ public class GuildData {
 			stmt.close();
 			return rtn;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue trying to get user data");
+			Logging.log(e);
 			return null;
 		}
 	}
