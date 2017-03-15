@@ -47,7 +47,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getAlias().get(0)+" [{true|false}]`";
+		return "`"+getPrefix(g)+getName()+" [{true|false}]`";
 	}
 
 	@Override
@@ -58,10 +58,10 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	@Override
 	public String getLongDescription() {
 		return "This command sets the xp earning permmision for the channel within Caex\n"
-				+ "leaving the value blank will return the current setting for this Channel\n"
-				+ "**True:** users will earn xp in this channel\n"
-				+ "**False:** users will not earn XP\n"
-				+ "**Default Value:** " + ChannelData.DEFAULT_XP_SETTING;
+				+ "leaving the value blank will return the current setting for this Channel\n\n"
+				+ "`True`: users will earn xp in this channel\n"
+				+ "`False`: users will not earn XP\n"
+				+ "`Default Value`: " + ChannelData.DEFAULT_XP_SETTING;
 	}
 
 	@Override

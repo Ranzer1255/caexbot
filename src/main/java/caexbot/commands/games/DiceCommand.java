@@ -7,7 +7,6 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.dice.DiceParser;
-import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -25,7 +24,7 @@ public class DiceCommand extends CaexCommand implements Describable{
 		try {
 			channel.sendMessage(author.getAsMention()+": "+DiceParser.parseDiceString(args[0]).Result()).queue();
 		} catch (IllegalArgumentException e) {
-			channel.sendMessage("I'm sorry i didn't uderstand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
+			channel.sendMessage("I'm sorry i didn't understand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
 		}
 		
 	}
@@ -42,23 +41,19 @@ public class DiceCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return "Rolls dice using the standard RPG dice format\n"
+				+ "Currently it will only handle 1 die type and a single modifier\n\n"
+				+ "__Examples__\n"
+				+ "```\n"
+				+ "1d20+5\n"
+				+ "8d6\n"
+				+ "1d100\n"
+				+ "```";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("**[").append(StringUtil.cmdArrayToString(getAlias(), ", ",g)).append("]** ").append("<Standard RPG Dice format>\n");
-		sb.append("  __Examples__\n");
-		sb.append("```\n"
-				+ "  1d20\n"
-				+ "  1d6+3\n"
-				+ "  3d10\n"
-				+ "```");
-		
-		return sb.toString();
+		return "`"+getPrefix(g)+getName()+" <basic rpg notation>`";
 	}
 	
 	@Override

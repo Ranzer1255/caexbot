@@ -54,7 +54,7 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	}
 	@Override
 	public String getUsage(Guild g) {
-		return String.format("**%s%s**", getPrefix(g),getName());
+		return String.format("`%s%s`", getPrefix(g),getName());
 	}
 
 	@Override

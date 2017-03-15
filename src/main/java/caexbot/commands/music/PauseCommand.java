@@ -17,11 +17,6 @@ public class PauseCommand extends CaexCommand implements Describable{
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
-		/*TODO Pause Command process
-		 * Pause current playing track.
-		 * if not playing 
-		 * 		do nothing
-		 */
 		GuildPlayerManager.getPlayer(event.getGuild()).pause();
 		
 		 

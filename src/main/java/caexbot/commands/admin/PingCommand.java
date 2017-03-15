@@ -24,19 +24,11 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 		long lag = endTime.getTime()-startTime.getTime();
 		pong.editMessage(pong.getContent()+" `"+lag+"ms`").queue();
 		
-//		Date startTime2 = new Date();
-//		channel.sendMessage("pong again! ").queue(pong -> {
-//			Date endTime = new Date();
-//			long lag = endTime.getTime()-startTime2.getTime();
-//			pong.editMessage(pong.getContent()+"`"+lag+"ms`").queue();
-//		});
-		
-		
 	}
 
 	@Override
 	public String getUsage(Guild g) {
-		return getPrefix(g)+"ping";
+		return "`"+getPrefix(g)+getName()+"`";
 	}
 
 	@Override
@@ -51,7 +43,7 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 	
 	@Override
 	public String getLongDescription() {
-		return getShortDescription();
+		return "Tests the response time of the host server";
 	}
 
 	@Override

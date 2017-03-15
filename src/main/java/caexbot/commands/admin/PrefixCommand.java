@@ -8,7 +8,6 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
-import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -47,12 +46,12 @@ public class PrefixCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return    "Defines a new prefix for this guild.\n\n"
+				+ "Leave the option blank to reset to the default prefix of `"+CaexConfiguration.getInstance().getPrefix()+"`";
 	}
 	@Override
 	public String getUsage(Guild g) {
-		return String.format("**[%s]** <prefix to set to> [blank to reset to default] ", StringUtil.cmdArrayToString(getAlias(), ", "	, g));
+		return "`"+getPrefix(g)+getName()+" [<new prefix>]`";
 	}
 	
 	@Override

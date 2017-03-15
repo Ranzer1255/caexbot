@@ -30,7 +30,6 @@ public class MusicListener implements MusicEventListener{
 	}
 
 	public void setMusicChannel(TextChannel musicChannel) {
-//		GuildManager.getGuildData(guild).setMusicChannel(musicChannel); TODO move this to an administraton command
 		lastMusicChannel=musicChannel;
 	}
 
@@ -51,7 +50,7 @@ public class MusicListener implements MusicEventListener{
 		}
 		
 		else if (event instanceof MusicLoadEvent){
-			getMusicChannel().sendMessage(String.format("Loaded %s sucssesfuly\n%s", 
+			getMusicChannel().sendMessage(String.format("Loaded %s successfully\n%s", 
 					((MusicLoadEvent) event).getSong().getInfo().title, "http://youtu.be/"+((MusicLoadEvent) event).getSong().getIdentifier())).queue();
 		}
 		
