@@ -30,7 +30,6 @@ public class MusicListener implements MusicEventListener{
 	}
 
 	public void setMusicChannel(TextChannel musicChannel) {
-//		GuildManager.getGuildData(guild).setMusicChannel(musicChannel); TODO move this to an administraton command
 		lastMusicChannel=musicChannel;
 	}
 

@@ -2,6 +2,7 @@ package caexbot.commands.admin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,13 +76,27 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 			eb.setAuthor("Full Command List", null, null);
 			eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
 			
-			for (Catagory cat : catagorized.keySet()) {
-				sb.append(String.format("**__%s__**\n", cat.NAME));
-				for (Describable d : catagorized.get(cat)) {
-					sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));
+			catagorized.keySet().stream().sorted(new Comparator<Catagory>() {
+
+				@Override
+				public int compare(Catagory o1, Catagory o2) {
+					return o1.NAME.compareToIgnoreCase(o2.name());
 				}
-				sb.append("\n");
-			}
+				
+			}).forEachOrdered(cat -> {
+				sb.append(String.format("**__%s__**\n", cat.NAME));
+				catagorized.get(cat).stream().sorted(new Comparator<Describable>() {
+
+					@Override
+					public int compare(Describable o1, Describable o2) {
+						return o1.getName().compareToIgnoreCase(o2.getName());
+					}
+					
+				}).forEachOrdered(d -> {
+					sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));
+				});
+			sb.append("\n");
+			});
 			eb.setDescription(sb.toString());
 			mb.setEmbed(eb.build());
 			channel.sendMessage(mb.build()).queue();
