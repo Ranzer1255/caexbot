@@ -98,7 +98,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	@Override
 	public String getUsage(Guild g) {
 
-		return getPrefix(g)+"help [command]";
+		return getPrefix(g)+"help [command]`";
 	}
 
 	@Override
