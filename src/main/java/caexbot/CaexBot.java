@@ -13,6 +13,7 @@ import caexbot.commands.admin.XPPermCommand;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
+import caexbot.commands.chat.InsultCommand;
 //import caexbot.commands.chat.InsultCommand;0
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
@@ -70,7 +71,7 @@ public class CaexBot {
 		commands = new CommandListener(JDA);
 		
 		commands.addCommand(new HelpCommand(commands))
-//				.addCommand(new InsultCommand()) //dissabled as the generating site is down
+				.addCommand(new InsultCommand()) 
 				.addCommand(new DiceCommand())
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())

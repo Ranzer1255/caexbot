@@ -24,7 +24,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * @author jrdillingham
  *
  */
-@Deprecated
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 
 	@Override
@@ -41,8 +40,8 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		}
 		if(sb.length()==0) return;//don't throw an insult if no one was tagged.
 		try {
-			Document doc = Jsoup.parse(new URL("http://www.insultgenerator.org"), 3000);
-			String insult = doc.getElementsByClass("wrap").get(0).html().replace("<br>", "").replace("\n", "");
+			Document doc = Jsoup.parse(new URL("http://www.pangloss.com/seidel/Shaker/index.html?"), 3000);
+			String insult = doc.getElementsByTag("p").get(0).text();;
 			sb.append(insult);
 			
 			channel.sendMessage(sb.toString()).queue();
@@ -77,13 +76,14 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public String getUsage(Guild g) {
-		return getPrefix(g)+getName()+" [@user/users you want to insult]";
+		return "`"+getPrefix(g)+getName()+" <Taged users you want to insult>'";
 	}
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return getShortDescription()+"\n"
+				+ "Tag the people you want to insult. can insult more than one at a time.\n\n"
+				+ "Powered by (pangloss.com)[http://www.pangloss.com/seidel/Shaker/index.html?]";
 	}
 
 }
