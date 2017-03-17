@@ -76,14 +76,14 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getName()+" <Taged users you want to insult>'";
+		return "`"+getPrefix(g)+getName()+" <Taged users you want to insult>`";
 	}
 
 	@Override
 	public String getLongDescription() {
 		return getShortDescription()+"\n"
 				+ "Tag the people you want to insult. can insult more than one at a time.\n\n"
-				+ "Powered by (pangloss.com)[http://www.pangloss.com/seidel/Shaker/index.html?]";
+				+ "Powered by [pangloss.com](http://www.pangloss.com/seidel/Shaker/index.html?)";
 	}
 
 }
