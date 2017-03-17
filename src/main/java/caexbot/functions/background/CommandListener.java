@@ -32,6 +32,12 @@ public class CommandListener extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
+		if (event.getMessage().isMentioned(event.getJDA().getSelfUser())){
+			if (event.getMessage().getContent().contains("prefix")) {
+				event.getChannel().sendMessage("My current prefix is: `"+CaexCommand.getPrefix(event.getGuild())+"`").queue();
+			}
+		}
+		
 		User author = event.getAuthor();
 		String message = event.getMessage().getRawContent();
 		
@@ -39,7 +45,7 @@ public class CommandListener extends ListenerAdapter {
 			return;
 		findCommand(event, author, message); 
 	}
-
+	
 	protected void findCommand(MessageReceivedEvent event, User author, String message) {
 		
 		if (!author.isBot()) {
