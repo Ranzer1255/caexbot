@@ -64,7 +64,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 			
 			Map<Catagory, List<Describable>> catagorized = new HashMap<>();
 			
-			for (Describable d : getDescribables()) {//TODO sort Categories alphabetically 
+			for (Describable d : getDescribables()) {
 				if(catagorized.get(d.getCatagory())==null){
 					catagorized.put(d.getCatagory(), new ArrayList<>());
 				}
@@ -85,16 +85,8 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 				
 			}).forEachOrdered(cat -> {
 				sb.append(String.format("**__%s__**\n", cat.NAME));
-				catagorized.get(cat).stream().sorted(new Comparator<Describable>() {
-
-					@Override
-					public int compare(Describable o1, Describable o2) {
-						return o1.getName().compareToIgnoreCase(o2.getName());
-					}
-					
-				}).forEachOrdered(d -> {
-					sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));
-				});
+				catagorized.get(cat).stream().sorted((o1, o2) -> {return o1.getName().compareToIgnoreCase(o2.getName());}
+				).forEachOrdered(d -> {sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));});
 			sb.append("\n");
 			});
 			eb.setDescription(sb.toString());
