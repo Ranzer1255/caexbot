@@ -1,2 +1,5 @@
 TODOs and misc notes
 
+redo Help again. i had the brain storm to have the commands build the embed for help and pass it up.
+this way I can hvae the subcommands build an embed and have the super command pass through to the
+subcommand
