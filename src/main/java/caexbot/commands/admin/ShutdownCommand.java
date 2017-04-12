@@ -21,7 +21,7 @@ public class ShutdownCommand extends CaexCommand {
 			noPermission(event);
 			return;
 		}
-		channel.sendMessage("if you insist boss.... *blerg*").queue();
+		channel.sendMessage("if you insist boss.... *blerg*").complete();
 		if (args.length>0&&args[0].equals("alert")) {
 			for (Guild g : event.getJDA().getGuilds()) {
 				try {
@@ -31,9 +31,10 @@ public class ShutdownCommand extends CaexCommand {
 				} catch (PermissionException e) {
 					Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
 				}
-			} 
+			}
+			channel.sendMessage("i've told everyone. night night").complete();
 		}
-		event.getJDA().shutdown();
+//		event.getJDA().shutdown();
 		System.exit(0);
 	}
 
