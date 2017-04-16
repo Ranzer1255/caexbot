@@ -28,13 +28,15 @@ public class GuildData {
 	//xp methods
 	public void addXP(User author, int XP, TextChannel channel) {
 
+		int oldLevel = this.getLevel(author);
 		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
 		
-		try{
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+			   	  "insert into member (guild_id, user_id, xp, last_xp) values (?,?,?,?)"
+				+ "on duplicate key update xp=xp+?,last_xp=?;");){
+			
 			Date timestamp = new Date();
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-				   	  "insert into member (guild_id, user_id, xp, last_xp) values (?,?,?,?)"
-					+ "on duplicate key update xp=xp+?,last_xp=?;");
+			
 			stmt.setString(1, guild.getId());
 			stmt.setString(2, author.getId());
 			stmt.setInt(3, XP);
@@ -42,12 +44,44 @@ public class GuildData {
 			stmt.setInt(5, XP);
 			stmt.setLong(6, timestamp.getTime());
 			stmt.executeUpdate();
-			stmt.close();
+			
+			if(this.getLevel(author)>oldLevel){
+				levelUpAlert(author, channel);
+			}
 			
 		} catch (Exception e){
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
+	}
+
+	private void levelUpAlert(User author, TextChannel channel) {
+		if(getXPAnnoucement(channel.getGuild())){
+			channel.sendMessage(String.format("Well met %s!\nYou have advanced to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
+		}
+		
+	}
+
+	private boolean getXPAnnoucement(Guild g) {
+		
+		boolean rtn = false;
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				"select xp_annouce from guild where guild_id = ?"
+				)){
+			
+			stmt.setString(1, g.getId());
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()){
+				rtn = rs.getBoolean(1);
+			}
+			
+		} catch (SQLException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
+			rtn = false;
+		}
+		return rtn;
 	}
 
 	public List<UserLevel> getGuildRankings() {
