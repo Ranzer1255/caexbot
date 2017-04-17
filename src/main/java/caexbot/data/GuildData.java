@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import caexbot.CaexBot;
@@ -35,14 +34,14 @@ public class GuildData {
 			   	  "insert into member (guild_id, user_id, xp, last_xp) values (?,?,?,?)"
 				+ "on duplicate key update xp=xp+?,last_xp=?;");){
 			
-			Date timestamp = new Date();
+			long timestamp = System.currentTimeMillis();
 			
 			stmt.setString(1, guild.getId());
 			stmt.setString(2, author.getId());
 			stmt.setInt(3, XP);
-			stmt.setLong(4, timestamp.getTime());
+			stmt.setLong(4, timestamp);
 			stmt.setInt(5, XP);
-			stmt.setLong(6, timestamp.getTime());
+			stmt.setLong(6, timestamp);
 			stmt.executeUpdate();
 			
 			if(this.getLevel(author)>oldLevel){
@@ -114,15 +113,16 @@ public class GuildData {
 		return ranking;
 	}
 
-	public UserLevel getUserLevel(User author) {
+	public UserLevel getUserLevel(Member author) {
 		
 		try {
 			UserLevel rtn=null;
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					  "select guild_id, user_id, xp, last_xp from member "
-					+ "where user_id = ?;"
+					+ "where user_id = ? and guild_id = ?;"
 			);
-			stmt.setString(1, author.getId());
+			stmt.setString(1, author.getUser().getId());
+			stmt.setString(2, author.getGuild().getId());
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()){
@@ -149,11 +149,13 @@ public class GuildData {
 	public int getXP(User u){
 		
 		try {
+			int rtn = -1;
 			ResultSet rs = CaexDB.getConnection().prepareStatement(
 					String.format("select xp from member where guild_id = %s and user_id=%s;",guild.getId(), u.getId())
 					).executeQuery();
-			rs.next();
-			int rtn = rs.getInt(1);
+			while (rs.next()){
+				rtn = rs.getInt(1);
+			}
 			rs.close();
 			
 			return rtn;

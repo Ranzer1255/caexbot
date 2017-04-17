@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
-	private static final long MESSAGE_TIMEOUT = 1000L;
+	private static final long MESSAGE_TIMEOUT = 60000L;
 	private final static int XP_LOWBOUND = 15, XP_HIGHBOUND = 25;
 	
 	@Override
@@ -30,8 +30,9 @@ public class LevelUpdater extends ListenerAdapter{
 	}
 	
 	private boolean isNotTimedout(GuildMessageReceivedEvent event, GuildData gd) {
-		return gd.getUserLevel(event.getAuthor())==null
-				||(System.currentTimeMillis()- gd.getUserLevel(event.getAuthor()).getLastXPTime().getTime()) > MESSAGE_TIMEOUT;
+		
+		return gd.getUserLevel(event.getMember())==null
+				||(System.currentTimeMillis()- gd.getUserLevel(event.getMember()).getLastXPTime()) > MESSAGE_TIMEOUT;
 	}
 	
 	private boolean isNotBot(GuildMessageReceivedEvent event) {

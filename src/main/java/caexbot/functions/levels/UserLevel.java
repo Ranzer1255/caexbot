@@ -1,8 +1,5 @@
 package caexbot.functions.levels;
 
-
-import java.util.Date;
-
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
@@ -11,7 +8,7 @@ public class UserLevel implements Comparable<UserLevel> {
 
 	final private int experience;
 	final private Member member;
-	final private Date lastXP;
+	final private long lastXP;
 	
 	/**
 	 * create new UserLevel with initial Expereience
@@ -20,13 +17,13 @@ public class UserLevel implements Comparable<UserLevel> {
 	public UserLevel(Member m, int XP, Long lxp) {
 		experience = XP;
 		member=m;
-		lastXP = new Date(lxp);
+		lastXP = lxp;
 	}
 	
 	public UserLevel(Member m, int XP) {
 		experience = XP;
 		member=m;
-		lastXP = new Date();
+		lastXP = System.currentTimeMillis();
 	}
 	
 
@@ -38,7 +35,7 @@ public class UserLevel implements Comparable<UserLevel> {
 		return getLevel(getXP());
 	}
 	
-	public Date getLastXPTime() {
+	public long getLastXPTime() {
 		return lastXP;
 	}
 
