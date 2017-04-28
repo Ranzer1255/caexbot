@@ -68,15 +68,16 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		
 		
 		//main logic
-		gd.removeXP(author, bet, channel);
 		
 		HiLowGame game = new HiLowGame(author, channel, bet, c);
 		
 		try {
 			if (game.win()){
-				win(game, gd);
+				gd.addXP(author, bet, channel);
+				win(game);
 			} else {
-				lose(game, gd);
+				gd.removeXP(author, bet, channel);
+				lose(game);
 			}
 		} catch (Exception e) {
 			Logging.error("WTF!! just happend");
@@ -95,8 +96,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		
 	}
 
-	private void win(HiLowGame game, GuildData gd) {
-		gd.addXP(game.player, game.bet*2, game.channel);
+	private void win(HiLowGame game) {
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setAuthor("Winner!", null, null);
@@ -108,10 +108,10 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		eb.addField("Winner", "You earn "+(game.getBet()*2)+"xp!", false);
 		eb.setColor(Color.yellow);
 		
-		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).build()).queue();
+		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
 		
 	}
-	private void lose(HiLowGame game, GuildData gd) {
+	private void lose(HiLowGame game) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor("Bad Luck!", null, null);
 		eb.setDescription(String.format(
@@ -122,7 +122,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		eb.addField("Loser", "You Lose "+game.getBet()+"xp!", false);
 		eb.setColor(Color.RED);
 		
-		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).build()).queue();
+		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
 	}
 
 
@@ -152,8 +152,8 @@ public class HiLowCommand extends CaexCommand implements Describable {
 				+ ""
 				+ "Choose how much you would like to bet,\n"
 				+ "then decide if the number will fall Hi or Low of `"+CUT_OFF+"` on a scale of `"+MIN_RAN+"-"+MAX_RAN+"`\n"
-				+ "(Side note a hit on `"+CUT_OFF+"` will be counted as `low`)\n\n"
-				+ "If you win, Congradulations! Your bet will be doubled and added back to your total\n"
+				+ "(Side note, a hit on `"+CUT_OFF+"` will be counted as `low`)\n\n"
+				+ "If you win, Congratulations! Your bet will be doubled and added back to your total\n"
 				+ "If you lose, <sad trombone>, Your bet is gone and your hard earned xp is washed away\n\n"
 				+ "You must have a minimum of `"+MIN_XP+"xp` to play, and you may only bet up to `"+(MAX_BET_PERCENTAGE*100)+"%` of your current xp.\n"
 				+ "GOOD LUCK!";
