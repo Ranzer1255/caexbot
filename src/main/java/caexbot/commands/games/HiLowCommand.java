@@ -96,7 +96,9 @@ public class HiLowCommand extends CaexCommand implements Describable {
 	}
 
 	private void win(HiLowGame game, GuildData gd) {
+		gd.addXP(game.player, game.bet*2, game.channel);
 		EmbedBuilder eb = new EmbedBuilder();
+		
 		eb.setAuthor("Winner!", null, null);
 		eb.setDescription(String.format(
 				  "Your bet was: `%dxp`\n"
