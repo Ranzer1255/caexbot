@@ -17,6 +17,7 @@ import caexbot.commands.chat.InsultCommand;
 //import caexbot.commands.chat.InsultCommand;0
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
+import caexbot.commands.games.HiLowCommand;
 import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
@@ -84,7 +85,8 @@ public class CaexBot {
 				.addCommand(new ZomDiceCommand())
 				.addCommand(new PrefixCommand())
 				.addCommand(new XPPermCommand())
-				.addCommand(new MusicCommand());
+				.addCommand(new MusicCommand())
+				.addCommand(new HiLowCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
