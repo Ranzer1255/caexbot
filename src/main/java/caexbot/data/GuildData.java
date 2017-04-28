@@ -59,8 +59,8 @@ public class GuildData {
 		Logging.debug("Removing "+ XP + "XP from "+ author.getName()+":"+guild.getName());
 		
 		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-			   	  "update member"
-			   	  + "set xp = xp-?"
+			   	  "update member "
+			   	  + "set xp = xp-? "
 			   	  + "where user_id = ? and guild_id = ?");){
 			
 			stmt.setString(3, guild.getId());
