@@ -53,10 +53,40 @@ public class GuildData {
 			Logging.log(e);
 		}
 	}
+	
+	public void removeXP(User author, int XP, TextChannel channel){
+		int oldLevel = this.getLevel(author);
+		Logging.debug("Removing "+ XP + "XP from "+ author.getName()+":"+guild.getName());
+		
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+			   	  "update member"
+			   	  + "set xp = xp-?"
+			   	  + "where user_id = ? and guild_id = ?");){
+			
+			stmt.setString(3, guild.getId());
+			stmt.setString(2, author.getId());
+			stmt.setInt(1, XP);
+			stmt.executeUpdate();
+			
+			if(this.getLevel(author)<oldLevel){
+				levelDownAlert(author, channel);
+			}
+			
+		} catch (Exception e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+	}
 
 	private void levelUpAlert(User author, TextChannel channel) {
 		if(getXPAnnoucement(channel.getGuild())){
 			channel.sendMessage(String.format("Well met %s!\nYou have advanced to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
+		}
+		
+	}
+	private void levelDownAlert(User author, TextChannel channel) {
+		if(getXPAnnoucement(channel.getGuild())){
+			channel.sendMessage(String.format("Oh No %s!\nYou have decreased to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
