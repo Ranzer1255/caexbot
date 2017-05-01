@@ -42,7 +42,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 			  .addField("Artwork", "Mellie", false)
 			  .addField("Invite me!", inviteLinkBuilder(bot), true)
 			  .addField("GitHub Repo", "[GitHub](https://github.com/sgmaniac1255/caexbot)", true)
-			  .setFooter("Please report bugs/features ideas on the github/issues page", null);
+			  .setFooter("Please report bugs/features ideas [here](https://gitreports.com/issue/Sgmaniac1255/caexbot)", null);
 
 			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 		}
