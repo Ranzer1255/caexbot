@@ -282,7 +282,11 @@ public class GuildData {
 			rs.next();
 			String rtn = rs.getString(1);
 			stmt.close();
-			return CaexBot.getJDA().getTextChannelById(rtn);
+			try {
+				return CaexBot.getJDA().getTextChannelById(rtn);
+			} catch (IllegalArgumentException e) {
+				return null;
+			}
 			
 			
 		} catch (SQLException e) {
