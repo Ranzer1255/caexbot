@@ -1,5 +1,9 @@
 package caexbot.commands.chat;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -8,6 +12,7 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -29,7 +34,27 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		channel.sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)], author.getAsMention())).queue();
+	
+		if (ThreadLocalRandom.current().nextInt(2)==0) {
+			channel.sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],
+					author.getAsMention())).queue();
+		} else {
+			
+			
+			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
+			
+			if(fp==null){
+//				System.out.println("is null");
+				return;
+			}
+			try {
+				channel.sendFile(fp, new MessageBuilder().append(author.getAsMention()).build()).complete();;
+				fp.delete();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -65,6 +90,34 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.CHAT;
+	}
+	
+	private static File getResourceAsFile(String path){
+		try {
+			InputStream in =FacepalmCommand.class.getResourceAsStream(path);
+	        System.out.println(path);
+	        if (in == null) {
+	        	
+//	        	System.out.println("in is null");
+	            return null;
+	        }
+
+	        File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".jpg");
+	        tempFile.deleteOnExit();
+
+	        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+	            //copy stream
+	            byte[] buffer = new byte[1024];
+	            int bytesRead;
+	            while ((bytesRead = in.read(buffer)) != -1) {
+	                out.write(buffer, 0, bytesRead);
+	            }
+	        }
+	        return tempFile;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 
 }
