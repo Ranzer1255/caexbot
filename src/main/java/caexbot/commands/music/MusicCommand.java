@@ -49,8 +49,9 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 		Optional<CaexCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 
+		// Silent failure of miss-typed subcommands
 		if (!c.isPresent()) {
-			channel.sendMessage(invalidUsage(event.getGuild()));
+//			channel.sendMessage(invalidUsage(event.getGuild()));
 			return;
 		}
 
