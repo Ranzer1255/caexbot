@@ -198,7 +198,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	// AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-		if (endReason == AudioTrackEndReason.FINISHED)
+		if (endReason == AudioTrackEndReason.FINISHED||endReason == AudioTrackEndReason.LOAD_FAILED)
 			playNext();
 		if (endReason == AudioTrackEndReason.REPLACED)
 			notifyOfEvent(new MusicSkipEvent(track));
@@ -253,7 +253,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		@Override
 		public void loadFailed(FriendlyException exception) {
 			// TODO make loadFailed
-
+			System.out.println(exception.getCause());
 			System.out.println(exception.getMessage());// Temp BreadCrumb
 		}
 
