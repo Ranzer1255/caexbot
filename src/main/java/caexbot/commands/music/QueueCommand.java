@@ -25,7 +25,12 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 			
 			eb.setAuthor("Currently Playing", null, null);
 			if(gp.getPlayingTrack()!=null){
-				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nby "+gp.getPlayingTrack().getInfo().author,"http://youtu.be/"+gp.getPlayingTrack().getIdentifier());
+				eb.setTitle(
+						String.format("%s\n"
+								   +  "by %s",
+								gp.getPlayingTrack().getInfo().title,
+								gp.getPlayingTrack().getInfo().author),
+						GuildPlayer.getTrackURL(gp.getPlayingTrack()));
 			} else {
 				eb.setTitle("Nothing Playing",null);
 			}
@@ -41,7 +46,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				long runtime = 0;
 				for (AudioTrack track : gp.getQueue().getQueue()) {
 					if(i>10) break;
-					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, "http://youtu.be/"+track.getIdentifier()));
+					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, GuildPlayer.getTrackURL(track)));
 				}
 				eb.setDescription(sb.toString());
 				

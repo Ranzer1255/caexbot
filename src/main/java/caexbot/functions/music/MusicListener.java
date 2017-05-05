@@ -42,7 +42,7 @@ public class MusicListener implements MusicEventListener{
 		}
 		
 		else if (event instanceof MusicStartEvent){
-			getMusicChannel().sendMessage(String.format(MusicCommand.NOW_PLAYING, "http://youtu.be/"+((MusicStartEvent) event).getSong().getIdentifier())).queue();
+			getMusicChannel().sendMessage(String.format(MusicCommand.NOW_PLAYING, GuildPlayer.getTrackURL(((MusicStartEvent) event).getSong()))).queue();
 		}
 		
 		else if (event instanceof MusicSkipEvent){
@@ -51,7 +51,7 @@ public class MusicListener implements MusicEventListener{
 		
 		else if (event instanceof MusicLoadEvent){
 			getMusicChannel().sendMessage(String.format("Loaded %s successfully\n%s", 
-					((MusicLoadEvent) event).getSong().getInfo().title, "http://youtu.be/"+((MusicLoadEvent) event).getSong().getIdentifier())).queue();
+					((MusicLoadEvent) event).getSong().getInfo().title, GuildPlayer.getTrackURL(((MusicLoadEvent) event).getSong()))).queue();
 		}
 		
 		else if (event instanceof PlaylistLoadEvent){
