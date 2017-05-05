@@ -1,13 +1,17 @@
 package caexbot.functions.music;
 
+import caexbot.commands.CaexCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.data.GuildManager;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
+import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
+import caexbot.functions.music.events.VolumeChangeEvent;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 
@@ -59,11 +63,64 @@ public class MusicListener implements MusicEventListener{
 					((PlaylistLoadEvent) event).getList().getName())).queue();
 		}
 		
+		else if (event instanceof MusicPausedEvent) {
+			if (!((MusicPausedEvent) event).getPaused()) {
+				getMusicChannel().sendMessage(String.format("Music paused. call `%sm play` or `%sm pause` to resume",
+						CaexCommand.getPrefix(getMusicChannel().getGuild()),
+						CaexCommand.getPrefix(getMusicChannel().getGuild()))).queue();
+			}
+			
+		}
+		
+		else if (event instanceof VolumeChangeEvent) {
+			MessageBuilder mb = new MessageBuilder();
+			
+			mb.append(String.format("Volume set to %d\n",((VolumeChangeEvent) event).getVol()));
+			mb.append("```\n");
+			mb.append("*-------------------------*--boost---*\n");
+			mb.append(volumeBar(((VolumeChangeEvent) event).getVol())+"\n");
+			mb.append("*-------------------------*----------*\n");
+			mb.append("```");
+			
+			
+			getMusicChannel().sendMessage(mb.build()).queue();
+			
+		}
+		
 		else{
 			getMusicChannel().sendMessage("This music event isn't hanndled yet.... Yell at ranzer ("+event.getClass().getSimpleName()+")").queue();
 		
 		}
 		
 		
+	}
+
+	private CharSequence volumeBar(int vol) {
+		StringBuilder rtn = new StringBuilder();
+		rtn.append("*|");
+		if (vol<=100) {
+			int volBars = vol / 4;
+			for (int i = 0; i < volBars - 2; i++) {
+				rtn.append('=');
+			}
+			rtn.append('|');
+			for (int i = 0; i < 25 - volBars; i++) {
+				rtn.append(' ');
+			}
+			rtn.append("*          *");
+		} else {
+			int boost = vol-100;
+			int boostBars = boost/5;
+			rtn.append("========================*");
+			for (int i = 0; i<boostBars-1;i++){
+				rtn.append('=');
+			}
+			rtn.append("|");
+			for (int i = 0; i<10-boostBars;i++){
+				rtn.append(" ");
+			}
+			rtn.append('*');
+		}
+		return rtn.toString();
 	}
 }
