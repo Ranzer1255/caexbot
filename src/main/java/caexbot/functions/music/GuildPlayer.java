@@ -94,9 +94,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		YouTubeSearcher yts = new YouTubeSearcher();
 		String videoID = yts.searchForVideo(search);
 
-		System.out.println(videoID);
-		loading = true;
-		pm.loadItem(videoID, loader);
+		queueID(videoID);
 	}
 
 	public void queueID(String songID) {
@@ -311,19 +309,5 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	public AudioTrack getPlayingTrack() {
 		return player.getPlayingTrack();
 
-	}
-	
-	public static String getTrackURL(AudioTrack track){
-		if(track.getSourceManager().getSourceName().equals("youtube")){
-			return String.format("http://youtu.be/%s", track.getIdentifier());
-		}
-//		if(track.getSourceManager().getSourceName().equals("soundcloud")){ TODO
-//			
-//			return String.format("", args)
-//		}
-		
-		else{
-			return "Source URL unknown";
-		}
 	}
 }
