@@ -46,6 +46,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				long runtime = 0;
 				for (AudioTrack track : gp.getQueue().getQueue()) {
 					if(i>10) break;
+					System.out.println(track);
 					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, track.getInfo().uri));
 				}
 				eb.setDescription(sb.toString());
@@ -53,7 +54,9 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				for(AudioTrack track:gp.getQueue().getQueue()){
 					runtime += track.getDuration();
 				}
-				runtime += gp.getPlayingTrack().getDuration();
+  				if (gp.getPlayingTrack()!=null) {
+					runtime += gp.getPlayingTrack().getDuration();
+				}
 				eb.setFooter("Estimated Runtime: "+StringUtil.calcTime(runtime/1000), null);
 				
 			}
