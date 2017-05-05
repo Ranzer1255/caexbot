@@ -44,7 +44,6 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
 			
 			if(fp==null){
-//				System.out.println("is null");
 				return;
 			}
 			try {
@@ -95,11 +94,8 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	private static File getResourceAsFile(String path){
 		try {
 			InputStream in =FacepalmCommand.class.getResourceAsStream(path);
-	        System.out.println(path);
 	        if (in == null) {
-	        	
-//	        	System.out.println("in is null");
-	            return null;
+	        	return null;
 	        }
 
 	        File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".jpg");
