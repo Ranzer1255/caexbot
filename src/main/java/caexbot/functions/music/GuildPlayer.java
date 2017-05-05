@@ -158,8 +158,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	}
 	
 	public void vol(int vol) {
-		notifyOfEvent(new VolumeChangeEvent(vol));
 		player.setVolume(vol);
+		notifyOfEvent(new VolumeChangeEvent(player.getVolume()));
 	}
 
 	public void pause() {
