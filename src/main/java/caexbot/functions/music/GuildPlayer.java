@@ -10,6 +10,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -311,5 +313,19 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	public AudioTrack getPlayingTrack() {
 		return player.getPlayingTrack();
 
+	}
+	
+	public static String getTrackURL(AudioTrack track){
+		if(track.getSourceManager().getSourceName().equals("youtube")){
+			return String.format("http://youtu.be/%s", track.getIdentifier());
+		}
+//		if(track.getSourceManager().getSourceName().equals("soundcloud")){ TODO
+//			
+//			return String.format("", args)
+//		}
+		
+		else{
+			return "Source URL unknown";
+		}
 	}
 }
