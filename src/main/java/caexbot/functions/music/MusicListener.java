@@ -10,6 +10,7 @@ import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
+import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -85,6 +86,10 @@ public class MusicListener implements MusicEventListener{
 			
 			getMusicChannel().sendMessage(mb.build()).queue();
 			
+		}
+		
+		else if (event instanceof ShuffleEvent){
+			getMusicChannel().sendMessage("*throws all the tracks up in the air....*").queue();
 		}
 		
 		else{
