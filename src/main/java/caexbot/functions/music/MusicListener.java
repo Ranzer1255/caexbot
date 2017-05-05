@@ -98,24 +98,42 @@ public class MusicListener implements MusicEventListener{
 	private CharSequence volumeBar(int vol) {
 		StringBuilder rtn = new StringBuilder();
 		rtn.append("*|");
+		
+		//not boosted
 		if (vol<=100) {
-			int volBars = vol / 4;
-			for (int i = 0; i < volBars - 2; i++) {
+			
+			//number of bars to add (if the math comes out to neg set to 0
+			int volBars = ((vol / 4)-2)>0?(vol / 4)-2:0;
+			
+			//add bars
+			for (int i = 0; i < volBars; i++) {
 				rtn.append('=');
 			}
 			rtn.append('|');
-			for (int i = 0; i < 25 - volBars; i++) {
+			
+			//add blank space
+			for (int i = 0; i < 23 - volBars; i++) {
 				rtn.append(' ');
 			}
+			
+			//fill out blank boost space
 			rtn.append("*          *");
+			
+		//boosted volume
 		} else {
 			int boost = vol-100;
 			int boostBars = boost/5;
+			
+			//fill in full standard bar
 			rtn.append("========================*");
+			
+			//add boost bars
 			for (int i = 0; i<boostBars-1;i++){
 				rtn.append('=');
 			}
 			rtn.append("|");
+			
+			//add blank space
 			for (int i = 0; i<10-boostBars;i++){
 				rtn.append(" ");
 			}
