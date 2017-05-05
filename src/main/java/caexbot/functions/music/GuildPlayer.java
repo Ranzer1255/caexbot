@@ -41,6 +41,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	private AudioPlayer player;
 	private AudioFrame lastFrame;
 	private boolean loading;
+	private boolean insertFlag;
 
 	private List<MusicEventListener> listeners = new ArrayList<>();
 	private MusicListener musicListener;//This may move or become a different implementation
@@ -101,6 +102,16 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		System.out.println(songID);
 		loading = true;
 		pm.loadItem(songID, loader);
+	}
+	
+	public void insertSearch(String search){
+		insertFlag = true;
+		queueSearch(search);
+	}
+	
+	public void insertID(String songID){
+		insertFlag = true;
+		queueID(songID);
 	}
 
 	public TrackQueue getQueue() {
@@ -225,6 +236,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		@Override
 		public void trackLoaded(AudioTrack track) {
+			if(insertFlag){
+				queue.insert(track);
+				insertFlag=false;
+				return;
+			}
+			
 			queue.add(track);
 			notifyOfEvent(new MusicLoadEvent(track));
 			loading = false;
@@ -287,7 +304,17 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		public void add(AudioTrack track) {
 			queue.add(track);
 		}
-
+		
+		/**
+		 * inserts track at the head of the queue
+		 * 
+		 * @param track
+		 * 			track to be added
+		 */
+		public void insert(AudioTrack track){
+			((LinkedList<AudioTrack>) queue).addFirst(track);
+		}
+		
 		/**
 		 * clears the queue
 		 */
