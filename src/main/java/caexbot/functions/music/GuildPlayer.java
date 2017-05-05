@@ -116,8 +116,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	public void start() {
 		// System.out.println(player.isPaused() +" : "+
 		// player.getPlayingTrack().getInfo().title);
-		if (player.isPaused() || player.getPlayingTrack() == null) {
+		if (player.isPaused()) {
 			player.setPaused(false);
+		}
+		
+		if (player.getPlayingTrack() == null) {
 			playNext();
 		}
 	}
