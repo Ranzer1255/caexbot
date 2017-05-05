@@ -29,8 +29,7 @@ public class PauseCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Pauses the currently playing song";
 	}
 
 	@Override
