@@ -3,12 +3,14 @@ package caexbot.functions.music;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.data.GuildManager;
+import caexbot.functions.music.events.LoadFailedEvent;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.NoMatchEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
@@ -90,6 +92,14 @@ public class MusicListener implements MusicEventListener{
 		
 		else if (event instanceof ShuffleEvent){
 			getMusicChannel().sendMessage("*throws all the tracks up in the air....*").queue();
+		}
+		
+		else if (event instanceof LoadFailedEvent){
+			getMusicChannel().sendMessage(String.format("There was a problem loading that song sorry!\n(%s)", ((LoadFailedEvent) event).getException().getMessage())).queue();
+		}
+		
+		else if (event instanceof NoMatchEvent){
+			getMusicChannel().sendMessage("I'm sorry, but i didn't find anything matching that search").queue();
 		}
 		
 		else{
