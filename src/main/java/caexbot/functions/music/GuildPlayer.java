@@ -17,12 +17,14 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import caexbot.commands.search.YouTubeSearcher;
+import caexbot.functions.music.events.LoadFailedEvent;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.NoMatchEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
@@ -260,17 +262,16 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		@Override
 		public void noMatches() {
-			// TODO make noMatches
-			
-			System.out.println("no match?");
+			Logging.debug("No match found in search");
+			notifyOfEvent(new NoMatchEvent());
 
 		}
 
 		@Override
 		public void loadFailed(FriendlyException exception) {
-			// TODO make loadFailed
-			System.out.println(exception.getCause());
-			System.out.println(exception.getMessage());// Temp BreadCrumb
+			Logging.debug(exception.getMessage());
+			notifyOfEvent(new LoadFailedEvent(exception));
+			
 		}
 
 	}
