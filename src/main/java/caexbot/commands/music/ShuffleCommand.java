@@ -23,7 +23,6 @@ public class ShuffleCommand extends AbstractMusicCommand {
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
 		return "shuffle shuffle!";
 	}
 }

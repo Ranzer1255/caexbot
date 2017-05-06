@@ -20,7 +20,7 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
-		if (args[0].startsWith(getPrefix(event.getGuild()))) {//test code TODO handle this better
+		if (args[0].startsWith(getPrefix(event.getGuild()))) {
 			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));
 		} else {
 			GuildPlayerManager.getPlayer(event.getGuild()).insertSearch(StringUtil.arrayToString(Arrays.asList(args), " "));

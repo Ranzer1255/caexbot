@@ -22,7 +22,7 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 			int vol = Integer.parseInt(args[0]);
 			GuildPlayerManager.getPlayer(event.getGuild()).vol(vol);
 		} catch (NumberFormatException e) {
-			// TODO Bitch at user for not giving us a number
+			channel.sendMessage("I'm sorry please use an Integer between 1-150").queue();
 		}
 	}
 

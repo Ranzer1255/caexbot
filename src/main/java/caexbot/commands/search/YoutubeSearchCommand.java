@@ -58,13 +58,13 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		// TODO make getLongDescription
-		return getShortDescription();
+		return getShortDescription()+"\n\n"+
+				"Enter your Search Query after the command and caex will return the top item returned by youtube";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		return getPrefix(g)+getAlias().get(0) + " <your search terms>";//TODO match usage format
+		return "`"+getPrefix(g)+getName() + " <your search terms>`";
 	}
 	
 	@Override
