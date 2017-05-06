@@ -14,7 +14,6 @@ import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
 import caexbot.commands.chat.InsultCommand;
-//import caexbot.commands.chat.InsultCommand;0
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
 import caexbot.commands.games.HiLowCommand;
