@@ -11,7 +11,6 @@ import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 
@@ -63,12 +62,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			
 		} else {
-			
-			if (args[0].startsWith(getPrefix(event.getGuild()))) {//test code TODO handle this better
-				GuildPlayerManager.getPlayer(event.getGuild()).queueID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));
-			} else {
-				GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
-			}
+			GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));	
 		}
 	
 	}
@@ -82,17 +76,4 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 	public String getShortDescription() {
 		return "Add song to the play queue";
 	}
-	
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }
