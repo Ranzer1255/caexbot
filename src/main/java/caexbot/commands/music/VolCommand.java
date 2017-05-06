@@ -16,7 +16,8 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
 		if(args.length==0){
-			return;//TODO bitch at user for not telling us anything ;)
+			GuildPlayerManager.getPlayer(event.getGuild()).vol();
+			return;
 		}
 		try {
 			int vol = Integer.parseInt(args[0]);

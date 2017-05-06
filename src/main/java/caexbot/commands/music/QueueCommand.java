@@ -25,7 +25,12 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 			
 			eb.setAuthor("Currently Playing", null, null);
 			if(gp.getPlayingTrack()!=null){
-				eb.setTitle(gp.getPlayingTrack().getInfo().title+"\nby "+gp.getPlayingTrack().getInfo().author,"http://youtu.be/"+gp.getPlayingTrack().getIdentifier());
+				eb.setTitle(
+						String.format("%s\n"
+								   +  "by %s",
+								gp.getPlayingTrack().getInfo().title,
+								gp.getPlayingTrack().getInfo().author),
+						gp.getPlayingTrack().getInfo().uri);
 			} else {
 				eb.setTitle("Nothing Playing",null);
 			}
@@ -41,14 +46,16 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				long runtime = 0;
 				for (AudioTrack track : gp.getQueue().getQueue()) {
 					if(i>10) break;
-					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, "http://youtu.be/"+track.getIdentifier()));
+					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, track.getInfo().uri));
 				}
 				eb.setDescription(sb.toString());
 				
 				for(AudioTrack track:gp.getQueue().getQueue()){
 					runtime += track.getDuration();
 				}
-				runtime += gp.getPlayingTrack().getDuration();
+  				if (gp.getPlayingTrack()!=null) {
+					runtime += gp.getPlayingTrack().getDuration();
+				}
 				eb.setFooter("Estimated Runtime: "+StringUtil.calcTime(runtime/1000), null);
 				
 			}
@@ -56,6 +63,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			
 		} else {
+			
 			if (args[0].startsWith(getPrefix(event.getGuild()))) {//test code TODO handle this better
 				GuildPlayerManager.getPlayer(event.getGuild()).queueID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));
 			} else {

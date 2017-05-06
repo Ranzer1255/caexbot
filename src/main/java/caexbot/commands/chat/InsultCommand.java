@@ -31,7 +31,6 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		StringBuilder sb = new StringBuilder();
 		
 		for ( User u : event.getMessage().getMentionedUsers()) {
-			System.out.println(u.getId());
 			if(u.getId().equals(CaexConfiguration.getInstance().getOwner())){
 				channel.sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
 				continue;
