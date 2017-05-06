@@ -6,7 +6,6 @@ import java.util.List;
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -28,21 +27,8 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 		}
 
 	}
-
-	@Override
-	public String getUsage(Guild g) {
-		return null;//TODO
-	}
-
 	@Override
 	public String getShortDescription() {
 		return "Add song to the Head of the queue";
 	}
-
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

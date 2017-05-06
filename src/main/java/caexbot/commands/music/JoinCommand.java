@@ -8,7 +8,6 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -39,20 +38,6 @@ public class JoinCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public String getShortDescription() {
-		// TODO make getDescription
-		return null;
+		return "join bot to your current voice channel";
 	}
-
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getUsage(Guild g) {
-		// TODO make getUsage
-		return null;
-	}
-
 }

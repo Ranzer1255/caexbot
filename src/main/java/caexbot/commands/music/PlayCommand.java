@@ -7,7 +7,6 @@ import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -37,18 +36,5 @@ public class PlayCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public String getShortDescription() {
 		return "Start playing the first song in queue";
-	}
-	
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	}	
 }

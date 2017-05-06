@@ -32,6 +32,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		subCommands.add(new InsertCommand());
 		subCommands.add(new PlayCommand());
 		subCommands.add(new PauseCommand());
+		subCommands.add(new PlaylistCommand());
 		subCommands.add(new StopCommand());
 		subCommands.add(new SkipCommand());
 		subCommands.add(new VolCommand());
