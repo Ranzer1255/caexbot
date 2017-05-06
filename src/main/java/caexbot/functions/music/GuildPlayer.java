@@ -239,10 +239,9 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			if(insertFlag){
 				queue.insert(track);
 				insertFlag=false;
-				return;
+			} else {
+				queue.add(track);
 			}
-			
-			queue.add(track);
 			notifyOfEvent(new MusicLoadEvent(track));
 			loading = false;
 
