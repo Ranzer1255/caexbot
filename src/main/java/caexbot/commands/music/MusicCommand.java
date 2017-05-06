@@ -82,7 +82,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		
 		for (CaexCommand cmd : subCommands) {
 			sb.append(
-				String.format("`%s`: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
+				String.format("**%s**: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
 			);
 		}
 		
@@ -95,9 +95,9 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		
 		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
 		for(CaexCommand cmd : subCommands){
-			sb.append(String.format("%s | ", cmd.getName()));
+			sb.append(String.format("%s|", cmd.getName()));
 		}
-		sb.delete(sb.length()-3,sb.length());
+		sb.delete(sb.length()-1,sb.length());
 		sb.append("}`");
 				
 		return sb.toString();
