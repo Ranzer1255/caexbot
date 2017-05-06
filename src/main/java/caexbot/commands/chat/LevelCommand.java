@@ -70,10 +70,9 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		return Catagory.CHAT;
 	}
 
-	//TODO make this an embed
+
 	private Message rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-//		StringBuilder msg = new StringBuilder();
-		
+	
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setAuthor("Current Leaderboard", null, null);
@@ -84,7 +83,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		List<UserLevel> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
 		
-//		msg.append("__***?Current Leaderboard***__\nall XP is beta and will be reset\n\n");
 		int index=0;
 		for (UserLevel entry : rankings) {
 			if(index++>=10) break;
@@ -96,13 +94,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 					), 
 					true
 			);
-//			msg.append(
-//				String.format("__**%s**__:\t*Level:* **%s** with __%sxp*__\n", 
-//					entry.getMember().getEffectiveName(), 
-//					entry.getLevel(),
-//					entry.getXP()
-//				)
-//			);
 		}
 		
 		return new MessageBuilder().setEmbed(eb.build()).build();

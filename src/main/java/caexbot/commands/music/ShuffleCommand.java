@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -23,21 +22,7 @@ public class ShuffleCommand extends AbstractMusicCommand {
 	}
 
 	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
 		return "shuffle shuffle!";
 	}
-
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

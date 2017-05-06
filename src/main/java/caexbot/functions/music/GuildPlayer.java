@@ -17,12 +17,14 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import caexbot.commands.search.YouTubeSearcher;
+import caexbot.functions.music.events.LoadFailedEvent;
 import caexbot.functions.music.events.MusicEvent;
 import caexbot.functions.music.events.MusicJoinEvent;
 import caexbot.functions.music.events.MusicLoadEvent;
 import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
+import caexbot.functions.music.events.NoMatchEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
@@ -41,6 +43,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	private AudioPlayer player;
 	private AudioFrame lastFrame;
 	private boolean loading;
+	private boolean insertFlag;
 
 	private List<MusicEventListener> listeners = new ArrayList<>();
 	private MusicListener musicListener;//This may move or become a different implementation
@@ -94,15 +97,23 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		YouTubeSearcher yts = new YouTubeSearcher();
 		String videoID = yts.searchForVideo(search);
 
-		System.out.println(videoID);
-		loading = true;
-		pm.loadItem(videoID, loader);
+		queueID(videoID);
 	}
 
 	public void queueID(String songID) {
 		System.out.println(songID);
 		loading = true;
 		pm.loadItem(songID, loader);
+	}
+	
+	public void insertSearch(String search){
+		insertFlag = true;
+		queueSearch(search);
+	}
+	
+	public void insertID(String songID){
+		insertFlag = true;
+		queueID(songID);
 	}
 
 	public TrackQueue getQueue() {
@@ -116,8 +127,11 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	public void start() {
 		// System.out.println(player.isPaused() +" : "+
 		// player.getPlayingTrack().getInfo().title);
-		if (player.isPaused() || player.getPlayingTrack() == null) {
+		if (player.isPaused()) {
 			player.setPaused(false);
+		}
+		
+		if (player.getPlayingTrack() == null) {
 			playNext();
 		}
 	}
@@ -152,9 +166,13 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 	}
 
+	public void vol() {
+		notifyOfEvent(new VolumeChangeEvent(player.getVolume()));
+	}
+	
 	public void vol(int vol) {
-		notifyOfEvent(new VolumeChangeEvent(vol));
 		player.setVolume(vol);
+		notifyOfEvent(new VolumeChangeEvent(player.getVolume()));
 	}
 
 	public void pause() {
@@ -193,7 +211,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	// AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-		if (endReason == AudioTrackEndReason.FINISHED)
+		if (endReason == AudioTrackEndReason.FINISHED||endReason == AudioTrackEndReason.LOAD_FAILED)
 			playNext();
 		if (endReason == AudioTrackEndReason.REPLACED)
 			notifyOfEvent(new MusicSkipEvent(track));
@@ -220,7 +238,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		@Override
 		public void trackLoaded(AudioTrack track) {
-			queue.add(track);
+			if(insertFlag){
+				queue.insert(track);
+				insertFlag=false;
+			} else {
+				queue.add(track);
+			}
 			notifyOfEvent(new MusicLoadEvent(track));
 			loading = false;
 
@@ -239,17 +262,16 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
 		@Override
 		public void noMatches() {
-			// TODO make noMatches
-			
-			System.out.println("no match?");
+			Logging.debug("No match found in search");
+			notifyOfEvent(new NoMatchEvent());
 
 		}
 
 		@Override
 		public void loadFailed(FriendlyException exception) {
-			// TODO make loadFailed
-
-			System.out.println(exception.getMessage());// Temp BreadCrumb
+			Logging.debug(exception.getMessage());
+			notifyOfEvent(new LoadFailedEvent(exception));
+			
 		}
 
 	}
@@ -282,7 +304,17 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		public void add(AudioTrack track) {
 			queue.add(track);
 		}
-
+		
+		/**
+		 * inserts track at the head of the queue
+		 * 
+		 * @param track
+		 * 			track to be added
+		 */
+		public void insert(AudioTrack track){
+			((LinkedList<AudioTrack>) queue).addFirst(track);
+		}
+		
 		/**
 		 * clears the queue
 		 */

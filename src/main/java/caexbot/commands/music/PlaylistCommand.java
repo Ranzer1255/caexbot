@@ -9,23 +9,30 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class PauseCommand extends AbstractMusicCommand implements Describable{
+public class PlaylistCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
-		GuildPlayerManager.getPlayer(event.getGuild()).pause();
-		
-		 
-	}
+		if (args.length == 0){
+			channel.sendMessage("what was the playlist ID again?").queue();
+			return;
+		}
+		if (args[0].charAt(0)=='i' && args.length>1){
+			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[1]);
+		}
+		GuildPlayerManager.getPlayer(event.getGuild()).queueID(args[0]);
 
+		
+	}
+	
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("pause");
+		return Arrays.asList("playlist", "pl");
 	}
 
 	@Override
 	public String getShortDescription() {
-		return "Pauses the currently playing song";
+		return "skips the search process and passes input straight to lavaplayer";
 	}
 }

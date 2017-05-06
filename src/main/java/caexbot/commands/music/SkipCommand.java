@@ -5,7 +5,6 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -27,20 +26,6 @@ public class SkipCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Skips the rest of the current track";
 	}
-
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Describable;
+import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -28,8 +29,10 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		subCommands = new ArrayList<>();
 		subCommands.add(new JoinCommand());
 		subCommands.add(new QueueCommand());
+		subCommands.add(new InsertCommand());
 		subCommands.add(new PlayCommand());
 		subCommands.add(new PauseCommand());
+		subCommands.add(new PlaylistCommand());
 		subCommands.add(new StopCommand());
 		subCommands.add(new SkipCommand());
 		subCommands.add(new VolCommand());
@@ -49,11 +52,13 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 		Optional<CaexCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 
+		// Silent failure of miss-typed subcommands
 		if (!c.isPresent()) {
-			channel.sendMessage(invalidUsage(event.getGuild()));
+			Logging.debug("no music subcommand");
+//			channel.sendMessage(invalidUsage(event.getGuild()));
 			return;
 		}
-
+		Logging.debug("Music Subclass: "+c.get().getName());
 		setMusicChannel(channel);
 		c.get().runCommand(Arrays.copyOfRange(args, 1, args.length), author, channel, event);
 	}
@@ -77,7 +82,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		
 		for (CaexCommand cmd : subCommands) {
 			sb.append(
-				String.format("`%s`: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
+				String.format("**%s**: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
 			);
 		}
 		
@@ -90,9 +95,9 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		
 		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
 		for(CaexCommand cmd : subCommands){
-			sb.append(String.format("%s | ", cmd.getName()));
+			sb.append(String.format("%s|", cmd.getName()));
 		}
-		sb.delete(sb.length()-3,sb.length());
+		sb.delete(sb.length()-1,sb.length());
 		sb.append("}`");
 				
 		return sb.toString();

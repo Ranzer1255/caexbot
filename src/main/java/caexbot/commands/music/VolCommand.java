@@ -5,7 +5,6 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -16,13 +15,14 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
 		if(args.length==0){
-			return;//TODO bitch at user for not telling us anything ;)
+			GuildPlayerManager.getPlayer(event.getGuild()).vol();
+			return;
 		}
 		try {
 			int vol = Integer.parseInt(args[0]);
 			GuildPlayerManager.getPlayer(event.getGuild()).vol(vol);
 		} catch (NumberFormatException e) {
-			// TODO Bitch at user for not giving us a number
+			channel.sendMessage("I'm sorry please use an Integer between 1-150").queue();
 		}
 	}
 
@@ -33,20 +33,6 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public String getShortDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Adjust the volume of the song on a scale from 1-150";
 	}
-
-	@Override
-	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
