@@ -4,44 +4,18 @@ import javax.security.auth.login.LoginException;
 import caexbot.functions.background.CommandListener;
 import caexbot.functions.levels.LevelUpdater;
 import caexbot.util.Logging;
-import caexbot.commands.admin.HelpCommand;
-import caexbot.commands.admin.InfoCommand;
-import caexbot.commands.admin.PingCommand;
-import caexbot.commands.admin.PrefixCommand;
-import caexbot.commands.admin.ShutdownCommand;
-import caexbot.commands.admin.XPPermCommand;
-import caexbot.commands.chat.DraconicTranslateCommand;
-import caexbot.commands.chat.EightBallCommand;
-import caexbot.commands.chat.FacepalmCommand;
-import caexbot.commands.chat.InsultCommand;
-import caexbot.commands.chat.LevelCommand;
-import caexbot.commands.games.DiceCommand;
-import caexbot.commands.games.HiLowCommand;
-import caexbot.commands.games.ZomDiceCommand;
-import caexbot.commands.music.MusicCommand;
-import caexbot.commands.search.YoutubeSearchCommand;
+import caexbot.commands.admin.*;
+import caexbot.commands.chat.*;
+import caexbot.commands.games.*;
+import caexbot.commands.music.*;
+import caexbot.commands.search.*;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
-
-/*
- * TODO add prefix announcement via mention
- * 
- * if a message contains both a mention to the bot and the word "prefix" caex will reply with the following
- * 
- * My prefix on this guild is `<prefix>`
- * if you are an admin and would like to change this,
- * use the command `<prefix>set-prefix new prefix`
- * 
- * other prefix used by this bot include:
- *  <insert 3 random prefixes from the DB>
- *  
- */
 public class CaexBot {
 	
 	private static JDA JDA;
@@ -91,17 +65,6 @@ public class CaexBot {
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
-		//color controls buggy and unreliable ATM
-		if(config.isDebug()){
-			for (Guild g : JDA.getGuilds()) {
-				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
-				JDA.getPresence().setGame(Game.of("in Testing Mode"));
-			}
-		} else {
-			for(Guild g: JDA.getGuilds()){
-				g.getController().setNickname(g.getMember(JDA.getSelfUser()), null).queue();
-			}
-		}
 		Logging.info("Done Loading and ready to go!");
 	}
 

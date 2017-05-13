@@ -33,8 +33,14 @@ public class CommandListener extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
 		if (event.getMessage().isMentioned(event.getJDA().getSelfUser())){
-			if (event.getMessage().getContent().contains("prefix")) {
-				event.getChannel().sendMessage("My current prefix is: `"+CaexCommand.getPrefix(event.getGuild())+"`").queue();
+			if (containsKeyWord(event)) {
+				event.getChannel().sendMessage(String.format(
+						"My current prefix is: `%s`\n\n"
+						+ "If you have the `administrator` permission, you may change my prefix using the `set-prefix` command.\n\n"
+						+ "Do `%shelp set-prefix` for more information.",
+						CaexCommand.getPrefix(event.getGuild()),
+						CaexCommand.getPrefix(event.getGuild())
+								)).queue();
 			}
 		}
 		
@@ -44,6 +50,16 @@ public class CommandListener extends ListenerAdapter {
 		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild())))
 			return;
 		findCommand(event, author, message); 
+	}
+
+	private boolean containsKeyWord(MessageReceivedEvent event) {
+		List<String> keywords = Arrays.asList("prefix", "help", "command", "code");
+		
+		for (String string : keywords) {
+			if(event.getMessage().getContent().contains(string))
+				return true;
+		}
+		return false;
 	}
 	
 	protected void findCommand(MessageReceivedEvent event, User author, String message) {
