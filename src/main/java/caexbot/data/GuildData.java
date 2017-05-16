@@ -91,6 +91,17 @@ public class GuildData {
 		
 	}
 
+	public void setXPAnnoucement(Guild g, boolean annouce){
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+			"update guild set xp_annouce=? where guild_id = ?;"	
+		)){
+			stmt.setBoolean(0, annouce);
+			stmt.setString(1, g.getId());
+		} catch (SQLException e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+	}
 	private boolean getXPAnnoucement(Guild g) {
 		
 		boolean rtn = false;
