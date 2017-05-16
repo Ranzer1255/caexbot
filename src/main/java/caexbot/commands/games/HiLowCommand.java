@@ -20,7 +20,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HiLowCommand extends CaexCommand implements Describable {
 
-	private static final double MAX_BET_PERCENTAGE = .1;//set this on a server by server level?
+	private static final double MAX_BET_PERCENTAGE = .25;//set this on a server by server level?
 	private static final int MIN_XP = 1000;//and this?
 	private static final int MIN_RAN = 1;
 	private static final int MAX_RAN = 100;
