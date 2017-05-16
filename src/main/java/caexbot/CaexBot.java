@@ -59,7 +59,8 @@ public class CaexBot {
 				.addCommand(new PrefixCommand())
 				.addCommand(new XPPermCommand())
 				.addCommand(new MusicCommand())
-				.addCommand(new HiLowCommand());
+				.addCommand(new HiLowCommand())
+				.addCommand(new LevelAlertToggleCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());

@@ -18,6 +18,7 @@ import net.dv8tion.jda.core.entities.User;
 
 public class GuildData {
 
+	public static final boolean DEFAULT_XP_ANNOUCEMENT = true;
 	private Guild guild;
 	
 	public GuildData(Guild guild) {
@@ -79,26 +80,39 @@ public class GuildData {
 	}
 
 	private void levelUpAlert(User author, TextChannel channel) {
-		if(getXPAnnoucement(channel.getGuild())){
+		if(getXPAnnoucement()){
 			channel.sendMessage(String.format("Well met %s!\nYou have advanced to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
 	private void levelDownAlert(User author, TextChannel channel) {
-		if(getXPAnnoucement(channel.getGuild())){
+		if(getXPAnnoucement()){
 			channel.sendMessage(String.format("Oh No %s!\nYou have decreased to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
 
-	private boolean getXPAnnoucement(Guild g) {
+	public void setXPAnnoucement(boolean annouce){
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+			"update guild set xp_annouce=? where guild_id = ?;"	
+		)){
+			stmt.setBoolean(1, annouce);
+			stmt.setString(2, guild.getId());
+			
+			stmt.execute();
+		} catch (SQLException e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+	}
+	public boolean getXPAnnoucement() {
 		
 		boolean rtn = false;
 		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 				"select xp_annouce from guild where guild_id = ?"
 				)){
 			
-			stmt.setString(1, g.getId());
+			stmt.setString(1, guild.getId());
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()){
