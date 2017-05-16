@@ -15,7 +15,7 @@ import net.dv8tion.jda.core.exceptions.PermissionException;
 
 public class ShutdownCommand extends CaexCommand {
 
-	//TODO see if its posible to add in control words to the string to replace with functions like getPrefix() and such to make each message guild specific
+	//TODO see if its possible to add in control words to the string to replace with functions like getPrefix() and such to make each message guild specific
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 		if (author!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
