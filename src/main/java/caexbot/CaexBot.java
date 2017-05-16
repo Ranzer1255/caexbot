@@ -16,6 +16,9 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
+/*
+ * TODO add guild names to log output
+ */
 public class CaexBot {
 	
 	private static JDA JDA;
