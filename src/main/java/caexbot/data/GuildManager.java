@@ -69,7 +69,7 @@ public class GuildManager extends ListenerAdapter{
 	public void onGuildLeave(GuildLeaveEvent event) {
 		super.onGuildLeave(event);
 		
-		try{
+		try{//TODO change to Try with Resouces
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"delete from guild where guild_id = ?"
 			);
@@ -92,7 +92,7 @@ public class GuildManager extends ListenerAdapter{
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		super.onGuildMemberLeave(event);
 		
-		try {
+		try {//TODO change to Try with Resouces
 			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"delete from member where guild_id=? and user_id = ?"
 			);
@@ -135,7 +135,7 @@ public class GuildManager extends ListenerAdapter{
 	}
 
 	private static void removeOldGuilds() {
-		try {
+		try {//TODO change to Try with Resouces
 			ResultSet rs = CaexDB.getConnection().prepareStatement(
 					"select guild_id from guild" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
 			).executeQuery();
@@ -152,7 +152,7 @@ public class GuildManager extends ListenerAdapter{
 	}
 
 	private static void updateMembers() {
-		try {
+		try {//TODO change to Try with Resouces
 			ResultSet rs = CaexDB.getConnection().prepareStatement(
 				"select guild_id, user_id from member" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
 			).executeQuery();
