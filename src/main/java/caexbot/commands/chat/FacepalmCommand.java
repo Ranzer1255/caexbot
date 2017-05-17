@@ -12,6 +12,7 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
+import caexbot.util.Logging;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -50,8 +51,8 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 				channel.sendFile(fp, new MessageBuilder().append(author.getAsMention()).build()).complete();;
 				fp.delete();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logging.error(e.getMessage());
+				Logging.log(e);
 			}
 		}
 
