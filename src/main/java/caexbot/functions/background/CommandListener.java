@@ -32,7 +32,7 @@ public class CommandListener extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
-		if (event.getMessage().isMentioned(event.getJDA().getSelfUser())){
+		if (event.getMessage().isMentioned(event.getJDA().getSelfUser()) && !event.getMessage().mentionsEveryone()){
 			if (containsKeyWord(event)) {
 				event.getChannel().sendMessage(String.format(
 						"My current prefix is: `%s`\n\n"
