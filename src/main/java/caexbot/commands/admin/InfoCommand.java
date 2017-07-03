@@ -1,20 +1,22 @@
 package caexbot.commands.admin;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
+
+import caexbot.CaexBot;
+import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
+import caexbot.commands.DraconicCommand;
+import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import java.util.Arrays;
-import java.util.List;
-
-import caexbot.commands.CaexCommand;
-import caexbot.commands.Catagory;
-import caexbot.commands.Describable;
-import caexbot.commands.DraconicCommand;
-import caexbot.config.CaexConfiguration;
 
 public class InfoCommand extends CaexCommand implements DraconicCommand, Describable{
 
@@ -57,12 +59,49 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 				eb.addField("Guilds", String.valueOf(event.getJDA().getGuilds().size()), false)
 				  .addField("Users", countNonBotUsers(event), true)
 				  .addField("Bots", countBotUsers(event), true)
+				  .addField("Up Time",getUpTime(), true)
 				  .addField("Game", event.getJDA().getPresence().getGame().getName(), true);
 
 				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			}
 		}
 
+	}
+
+	private String getUpTime() {
+		StringBuilder sb = new StringBuilder();
+		LocalDateTime now = LocalDateTime.now();
+		
+		if(CaexBot.START_TIME.until(now, ChronoUnit.YEARS)!=0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.YEARS)+" Yrs, ");
+			now=now.minusYears(CaexBot.START_TIME.until(now, ChronoUnit.YEARS));
+		}
+		if(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS)!= 0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS)+" Mths, ");
+			now=now.minusMonths(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS));
+		}
+		if(CaexBot.START_TIME.until(now, ChronoUnit.DAYS)!=0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.DAYS)+" Days, ");
+			now=now.minusDays(CaexBot.START_TIME.until(now, ChronoUnit.DAYS));
+		}
+		if(CaexBot.START_TIME.until(now, ChronoUnit.HOURS)!=0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.HOURS)+" Hrs, ");
+			now=now.minusHours(CaexBot.START_TIME.until(now, ChronoUnit.HOURS));
+		}
+		if(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES)!=0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES)+" Mins, ");
+			now=now.minusMinutes(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES));
+		}
+		if(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS)!=0){
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS)+" Secs, ");
+			now=now.minusSeconds(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS));
+		}
+		
+		
+		sb.delete(sb.length()-2, sb.length());
+		sb.append(".");
+		
+		return sb.toString();
 	}
 
 	private String countBotUsers(MessageReceivedEvent event) {
