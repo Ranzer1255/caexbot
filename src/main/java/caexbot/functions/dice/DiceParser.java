@@ -48,7 +48,7 @@ public class DiceParser {
 			rtn = new DieRoll(number, size, modifier);
 			
 		} else {
-			throw new IllegalArgumentException(match);
+			throw new IllegalDiceFormatException(match);
 		}
 		
 		return rtn;

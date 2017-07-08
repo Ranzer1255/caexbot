@@ -7,6 +7,8 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.dice.DiceParser;
+import caexbot.functions.dice.DieRoll;
+import caexbot.functions.dice.IllegalDiceFormatException;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -17,14 +19,20 @@ public class DiceCommand extends CaexCommand implements Describable{
 	@Override
 	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
 
+		System.out.println(event.getMessage().getContent());
 		if(!(args.length==1)){
 			invalidUsage(event.getGuild());
 		}
-		
+		DieRoll dr = DiceParser.parseDiceString(args[0]);
 		try {
-			channel.sendMessage(author.getAsMention()+": "+DiceParser.parseDiceString(args[0]).Result()).queue();
-		} catch (IllegalArgumentException e) {
+			String message = author.getAsMention()+": "+dr.verboseResult();
+			channel.sendMessage(message).queue();
+		} catch (IllegalDiceFormatException e) {
 			channel.sendMessage("I'm sorry i didn't understand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
+		} catch (IllegalArgumentException e) {
+			if (e.getMessage().equals("Provided text for message must be less than 2000 characters in length")) {
+				channel.sendMessage("Sorry "+event.getAuthor().getAsMention()+" Result too long to display each die\n"+ dr.result()).queue();
+			}
 		}
 		
 	}
