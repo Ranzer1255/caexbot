@@ -86,6 +86,10 @@ public class CaexBot {
 		JDA.getPresence().setGame(Game.of(config.getStatus()));
 	
 		Logging.info("Done Loading and ready to go!");
+		Logging.info("Sending Online message to Owner");
+		JDA.getUserById(config.getOwner()).openPrivateChannel().queue((t) -> {
+				t.sendMessage("Boss, I've just come online").queue();
+		});
 	}
 
 	public static JDA getJDA(){
