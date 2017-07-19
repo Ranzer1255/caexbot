@@ -12,6 +12,7 @@ import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -34,41 +35,55 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		}
 		if (args.length == 0) { // !info
 			User bot = event.getJDA().getSelfUser();
-			eb.setAuthor("Caex Hewa", "https://github.com/Sgmaniac1255/caexbot", bot.getAvatarUrl())
-			  .setColor(event.getGuild().getMember(bot).getColor())
-			  .setTitle("A Discord Chatbot",null)
-			  .setDescription("Written by Ranzer")
-			  .setThumbnail(bot.getAvatarUrl())
-			  .addField("Version", CaexConfiguration.getInstance().getVersion(), true)
-			  .addField("Language", "Java", true)
-			  .addField("Artwork", "Mellie", false)
-			  .addField("Invite me!", inviteLinkBuilder(bot), true)
-			  .addField("GitHub Repo", "[GitHub](https://github.com/sgmaniac1255/caexbot)\n[Bugs and Suggestions](https://gitreports.com/issue/Sgmaniac1255/caexbot)", true)
-			  .setFooter("Please report bugs or suggestions in the link above", null);
+			eb = infoEmbed(bot);
+			eb.setColor(event.getGuild().getMember(bot).getColor());
 
 			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 		}
 		if (args.length == 1) { // 1 argument
 			if (args[0].equals("stats")) { // !info stats
 				User bot = event.getJDA().getSelfUser();
-				eb.setAuthor("Caex Hewa", "https://github.com/Sgmaniac1255/caexbot", bot.getAvatarUrl())
-				  .setColor(event.getGuild().getMember(bot).getColor())
-				  .setTitle("A Discord Chatbot",null)
-				  .setDescription("Written by Ranzer")
-				  .setThumbnail(bot.getAvatarUrl());
-				eb.addField("Guilds", String.valueOf(event.getJDA().getGuilds().size()), false)
-				  .addField("Users", countNonBotUsers(event), true)
-				  .addField("Bots", countBotUsers(event), true)
-				  .addField("Up Time",getUpTime(), true)
-				  .addField("Game", event.getJDA().getPresence().getGame().getName(), true);
+				eb = statusEmbed(event.getJDA().getSelfUser());
 
+
+				eb.setColor(event.getGuild().getMember(bot).getColor());
 				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			}
 		}
 
 	}
 
-	private String getUpTime() {
+	static public EmbedBuilder statusEmbed(User bot) {
+		EmbedBuilder rtn = coreEmbed(bot);
+		rtn.addField("Guilds", String.valueOf(bot.getJDA().getGuilds().size()), false)
+		  .addField("Users", countNonBotUsers(bot.getJDA()), true)
+		  .addField("Bots", countBotUsers(bot.getJDA()), true)
+		  .addField("Up Time",getUpTime(), true)
+		  .addField("Game", bot.getJDA().getPresence().getGame().getName(), true);
+		return rtn;
+	}
+
+	static public EmbedBuilder infoEmbed(User bot) {
+		EmbedBuilder rtn = coreEmbed(bot);
+		  rtn.addField("Version", CaexConfiguration.getInstance().getVersion(), true)
+		  .addField("Language", "Java", true)
+		  .addField("Artwork", "Mellie", false)
+		  .addField("Invite me!", inviteLinkBuilder(bot), true)
+		  .addField("GitHub Repo", "[GitHub](https://github.com/sgmaniac1255/caexbot)\n[Bugs and Suggestions](https://gitreports.com/issue/Sgmaniac1255/caexbot)", true)
+		  .setFooter("Please report bugs or suggestions in the link above", null);
+		return rtn;
+	}
+
+	static private EmbedBuilder coreEmbed(User bot) {
+		EmbedBuilder rtn = new EmbedBuilder();
+		rtn.setAuthor("Caex Hewa", "https://github.com/Sgmaniac1255/caexbot", bot.getAvatarUrl())
+		  .setTitle("A Discord Chatbot",null)
+		  .setDescription("Written by Ranzer")
+		  .setThumbnail(bot.getAvatarUrl());
+		return rtn;
+	}
+
+	private static String getUpTime() {
 		StringBuilder sb = new StringBuilder();
 		LocalDateTime now = LocalDateTime.now();
 		
@@ -104,10 +119,10 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		return sb.toString();
 	}
 
-	private String countBotUsers(MessageReceivedEvent event) {
+	private static String countBotUsers(JDA api) {
 		int count = 0;
 		
-		for(User u:event.getJDA().getUsers()){
+		for(User u:api.getUsers()){
 			if (u.isBot()){
 				count++;
 			}
@@ -116,10 +131,10 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		return String.valueOf(count);
 	}
 
-	private String countNonBotUsers(MessageReceivedEvent event) {
+	private static String countNonBotUsers(JDA api) {
 		int count = 0;
 		
-		for(User u:event.getJDA().getUsers()){
+		for(User u:api.getUsers()){
 			if (!u.isBot()){
 				count++;
 			}
@@ -128,7 +143,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		return String.valueOf(count);
 	}
 
-	private String inviteLinkBuilder(User bot) {
+	private static String inviteLinkBuilder(User bot) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("[No Permissions]")

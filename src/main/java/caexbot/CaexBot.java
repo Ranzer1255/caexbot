@@ -28,6 +28,7 @@ import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
@@ -88,7 +89,12 @@ public class CaexBot {
 		Logging.info("Done Loading and ready to go!");
 		Logging.info("Sending Online message to Owner");
 		JDA.getUserById(config.getOwner()).openPrivateChannel().queue((t) -> {
-				t.sendMessage("Boss, I've just come online").queue();
+				t.sendMessage(new MessageBuilder().append("Boss, I've just come online")
+						.setEmbed(InfoCommand.infoEmbed(getJDA().getSelfUser()).build()).build()
+						).queue();
+				t.sendMessage(new MessageBuilder().setEmbed(
+						InfoCommand.statusEmbed(getJDA().getSelfUser()).build()
+						).build()).queue();
 		});
 	}
 
