@@ -29,6 +29,8 @@ public class DraconicListener extends ListenerAdapter{
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		
+		if(event.getAuthor().isBot()){return;}
+		
 		if(!event.getMessage().getRawContent().toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()))) 
 			return;
 		

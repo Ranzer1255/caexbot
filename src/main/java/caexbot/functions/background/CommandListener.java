@@ -31,6 +31,7 @@ public class CommandListener extends ListenerAdapter {
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
+		if (event.getAuthor().isBot()){return;}//ignore bots and self
 		
 		if (event.getMessage().isMentioned(event.getJDA().getSelfUser()) && !event.getMessage().mentionsEveryone()){
 			if (containsKeyWord(event)) {
@@ -64,19 +65,18 @@ public class CommandListener extends ListenerAdapter {
 	
 	private void findCommand(MessageReceivedEvent event, User author, String message) {
 		
-		if (!author.isBot()) {
-			String[] args = message.split(" ");
-			String command = args[0].toLowerCase().replace(CaexCommand.getPrefix(event.getGuild()), "");
-			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
-			TextChannel channel = event.getTextChannel();
-			Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
-			
-			if(c.isPresent()){
-				CaexCommand cmd = c.get();
-				
-				callCommand(event, author, finalArgs, channel, cmd);
-			}
+		String[] args = message.split(" ");
+		String command = args[0].toLowerCase().replace(CaexCommand.getPrefix(event.getGuild()), "");
+		String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
+		TextChannel channel = event.getTextChannel();
+		Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
+
+		if(c.isPresent()){
+			CaexCommand cmd = c.get();
+
+			callCommand(event, author, finalArgs, channel, cmd);
 		}
+
 	}
 
 	protected void callCommand(MessageReceivedEvent event, User author, String[] finalArgs, TextChannel channel,
