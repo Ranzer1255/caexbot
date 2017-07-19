@@ -62,7 +62,7 @@ public class CommandListener extends ListenerAdapter {
 		return false;
 	}
 	
-	protected void findCommand(MessageReceivedEvent event, User author, String message) {
+	private void findCommand(MessageReceivedEvent event, User author, String message) {
 		
 		if (!author.isBot()) {
 			String[] args = message.split(" ");
