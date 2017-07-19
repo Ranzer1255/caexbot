@@ -24,23 +24,29 @@ public class ShutdownCommand extends CaexCommand {
 		}
 		channel.sendMessage("if you insist boss.... *blerg*").complete();
 		if (args.length>0&&args[0].equals("alert")) {
-			for (Guild g : event.getJDA().getGuilds()) {
-				try {
-					g.getPublicChannel().sendMessage("I've got to go.... \n" + 
-				((args.length>1)?StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1, args.length)), " ")+"\n":"")+
-				"*casts teleport and vanishes*").queue();
-				} catch (PermissionException e) {
-					Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
-				}
-			}
-			channel.sendMessage("i've told everyone. night night").complete();
+			shutdownAlertBroadcast(args, channel, event);
 		}
-//		event.getJDA().shutdown();
+		event.getJDA().shutdown();
+		try {Thread.sleep(500L);} catch (InterruptedException e) {}
 		System.exit(0);
 	}
 
 	@Override
 	public List<String> getAlias() {
 		return Arrays.asList("vdri");
+	}
+
+	private void shutdownAlertBroadcast(String[] args, TextChannel channel, MessageReceivedEvent event) {
+		for (Guild g : event.getJDA().getGuilds()) {
+			try {
+				g.getPublicChannel().sendMessage("I've got to go.... \n" + 
+			((args.length>1)?StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1, args.length)), " ")+"\n":"")+
+			"*casts teleport and vanishes*").queue();
+			} catch (PermissionException e) {
+				Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
+				continue;
+			}
+		}
+		channel.sendMessage("i've told everyone. night night").complete();
 	}
 }
