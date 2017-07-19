@@ -218,17 +218,16 @@ public class GuildData {
 	public String getPrefix() {
 		String prefix=null;
 		
-		try {
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-					"select prefix from guild where guild_id = ?"
-			);
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				"select prefix from guild where guild_id = ?"
+		)){
+			
 			stmt.setString(1, guild.getId());
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()){
 				prefix=rs.getString(1);
 			}
-			stmt.close();
 		} catch (SQLException e) {
 
 			Logging.error("issue getting Prefix");
