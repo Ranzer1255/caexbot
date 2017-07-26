@@ -10,22 +10,20 @@ import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelAlertToggleCommand extends CaexCommand implements Describable {
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		
 		if (args.length==0){
-			channel.sendMessage("The Level annoucement setting for this guild is currently: "+
+			event.getTextChannel().sendMessage("The Level annoucement setting for this guild is currently: "+
 					GuildManager.getGuildData(event.getGuild()).getXPAnnoucement()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
-			channel.sendMessage("I'm sorry i didn't understand that please follow the usage\n"
+			event.getTextChannel().sendMessage("I'm sorry i didn't understand that please follow the usage\n"
 								+getUsage(event.getGuild())).queue();
 			return;
 		}
@@ -33,9 +31,9 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 		GuildManager.getGuildData(event.getGuild()).setXPAnnoucement(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
-			channel.sendMessage("I will now inform you when your level changes!").queue();
+			event.getTextChannel().sendMessage("I will now inform you when your level changes!").queue();
 		} else {
-			channel.sendMessage("I will no longer inform you when your level changes").queue();
+			event.getTextChannel().sendMessage("I will no longer inform you when your level changes").queue();
 		}
 	
 	}
@@ -73,6 +71,11 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.ADMIN;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 
 }

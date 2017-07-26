@@ -8,8 +8,6 @@ import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.PermissionException;
 
@@ -17,14 +15,15 @@ public class ShutdownCommand extends CaexCommand {
 
 	//TODO see if its possible to add in control words to the string to replace with functions like getPrefix() and such to make each message guild specific
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		if (author!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
+	public void process(String[] args,  MessageReceivedEvent event) {
+		if (event.getAuthor()!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
 			noPermission(event);
 			return;
 		}
-		channel.sendMessage("if you insist boss.... *blerg*").complete();
+		event.getChannel().sendMessage("if you insist boss.... *blerg*").queue();
 		if (args.length>0&&args[0].equals("alert")) {
-			shutdownAlertBroadcast(args, channel, event);
+			shutdownAlertBroadcast(args, event);
+			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
 		event.getJDA().shutdown();
 		try {Thread.sleep(500L);} catch (InterruptedException e) {}
@@ -33,10 +32,10 @@ public class ShutdownCommand extends CaexCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("vdri");
+		return Arrays.asList("vdri");//this is "sleep" in draconic
 	}
 
-	private void shutdownAlertBroadcast(String[] args, TextChannel channel, MessageReceivedEvent event) {
+	private void shutdownAlertBroadcast(String[] args, MessageReceivedEvent event) {
 		for (Guild g : event.getJDA().getGuilds()) {
 			try {
 				g.getPublicChannel().sendMessage("I've got to go.... \n" + 
@@ -47,6 +46,10 @@ public class ShutdownCommand extends CaexCommand {
 				continue;
 			}
 		}
-		channel.sendMessage("i've told everyone. night night").complete();
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 }

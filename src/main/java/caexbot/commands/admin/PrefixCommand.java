@@ -10,26 +10,24 @@ import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PrefixCommand extends CaexCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 		
 		switch (args.length){
 		case 0:
 			GuildManager.removePrefix(event.getGuild());
-			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexConfiguration.getInstance().getPrefix())).queue();
+			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexConfiguration.getInstance().getPrefix())).queue();
 			return;
 		case 1:
 			GuildManager.setPrefix(event.getGuild(), args[0]);
-			channel.sendMessage(String.format("Ok boss, I'll listen for \"%s\"", GuildManager.getPrefix(event.getGuild()))).queue();
+			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", GuildManager.getPrefix(event.getGuild()))).queue();
 			return;
 		default:			
-			channel.sendMessage("Hey, i can't listen for more than one thing ;)").queue();
+			event.getChannel().sendMessage("Hey, i can't listen for more than one thing ;)").queue();
 			return;
 		}
 	}
@@ -63,5 +61,10 @@ public class PrefixCommand extends CaexCommand implements Describable{
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.ADMIN;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 }
