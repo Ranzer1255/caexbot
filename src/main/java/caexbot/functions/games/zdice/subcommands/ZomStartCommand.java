@@ -3,20 +3,17 @@ package caexbot.functions.games.zdice.subcommands;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.controlers.ZomDiceDiscordControler;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class ZomStartCommand extends CaexCommand implements Describable{
+public class ZomStartCommand extends AbstractZombieCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		ZomDiceDiscordControler.getInstance().startGameInChannel(channel);
+	public void process(String[] args, MessageReceivedEvent event) {
+		ZomDiceDiscordControler.getInstance().startGameInChannel(event.getTextChannel());
 		
 	}
 

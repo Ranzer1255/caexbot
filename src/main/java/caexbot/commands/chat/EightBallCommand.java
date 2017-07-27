@@ -12,8 +12,6 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class EightBallCommand extends CaexCommand implements Describable{
@@ -48,9 +46,8 @@ public class EightBallCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
-		Logging.debug("Sending message to: "+channel.getGuild().getName()+": "+channel.getName());
-		channel.sendMessage(author.getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
+	public void process(String[] args, MessageReceivedEvent event){
+		event.getChannel().sendMessage(event.getAuthor().getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
 	}
 	
 	@Override
@@ -76,5 +73,10 @@ public class EightBallCommand extends CaexCommand implements Describable{
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.CHAT;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 }

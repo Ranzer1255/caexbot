@@ -15,8 +15,6 @@ import caexbot.commands.DraconicCommand;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
@@ -34,11 +32,11 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	};
 	
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 	
 		if (ThreadLocalRandom.current().nextInt(2)==0) {
-			channel.sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],
-					author.getAsMention())).queue();
+			event.getChannel().sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],
+					event.getAuthor().getAsMention())).queue();
 		} else {
 			
 			
@@ -48,7 +46,7 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 				return;
 			}
 			try {
-				channel.sendFile(fp, new MessageBuilder().append(author.getAsMention()).build()).complete();;
+				event.getChannel().sendFile(fp, new MessageBuilder().append(event.getAuthor().getAsMention()).build()).complete();;
 				fp.delete();
 			} catch (IOException e) {
 				Logging.error(e.getMessage());
@@ -115,6 +113,11 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 
 }

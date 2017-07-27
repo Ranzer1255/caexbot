@@ -8,8 +8,6 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -22,9 +20,9 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class JoinCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		
-		VoiceChannel join = event.getGuild().getMember(author).getVoiceState().getChannel();
+		VoiceChannel join = event.getGuild().getMember(event.getAuthor()).getVoiceState().getChannel();
 		
 		if(join!=null){	
 			GuildPlayerManager.getPlayer(event.getGuild()).join(join);

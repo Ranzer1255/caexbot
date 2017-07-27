@@ -9,8 +9,6 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Describable;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /*
@@ -44,10 +42,10 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	}
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 		System.out.println("in muisc");
 		if (args.length != 1) {
-			channel.sendMessage(author.getAsMention() + getUsage(event.getGuild()));
+			event.getTextChannel().sendMessage(event.getAuthor().getAsMention() + getUsage(event.getGuild()));
 		}
 
 		Optional<CaexCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
@@ -59,8 +57,8 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 			return;
 		}
 		Logging.debug("Music Subclass: "+c.get().getName());
-		setMusicChannel(channel);
-		c.get().runCommand(Arrays.copyOfRange(args, 1, args.length), author, channel, event);
+		setMusicChannel(event.getTextChannel());
+		c.get().runCommand(Arrays.copyOfRange(args, 1, args.length), event);
 	}
 
 	@Override

@@ -8,8 +8,6 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class YoutubeSearchCommand extends CaexCommand implements Describable{
@@ -21,7 +19,7 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 		yts = new YouTubeSearcher();
 	}
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		StringBuilder queryBuilder = new StringBuilder();
 		
 		for (int i = 0; i < args.length; i++) {
@@ -35,9 +33,9 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 		if(videoID!=null){
 			StringBuilder youtubeURL = new StringBuilder();
 			youtubeURL.append(YOUTUBE_BASE_STRING).append(videoID);
-			channel.sendMessage(author.getAsMention() + " "+ youtubeURL.toString()).queue();
+			event.getChannel().sendMessage(event.getAuthor().getAsMention() + " "+ youtubeURL.toString()).queue();
 		} else {
-			channel.sendMessage("I'm sorry, i didn't find anything").queue();			
+			event.getChannel().sendMessage("I'm sorry, i didn't find anything").queue();			
 
 
 		}
@@ -70,6 +68,10 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.SEARCH;
+	}
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 
 }

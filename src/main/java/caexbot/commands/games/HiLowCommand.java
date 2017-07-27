@@ -27,7 +27,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 	private static final int CUT_OFF = 50;
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 
 		//parse args
 		if (args.length==0 || args.length>2){
@@ -37,8 +37,8 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		
 		//parse bet
 		GuildData gd = 	GuildManager.getGuildData(event.getGuild());
-		if(gd.getXP(author)<MIN_XP){
-			channel.sendMessage("I'm sorry, but you have not yet earned enough points to gamble you XP away.\n"
+		if(gd.getXP(event.getAuthor())<MIN_XP){
+			event.getChannel().sendMessage("I'm sorry, but you have not yet earned enough points to gamble you XP away.\n"
 					+ "Come back after you have earned " + MIN_XP+ " points").queue();
 			return;
 		}
@@ -50,8 +50,8 @@ public class HiLowCommand extends CaexCommand implements Describable {
 			return;
 		}
 		
-		if (bet > (gd.getXP(author)*MAX_BET_PERCENTAGE)){
-			channel.sendMessage("I'm sorry I can't allow you to bet more than "+ (MAX_BET_PERCENTAGE*100) +"% of your XP.").queue();
+		if (bet > (gd.getXP(event.getAuthor())*MAX_BET_PERCENTAGE)){
+			event.getChannel().sendMessage("I'm sorry I can't allow you to bet more than "+ (MAX_BET_PERCENTAGE*100) +"% of your XP.").queue();
 			return;
 		}
 		
@@ -69,14 +69,18 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		
 		//main logic
 		
-		HiLowGame game = new HiLowGame(author, channel, bet, c);
+		runGame(gd, bet, c, event);
+	}
+
+	private void runGame(GuildData gd, int bet, Choice c, MessageReceivedEvent event) {
+		HiLowGame game = new HiLowGame(event, bet, c);
 		
 		try {
 			if (game.win()){
-				gd.addXP(author, bet, channel);
+				gd.addXP(event.getAuthor(), bet, event.getTextChannel());
 				win(game);
 			} else {
-				gd.removeXP(author, bet, channel);
+				gd.removeXP(event.getAuthor(), bet, event.getTextChannel());
 				lose(game);
 			}
 		} catch (Exception e) {
@@ -159,15 +163,22 @@ public class HiLowCommand extends CaexCommand implements Describable {
 				+ "GOOD LUCK!";
 	}
 
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
+	}
+
 	public class HiLowGame {
 		private User player;
 		private TextChannel channel;
 		private int bet;
 		private int randomNumber;
 		private Choice choice;
-		public HiLowGame(User player, TextChannel channel, int bet, Choice c){
-			this.player=player;
-			this.channel=channel;
+		
+		
+		public HiLowGame(MessageReceivedEvent event, int bet, Choice c){
+			this.player=event.getAuthor();
+			this.channel=event.getTextChannel();
 			this.bet = bet;
 			choice = c;
 			randomNumber = ThreadLocalRandom.current().nextInt(MIN_RAN, MAX_RAN+1);
