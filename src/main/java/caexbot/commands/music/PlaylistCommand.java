@@ -5,17 +5,15 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PlaylistCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 
 		if (args.length == 0){
-			channel.sendMessage("what was the playlist ID again?").queue();
+			event.getChannel().sendMessage("what was the playlist ID again?").queue();
 			return;
 		}
 		if (args[0].charAt(0)=='i' && args.length>1){

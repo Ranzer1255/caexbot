@@ -7,14 +7,12 @@ import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PlayCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){
@@ -22,7 +20,7 @@ public class PlayCommand extends AbstractMusicCommand implements Describable{
 		}
 		
 		if(!player.isConnected()){
-			player.join(event.getGuild().getMember(author).getVoiceState().getChannel());
+			player.join(event.getGuild().getMember(event.getAuthor()).getVoiceState().getChannel());
 		}
 		
 		player.start();

@@ -13,8 +13,6 @@ import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DraconicTranslateCommand extends CaexCommand implements Describable{
@@ -31,17 +29,17 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 	}
 	
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 		
 		if (args[0].equals("com")){
-			fromDraconic(Arrays.copyOfRange(args, 1,args.length), channel);
+			fromDraconic(Arrays.copyOfRange(args, 1,args.length), event);
 			return;
 		}
 		
-		toDraconic(args, channel);
+		toDraconic(args, event);
 	}
 	
-	private void fromDraconic(String[] args, TextChannel channel) {
+	private void fromDraconic(String[] args, MessageReceivedEvent event) {
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
@@ -51,10 +49,10 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 		eb.addField("Draconic:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
 		eb.addField("Common:", trans.translate(args, false), false);
 		
-		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 	}
 
-	private void toDraconic(String[] args, TextChannel channel) {
+	private void toDraconic(String[] args, MessageReceivedEvent event) {
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
@@ -64,7 +62,7 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 		eb.addField("Common:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
 		eb.addField("Draconic", trans.translate(args, true), false);
 		
-		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 	}
 
 	@Override
@@ -94,5 +92,10 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.CHAT;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 }

@@ -15,7 +15,6 @@ import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -27,12 +26,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,MessageReceivedEvent event) {
 		StringBuilder sb = new StringBuilder();
 		
 		for ( User u : event.getMessage().getMentionedUsers()) {
 			if(u.getId().equals(CaexConfiguration.getInstance().getOwner())){
-				channel.sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
+				event.getChannel().sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
 				continue;
 			}
 			sb.append(u.getAsMention()+", ");
@@ -43,7 +42,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			String insult = doc.getElementsByTag("p").get(0).text();;
 			sb.append(insult);
 			
-			channel.sendMessage(sb.toString()).queue();
+			event.getChannel().sendMessage(sb.toString()).queue();
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -83,6 +82,11 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		return getShortDescription()+"\n"
 				+ "Tag the people you want to insult. can insult more than one at a time.\n\n"
 				+ "Powered by [pangloss.com](http://www.pangloss.com/seidel/Shaker/index.html?)";
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 
 }

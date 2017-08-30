@@ -12,35 +12,42 @@ import caexbot.functions.levels.UserLevel;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 
 		if (args.length>0){
 			if (args[0].equals("rank")){
-				channel.sendMessage(rankMessage(args,author,channel,event)).queue();
+				event.getChannel().sendMessage(rankMessage(event)).queue();
 				return;
-			}
+			} 
 		}
 		
 		
-		EmbedBuilder eb = new EmbedBuilder();
-		eb.setAuthor(event.getMember().getEffectiveName(), null, author.getAvatarUrl())
-			.setColor(event.getMember().getColor())
-			.setThumbnail(author.getAvatarUrl())
-			.setTitle("XP Breakdown",null)
-			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(event.getGuild()).getXP(author)), true)
-			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(event.getGuild()).getLevel(author)), true);
+		EmbedBuilder eb = memberXPEmbed(event.getMember());
 		
 		MessageBuilder mb = new MessageBuilder();
-		channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 
+	}
+
+
+	//lays the ground work for seeing other's xp outside of the ranked list
+	//TODO add ability to see individual member's XP stats by mention.
+	private EmbedBuilder memberXPEmbed(Member member) {
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setAuthor(member.getEffectiveName(), null, member.getUser().getAvatarUrl())
+			.setColor(member.getColor())
+			.setThumbnail(member.getUser().getAvatarUrl())
+			.setTitle("XP Breakdown",null)
+			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getXP(member.getUser())), true)
+			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true);
+		return eb;
 	}
 
 
@@ -71,12 +78,12 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	}
 
 
-	private Message rankMessage(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	private Message rankMessage(MessageReceivedEvent event) {
 	
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setAuthor("Current Leaderboard", null, null);
-		eb.setDescription("XP is in beta and is likely to be reset");
+		eb.setDescription("XP is in beta and is likely to be reset");// is this still needed? i've polished the code so that its stable now
 		eb.setColor(getCatagory().COLOR);
 		eb.setThumbnail("http://i1.kym-cdn.com/entries/icons/original/000/021/324/photo.jpg");
 		
@@ -103,5 +110,11 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	@Override
 	public List<String> getDraconicAlias() {
 		return Arrays.asList("tawura_authot");
+	}
+
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 }

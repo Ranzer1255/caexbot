@@ -2,13 +2,11 @@ package caexbot.commands;
 
 import java.util.List;
 
-import caexbot.data.GuildManager;
 import caexbot.config.CaexConfiguration;
+import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class CaexCommand{
@@ -17,26 +15,35 @@ public abstract class CaexCommand{
 	private static final String NO_PERMISSION_MESSAGE = "You're not my player! You can't tell me what to do!";
 
 	public static String getPrefix(Guild guild) {
+		if (guild==null){
+			return "";
+		}
 		return GuildManager.getPrefix(guild);
 	}
 
-	public void runCommand(String[] args, User author, TextChannel channel, MessageReceivedEvent event){
-		if (!author.getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
-			if (!hasPermission(args, author, channel, event)) {
+	public void runCommand(String[] args, MessageReceivedEvent event){
+		if (!event.getAuthor().getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
+			if (!hasPermission(args, event)) {
 				noPermission(event);
 				return;
 			} 
 		}
-		process(args, author, channel, event);
+		if(event.getGuild()==null && !isAplicableToPM()){
+			event.getChannel().sendMessage("This command cannot be used in Private channels").queue();
+			return;
+		}
+		process(args, event);
 	}
 	
-	abstract public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event);
+	abstract public boolean isAplicableToPM();
+	
+	abstract public void process(String[] args, MessageReceivedEvent event);
 	
 	abstract public List<String> getAlias();
-	private boolean hasPermission(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	private boolean hasPermission(String[] args, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
-			return hasRoleRequirements(args, author,channel,event);
-		for (Role role : event.getGuild().getMember(author).getRoles()) {
+			return hasRoleRequirements(args, event);
+		for (Role role : event.getGuild().getMember(event.getAuthor()).getRoles()) {
 			if(role.getPermissions().contains(getPermissionRequirements())){
 				return true;
 			}
@@ -44,10 +51,10 @@ public abstract class CaexCommand{
 		return false;
 	}
 
-	private boolean hasRoleRequirements(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	private boolean hasRoleRequirements(String[] args, MessageReceivedEvent event) {
 		if(getRoleRequirements()==null)
 			return true;
-		for(Role role : event.getGuild().getMember(author).getRoles()){
+		for(Role role : event.getGuild().getMember(event.getAuthor()).getRoles()){
 			if(getRoleRequirements().contains(role.getName()))
 				return true;
 		}
@@ -55,7 +62,7 @@ public abstract class CaexCommand{
 		
 		return false;
 	}
-
+	
 	public List<String> getRoleRequirements() {
 		return null;
 	}

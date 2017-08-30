@@ -8,10 +8,13 @@ import java.util.Optional;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
-import caexbot.functions.games.zdice.subcommands.*;
+import caexbot.functions.games.zdice.subcommands.ZomEndTurnCommand;
+import caexbot.functions.games.zdice.subcommands.ZomJoinCommand;
+import caexbot.functions.games.zdice.subcommands.ZomQuitCommand;
+import caexbot.functions.games.zdice.subcommands.ZomRollCommand;
+import caexbot.functions.games.zdice.subcommands.ZomScoreCommand;
+import caexbot.functions.games.zdice.subcommands.ZomStartCommand;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ZomDiceCommand extends CaexCommand implements Describable{
@@ -28,19 +31,19 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		if(args.length!=1){
-			channel.sendMessage(author.getAsMention() + getUsage(event.getGuild())).queue();
+			event.getChannel().sendMessage(event.getAuthor().getAsMention() + getUsage(event.getGuild())).queue();
 		}
 		
 		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
-			channel.sendMessage(invalidUsage(event.getGuild())).queue();
+			event.getChannel().sendMessage(invalidUsage(event.getGuild())).queue();
 			return;
 		}
 		
-		c.get().runCommand(args, author, channel, event);
+		c.get().runCommand(args, event);
 
 	}
 
@@ -93,6 +96,11 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 	@Override
 	public String invalidUsage(Guild g){
 		return "I'm sorry, i didn't understand\n" +getUsage(g);
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 
 }

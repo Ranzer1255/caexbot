@@ -26,4 +26,9 @@ public abstract class AbstractMusicCommand extends CaexCommand implements Descri
 	public String getUsage(Guild g) {//not used atm
 		return null;
 	}
+	
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
+	}
 }

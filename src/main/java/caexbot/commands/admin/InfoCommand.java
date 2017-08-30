@@ -15,7 +15,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -24,32 +23,23 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 	private static final String REQUIRED_PERMISSIONS = "70372416";
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
-
-		if (args.length > 1) { // more than 1 argument
-
-			channel.sendMessage("To many arguments!").queue();
-		}
-		if (args.length == 0) { // !info
-			User bot = event.getJDA().getSelfUser();
-			eb = infoEmbed(bot);
+		User bot = event.getJDA().getSelfUser();
+		
+		if (event.getGuild()!=null) {
 			eb.setColor(event.getGuild().getMember(bot).getColor());
-
-			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
 		}
-		if (args.length == 1) { // 1 argument
-			if (args[0].equals("stats")) { // !info stats
-				User bot = event.getJDA().getSelfUser();
-				eb = statusEmbed(event.getJDA().getSelfUser());
-
-
-				eb.setColor(event.getGuild().getMember(bot).getColor());
-				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
-			}
+		
+		if (args.length == 1&&args[0].equals("stats")) { // 1 argument !info stats
+			eb = statusEmbed(event.getJDA().getSelfUser());
+		} else { // !info
+			eb = infoEmbed(bot);
 		}
+
+		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 
 	}
 
@@ -188,6 +178,11 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 	public String getLongDescription() {
 		return    "This command gives detailed information about the bot\n\n"
 				+ "`stats`: displays misc. stats reported by JDA";
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 
 }

@@ -18,8 +18,6 @@ import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HelpCommand extends CaexCommand implements DraconicCommand, Describable{
@@ -31,7 +29,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	}
 	
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		Logging.debug("Help called");
 
 //		StringBuilder sb = new StringBuilder();
@@ -54,8 +52,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 				if (d.getPermissionRequirements() != null) {
 					eb.addField("Role Requirement", d.getPermissionRequirements().getName(), true);
 				}
-				
-				channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+				event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 
 			}
 			
@@ -74,8 +71,9 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 			EmbedBuilder eb = new EmbedBuilder();
 			
 			eb.setAuthor("Full Command List", null, null);
-			eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
-			
+			if (event.getGuild() !=null) {
+				eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
+			}
 			catagorized.keySet().stream().sorted(new Comparator<Catagory>() {
 
 				@Override
@@ -91,7 +89,8 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 			});
 			eb.setDescription(sb.toString());
 			mb.setEmbed(eb.build());
-			channel.sendMessage(mb.build()).queue();
+
+			event.getChannel().sendMessage(mb.build()).queue();
 		}
 	}
 
@@ -138,5 +137,10 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		}
 		
 		return rtn;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 }

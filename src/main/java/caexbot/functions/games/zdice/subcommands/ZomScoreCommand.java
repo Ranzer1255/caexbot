@@ -3,22 +3,19 @@ package caexbot.functions.games.zdice.subcommands;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.controlers.UserPlayerAdapter;
 import caexbot.functions.games.zdice.controlers.ZomDiceDiscordControler;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class ZomScoreCommand extends CaexCommand implements Describable{
+public class ZomScoreCommand extends AbstractZombieCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
-		int brains = ZomDiceDiscordControler.getInstance().getScore(new UserPlayerAdapter(author));
-		channel.sendMessage(String.format("%s: your score is **%d** Brains!", author.getAsMention(), brains)).queue();
+	public void process(String[] args,  MessageReceivedEvent event) {
+		int brains = ZomDiceDiscordControler.getInstance().getScore(new UserPlayerAdapter(event.getAuthor()));
+		event.getChannel().sendMessage(String.format("%s: your score is **%d** Brains!", event.getAuthor().getAsMention(), brains)).queue();
 	}
 
 	@Override

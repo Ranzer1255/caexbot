@@ -10,14 +10,12 @@ import caexbot.functions.dice.DiceParser;
 import caexbot.functions.dice.DieRoll;
 import caexbot.functions.dice.IllegalDiceFormatException;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DiceCommand extends CaexCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 
 		System.out.println(event.getMessage().getContent());
 		if(!(args.length==1)){
@@ -25,13 +23,13 @@ public class DiceCommand extends CaexCommand implements Describable{
 		}
 		DieRoll dr = DiceParser.parseDiceString(args[0]);
 		try {
-			String message = author.getAsMention()+": "+dr.verboseResult();
-			channel.sendMessage(message).queue();
+			String message = event.getAuthor().getAsMention()+": "+dr.verboseResult();
+			event.getChannel().sendMessage(message).queue();
 		} catch (IllegalDiceFormatException e) {
-			channel.sendMessage("I'm sorry i didn't understand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
+			event.getChannel().sendMessage("I'm sorry i didn't understand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
 		} catch (IllegalArgumentException e) {
 			if (e.getMessage().equals("Provided text for message must be less than 2000 characters in length")) {
-				channel.sendMessage("Sorry "+event.getAuthor().getAsMention()+" Result too long to display each die\n"+ dr.result()).queue();
+				event.getChannel().sendMessage("Sorry "+event.getAuthor().getAsMention()+" Result too long to display each die\n"+ dr.result()).queue();
 			}
 		}
 		
@@ -73,6 +71,11 @@ public class DiceCommand extends CaexCommand implements Describable{
 	public String invalidUsage(Guild g) {
 		// TODO make invalidUsage
 		return super.invalidUsage(g);
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 
 }

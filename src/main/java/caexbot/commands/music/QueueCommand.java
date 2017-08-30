@@ -11,13 +11,11 @@ import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
+	public void process(String[] args, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
 			GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
 			EmbedBuilder eb = new EmbedBuilder();
@@ -59,7 +57,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				
 			}
 			MessageBuilder mb = new MessageBuilder();
-			channel.sendMessage(mb.setEmbed(eb.build()).build()).queue();
+			event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 			
 		} else {
 			GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));	

@@ -10,32 +10,30 @@ import caexbot.data.ChannelData;
 import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args,  MessageReceivedEvent event) {
 
 		if (args.length==0){
-			channel.sendMessage("This channel's XP setting is currently: "+
-					GuildManager.getGuildData(event.getGuild()).getChannel(channel).getXPPerm()).queue();
+			event.getChannel().sendMessage("This channel's XP setting is currently: "+
+					GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
-			channel.sendMessage("I'm sorry i didn't understand that please follow the usage\n"
+			event.getChannel().sendMessage("I'm sorry i didn't understand that please follow the usage\n"
 								+getUsage(event.getGuild())).queue();
 			return;
 		}
 		
-		GuildManager.getGuildData(event.getGuild()).getChannel(channel).setXPPerm(Boolean.parseBoolean(args[0]));
+		GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).setXPPerm(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
-			channel.sendMessage("You will now earn XP in this channel").queue();
+			event.getChannel().sendMessage("You will now earn XP in this channel").queue();
 		} else {
-			channel.sendMessage("you will now __not__ earn XP in this channel").queue();
+			event.getChannel().sendMessage("you will now __not__ earn XP in this channel").queue();
 		}
 		
 	}
@@ -73,5 +71,10 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.ADMIN;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return false;
 	}
 }

@@ -10,16 +10,14 @@ import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PingCommand extends CaexCommand implements DraconicCommand, Describable{
 
 	@Override
-	public void process(String[] args, User author, TextChannel channel, MessageReceivedEvent event) {
+	public void process(String[] args, MessageReceivedEvent event) {
 		Date startTime = new Date();
-		Message pong = channel.sendMessage("pong!").complete();
+		Message pong = event.getChannel().sendMessage("pong!").complete();
 		Date endTime = new Date();
 		long lag = endTime.getTime()-startTime.getTime();
 		pong.editMessage(pong.getContent()+" `"+lag+"ms`").queue();
@@ -54,6 +52,11 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 	@Override
 	public Catagory getCatagory() {
 		return Catagory.ADMIN;
+	}
+
+	@Override
+	public boolean isAplicableToPM() {
+		return true;
 	}
 
 
