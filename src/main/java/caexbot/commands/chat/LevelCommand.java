@@ -11,9 +11,12 @@ import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
@@ -21,6 +24,30 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 
+		if (event.getChannelType().equals(ChannelType.TEXT)) {
+			guildCall(args, event);
+		} else if (event.getChannelType().equals(ChannelType.PRIVATE)){
+			privateCall(args,event);
+		}
+
+	}
+
+
+	private void privateCall(String[] args, MessageReceivedEvent event) {
+		MessageChannel channel = event.getAuthor().openPrivateChannel().complete();
+		
+		for(Guild g : event.getAuthor().getMutualGuilds()){
+			MessageBuilder mb = new MessageBuilder();
+			mb.append("***__"+g.getName()+"__***");
+			mb.setEmbed(memberXPEmbed(g.getMember(event.getAuthor())));
+			
+			channel.sendMessage(mb.build()).queue();
+		}
+		
+	}
+
+
+	private void guildCall(String[] args, MessageReceivedEvent event) {
 		if (args.length>0){
 			if (args[0].equals("rank")){
 				event.getChannel().sendMessage(rankMessage(event)).queue();
@@ -28,18 +55,14 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			} 
 		}
 		
-		
-		EmbedBuilder eb = memberXPEmbed(event.getMember());
-		
 		MessageBuilder mb = new MessageBuilder();
-		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
-
+		event.getChannel().sendMessage(mb.setEmbed(memberXPEmbed(event.getMember())).build()).queue();
 	}
 
 
 	//lays the ground work for seeing other's xp outside of the ranked list
 	//TODO add ability to see individual member's XP stats by mention.
-	private EmbedBuilder memberXPEmbed(Member member) {
+	private MessageEmbed memberXPEmbed(Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(member.getEffectiveName(), null, member.getUser().getAvatarUrl())
 			.setColor(member.getColor())
@@ -47,7 +70,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			.setTitle("XP Breakdown",null)
 			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getXP(member.getUser())), true)
 			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true);
-		return eb;
+		return eb.build();
 	}
 
 
@@ -115,6 +138,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 
 	@Override
 	public boolean isAplicableToPM() {
-		return false;
+		return true;
 	}
 }
