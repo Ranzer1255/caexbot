@@ -22,6 +22,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
 
+	private static final String XP_RULES = "Earn XP by talking!\n"
+			+ "You'll get 15-25xp per message once every 60 seconds";
+
+
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 
@@ -88,7 +92,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			.setThumbnail(member.getUser().getAvatarUrl())
 			.setTitle("XP Breakdown",null)
 			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getXP(member.getUser())), true)
-			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true);
+			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true)
+			.setFooter(XP_RULES, null);
 		return eb.build();
 	}
 
@@ -125,7 +130,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setAuthor("Current Leaderboard", null, null);
-		eb.setDescription("XP is in beta and is likely to be reset");// is this still needed? i've polished the code so that its stable now
+		eb.setDescription(XP_RULES);
 		eb.setColor(getCatagory().COLOR);
 		eb.setThumbnail(guild.getIconUrl());
 		
