@@ -7,6 +7,7 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
+import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -36,6 +37,24 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	private void privateCall(String[] args, MessageReceivedEvent event) {
 		MessageChannel channel = event.getAuthor().openPrivateChannel().complete();
 		
+		if (args.length>0){
+			if (args[0].equals("rank")){
+				
+				//if i call xp rank, give me everyone's guild. not just the ones i'm in.
+				if(event.getAuthor().getId().equals(CaexConfiguration.getInstance().getOwner())){
+					for (Guild g: event.getJDA().getGuilds()) {
+						event.getChannel().sendMessage(rankMessage(g)).queue();
+					}
+					return;
+				}
+				
+				for (Guild g: event.getAuthor().getMutualGuilds()) {
+					event.getChannel().sendMessage(rankMessage(g)).queue();
+				}
+				return;
+			} 
+		}
+		
 		for(Guild g : event.getAuthor().getMutualGuilds()){
 			MessageBuilder mb = new MessageBuilder();
 			mb.append("***__"+g.getName()+"__***");
@@ -50,7 +69,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	private void guildCall(String[] args, MessageReceivedEvent event) {
 		if (args.length>0){
 			if (args[0].equals("rank")){
-				event.getChannel().sendMessage(rankMessage(event)).queue();
+				event.getChannel().sendMessage(rankMessage(event.getGuild())).queue();
 				return;
 			} 
 		}
@@ -101,17 +120,17 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	}
 
 
-	private Message rankMessage(MessageReceivedEvent event) {
+	private Message rankMessage(Guild guild) {
 	
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setAuthor("Current Leaderboard", null, null);
 		eb.setDescription("XP is in beta and is likely to be reset");// is this still needed? i've polished the code so that its stable now
 		eb.setColor(getCatagory().COLOR);
-		eb.setThumbnail("http://i1.kym-cdn.com/entries/icons/original/000/021/324/photo.jpg");
+		eb.setThumbnail(guild.getIconUrl());
 		
 		
-		List<UserLevel> rankings = GuildManager.getGuildData(event.getGuild()).getGuildRankings();
+		List<UserLevel> rankings = GuildManager.getGuildData(guild).getGuildRankings();
 		
 		int index=0;
 		for (UserLevel entry : rankings) {
@@ -126,7 +145,10 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			);
 		}
 		
-		return new MessageBuilder().setEmbed(eb.build()).build();
+		return new MessageBuilder()
+				.setEmbed(eb.build())
+				.append("***__"+guild.getName()+"__***")
+				.build();
 	}
 
 
