@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ranzer.caexbot</groupId>
 	<artifactId>caexbot</artifactId>
-	<version>2.8.18</version>
+	<version>2.8.19</version>
 	<name> Caex Bot for Discord</name>
 	<description>Bot for Ranzer's Playground Discord Server</description>
 
@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.sedmelluq</groupId>
 			<artifactId>lavaplayer</artifactId>
-			<version>1.2.44</version>
+			<version>1.2.43</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
