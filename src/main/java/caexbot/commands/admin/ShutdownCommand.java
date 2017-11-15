@@ -35,6 +35,7 @@ public class ShutdownCommand extends CaexCommand {
 		return Arrays.asList("vdri");//this is "sleep" in draconic
 	}
 
+	@SuppressWarnings("deprecation")//i'm going to keep this in until JDA devs break it completely
 	private void shutdownAlertBroadcast(String[] args, MessageReceivedEvent event) {
 		for (Guild g : event.getJDA().getGuilds()) {
 			try {
