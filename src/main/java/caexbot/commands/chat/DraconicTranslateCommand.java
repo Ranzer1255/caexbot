@@ -1,7 +1,6 @@
 package caexbot.commands.chat;
 
 import java.awt.Color;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,50 +16,40 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class DraconicTranslateCommand extends CaexCommand implements Describable{
 
-	private static final String DICT = "/caexbot/draconic/dict.txt";
-	private DraconicTranslator trans;
-	
-	public DraconicTranslateCommand() 
-	{	
-		File dict;
-		dict = new File(System.getProperty("user.home"),DICT);
-
-		trans = new DraconicTranslator(dict);
-	}
-	
+		
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 		
 		if (args[0].equals("com")){
-			fromDraconic(Arrays.copyOfRange(args, 1,args.length), event);
+			fromDraconic(StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1,args.length))," "), event);
 			return;
 		}
 		
-		toDraconic(args, event);
+		toDraconic(StringUtil.arrayToString(Arrays.asList(args)," "), event);
 	}
 	
-	private void fromDraconic(String[] args, MessageReceivedEvent event) {
+	private void fromDraconic(String phrase, MessageReceivedEvent event) {
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
 		eb.setAuthor("Draconic Translation", "http://draconic.twilightrealm.com/", null);
 		eb.setFooter("Powered by Draconic Translator from Twilight Realm", null);
 		eb.setColor(new Color(0xa0760a));
-		eb.addField("Draconic:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
-		eb.addField("Common:", trans.translate(args, false), false);
+		eb.addField("Draconic:", phrase, false);
+		eb.addField("Common:", DraconicTranslator.translate(phrase, false), false);
 		
 		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 	}
 
-	private void toDraconic(String[] args, MessageReceivedEvent event) {
+	private void toDraconic(String phrase, MessageReceivedEvent event) {
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
 		eb.setAuthor("Draconic Translation", "http://draconic.twilightrealm.com/", null);
 		eb.setFooter("Powered by Draconic Translator from Twilight Realm", null);
 		eb.setColor(new Color(0xa0760a));
-		eb.addField("Common:", StringUtil.arrayToString(Arrays.asList(args), " "), false);
-		eb.addField("Draconic", trans.translate(args, true), false);
+		eb.addField("Common:", phrase, false);
+		eb.addField("Draconic", DraconicTranslator.translate(phrase, true), false);
 		
 		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
 	}

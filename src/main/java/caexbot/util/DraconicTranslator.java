@@ -5,9 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,94 +15,144 @@ import org.jsoup.select.Elements;
 
 /**
  * 
- * @author Logic: Seth, Formatting: Ranzer
- *
+ * @author Ranzer, Webscraping by Seth
  */
 public class DraconicTranslator {
+	
 
-	private Document doc;
-	private Elements table;
-	private BidiMap<String, String> map;
-	private FileWriter fileWriter;
-
-	public DraconicTranslator(File file) {
-
-		map = new DualHashBidiMap<String, String>();
-		try {
-			doc = Jsoup.parse(new URL("http://draconic.twilightrealm.com/vocabulary.php?lang=&sort=all"), 3000);
-			grabTable();
-			try {
-				fileWriter = new FileWriter(file);
-			} catch (FileNotFoundException e) {
-				System.out.println("you shouldn't be going this way");
-				file.getParentFile().mkdirs();
-				try {
-					file.createNewFile();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+	/**
+	 * 
+	 * @param phrase String to translate
+	 * @param common True if phrase is in common, false if phrase is in draconic.
+	 * @return
+	 */
+	static public String translate(String phrase, Boolean common){
+		String[] wordsToTranslate = phrase.split("[^a-zA-Z']+");
+		String[] translations = new String[wordsToTranslate.length];
+		Map<String, String> dict = common ? Dictonary.getCommon() : Dictonary.getDraconic();
+		for (int i = 0; i < wordsToTranslate.length; i++) {
+			if(dict.containsKey(wordsToTranslate[i].toLowerCase())){
+				translations[i] = dict.get(wordsToTranslate[i].toLowerCase());
+			} else {
+				translations[i] = "["+wordsToTranslate[i]+"]";
 			}
-			fileWriter.write(doc.toString());
-			fileWriter.close();
-		} catch (Exception e) {
-			try {
-				doc = Jsoup.parse(file, "UTF-8");
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-			grabTable();
 		}
-
+		
+		for (int i = 0; i < translations.length; i++) {
+			phrase = phrase.replaceFirst(wordsToTranslate[i], translations[i]);
+		}
+		
+		return phrase;
 	}
 	
-	public String translate(String[] body, boolean english)
-	{
-		String rtn = "", temp, regexString;
+	private static class Dictonary{
 		
-		BidiMap<String, String> tempMap = english ? map : map.inverseBidiMap();
+		private static final String BACKUP_FILE_LOCATION = "/caexbot/draconic/dict.txt";
 		
-		for (String string : body) 
-		{
-			if(string.isEmpty())
-			{
-				rtn += " ";
-				continue;
-			}
-			
-			boolean isUpper = Character.isUpperCase(string.charAt(0));
-			
-			regexString = string.replaceAll("[^a-zA-Z]", "");
-			
-			if (tempMap.containsKey(regexString.toLowerCase())) 
-			{
-				temp = tempMap.get(regexString.toLowerCase());
-				
-				if (isUpper)
-					temp = temp.replaceFirst(temp.substring(0, 1), temp.substring(0, 1).toUpperCase());
-			} 
-			else 
-			{
-				temp = regexString;
-			}
-			
-			rtn += string.replace(regexString, temp) + " ";
+		//map holding the Common to Draconic dict
+		static private Map<String,String> comToDrc = new HashMap<>();
+		
+		//map holding the Draconic to Common dict
+		static private Map<String,String> drcToCom = new HashMap<>();
+		
+		//Timeout the Dict after 1 hour (1*60*60*1000)
+		private static final long TIMEOUT = 3_600_000l;
+
+		//timestamp for last update
+		static private long lastUpdate;
+		
+		
+		public static Map<String,String> getCommon(){
+			dictCheck(comToDrc);
+			return comToDrc;
+		}
+		public static Map<String,String> getDraconic(){
+			dictCheck(drcToCom);
+			return drcToCom;
 		}
 		
-		return rtn.trim();
-	}
-
-	public String translate(String body, boolean english) {
-		String[] split = body.split(" ");
-		return translate(split, english);
-	}
-
-	private void grabTable() {
-		table = doc.getElementsByTag("table").get(0).getElementsByTag("tr");
-		for (int count = 1; count < table.size(); count++) {
-			map.put(StringEscapeUtils.escapeHtml4(table.get(count).getElementsByTag("td").get(0).text())
-					.replace("&nbsp;", ""),
-					StringEscapeUtils.escapeHtml4(table.get(count).getElementsByTag("td").get(1).text())
-							.replace("&nbsp;", ""));
+		
+		
+		private static void dictCheck(Map<String,String> check) {
+			if (check.isEmpty()||dictTimeout()){
+				updateDict();
+			}
+		}
+		
+		private static boolean dictTimeout() {
+			if(System.currentTimeMillis()-lastUpdate > TIMEOUT){
+				return true;
+			}
+			return false;
+		}
+		
+		private static void updateDict() {
+			lastUpdate = System.currentTimeMillis();
+			
+			try {
+				//webscrape from Twilight realm
+				Document doc = Jsoup.parse(new URL("http://draconic.twilightrealm.com/vocabulary.php?lang=&sort=all"), 3000);
+				
+				writeBackupFile(doc);
+				
+				comToDrc=parseDoc(doc);
+				drcToCom=flipMap(comToDrc);
+			} catch (IOException e) {//webscrabing failed loading from backup file
+				try {
+					Document doc = Jsoup.parse(new File(System.getProperty("user.home")), "UTF-8");
+					comToDrc=parseDoc(doc);
+					drcToCom=flipMap(comToDrc);
+				} catch (IOException e2) {
+					e2.printStackTrace();
+					Logging.messageBoss(LogLevel.ERROR, "Draconic translation: hey boss, check loading from backup file");
+				}
+			}			
+		}
+		
+		private static Map<String,String> parseDoc(Document doc) {
+			Map<String,String> rtn = new HashMap<>();
+			Elements table = doc.getElementsByTag("table").get(0).getElementsByTag("tr");
+			for (int count = 1; count < table.size(); count++) {
+				rtn.put(StringEscapeUtils.escapeHtml4(table.get(count).getElementsByTag("td").get(0).text())
+						.replace("&nbsp;", ""),
+						StringEscapeUtils.escapeHtml4(table.get(count).getElementsByTag("td").get(1).text())
+								.replace("&nbsp;", ""));
+			}
+			return rtn;
+		}
+		
+		private static Map<String, String> flipMap(Map<String, String> map) {
+			Map<String, String> rtn = new HashMap<>();
+			
+			for (String key : map.keySet()) {
+				rtn.put(map.get(key), key);
+			}
+			return rtn;
+		}
+		
+		private static void writeBackupFile(Document doc) {
+			File backupFile = new File(System.getProperty("user.home"),BACKUP_FILE_LOCATION);
+			try (FileWriter fileWriter = new FileWriter(backupFile);){
+				
+				fileWriter.write(doc.toString());
+				
+			} catch (FileNotFoundException e){
+				backupFile.getParentFile().mkdirs();
+				try {
+					backupFile.createNewFile();
+				} catch (IOException e1) {
+					Logging.error("Draconic Translation: something went wrong writing the backup file");
+					Logging.error(e1.getMessage());
+					Logging.log(e1);
+					Logging.messageBoss(LogLevel.ERROR, "hey check backup File writting");
+				}
+			} catch (IOException e) {
+				Logging.error("Draconic Translation: something went wrong writing the backup file");
+				Logging.error(e.getMessage());
+				Logging.log(e);
+				Logging.messageBoss(LogLevel.ERROR, "Draconic Translation: hey check backup File writting");
+			}
+			
 		}
 	}
 }

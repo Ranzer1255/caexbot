@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
+import net.dv8tion.jda.core.entities.PrivateChannel;
 
 public class Logging {
 
@@ -58,6 +60,12 @@ public class Logging {
         for (StackTraceElement trace : ex.getStackTrace()) {
             log(LogLevel.ERROR, "\tat " + trace.toString());
         }
+    }
+    
+    public static void messageBoss(LogLevel level, String message){
+    	String line = String.format("[%s\t%s] %s\n",level.name(), getTimestamp(), message);
+    	PrivateChannel channel = CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete();
+    	channel.sendMessage(line).queue();
     }
 
     private static String getTimestamp() {
