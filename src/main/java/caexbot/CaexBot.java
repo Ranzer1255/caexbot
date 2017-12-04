@@ -84,7 +84,7 @@ public class CaexBot {
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());
-		JDA.getPresence().setGame(Game.of(config.getStatus()));
+		JDA.getPresence().setGame(Game.playing(config.getStatus()));
 	
 		Logging.info("Done Loading and ready to go!");
 		Logging.info("Sending Online message to Owner");
