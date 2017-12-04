@@ -10,6 +10,7 @@ import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
 import caexbot.functions.levels.UserLevel;
+import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -22,8 +23,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
 
+	private static final int NUMBER_OF_RANKINGS = 10;
 	private static final String XP_RULES = "Earn XP by talking!\n"
 			+ "You'll get 15-25xp per message once every 60 seconds";
+	private static final int MAX_NAME_LENGTH = 25;
 
 
 	@Override
@@ -139,9 +142,9 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		int index=0;
 		for (UserLevel entry : rankings) {
-			if(index++>=10) break;
+			if(index++>=NUMBER_OF_RANKINGS) break;
 			eb.addField(
-					"**"+index+": **"+entry.getMember().getEffectiveName(), 
+					"**"+index+": **"+StringUtil.truncate(entry.getMember().getEffectiveName(),MAX_NAME_LENGTH), 
 					String.format("*Level:* **%s**\n%,dxp", 
 							entry.getLevel(),
 							entry.getXP()
@@ -155,7 +158,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 				.append("***__"+guild.getName()+"__***")
 				.build();
 	}
-
 
 	@Override
 	public List<String> getDraconicAlias() {
