@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- Table `caexDB2`.`text_channel`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caexDB2`.`text_channel` (
-  `text_channel_id` VARCHAR(20) NOT NULL COMMENT 'ID of text channel from JDA/Discord',
+  `channel_id` VARCHAR(20) NOT NULL COMMENT 'ID of text channel from JDA/Discord',
   `guild_id` VARCHAR(20) NOT NULL COMMENT 'Guild ID of associated with this channel from Discord',
   `perm_game` TINYINT(1) NULL DEFAULT 1 COMMENT 'allow text based games in this channel',
   `perm_xp` TINYINT(1) NULL DEFAULT 1 COMMENT 'true if members earn XP in this channel',
