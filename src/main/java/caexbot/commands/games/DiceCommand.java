@@ -6,32 +6,46 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
-import caexbot.functions.dice.DiceParser;
-import caexbot.functions.dice.DieRoll;
-import caexbot.functions.dice.IllegalDiceFormatException;
+import caexbot.functions.dice.Dice;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+/**
+ * <p> Credit where Credit is due:
+ * <p>I borrowed the dice roller code from <a href="https://github.com/JoshCode/gilmore">GilmoreBot</a>
+ *  by <a href=https://github.com/JoshCode>JoshCode</a>
+ * @author Ranzer 
+ *
+ */
 public class DiceCommand extends CaexCommand implements Describable{
+
+	private static final int MAX_MESSAGE_LENGHT = 1000;
 
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 
 		System.out.println(event.getMessage().getContent());
-		if(!(args.length==1)){
+		if(!(args.length<1)){
 			invalidUsage(event.getGuild());
 		}
-		DieRoll dr = DiceParser.parseDiceString(args[0]);
-		try {
-			String message = event.getAuthor().getAsMention()+": "+dr.verboseResult();
-			event.getChannel().sendMessage(message).queue();
-		} catch (IllegalDiceFormatException e) {
-			event.getChannel().sendMessage("I'm sorry i didn't understand \""+ e.getMessage()+"\" please use standard RPG format.").queue();
-		} catch (IllegalArgumentException e) {
-			if (e.getMessage().equals("Provided text for message must be less than 2000 characters in length")) {
-				event.getChannel().sendMessage("Sorry "+event.getAuthor().getAsMention()+" Result too long to display each die\n"+ dr.result()).queue();
-			}
+		String expression = "";
+		
+		for (int i = 0; i < args.length; i++) {
+			expression+=" " + args[i];
 		}
+		Dice dice = new Dice(expression.substring(1));
+		
+		int result = dice.roll();
+		
+		
+		event.getChannel().sendMessage(String.format("%s: %s = %d", 
+				event.getAuthor().getAsMention(), 
+				(dice.getBreakdown().length()<MAX_MESSAGE_LENGHT)?dice.getBreakdown():
+					"(Message to long to display each die)"+expression.substring(1), 
+				result))
+		.queue();
+		
+		
 		
 	}
 
@@ -48,13 +62,14 @@ public class DiceCommand extends CaexCommand implements Describable{
 	@Override
 	public String getLongDescription() {
 		return "Rolls dice using the standard RPG dice format\n"
-				+ "Currently it will only handle 1 die type and a single modifier\n\n"
-				+ "__Examples__\n"
-				+ "```\n"
-				+ "1d20+5\n"
-				+ "8d6\n"
-				+ "1d100\n"
-				+ "```";
+				+ "Usage: ![roll|dice] [expression]\n"
+				+ "for example: !roll 1d20 + 5 [to hit]\n"
+				+ "[comment]: this is ignored\n"
+				+ "2d20khX: keep the X highest dice\n"
+				+ "2d20klX: keep the X lowest dice\n"
+				+ "4d6r<X: reroll every die lower than X\n"
+				+ "4d6ro<X: reroll every die lower than X, but only once\n"
+				+ "1d10!: exploding die - every time you roll a crit, add an extra die";
 	}
 	
 	@Override
