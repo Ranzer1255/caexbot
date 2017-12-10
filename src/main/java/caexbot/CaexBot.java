@@ -35,6 +35,15 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
 /*
  * TODO add guild names to log output
  */
+/**
+ * Credit where credit is due:
+ * <p> the basic structure of the command system of this bot was heavily based on
+ * <a href="https://github.com/JoshCode/gilmore">GilmoreBot</a>
+ *  by <a href=https://github.com/JoshCode>JoshCode</a>
+ *  <p> Thank you for the insperation!
+ * @author Ranzer
+ *
+ */
 public class CaexBot {
 	
 	private static JDA JDA;
