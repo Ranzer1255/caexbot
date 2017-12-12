@@ -1,13 +1,11 @@
 package caexbot.functions.dice;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import caexbot.functions.dice.expressions.Addition;
 
 public class Dice {
 
-	private final Random random = new Random();
 	private final ArrayList<Lexer.Token> tokens;
 	private String breakdown;
 

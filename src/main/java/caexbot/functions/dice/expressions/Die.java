@@ -223,6 +223,10 @@ public class Die extends Expression {
 				rerollNumber = Integer.parseInt(data.substring(3));
 				break;
 			}
+			
+			default: {
+				break;
+			}
 		}
 	}
 
