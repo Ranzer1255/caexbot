@@ -12,7 +12,7 @@ public class StopCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 
-		GuildPlayerManager.getPlayer(event.getGuild()).stop();
+		GuildPlayerManager.getPlayer(event.getGuild()).stop(false);
 	}
 
 	@Override

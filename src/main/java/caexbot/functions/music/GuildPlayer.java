@@ -147,7 +147,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		}
 
 		if (queue.isEmpty()) {
-			stop();
+			stop(true);
 			return;
 		}
 		player.playTrack(queue.remove());
@@ -158,12 +158,25 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	/**
 	 * stop playing and end the current song
 	 */
-	public void stop() {
+	public void stop(boolean clearQueue) {
 		player.setPaused(true);
 		player.stopTrack();
-		queue.clear();
-		guildAM.closeAudioConnection();
-
+		if(clearQueue) clearQueue();
+		close();
+	}
+	
+	public void clearQueue(){
+		queue.clear();		
+	}
+	
+	public void close(){
+		
+		new Thread(){
+			public void run() {
+				guildAM.closeAudioConnection();
+				interrupt();
+			};
+		}.start();
 	}
 
 	public void vol() {
