@@ -31,9 +31,8 @@ public class DraconicTranslator {
 		String[] translations = new String[wordsToTranslate.length];
 		Map<String, String> dict = common ? Dictonary.getCommon() : Dictonary.getDraconic();
 		for (int i = 0; i < wordsToTranslate.length; i++) {
-			System.out.println(dict.containsKey(wordsToTranslate[i].toLowerCase()));
 			if(dict.containsKey(wordsToTranslate[i].toLowerCase())&&
-					!dict.get(wordsToTranslate).equals("UNKNOWN")){
+					!dict.get(wordsToTranslate[i]).equals("UNKNOWN")){
 				translations[i] = dict.get(wordsToTranslate[i].toLowerCase());
 			} else {
 				translations[i] = "["+wordsToTranslate[i]+"]";
