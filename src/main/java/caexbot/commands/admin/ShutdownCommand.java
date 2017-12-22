@@ -20,11 +20,11 @@ public class ShutdownCommand extends CaexCommand {
 			noPermission(event);
 			return;
 		}
-		event.getChannel().sendMessage("if you insist boss.... *blerg*").queue();
 		if (args.length>0&&args[0].equals("alert")) {
 			shutdownAlertBroadcast(args, event);
 			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
+		event.getChannel().sendMessage("if you insist boss.... *blerg*").queue();
 		event.getJDA().shutdown();
 		try {Thread.sleep(500L);} catch (InterruptedException e) {}
 		System.exit(0);
@@ -45,6 +45,8 @@ public class ShutdownCommand extends CaexCommand {
 			} catch (PermissionException e) {
 				Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
 				continue;
+			} catch (NullPointerException e){
+				Logging.error(g.getName() + " no longer has a public channel, skipping till annoucnement update");
 			}
 		}
 	}
