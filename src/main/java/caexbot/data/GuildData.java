@@ -9,10 +9,12 @@ import java.util.List;
 import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
+import caexbot.functions.levels.RoleLevel;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 
@@ -125,6 +127,27 @@ public class GuildData {
 			rtn = false;
 		}
 		return rtn;
+	}
+	
+	public List<RoleLevel> getRoleRankings(){
+		List<RoleLevel> ranking = new ArrayList<>();
+		
+		for (Role r:guild.getRoles()){
+			//TODO filter excluded roles
+			ranking.add(new RoleLevel(r));
+		}
+		
+		List<UserLevel> users = getGuildRankings();
+		for(UserLevel user: users){
+			for(RoleLevel role: ranking){
+				if(user.getMember().getRoles().contains(role.ROLE)) role.addXp(user.getXP());
+			}
+		}
+		
+		ranking.sort((o1, o2)-> o1.compareTo(o2));
+		
+		return ranking;
+		
 	}
 
 	public List<UserLevel> getGuildRankings() {

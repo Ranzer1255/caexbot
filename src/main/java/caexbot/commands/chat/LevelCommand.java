@@ -9,6 +9,7 @@ import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
+import caexbot.functions.levels.RoleLevel;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -78,7 +79,10 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			if (args[0].equals("rank")){
 				event.getChannel().sendMessage(rankMessage(event.getGuild())).queue();
 				return;
-			} 
+			} else if (args[0].equals("roles")){
+				event.getChannel().sendMessage(rollMessage(event.getGuild())).queue();
+				return;
+			}
 		}
 		
 		MessageBuilder mb = new MessageBuilder();
@@ -132,7 +136,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	
 		EmbedBuilder eb = new EmbedBuilder();
 		
-		eb.setAuthor("Current Leaderboard", null, null);
+		eb.setAuthor(String.format("%s Leaderboard",guild.getName()), null, null);
 		eb.setDescription(XP_RULES);
 		eb.setColor(getCatagory().COLOR);
 		eb.setThumbnail(guild.getIconUrl());
@@ -155,8 +159,33 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		return new MessageBuilder()
 				.setEmbed(eb.build())
-				.append("***__"+guild.getName()+"__***")
 				.build();
+	}
+
+	private Message rollMessage(Guild guild) {
+		EmbedBuilder eb = new EmbedBuilder();
+		MessageBuilder mb = new MessageBuilder();
+		
+		List<RoleLevel> rankings = GuildManager.getGuildData(guild).getRoleRankings();
+		
+		eb.setAuthor("Current Role Leaderboard", null, null);
+		eb.setDescription(XP_RULES + "/n[wip] role exclusion to come");
+		eb.setThumbnail(guild.getIconUrl());
+		eb.setColor(rankings.get(0).ROLE.getColor());
+				
+		int index = 0;
+		for (RoleLevel entry : rankings) {
+			if(index++>=NUMBER_OF_RANKINGS) break;
+			eb.addField(
+					"**"+index+": **"+StringUtil.truncate(entry.ROLENAME,MAX_NAME_LENGTH), 
+					String.format("%,dxp",
+							entry.getXp()
+					), 
+					true
+			);
+		}
+		
+		return mb.setEmbed(eb.build()).build();
 	}
 
 	@Override
