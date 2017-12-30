@@ -97,14 +97,14 @@ public class CaexBot {
 	
 		Logging.info("Done Loading and ready to go!");
 		Logging.info("Sending Online message to Owner");
-//		JDA.getUserById(config.getOwner()).openPrivateChannel().queue((t) -> {TODO uncomment this before build
-//				t.sendMessage(new MessageBuilder().append("Boss, I've just come online")
-//						.setEmbed(InfoCommand.infoEmbed(getJDA().getSelfUser()).build()).build()
-//						).queue();
-//				t.sendMessage(new MessageBuilder().setEmbed(
-//						InfoCommand.statusEmbed(getJDA().getSelfUser()).build()
-//						).build()).queue();
-//		});
+		JDA.getUserById(config.getOwner()).openPrivateChannel().queue((t) -> {
+				t.sendMessage(new MessageBuilder().append("Boss, I've just come online")
+						.setEmbed(InfoCommand.infoEmbed(getJDA().getSelfUser()).build()).build()
+						).queue();
+				t.sendMessage(new MessageBuilder().setEmbed(
+						InfoCommand.statusEmbed(getJDA().getSelfUser()).build()
+						).build()).queue();
+		});
 	}
 
 	public static JDA getJDA(){
