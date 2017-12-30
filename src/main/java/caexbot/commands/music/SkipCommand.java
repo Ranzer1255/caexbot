@@ -19,7 +19,7 @@ public class SkipCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("skip");
+		return Arrays.asList("skip", "next", "n");
 	}
 
 	@Override

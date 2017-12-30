@@ -18,6 +18,7 @@ import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HelpCommand extends CaexCommand implements DraconicCommand, Describable{
@@ -38,30 +39,27 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		//single command help line
 		if(args.length==1){
 			Logging.debug("help with arg (" +args[0]+")");
-			Optional<Describable> opt = getDescribables().stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 			Logging.debug(String.valueOf(opt.isPresent()));
 			if(opt.isPresent()){
-				EmbedBuilder eb = new EmbedBuilder();
 				Describable d = opt.get();
-				eb.setAuthor(d.getName(), null, null);
-				eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long descript wip");
-				eb.setColor(d.getCatagory().COLOR);
-				eb.addField("Usage",d.getUsage(event.getGuild())!=null?d.getUsage(event.getGuild()):"usage wip",false);
-				eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? StringUtil.cmdArrayToString(d.getAlias().subList(1, d.getAlias().size()), ", ",event.getGuild()):"*none*", true );
-				eb.addField("Catagory", d.getCatagory().toString(), true);
-				if (d.getPermissionRequirements() != null) {
-					eb.addField("Role Requirement", d.getPermissionRequirements().getName(), true);
-				}
-				event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
-
+				event.getChannel().sendMessage(mb.setEmbed(getDescription(d,event.getGuild())).build()).queue();
 			}
-			
+		}else if(args.length == 2){
+			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+			if(opt.isPresent()&&opt.get().hasSubcommands()){
+				Describable baseCommand = opt.get();
+				Optional<Describable> subOpt = getDescribables(baseCommand.getSubcommands()).stream().filter(cc -> cc.getAlias().contains(args[1])).findFirst();
+				if(subOpt.isPresent()){
+					event.getChannel().sendMessage(new MessageBuilder().setEmbed(getDescription(subOpt.get(),event.getGuild())).build()).queue();
+				}
+			}
 		//full command list	
 		}else{
 			
 			Map<Catagory, List<Describable>> catagorized = new HashMap<>();
 			
-			for (Describable d : getDescribables()) {
+			for (Describable d : getDescribables(cmds.getCommands())) {
 				if(catagorized.get(d.getCatagory())==null){
 					catagorized.put(d.getCatagory(), new ArrayList<>());
 				}
@@ -94,10 +92,25 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		}
 	}
 
+	public static MessageEmbed getDescription(Describable d, Guild g) {
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setAuthor(d.getName(), null, null);
+		eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long descript wip");
+		eb.setColor(d.getCatagory().COLOR);
+		eb.addField("Usage",d.getUsage(g)!=null?d.getUsage(g):"usage wip",false);
+		eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? "`"+StringUtil.cmdArrayToString(d.getAlias().subList(1, d.getAlias().size()), "`, `",g)+"`":"*none*", true );
+		eb.addField("Catagory", d.getCatagory().toString(), true);
+		if (d.getPermissionRequirements() != null) {
+			eb.addField("Role Requirement", d.getPermissionRequirements().getName(), true);
+		}
+		
+		return eb.build();
+	}
+
 	@Override
 	public String getUsage(Guild g) {
 
-		return getPrefix(g)+"help [command]`";
+		return getPrefix(g)+"help [<command>]`";
 	}
 
 	@Override
@@ -124,13 +137,17 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	public String getLongDescription() {
 		
 		return getShortDescription()+"\n\n"
-				+ "when given a command as an agrument, `help` will generate a help page for that command and return it";
+				+ "when given a command as an agrument, `help` will generate a help page for that command and return it\n\n"
+				+ "__**Usage syntax**__\n"
+				+ "arguemnts in `<>` are to be substituded with the requested value\n"
+				+ "arguments in `[]` are optional and can be ignored\n"
+				+ "arguments in `{}` mean pick one from the list seperated by `|`";
 	}
 
-	private List<Describable> getDescribables(){
+	private List<Describable> getDescribables(List<CaexCommand> list){
 		List<Describable> rtn = new ArrayList<>();
 			
-		for (CaexCommand cmd : cmds.getCommands()) {
+		for (CaexCommand cmd :list) {
 			if(cmd instanceof Describable){
 				rtn.add((Describable) cmd);
 			}

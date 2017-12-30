@@ -15,4 +15,6 @@ public interface Describable {
 	public String getShortDescription();
 	public String getLongDescription();
 	public Permission getPermissionRequirements();
+	public boolean hasSubcommands();
+	public List<CaexCommand> getSubcommands();
 }

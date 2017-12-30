@@ -18,13 +18,13 @@ public abstract class AbstractMusicCommand extends CaexCommand implements Descri
 	}
 	
 	@Override
-	public String getLongDescription() {//not used atm
-		return null;
+	public String getLongDescription() {
+		return getShortDescription()+"\n\n";
 	}
 	
 	@Override
-	public String getUsage(Guild g) {//not used atm
-		return null;
+	public String getUsage(Guild g) {
+		return String.format("`%smusic %s`", getPrefix(g), getName());
 	}
 	
 	@Override

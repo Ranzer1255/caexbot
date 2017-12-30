@@ -38,4 +38,10 @@ public class JoinCommand extends AbstractMusicCommand implements Describable{
 	public String getShortDescription() {
 		return "join bot to your current voice channel";
 	}
+	
+	@Override
+	public String getLongDescription() {
+		return super.getLongDescription()
+				+ "This command will join caex to whatever voice channel you are currently in";
+	}
 }

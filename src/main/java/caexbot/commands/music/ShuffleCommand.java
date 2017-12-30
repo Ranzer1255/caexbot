@@ -16,11 +16,17 @@ public class ShuffleCommand extends AbstractMusicCommand {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("shuffle");
+		return Arrays.asList("shuffle", "mix");
 	}
 
 	@Override
 	public String getShortDescription() {
 		return "shuffle shuffle!";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		return super.getLongDescription()+
+				"randomly shuffles the order of the queue";
 	}
 }

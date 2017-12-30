@@ -26,4 +26,11 @@ public class PauseCommand extends AbstractMusicCommand implements Describable{
 	public String getShortDescription() {
 		return "Pauses the currently playing song";
 	}
+	
+	@Override
+	public String getLongDescription() {
+		return getShortDescription()+"\n\n"
+				+ "to resume: call this command again, or call `play`";
+	}
+	
 }
