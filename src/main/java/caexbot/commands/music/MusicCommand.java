@@ -100,5 +100,10 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 				
 		return sb.toString();
 	}
+	
+	@Override
+	public boolean hasSubcommands() {
+		return true;
+	}
 
 }

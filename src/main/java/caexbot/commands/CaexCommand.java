@@ -87,5 +87,9 @@ public abstract class CaexCommand{
 	public String getName(){
 		return getAlias().get(0);
 	}
+	
+	public boolean hasSubcommands(){
+		return false;
+	}
 
 }
