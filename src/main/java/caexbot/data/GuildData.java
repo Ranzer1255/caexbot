@@ -9,10 +9,12 @@ import java.util.List;
 import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
 import caexbot.database.CaexDB;
+import caexbot.functions.levels.RoleLevel;
 import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 
@@ -126,6 +128,39 @@ public class GuildData {
 		}
 		return rtn;
 	}
+	
+	public RoleLevel getRoleLevel(Role role){
+		RoleLevel rtn = new RoleLevel(role);
+		
+		List<Member> members = role.getGuild().getMembersWithRoles(role);
+		
+		for(Member m:members){
+			rtn.addXp(getXP(m.getUser()));
+		}
+		
+		return rtn;
+	}
+	
+	public List<RoleLevel> getRoleRankings(){
+		List<RoleLevel> ranking = new ArrayList<>();
+		
+		for (Role r:guild.getRoles()){
+			//TODO filter excluded roles
+			ranking.add(new RoleLevel(r));
+		}
+		
+		List<UserLevel> users = getGuildRankings();
+		for(UserLevel user: users){
+			for(RoleLevel role: ranking){
+				if(user.getMember().getRoles().contains(role.ROLE)) role.addXp(user.getXP());
+			}
+		}
+		
+		ranking.sort((o1, o2)-> o1.compareTo(o2));
+		
+		return ranking;
+		
+	}
 
 	public List<UserLevel> getGuildRankings() {
 		
@@ -192,15 +227,13 @@ public class GuildData {
 	
 	public int getXP(User u){
 		
-		try {
-			int rtn = -1;
-			ResultSet rs = CaexDB.getConnection().prepareStatement(
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
 					String.format("select xp from member where guild_id = %s and user_id=%s;",guild.getId(), u.getId())
-					).executeQuery();
+					).executeQuery()){
+			int rtn = -1;
 			while (rs.next()){
 				rtn = rs.getInt(1);
 			}
-			rs.close();
 			
 			return rtn;
 			

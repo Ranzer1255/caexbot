@@ -65,11 +65,8 @@ public class UserLevel implements Comparable<UserLevel> {
 	}
 	
 	static public int calcXPForLevel(int level){
-		if (level == 1){
-			return 0;
-		} else {
-			return calcXPForLevel(level-1)+((level-1)*1000);
-		}
+				
+		return (int)Math.floor((500*Math.pow(level,2))-(500*level));
 		
 	}
 
