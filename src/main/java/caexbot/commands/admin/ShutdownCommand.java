@@ -5,11 +5,7 @@ import java.util.List;
 
 import caexbot.commands.CaexCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.util.Logging;
-import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
 
 public class ShutdownCommand extends CaexCommand {
 
@@ -21,7 +17,7 @@ public class ShutdownCommand extends CaexCommand {
 			return;
 		}
 		if (args.length>0&&args[0].equals("alert")) {
-			shutdownAlertBroadcast(args, event);
+//			shutdownAlertBroadcast(args, event); TODO to be fix when annoucement system is implemented
 			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
 		event.getChannel().sendMessage("if you insist boss.... *blerg*").queue();
@@ -35,21 +31,21 @@ public class ShutdownCommand extends CaexCommand {
 		return Arrays.asList("vdri");//this is "sleep" in draconic
 	}
 
-	@SuppressWarnings("deprecation")//i'm going to keep this in until JDA devs break it completely
-	private void shutdownAlertBroadcast(String[] args, MessageReceivedEvent event) {
-		for (Guild g : event.getJDA().getGuilds()) {
-			try {
-				g.getPublicChannel().sendMessage("I've got to go.... \n" + 
-			((args.length>1)?StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1, args.length)), " ")+"\n":"")+
-			"*casts teleport and vanishes*").queue();
-			} catch (PermissionException e) {
-				Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
-				continue;
-			} catch (NullPointerException e){
-				Logging.error(g.getName() + " no longer has a public channel, skipping till annoucnement update");
-			}
-		}
-	}
+	//TODO fix this when i implement an announcement system
+//	private void shutdownAlertBroadcast(String[] args, MessageReceivedEvent event) {
+//		for (Guild g : event.getJDA().getGuilds()) {
+//			try {
+//				g.getPublicChannel().sendMessage("I've got to go.... \n" + 
+//			((args.length>1)?StringUtil.arrayToString(Arrays.asList(Arrays.copyOfRange(args, 1, args.length)), " ")+"\n":"")+
+//			"*casts teleport and vanishes*").queue();
+//			} catch (PermissionException e) {
+//				Logging.error("i can't talk here sorry: " + e.getLocalizedMessage());
+//				continue;
+//			} catch (NullPointerException e){
+//				Logging.error(g.getName() + " no longer has a public channel, skipping till annoucnement update");
+//			}
+//		}
+//	}
 
 	@Override
 	public boolean isAplicableToPM() {

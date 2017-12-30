@@ -30,11 +30,11 @@ public class DraconicListener extends ListenerAdapter{
 		
 		if(event.getAuthor().isBot()){return;}
 		
-		if(!event.getMessage().getRawContent().toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()))) 
+		if(!event.getMessage().getContentRaw().toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild()))) 
 			return;
 		
 		if (event.getAuthor() != CaexBot.getJDA().getSelfUser()) {
-			String[] args = event.getMessage().getRawContent().split(" ");
+			String[] args = event.getMessage().getContentRaw().split(" ");
 			String command = args[0].replace(CaexCommand.getPrefix(event.getGuild()), "").toLowerCase();
 			String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
 			Optional<DraconicCommand> c = cmds.stream().filter(dc -> dc.getDraconicAlias().contains(command)).findFirst();

@@ -24,7 +24,6 @@ public class DiceCommand extends CaexCommand implements Describable{
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 
-		System.out.println(event.getMessage().getContent());
 		if(!(args.length<1)){
 			invalidUsage(event.getGuild());
 		}

@@ -20,7 +20,7 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 		Message pong = event.getChannel().sendMessage("pong!").complete();
 		Date endTime = new Date();
 		long lag = endTime.getTime()-startTime.getTime();
-		pong.editMessage(pong.getContent()+" `"+lag+"ms`").queue();
+		pong.editMessage(pong.getContentDisplay()+" `"+lag+"ms`").queue();
 		
 	}
 

@@ -47,7 +47,7 @@ public class CommandListener extends ListenerAdapter {
 		}
 		
 		User author = event.getAuthor();
-		String message = event.getMessage().getRawContent();
+		String message = event.getMessage().getContentRaw();
 		
 		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild())))
 			return;
@@ -58,7 +58,7 @@ public class CommandListener extends ListenerAdapter {
 		List<String> keywords = Arrays.asList("prefix", "help", "command", "code");
 		
 		for (String string : keywords) {
-			if(event.getMessage().getContent().contains(string))
+			if(event.getMessage().getContentDisplay().contains(string))
 				return true;
 		}
 		return false;

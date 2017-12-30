@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ranzer.caexbot</groupId>
 	<artifactId>caexbot</artifactId>
-	<version>2.11.1</version>
+	<version>2.11.2</version>
 	<name> Caex Bot for Discord</name>
 	<description>Bot for Ranzer's Playground Discord Server</description>
 
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>3.3.1_307</version>
+			<version>3.4.0_319</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sedmelluq</groupId>
