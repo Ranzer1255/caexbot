@@ -129,6 +129,18 @@ public class GuildData {
 		return rtn;
 	}
 	
+	public RoleLevel getRoleLevel(Role role){
+		RoleLevel rtn = new RoleLevel(role);
+		
+		List<Member> members = role.getGuild().getMembersWithRoles(role);
+		
+		for(Member m:members){
+			rtn.addXp(getXP(m.getUser()));
+		}
+		
+		return rtn;
+	}
+	
 	public List<RoleLevel> getRoleRankings(){
 		List<RoleLevel> ranking = new ArrayList<>();
 		
@@ -215,15 +227,13 @@ public class GuildData {
 	
 	public int getXP(User u){
 		
-		try {
-			int rtn = -1;
-			ResultSet rs = CaexDB.getConnection().prepareStatement(
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
 					String.format("select xp from member where guild_id = %s and user_id=%s;",guild.getId(), u.getId())
-					).executeQuery();
+					).executeQuery()){
+			int rtn = -1;
 			while (rs.next()){
 				rtn = rs.getInt(1);
 			}
-			rs.close();
 			
 			return rtn;
 			
