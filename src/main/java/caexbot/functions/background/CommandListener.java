@@ -33,6 +33,7 @@ public class CommandListener extends ListenerAdapter {
 		
 		if (event.getAuthor().isBot()){return;}//ignore bots and self
 		
+		//user asked for prefix
 		if (event.getMessage().isMentioned(event.getJDA().getSelfUser()) && !event.getMessage().mentionsEveryone()){
 			if (containsKeyWord(event)) {
 				event.getChannel().sendMessage(String.format(
