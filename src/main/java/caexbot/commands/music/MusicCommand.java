@@ -7,14 +7,12 @@ import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Describable;
+import caexbot.commands.admin.HelpCommand;
 import caexbot.util.Logging;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-/*
- * TODO redesign music so that its not a subcommand list
- * i want to just do !join and not !music join ect.
- */
 public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	public static final String JOIN = "Joining Channel %s";
@@ -43,9 +41,9 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
-		System.out.println("in muisc");
 		if (args.length != 1) {
-			event.getTextChannel().sendMessage(event.getAuthor().getAsMention() + getUsage(event.getGuild()));
+			event.getTextChannel().sendMessage(new MessageBuilder().setEmbed(HelpCommand.getDescription(this, event.getGuild())).build()).queue();;
+			return;
 		}
 
 		Optional<CaexCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
@@ -104,6 +102,11 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public boolean hasSubcommands() {
 		return true;
+	}
+	
+	@Override
+	public List<CaexCommand> getSubcommands() {
+		return subCommands;
 	}
 
 }

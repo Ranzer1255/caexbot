@@ -3,10 +3,8 @@ package caexbot.functions.games.zdice.subcommands;
 import java.util.Arrays;
 import java.util.List;
 
-import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.controlers.ZomDiceDiscordControler;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ZomStartCommand extends AbstractZombieCommand implements Describable{
@@ -26,22 +24,11 @@ public class ZomStartCommand extends AbstractZombieCommand implements Describabl
 	public String getShortDescription() {
 		return "Start the game.";
 	}
-
-	@Override
-	public Catagory getCatagory() {
-		return Catagory.GAME;
-	}
-
-	@Override
-	public String getUsage(Guild g) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public String getLongDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getLongDescription()+
+				"Must have more than 1 player currently registered to play";
 	}
 
 }

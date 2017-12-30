@@ -5,6 +5,7 @@ import java.util.List;
 
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PlaylistCommand extends AbstractMusicCommand implements Describable {
@@ -31,6 +32,21 @@ public class PlaylistCommand extends AbstractMusicCommand implements Describable
 
 	@Override
 	public String getShortDescription() {
-		return "skips the search process and passes input straight to lavaplayer";
+		return "skips the search process and inserts a Youtube video or playlist code into the playlist";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		return super.getLongDescription() +
+		"input a URL, video code, or playlist code \n\n"
+		+ "examples:\n"
+		+ "`https://www.youtube.com/watch?v=dQw4w9WgXcQ`\n"
+		+ "`dQw4w9WgXcQ`\n"
+		+ "`PL7atuZxmT954bCkC062rKwXTvJtcqFB8i`";
+	}
+	
+	@Override
+	public String getUsage(Guild g) {
+		return String.format("`%smusic %s <video URL or Code>`", getPrefix(g),getName());
 	}
 }

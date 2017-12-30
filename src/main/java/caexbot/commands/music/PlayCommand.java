@@ -7,6 +7,7 @@ import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PlayCommand extends AbstractMusicCommand implements Describable{
@@ -34,5 +35,20 @@ public class PlayCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public String getShortDescription() {
 		return "Start playing the first song in queue";
-	}	
+	}
+	
+	@Override
+	public String getLongDescription() {
+		return super.getLongDescription()+
+				"this command does several things all in one.\n"
+				+ "* if Caex isn't connected to a voice channel, he'll join you as per the `join` command\n\n"
+				+ "* if supplied with a search string, he will search Youtube and add the song to the end of the queue as per the `queue` command\n\n"
+				+ "* if caex is paused, he'll start playing again\n\n"
+				+ "* last but not least, if he's stopped he'll start playing the first song in the queue";
+	}
+	
+	@Override
+	public String getUsage(Guild g) {
+		return String.format("`%smusic %s [<search string>]`", getPrefix(g), getName());
+	}
 }

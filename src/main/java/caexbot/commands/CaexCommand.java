@@ -91,5 +91,9 @@ public abstract class CaexCommand{
 	public boolean hasSubcommands(){
 		return false;
 	}
+	
+	public List<CaexCommand> getSubcommands(){
+		return null;
+	}
 
 }

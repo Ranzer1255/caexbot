@@ -102,5 +102,15 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 	public boolean isAplicableToPM() {
 		return false;
 	}
+	
+	@Override
+	public boolean hasSubcommands() {
+		return true;
+	}
+	
+	@Override
+	public List<CaexCommand> getSubcommands() {
+		return zomSubCommands;
+	}
 
 }

@@ -11,6 +11,7 @@ import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Guild;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
 
@@ -67,11 +68,22 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("add", "queue");
+		return Arrays.asList("queue","add");
 	}
 
 	@Override
 	public String getShortDescription() {
 		return "Add song to the play queue";
+	}
+	
+	@Override
+	public String getLongDescription() {
+		return super.getLongDescription()+
+				"When not given a search string, this command will list the next 10 songs currently in the queue";
+	}
+	
+	@Override
+	public String getUsage(Guild g) {
+		return String.format("`%smusic %s [<search string>]`", getPrefix(g),getName());
 	}
 }
