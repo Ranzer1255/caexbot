@@ -41,7 +41,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
-		if (args.length != 1) {
+		if (args.length == 0) {
 			event.getTextChannel().sendMessage(new MessageBuilder().setEmbed(HelpCommand.getDescription(this, event.getGuild())).build()).queue();;
 			return;
 		}
