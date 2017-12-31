@@ -118,12 +118,13 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	@Override
 	public String getLongDescription() {
 		return "This command returns the caller's current XP and level.\n\n"
-				+ "`rank` option: This command will return the top 10 users in the guild";
+				+ "`rank` option: This command will return the top 10 users in the guild\n"
+				+ "`roles` option: this command will return the top 10 roles in the guild";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getAlias().get(0)+" [rank]`";
+		return "`"+getPrefix(g)+getAlias().get(0)+" [{rank | roles}]`";
 	}
 	
 	@Override
@@ -169,7 +170,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		List<RoleLevel> rankings = GuildManager.getGuildData(guild).getRoleRankings();
 		
 		eb.setAuthor("Current Role Leaderboard", null, null);
-		eb.setDescription(XP_RULES + "/n[wip] role exclusion to come");
+		eb.setDescription(XP_RULES + "\n[wip] role exclusion to come");
 		eb.setThumbnail(guild.getIconUrl());
 		eb.setColor(rankings.get(0).ROLE.getColor());
 				

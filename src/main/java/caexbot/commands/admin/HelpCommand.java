@@ -38,9 +38,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		
 		//single command help line
 		if(args.length==1){
-			Logging.debug("help with arg (" +args[0]+")");
 			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
-			Logging.debug(String.valueOf(opt.isPresent()));
 			if(opt.isPresent()){
 				Describable d = opt.get();
 				event.getChannel().sendMessage(mb.setEmbed(getDescription(d,event.getGuild())).build()).queue();
