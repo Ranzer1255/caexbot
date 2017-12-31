@@ -96,7 +96,11 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long descript wip");
 		eb.setColor(d.getCatagory().COLOR);
 		eb.addField("Usage",d.getUsage(g)!=null?d.getUsage(g):"usage wip",false);
-		eb.addField("Other Aliases", (d.getAlias().size()-1)!=0 ? "`"+StringUtil.cmdArrayToString(d.getAlias().subList(1, d.getAlias().size()), "`, `",g)+"`":"*none*", true );
+		eb.addField("Other Aliases",
+				(d.getAlias().size()-1)!=0 ? 
+						"`"+StringUtil.arrayToString(d.getAlias().subList(1, d.getAlias().size()), "`, `")+"`":
+						"*none*",
+				true );
 		eb.addField("Catagory", d.getCatagory().toString(), true);
 		if (d.getPermissionRequirements() != null) {
 			eb.addField("Role Requirement", d.getPermissionRequirements().getName(), true);
