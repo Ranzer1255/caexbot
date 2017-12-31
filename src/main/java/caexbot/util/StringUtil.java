@@ -43,14 +43,21 @@ public class StringUtil {
 		long mins = (runtime % 3600)/60;
 		long secs = runtime % 60; 
 		
-		if(hrs >0){
+		if(hrs >1){
 			rtn.append(hrs + " Hours ");
+		} else if (hrs==1){
+			rtn.append(hrs + " Hour ");
 		}
-		if(mins>0){
+		if(mins>1){
 			rtn.append(mins + " Minutes ");
+		} else if (mins==1){
+			rtn.append(mins + " Minute ");
 		}
-		rtn.append(secs + " Seconds");
-		
+		if (secs>1){
+			rtn.append(secs + " Seconds");
+		} else if (secs==1){
+			rtn.append(secs + " Second");
+		}
 		return rtn.toString();
 	}
 	

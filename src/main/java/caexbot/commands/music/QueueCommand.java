@@ -15,6 +15,8 @@ import net.dv8tion.jda.core.entities.Guild;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
 
+	private static final int SHOW_QUEUE_LENGTH = 10;
+
 	@Override
 	public void process(String[] args, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
@@ -43,7 +45,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				int i = 1;
 				long runtime = 0;
 				for (AudioTrack track : gp.getQueue().getQueue()) {
-					if(i>10) break;
+					if(i>SHOW_QUEUE_LENGTH) break;
 					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, track.getInfo().uri));
 				}
 				eb.setDescription(sb.toString());
