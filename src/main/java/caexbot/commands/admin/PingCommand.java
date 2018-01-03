@@ -8,7 +8,6 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -22,11 +21,6 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 		long lag = endTime.getTime()-startTime.getTime();
 		pong.editMessage(pong.getContentDisplay()+" `"+lag+"ms`").queue();
 		
-	}
-
-	@Override
-	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getName()+"`";
 	}
 
 	@Override

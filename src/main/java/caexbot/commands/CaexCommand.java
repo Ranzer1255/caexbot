@@ -95,5 +95,8 @@ public abstract class CaexCommand{
 	public List<CaexCommand> getSubcommands(){
 		return null;
 	}
+	public String getUsage(Guild g) {
+		return String.format("`%s%s`", getPrefix(g),getName());
+	}
 
 }

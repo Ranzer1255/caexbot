@@ -13,7 +13,6 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
@@ -69,11 +68,6 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 		
 		return sb.toString();
 	}
-	@Override
-	public String getUsage(Guild g) {
-		return String.format("`%s%s`", getPrefix(g),getName());
-	}
-
 	@Override
 	public List<String> getDraconicAlias() {
 		return Arrays.asList("ehaism_cha'sid");
