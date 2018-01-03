@@ -38,16 +38,16 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		
 		//single command help line
 		if(args.length==1){
-			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
 			if(opt.isPresent()){
 				Describable d = opt.get();
 				event.getChannel().sendMessage(mb.setEmbed(getDescription(d,event.getGuild())).build()).queue();
 			}
 		}else if(args.length == 2){
-			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
 			if(opt.isPresent()&&opt.get().hasSubcommands()){
 				Describable baseCommand = opt.get();
-				Optional<Describable> subOpt = getDescribables(baseCommand.getSubcommands()).stream().filter(cc -> cc.getAlias().contains(args[1])).findFirst();
+				Optional<Describable> subOpt = getDescribables(baseCommand.getSubcommands()).stream().filter(cc -> cc.getAlias().contains(args[1].toLowerCase())).findFirst();
 				if(subOpt.isPresent()){
 					event.getChannel().sendMessage(new MessageBuilder().setEmbed(getDescription(subOpt.get(),event.getGuild())).build()).queue();
 				}
