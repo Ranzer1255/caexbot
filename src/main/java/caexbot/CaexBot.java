@@ -14,6 +14,7 @@ import caexbot.commands.admin.XPPermCommand;
 import caexbot.commands.chat.DraconicTranslateCommand;
 import caexbot.commands.chat.EightBallCommand;
 import caexbot.commands.chat.FacepalmCommand;
+import caexbot.commands.chat.FistbumpCommand;
 import caexbot.commands.chat.InsultCommand;
 import caexbot.commands.chat.LevelCommand;
 import caexbot.commands.games.DiceCommand;
@@ -79,6 +80,7 @@ public class CaexBot {
 				.addCommand(new DraconicTranslateCommand())
 				.addCommand(new EightBallCommand())
 				.addCommand(new FacepalmCommand())
+				.addCommand(new FistbumpCommand())
 				.addCommand(new InfoCommand())
 				.addCommand(new LevelCommand())
 				.addCommand(new PingCommand())
