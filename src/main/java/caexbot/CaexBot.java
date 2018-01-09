@@ -26,6 +26,7 @@ import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
 import caexbot.functions.levels.LevelUpdater;
 import caexbot.functions.listeners.CommandListener;
+import caexbot.functions.listeners.JoinLeaveListener;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -96,6 +97,7 @@ public class CaexBot {
 				.addCommand(new AnnouncementSettingCommand());
 
 		JDA.addEventListener(commands);
+		JDA.addEventListener(new JoinLeaveListener());
 		JDA.addEventListener(new LevelUpdater());
 		JDA.getPresence().setGame(Game.playing(config.getStatus()));
 	
