@@ -20,7 +20,7 @@ public class ShutdownCommand extends CaexCommand {
 //			shutdownAlertBroadcast(args, event); TODO to be fix when annoucement system is implemented
 			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
-		event.getChannel().sendMessage("if you insist boss.... *blerg*").queue();
+		event.getChannel().sendMessage("if you insist boss.... *blerg*").complete();
 		event.getJDA().shutdown();
 		try {Thread.sleep(500L);} catch (InterruptedException e) {}
 		System.exit(0);
