@@ -128,7 +128,6 @@ public class GuildData {
 		}
 		return rtn;
 	}
-	
 	public RoleLevel getRoleLevel(Role role){
 		RoleLevel rtn = new RoleLevel(role);
 		
@@ -310,6 +309,54 @@ public class GuildData {
 			Logging.log(e);
 		}
 	}
+	public TextChannel getAnnouncementChannel(){
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
+				String.format("SELECT chan_announcement FROM guild where guild_id = %s;",
+						guild.getId())).executeQuery()
+		){
+			while (rs.next()) {
+				String chanIdString = rs.getString(1);
+				if(chanIdString!=null){
+					return guild.getJDA().getTextChannelById(chanIdString);
+				}
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			Logging.error("issue getting annoucement channel");
+			Logging.log(e);
+		}
+		return null;
+	}
+
+	public void setAnnouncementChannel(TextChannel channel){
+		if (channel==null){
+			try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+					String.format("update guild set chan_announcement=null where guild_id='%s';",
+							guild.getId()
+					))){
+				stmt.execute();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				String.format("update guild set chan_announcement='%s' where guild_id='%s';",
+						channel.getId(),
+						guild.getId())
+			)){
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			Logging.error("issue setting annoucement channel");
+			Logging.log(e);
+		}
+	}
+
 	/**
 	 * 
 	 * @return admin defined channel for music
