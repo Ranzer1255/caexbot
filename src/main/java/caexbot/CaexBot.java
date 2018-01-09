@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.security.auth.login.LoginException;
 
+import caexbot.commands.admin.AnnouncementSettingCommand;
 import caexbot.commands.admin.HelpCommand;
 import caexbot.commands.admin.InfoCommand;
 import caexbot.commands.admin.LevelAlertToggleCommand;
@@ -23,8 +24,8 @@ import caexbot.commands.games.ZomDiceCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.commands.search.YoutubeSearchCommand;
 import caexbot.config.CaexConfiguration;
-import caexbot.functions.background.CommandListener;
 import caexbot.functions.levels.LevelUpdater;
+import caexbot.functions.listeners.CommandListener;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -91,7 +92,8 @@ public class CaexBot {
 				.addCommand(new XPPermCommand())
 				.addCommand(new MusicCommand())
 				.addCommand(new HiLowCommand())
-				.addCommand(new LevelAlertToggleCommand());
+				.addCommand(new LevelAlertToggleCommand())
+				.addCommand(new AnnouncementSettingCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new LevelUpdater());

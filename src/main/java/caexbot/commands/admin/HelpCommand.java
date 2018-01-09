@@ -12,7 +12,7 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
-import caexbot.functions.background.CommandListener;
+import caexbot.functions.listeners.CommandListener;
 import caexbot.util.Logging;
 import caexbot.util.StringUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
