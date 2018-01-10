@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `caexDB2`.`guild` (
   `prefix` VARCHAR(45) NULL DEFAULT NULL COMMENT 'the set prefix for this guild, if null use global default',
   `chan_announcement` VARCHAR(20) NULL DEFAULT NULL COMMENT 'channel caex will use to make announcements in. if Null use guild\'s Public channel',
   `def_chan_music` VARCHAR(20) NULL DEFAULT NULL COMMENT 'channel caex will announce changes in music in. if null, reply in last used music command channel.',
-  `xp_annouce` TINYINT(1) NULL DEFAULT 1 COMMENT 'if true caex will announce when a user levels up. if false, he\'ll send a private message.',
+  `xp_announce` TINYINT(1) NULL DEFAULT 1 COMMENT 'if true caex will announce when a user levels up. if false, he\'ll send a private message.',
   PRIMARY KEY (`guild_id`),
   UNIQUE INDEX `idguild_UNIQUE` (`guild_id` ASC))
 ENGINE = InnoDB;
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `cekipDB2`.`guild` (
   `prefix` VARCHAR(45) NULL DEFAULT NULL COMMENT 'the set prefix for this guild, if null use global default',
   `chan_announcement` VARCHAR(20) NULL DEFAULT NULL COMMENT 'channel caex will use to make announcements in. if Null use guild\'s Public channel',
   `def_chan_music` VARCHAR(20) NULL COMMENT 'channel caex will announce changes in music in. if null, reply in last used music command channel.',
-  `xp_annouce` TINYINT(1) NULL DEFAULT 1 COMMENT 'if true caex will announce when a user levels up. if false, he\'ll send a private message.',
+  `xp_announce` TINYINT(1) NULL DEFAULT 1 COMMENT 'if true caex will announce when a user levels up. if false, he\'ll send a private message.',
   PRIMARY KEY (`guild_id`),
   UNIQUE INDEX `idguild_UNIQUE` (`guild_id` ASC))
 ENGINE = InnoDB;

@@ -7,6 +7,7 @@ import javax.security.auth.login.LoginException;
 import caexbot.commands.admin.AnnouncementSettingCommand;
 import caexbot.commands.admin.HelpCommand;
 import caexbot.commands.admin.InfoCommand;
+import caexbot.commands.admin.JoinLeaveSettingCommand;
 import caexbot.commands.admin.LevelAlertToggleCommand;
 import caexbot.commands.admin.PingCommand;
 import caexbot.commands.admin.PrefixCommand;
@@ -94,7 +95,8 @@ public class CaexBot {
 				.addCommand(new MusicCommand())
 				.addCommand(new HiLowCommand())
 				.addCommand(new LevelAlertToggleCommand())
-				.addCommand(new AnnouncementSettingCommand());
+				.addCommand(new AnnouncementSettingCommand())
+				.addCommand(new JoinLeaveSettingCommand());
 
 		JDA.addEventListener(commands);
 		JDA.addEventListener(new JoinLeaveListener());

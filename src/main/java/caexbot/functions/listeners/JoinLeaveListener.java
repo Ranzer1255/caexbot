@@ -12,14 +12,12 @@ public class JoinLeaveListener extends ListenerAdapter {
 	private final String JOIN_MESSAGE = "*bows* Welcome %s!";
 	private final String LEAVE_MESSAGE = "To all that care, %s has departed!";
 	
-	//TODO add in disable option to Database!
-	
 	@Override
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 		GuildData gd = GuildManager.getGuildData(event.getGuild());
 		TextChannel tc = gd.getAnnouncementChannel();
-		if (tc==null) return;
-		
+		if (!gd.getJLannouncement()) return;
+		if (tc==null) return;		
 		tc.sendMessage(String.format(JOIN_MESSAGE, event.getUser().getAsMention())).queue();
 	}
 	
@@ -27,10 +25,8 @@ public class JoinLeaveListener extends ListenerAdapter {
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		GuildData gd = GuildManager.getGuildData(event.getGuild());
 		TextChannel tc = gd.getAnnouncementChannel();
-		if (tc==null) return;
-		
-		tc.sendMessage(String.format(LEAVE_MESSAGE, event.getUser().getName())).queue();
-		
+		if (!gd.getJLannouncement()) return;
+		if (tc==null) return;		
+		tc.sendMessage(String.format(LEAVE_MESSAGE, event.getUser().getName())).queue();		
 	}
-
 }

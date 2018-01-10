@@ -26,7 +26,6 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 					cmd = sc;
 				}
 			}
-			System.out.println(cmd);
 			switch (cmd){
 			case SET:
 				guildData.setAnnouncementChannel(event.getTextChannel());
@@ -40,35 +39,35 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 		}
 		
 		String chan = (guildData.getAnnouncementChannel()!=null ? guildData.getAnnouncementChannel().getName():"none");
-		event.getChannel().sendMessage(String.format("My current annoucement channel is: %s",
+		event.getChannel().sendMessage(String.format("My current announcement channel is: %s",
 				chan)).queue();
 		
 	}
 
 	@Override
 	public String getShortDescription() {
-		return "Manages caex's annoucement channel for your guild";
+		return "Manages caex's announcement channel for your guild";
 	}
 
 	@Override
 	public String getLongDescription() {
 		return getShortDescription()+"\n\n"
-				+ "annoucements will include Joiners and leavers to your guild as well as bot alerts such"
+				+ "announcements will include Joiners and leavers to your guild as well as bot alerts such"
 				+ " as shutdowns and reboots, (though these are rare)\n\n"
-				+ "`set`:  will set the current channel to be Caex's Annoucemnet channel\n"
-				+ "`clear`: will clear the annoucement channel and disable all of caex's annoucements";
+				+ "`set`:  will set the current channel to be Caex's announcemnet channel\n"
+				+ "`clear`: will clear the announcement channel and disable all of caex's announcements";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		return String.format("%s%s [{set | clear}]",
+		return String.format("`%s%s [{set | clear}]`",
 				getPrefix(g),
 				getName());
 	}
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("annouce","annoucement");
+		return Arrays.asList("announce","announcement");
 	}
 
 	@Override

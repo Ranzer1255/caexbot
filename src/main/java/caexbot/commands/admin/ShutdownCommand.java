@@ -17,7 +17,7 @@ public class ShutdownCommand extends CaexCommand {
 			return;
 		}
 		if (args.length>0&&args[0].equals("alert")) {
-//			shutdownAlertBroadcast(args, event); TODO to be fix when annoucement system is implemented
+//			shutdownAlertBroadcast(args, event); TODO to be fix when announcement system is implemented
 			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
 		event.getChannel().sendMessage("if you insist boss.... *blerg*").complete();

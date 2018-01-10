@@ -18,8 +18,8 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 	public void process(String[] args, MessageReceivedEvent event) {
 		
 		if (args.length==0){
-			event.getTextChannel().sendMessage("The Level annoucement setting for this guild is currently: "+
-					GuildManager.getGuildData(event.getGuild()).getXPAnnoucement()).queue();
+			event.getTextChannel().sendMessage("The Level announcement setting for this guild is currently: "+
+					GuildManager.getGuildData(event.getGuild()).getXPannouncement()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
@@ -28,7 +28,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 			return;
 		}
 		
-		GuildManager.getGuildData(event.getGuild()).setXPAnnoucement(Boolean.parseBoolean(args[0]));
+		GuildManager.getGuildData(event.getGuild()).setXPannouncement(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
 			event.getTextChannel().sendMessage("I will now inform you when your level changes!").queue();
@@ -50,16 +50,16 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 
 	@Override
 	public String getShortDescription() {
-		return "Set Level change annoucemnt for the guild";
+		return "Set Level change announcemnt for the guild";
 	}
 
 	@Override
 	public String getLongDescription() {
-		return "This command sets the Level Change annoucement for the guild\n"
+		return "This command sets the Level Change announcement for the guild\n"
 				+ "leaving the value blank will return the current setting for this Guild\n\n"
 				+ "`True`: users will be notified when their level changes\n"
 				+ "`False`: users will not be notified when their level changes\n"
-				+ "`Default Value`: " + GuildData.DEFAULT_XP_ANNOUCEMENT;
+				+ "`Default Value`: " + GuildData.DEFAULT_XP_announceMENT;
 	}
 
 	@Override

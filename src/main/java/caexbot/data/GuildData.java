@@ -20,7 +20,7 @@ import net.dv8tion.jda.core.entities.User;
 
 public class GuildData {
 
-	public static final boolean DEFAULT_XP_ANNOUCEMENT = true;
+	public static final boolean DEFAULT_XP_announceMENT = true;
 	private Guild guild;
 	
 	public GuildData(Guild guild) {
@@ -82,23 +82,23 @@ public class GuildData {
 	}
 
 	private void levelUpAlert(User author, TextChannel channel) {
-		if(getXPAnnoucement()){
+		if(getXPannouncement()){
 			channel.sendMessage(String.format("Well met %s!\nYou have advanced to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
 	private void levelDownAlert(User author, TextChannel channel) {
-		if(getXPAnnoucement()){
+		if(getXPannouncement()){
 			channel.sendMessage(String.format("Oh No %s!\nYou have decreased to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
 
-	public void setXPAnnoucement(boolean annouce){
+	public void setXPannouncement(boolean announce){
 		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-			"update guild set xp_annouce=? where guild_id = ?;"	
+			"update guild set xp_announce=? where guild_id = ?;"	
 		)){
-			stmt.setBoolean(1, annouce);
+			stmt.setBoolean(1, announce);
 			stmt.setString(2, guild.getId());
 			
 			stmt.execute();
@@ -107,11 +107,11 @@ public class GuildData {
 			Logging.log(e);
 		}
 	}
-	public boolean getXPAnnoucement() {
+	public boolean getXPannouncement() {
 		
 		boolean rtn = false;
 		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
-				"select xp_annouce from guild where guild_id = ?"
+				"select xp_announce from guild where guild_id = ?"
 				)){
 			
 			stmt.setString(1, guild.getId());
@@ -128,6 +128,42 @@ public class GuildData {
 		}
 		return rtn;
 	}
+	public void setJLannouncement(boolean announce){
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+			"update guild set jl_announce=? where guild_id = ?;"	
+		)){
+			stmt.setBoolean(1, announce);
+			stmt.setString(2, guild.getId());
+			
+			stmt.execute();
+		} catch (SQLException e){
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+	}
+
+	public boolean getJLannouncement() {
+		
+		boolean rtn = false;
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				"select jl_announce from guild where guild_id = ?"
+				)){
+			
+			stmt.setString(1, guild.getId());
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()){
+				rtn = rs.getBoolean(1);
+			}
+			
+		} catch (SQLException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
+			rtn = false;
+		}
+		return rtn;
+	}
+
 	public RoleLevel getRoleLevel(Role role){
 		RoleLevel rtn = new RoleLevel(role);
 		
@@ -323,7 +359,7 @@ public class GuildData {
 			}
 			
 		} catch (SQLException e) {
-			Logging.error("issue getting annoucement channel");
+			Logging.error("issue getting announcement channel");
 			Logging.log(e);
 		}
 		return null;
@@ -338,7 +374,6 @@ public class GuildData {
 				stmt.execute();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return;
@@ -352,7 +387,7 @@ public class GuildData {
 			
 			stmt.execute();
 		} catch (SQLException e) {
-			Logging.error("issue setting annoucement channel");
+			Logging.error("issue setting announcement channel");
 			Logging.log(e);
 		}
 	}
