@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.security.auth.login.LoginException;
 
 import caexbot.config.CaexConfiguration;
+import caexbot.data.GuildManager;
 import caexbot.functions.levels.LevelUpdater;
 import caexbot.functions.listeners.CommandListener;
 import caexbot.functions.listeners.DraconicListener;
@@ -57,7 +58,8 @@ public class CaexBot {
 							   DraconicListener.getInstance(),
 							   new JoinLeaveListener(),
 							   new LevelUpdater(),
-							   new StartUpListener());
+							   new StartUpListener(),
+							   new GuildManager());
 		build.setGame(Game.playing("Waking up, please wait"));
 		build.setStatus(OnlineStatus.DO_NOT_DISTURB);
 		

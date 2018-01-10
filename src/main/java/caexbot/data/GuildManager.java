@@ -60,8 +60,14 @@ public class GuildManager extends ListenerAdapter{
 	
 	@Override
 	public void onGuildJoin(GuildJoinEvent event) {
-		super.onGuildJoin(event);
 		
+		try(PreparedStatement stmt = CaexDB.getConnection().prepareStatement("insert into guild(guild_id) values (?)")){
+			stmt.setString(1, event.getGuild().getId());
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
