@@ -30,7 +30,7 @@ public class ShutdownCommand extends CaexCommand {
 					+ "......goodbye........").queue();
 		}
 		event.getJDA().shutdown();
-		try {Thread.sleep(500L);} catch (InterruptedException e) {}
+		try {Thread.sleep(1000L);} catch (InterruptedException e) {}
 		System.exit(0);
 	}
 

@@ -2,7 +2,6 @@ package caexbot.commands.admin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +22,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HelpCommand extends CaexCommand implements DraconicCommand, Describable{
 
-	private CommandListener cmds;
-	
-	public HelpCommand(CommandListener cmds) {
-		this.cmds=cmds;
-	}
 	
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 		Logging.debug("Help called");
+		CommandListener cmds = CommandListener.getInstance();
 
 //		StringBuilder sb = new StringBuilder();
 		MessageBuilder mb = new MessageBuilder();
@@ -70,14 +65,9 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 			if (event.getGuild() !=null) {
 				eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
 			}
-			catagorized.keySet().stream().sorted(new Comparator<Catagory>() {
-
-				@Override
-				public int compare(Catagory o1, Catagory o2) {
-					return o1.NAME.compareToIgnoreCase(o2.name());
-				}
-				
-			}).forEachOrdered(cat -> {
+			catagorized.keySet().stream().sorted((o1,o2)->
+					o1.NAME.compareToIgnoreCase(o2.name())				
+			).forEachOrdered(cat -> {
 				sb.append(String.format("**__%s__**\n", cat.NAME));
 				catagorized.get(cat).stream().sorted((o1, o2) -> {return o1.getName().compareToIgnoreCase(o2.getName());}
 				).forEachOrdered(d -> {sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));});

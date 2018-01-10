@@ -7,19 +7,47 @@ import java.util.Optional;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.DraconicCommand;
-import net.dv8tion.jda.core.JDA;
+import caexbot.commands.admin.*;
+import caexbot.commands.chat.*;
+import caexbot.commands.games.*;
+import caexbot.commands.music.*;
+import caexbot.commands.search.*;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
-	
+	private static CommandListener cl;
 	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
 	private DraconicListener dl;
 	
-	public CommandListener(JDA jda) {
-		dl = new DraconicListener(this);
-		jda.addEventListener(dl);
+	public static CommandListener getInstance(){
+		if (cl==null) cl = new CommandListener();
+		return cl;
+	}
+	
+	private CommandListener() {
+		dl = DraconicListener.getInstance();
+		this.addCommand(new HelpCommand())
+			.addCommand(new InsultCommand()) 
+			.addCommand(new DiceCommand())
+			.addCommand(new DraconicTranslateCommand())
+			.addCommand(new EightBallCommand())
+			.addCommand(new FacepalmCommand())
+			.addCommand(new FistbumpCommand())
+			.addCommand(new InfoCommand())
+			.addCommand(new LevelCommand())
+			.addCommand(new PingCommand())
+			.addCommand(new ShutdownCommand())
+			.addCommand(new YoutubeSearchCommand())
+			.addCommand(new ZomDiceCommand())
+			.addCommand(new PrefixCommand())
+			.addCommand(new XPPermCommand())
+			.addCommand(new MusicCommand())
+			.addCommand(new HiLowCommand())
+			.addCommand(new LevelAlertToggleCommand())
+			.addCommand(new AnnouncementSettingCommand())
+			.addCommand(new JoinLeaveSettingCommand());
 	}
 	
 	public CommandListener addCommand(CaexCommand cmd){

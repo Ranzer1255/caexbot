@@ -13,12 +13,15 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class DraconicListener extends ListenerAdapter{
 
+	private static DraconicListener dl;
 	List<DraconicCommand> cmds = new ArrayList<>();
-	CommandListener cl;
 	
-	public DraconicListener(CommandListener cl) {
-		this.cl=cl;
+	public static DraconicListener getInstance() {
+		if (dl==null) dl = new DraconicListener();
+		return dl;
 	}
+
+	private DraconicListener(){}
 
 	public void addCommand(DraconicCommand cmd){
 		cmds.add(cmd);
@@ -42,7 +45,7 @@ public class DraconicListener extends ListenerAdapter{
 			if(c.isPresent()){
 				CaexCommand cmd = c.get().getCommand();
 				
-				cl.callCommand(event, finalArgs, cmd);
+				CommandListener.getInstance().callCommand(event, finalArgs, cmd);
 			}
 		}
 	}
