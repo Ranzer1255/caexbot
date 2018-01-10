@@ -6,10 +6,11 @@ import java.util.List;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
+import caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class FistbumpCommand extends CaexCommand implements Describable {
+public class FistbumpCommand extends CaexCommand implements Describable, DraconicCommand {
 
 	@Override
 	public Catagory getCatagory() {
@@ -47,6 +48,11 @@ public class FistbumpCommand extends CaexCommand implements Describable {
 	@Override
 	public List<String> getAlias() {
 		return Arrays.asList("fistbump","fb");
+	}
+
+	@Override
+	public List<String> getDraconicAlias() {
+		return Arrays.asList("bemin");
 	}
 
 }

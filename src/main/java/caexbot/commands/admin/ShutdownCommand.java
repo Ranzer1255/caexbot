@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.commands.CaexCommand;
+import caexbot.commands.chat.InsultCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -21,6 +22,13 @@ public class ShutdownCommand extends CaexCommand {
 			event.getChannel().sendMessage("i've told everyone. night night").queue();
 		}
 		event.getChannel().sendMessage("if you insist boss.... *blerg*").complete();
+		if(InsultCommand.lastOwnerInsult!=null){
+			InsultCommand.lastOwnerInsult.openPrivateChannel().complete()
+			.sendMessage(event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
+					" found out I insulted him behind his back....\n"
+					+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
+					+ "......goodbye........").queue();
+		}
 		event.getJDA().shutdown();
 		try {Thread.sleep(500L);} catch (InterruptedException e) {}
 		System.exit(0);

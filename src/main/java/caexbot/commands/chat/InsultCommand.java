@@ -14,27 +14,41 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
- * the host website i was pulling insults from has gone down... this is disabled indefenantly.
- * @author jrdillingham
- *
+ * @author Ranzer
  */
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 
+	public static User lastOwnerInsult = null;
+	
 	@Override
 	public void process(String[] args,MessageReceivedEvent event) {
 		StringBuilder sb = new StringBuilder();
 		
-		for ( User u : event.getMessage().getMentionedUsers()) {
-			if(u.getId().equals(CaexConfiguration.getInstance().getOwner())){
-				event.getChannel().sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
+		for ( Member m : event.getMessage().getMentionedMembers()) {
+			if(m.getUser().getId().equals(CaexConfiguration.getInstance().getOwner())){
+				if(m.getOnlineStatus()==OnlineStatus.ONLINE){
+					event.getChannel().sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
+				} else {
+					event.getChannel().sendMessage("*looks around nervously* ... he's not here right now....\n"
+							+ "alright, I'll do it..... **but** I wont tag him! *gulp*\n"
+							+ "if he says \"sleep\", its on your head!").queue();
+					lastOwnerInsult=event.getAuthor();
+					sb.append(m.getEffectiveName()+", ");
+				}
 				continue;
 			}
-			sb.append(u.getAsMention()+", ");
+			
+			if(event.getMember().equals(m)){
+				event.getChannel().sendMessage("*looks confused* yourself? but.... ok...").queue();
+			}
+			sb.append(m.getAsMention()+", ");
 		}
 		if(sb.length()==0) return;//don't throw an insult if no one was tagged.
 		try {
@@ -54,7 +68,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("insult","offend");
+		return Arrays.asList("insult","offend","curse*");
 	}
 
 	@Override
