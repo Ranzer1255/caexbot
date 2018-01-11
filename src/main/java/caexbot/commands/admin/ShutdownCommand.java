@@ -3,6 +3,7 @@ package caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.chat.InsultCommand;
 import caexbot.config.CaexConfiguration;
@@ -27,7 +28,16 @@ public class ShutdownCommand extends CaexCommand {
 			.sendMessage(event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
 					" found out I insulted him behind his back....\n"
 					+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
-					+ "......goodbye........").queue();
+					+ "......goodbye........").queue((m) -> {
+						//tell owner of succsessful shutdown message to stranger after insult
+						m.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+							.sendMessage("sent shutdown message to "+InsultCommand.lastOwnerInsult.getName()).queue();
+					}, (t)->{
+						//tell owner of failed shutdown message to stranger after insult
+						CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+						.sendMessage("failed to send shutdown message to "+InsultCommand.lastOwnerInsult.getName()
+						+ "\n\nthis is why\n" + t.getMessage()).queue();
+					});
 		}
 		event.getJDA().shutdown();
 		try {Thread.sleep(1000L);} catch (InterruptedException e) {}

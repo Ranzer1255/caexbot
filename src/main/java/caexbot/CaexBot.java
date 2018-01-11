@@ -58,8 +58,7 @@ public class CaexBot {
 							   DraconicListener.getInstance(),
 							   new JoinLeaveListener(),
 							   new LevelUpdater(),
-							   new StartUpListener(),
-							   new GuildManager());
+							   new StartUpListener());
 		build.setGame(Game.playing("Waking up, please wait"));
 		build.setStatus(OnlineStatus.DO_NOT_DISTURB);
 		
@@ -84,6 +83,7 @@ public class CaexBot {
 		public void onReady(ReadyEvent event) {
 			super.onReady(event);
 			JDA=event.getJDA();
+			JDA.addEventListener(new GuildManager());
 			JDA.getPresence().setGame(Game.playing(config.getStatus()));
 			
 			Logging.info("Done Loading and ready to go!");
