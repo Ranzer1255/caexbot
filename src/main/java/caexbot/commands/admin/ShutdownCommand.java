@@ -12,12 +12,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ShutdownCommand extends CaexCommand {
 	
-	private static String SHUTDOWN_MESSAGE = CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
-			" found out I insulted him behind his back....\n"
-			+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
-			+ "......goodbye........";
-
-	//TODO see if its possible to add in control words to the string to replace with functions like getPrefix() and such to make each message guild specific
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 		if (event.getAuthor()!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
@@ -31,7 +25,11 @@ public class ShutdownCommand extends CaexCommand {
 		event.getChannel().sendMessage("if you insist boss.... *blerg*").complete();
 		if(InsultCommand.lastOwnerInsult!=null){
 			InsultCommand.lastOwnerInsult.openPrivateChannel().complete()
-			.sendMessage(SHUTDOWN_MESSAGE).queue((m) ->	sucsesfulMessage(m), (t)->failedMessage(t));
+			.sendMessage(event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
+					" found out I insulted him behind his back....\n"
+					+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
+					+ "......goodbye........"
+					).queue((m) ->	sucsesfulMessage(m), (t)->failedMessage(t));
 		}
 		try {Thread.sleep(1000L);} catch (InterruptedException e) {}
 		event.getJDA().shutdown();
