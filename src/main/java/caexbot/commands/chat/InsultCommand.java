@@ -24,6 +24,9 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  */
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 	
+	private static final String BOT_INSULT = "Oh ha ha.... making me insult myself.... How original\n"
+			+ "Well, sence I'm a good sport I will";
+	private static final String SELF_INSULT = "*looks confused* yourself? but.... ok...";
 	private static final String OWNER_ONLINE = "You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!";
 	private static final String OWNER_OFFLINE = "*looks around nervously* ... he's not here right now....\n"
 			+ "alright, I'll do it..... **but** I wont tag him! *gulp*\n"
@@ -31,6 +34,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 	private static final String OWNER_IDLE = "*looks around nervously* ... he's not here righ.... wait!\n"
 			+ "I see him.... He's only Idle, might be back any second, especialy with that ping you just did\n"
 			+ "best not risk it, sorry!";
+	private static final String OWNER_INSULT = "*sputters* B...B..Boss? I would never dream.... *chuckles nervously* If.. If you insist....";
 	
 	private static String[] insults = {//TODO put these into a text file later
 			"What smells worse than a goblin? Oh yeah, you!",
@@ -98,7 +102,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			"Quick grab some fire...no wait, it's ok, it's not an actual troll!",
 			"If I were you, I'd go and get my money back for that remove curse spell!",
 			"And I thought troglodytes smelt bad!",
-			"We're you once hit by a melf's acid arrow or have you always looked like a half eaten marrow!",
+			"Were you once hit by a melf's acid arrow or have you always looked like a half eaten marrow!",
 			"Phew! Have you just cast stinking cloud or do you always smell like that!",
 			"Hey, you pox ridden dung heap, I bet not even a starving vampire would go near you!",
 			"By looking at you, now I know what you get when you scrape out the bottom of the barrel!",
@@ -130,7 +134,17 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		StringBuilder sb = new StringBuilder();
 		
 		for ( Member m : event.getMessage().getMentionedMembers()) {
+			
+			//owner insulted
 			if(m.getUser().getId().equals(CaexConfiguration.getInstance().getOwner())){
+				//owner insulted self
+				if(event.getMember().equals(m)){
+					event.getChannel().sendMessage(OWNER_INSULT).queue();
+					sb.append(m.getAsMention()+", ");
+					continue;
+				}
+				
+				//owner status check
 				switch (m.getOnlineStatus()){
 				case ONLINE:
 					event.getChannel().sendMessage(OWNER_ONLINE).queue();
@@ -152,8 +166,14 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 				continue;
 			}
 			
+			//user insulted self
 			if(event.getMember().equals(m)){
-				event.getChannel().sendMessage("*looks confused* yourself? but.... ok...").queue();
+				event.getChannel().sendMessage(SELF_INSULT).queue();
+			}
+			
+			//user insulted bot
+			if(m.equals(event.getGuild().getSelfMember())){
+				event.getChannel().sendMessage(BOT_INSULT).queue();
 			}
 			sb.append(m.getAsMention()+", ");
 		}
