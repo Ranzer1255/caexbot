@@ -11,7 +11,6 @@ import org.jsoup.nodes.Document;
 
 import caexbot.commands.*;
 import caexbot.config.CaexConfiguration;
-import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
@@ -21,6 +20,14 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * @author Ranzer
  */
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
+	
+	private static final String OWNER_ONLINE = "You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!";
+	private static final String OWNER_OFFLINE = "*looks around nervously* ... he's not here right now....\n"
+			+ "alright, I'll do it..... **but** I wont tag him! *gulp*\n"
+			+ "if he says \"sleep\", its on your head!";
+	private static final String OWNER_IDLE = "*looks around nervously* ... he's not here righ.... wait!\n"
+			+ "I see him.... He's only Idle, might be back any second, especialy with that ping you just did\n"
+			+ "best not risk it, sorry!";
 	
 	private static String[] insults = {//TODO put these into a text file later
 			"What smells worse than a goblin? Oh yeah, you!",
@@ -121,14 +128,23 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		
 		for ( Member m : event.getMessage().getMentionedMembers()) {
 			if(m.getUser().getId().equals(CaexConfiguration.getInstance().getOwner())){
-				if(m.getOnlineStatus()==OnlineStatus.ONLINE){
-					event.getChannel().sendMessage("You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!").queue();
-				} else {
-					event.getChannel().sendMessage("*looks around nervously* ... he's not here right now....\n"
-							+ "alright, I'll do it..... **but** I wont tag him! *gulp*\n"
-							+ "if he says \"sleep\", its on your head!").queue();
+				switch (m.getOnlineStatus()){
+				case ONLINE:
+					event.getChannel().sendMessage(OWNER_ONLINE).queue();
+					break;
+				
+				case INVISIBLE:
+				case DO_NOT_DISTURB:
+				case OFFLINE:
+					event.getChannel().sendMessage(OWNER_OFFLINE).queue();
 					lastOwnerInsult=event.getAuthor();
 					sb.append(m.getEffectiveName()+", ");
+					break;
+				case IDLE:
+					event.getChannel().sendMessage(OWNER_IDLE).queue();
+					break;
+				default :
+					event.getChannel().sendMessage("Thats odd.... He's got a weird status, best not chance it sorry.").queue();
 				}
 				continue;
 			}
