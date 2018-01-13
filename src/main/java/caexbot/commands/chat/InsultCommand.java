@@ -1,13 +1,8 @@
 package caexbot.commands.chat;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
@@ -189,15 +184,15 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 		return insults[ThreadLocalRandom.current().nextInt(insults.length)];
 	}
 
-	private String shakespearInsult(){
-		try {
-			Document doc = Jsoup.parse(new URL("http://www.pangloss.com/seidel/Shaker/index.html?"), 3000);
-			return doc.getElementsByTag("p").get(0).text();			
-		} catch (IOException e){
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	private String shakespearInsult(){ TODO add switch to flip between the two
+//		try {
+//			Document doc = Jsoup.parse(new URL("http://www.pangloss.com/seidel/Shaker/index.html?"), 3000);
+//			return doc.getElementsByTag("p").get(0).text();			
+//		} catch (IOException e){
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 	
 	@Override
 	public List<String> getAlias() {
