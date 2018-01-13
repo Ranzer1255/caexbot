@@ -9,7 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import caexbot.commands.*;
+import caexbot.commands.CaexCommand;
+import caexbot.commands.Catagory;
+import caexbot.commands.Describable;
+import caexbot.commands.DraconicCommand;
 import caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;

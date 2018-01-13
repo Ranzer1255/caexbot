@@ -39,8 +39,8 @@ public class ShutdownCommand extends CaexCommand {
 						+ "\n\nthis is why\n" + t.getMessage()).queue();
 					});
 		}
-		event.getJDA().shutdown();
 		try {Thread.sleep(1000L);} catch (InterruptedException e) {}
+		event.getJDA().shutdown();
 		System.exit(0);
 	}
 
