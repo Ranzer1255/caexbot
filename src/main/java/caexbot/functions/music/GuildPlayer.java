@@ -224,10 +224,17 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	// AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-		if (endReason == AudioTrackEndReason.FINISHED||endReason == AudioTrackEndReason.LOAD_FAILED)
+		switch (endReason){
+		case LOAD_FAILED:
+			//this isn't optimal imo, but its the only way i can figure on getting the frendly Exception
+			this.queueID(track.getIdentifier()); //reload the track and let the loader catch the exception
+		case FINISHED:
 			playNext();
-		if (endReason == AudioTrackEndReason.REPLACED)
+			break;
+		case REPLACED:
 			notifyOfEvent(new MusicSkipEvent(track));
+			break;
+		}
 	}
 	
 	@Override
@@ -277,13 +284,14 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		public void noMatches() {
 			Logging.debug("No match found in search");
 			notifyOfEvent(new NoMatchEvent());
-
+			loading = false;
 		}
 
 		@Override
 		public void loadFailed(FriendlyException exception) {
 			Logging.debug(exception.getMessage());
 			notifyOfEvent(new LoadFailedEvent(exception));
+			loading =false;
 			
 		}
 
