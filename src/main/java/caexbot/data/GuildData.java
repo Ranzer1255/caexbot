@@ -180,7 +180,7 @@ public class GuildData {
 		List<RoleLevel> ranking = new ArrayList<>();
 		
 		for (Role r:guild.getRoles()){
-			//TODO filter excluded roles
+			if(getRoleExcluded(r))continue;
 			ranking.add(new RoleLevel(r));
 		}
 		
@@ -195,6 +195,41 @@ public class GuildData {
 		
 		return ranking;
 		
+	}
+
+	private boolean getRoleExcluded(Role r) {
+		try(ResultSet rs = CaexDB.getConnection().prepareStatement(
+			String.format("select xp_excluded from role where role_id = %s and guild_id = %s",
+				r.getId(),
+				guild.getId()
+			)
+		).executeQuery()){
+			while(rs.next()){
+				return rs.getBoolean(1);
+			}
+		} catch (SQLException e) {
+			Logging.error(e.getMessage());
+			Logging.log(e);
+		}
+		return false;
+	}
+	
+	public void setExcludedRole(Role r, boolean exclude){
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+				"insert into role (guild_id, role_id, xp_excluded) "
+				+ "values (?,?,?) "
+				+ "on duplicate key update"
+				+ "xp_excluded = ?")){
+			
+			stmt.setString(1, guild.getId());
+			stmt.setString(2, r.getId());
+			stmt.setBoolean(3, exclude);
+			stmt.setBoolean(4, exclude);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public List<UserLevel> getGuildRankings() {
