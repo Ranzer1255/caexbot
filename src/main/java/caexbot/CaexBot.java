@@ -21,9 +21,6 @@ import net.dv8tion.jda.core.events.ShutdownEvent;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-/*
- * TODO add guild names to log output
- */
 /**
  * Credit where credit is due:
  * <p> the basic structure of the command system of this bot was heavily based on
