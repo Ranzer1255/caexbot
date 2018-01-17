@@ -83,15 +83,16 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 				event.getChannel().sendMessage(rollMessage(event.getGuild())).queue();
 				return;
 			}
+			
+			if(event.getMessage().getMentionedMembers()!=null){
+				event.getChannel().sendMessage(memberXPEmbed(event.getMessage().getMentionedMembers().get(0))).queue();
+				return;
+			}
 		}
 		
-		MessageBuilder mb = new MessageBuilder();
-		event.getChannel().sendMessage(mb.setEmbed(memberXPEmbed(event.getMember())).build()).queue();
+		event.getChannel().sendMessage(memberXPEmbed(event.getMember())).queue();
 	}
-
-
-	//lays the ground work for seeing other's xp outside of the ranked list
-	//TODO add ability to see individual member's XP stats by mention.
+	
 	private MessageEmbed memberXPEmbed(Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(member.getEffectiveName(), null, member.getUser().getAvatarUrl())
