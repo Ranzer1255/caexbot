@@ -226,15 +226,21 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
 		switch (endReason){
 		case LOAD_FAILED:
-			//this isn't optimal imo, but its the only way i can figure on getting the frendly Exception
-			this.queueID(track.getIdentifier()); //reload the track and let the loader catch the exception
+			//this is handled in onTrackException()
 		case FINISHED:
 			playNext();
 			break;
 		case REPLACED:
 			notifyOfEvent(new MusicSkipEvent(track));
 			break;
+		default: 
+			break; //no-op
 		}
+	}
+	
+	@Override
+	public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
+		notifyOfEvent(new LoadFailedEvent(exception));
 	}
 	
 	@Override
