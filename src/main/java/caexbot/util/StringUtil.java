@@ -1,5 +1,6 @@
 package caexbot.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class StringUtil {
@@ -16,6 +17,10 @@ public class StringUtil {
 		}
 		
 		return sb.toString();
+	}
+	
+	public static String arrayToString(String[] array, String delmiter){
+		return arrayToString(Arrays.asList(array), delmiter);
 	}
 
 	public static String calcTime(long runtime) {
@@ -50,6 +55,5 @@ public class StringUtil {
 			return string.substring(0, size);
 		}
 	}
-
 
 }
