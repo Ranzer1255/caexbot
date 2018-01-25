@@ -44,7 +44,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		}
 		int bet;
 		try {
-			bet = Integer.parseInt(args[0]);
+			bet = Math.abs(Integer.parseInt(args[0]));
 		} catch (NumberFormatException e) {
 			invalidUsage(event, "I didn't get an integer for your bet value!"); 
 			return;
