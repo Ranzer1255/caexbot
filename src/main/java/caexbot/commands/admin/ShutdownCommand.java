@@ -7,11 +7,11 @@ import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.chat.InsultCommand;
 import caexbot.config.CaexConfiguration;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ShutdownCommand extends CaexCommand {
-
-	//TODO see if its possible to add in control words to the string to replace with functions like getPrefix() and such to make each message guild specific
+	
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 		if (event.getAuthor()!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
@@ -28,20 +28,23 @@ public class ShutdownCommand extends CaexCommand {
 			.sendMessage(event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
 					" found out I insulted him behind his back....\n"
 					+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
-					+ "......goodbye........").queue((m) -> {
-						//tell owner of succsessful shutdown message to stranger after insult
-						m.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
-							.sendMessage("sent shutdown message to "+InsultCommand.lastOwnerInsult.getName()).queue();
-					}, (t)->{
-						//tell owner of failed shutdown message to stranger after insult
-						CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
-						.sendMessage("failed to send shutdown message to "+InsultCommand.lastOwnerInsult.getName()
-						+ "\n\nthis is why\n" + t.getMessage()).queue();
-					});
+					+ "......goodbye........"
+					).queue((m) ->	sucsesfulMessage(m), (t)->failedMessage(t));
 		}
-		event.getJDA().shutdown();
 		try {Thread.sleep(1000L);} catch (InterruptedException e) {}
+		event.getJDA().shutdown();
 		System.exit(0);
+	}
+
+	private void sucsesfulMessage(Message m) {
+		m.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+		.sendMessage("sent shutdown message to "+InsultCommand.lastOwnerInsult.getName()).queue();	
+	}
+	
+	private void failedMessage(Throwable t){
+		CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+		.sendMessage("failed to send shutdown message to "+InsultCommand.lastOwnerInsult.getName()
+		+ "\n\nthis is why\n" + t.getMessage()).queue();
 	}
 
 	@Override

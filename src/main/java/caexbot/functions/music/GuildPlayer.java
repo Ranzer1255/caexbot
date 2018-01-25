@@ -224,10 +224,23 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	// AudioEventHandler methods
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-		if (endReason == AudioTrackEndReason.FINISHED||endReason == AudioTrackEndReason.LOAD_FAILED)
+		switch (endReason){
+		case LOAD_FAILED:
+			//this is handled in onTrackException()
+		case FINISHED:
 			playNext();
-		if (endReason == AudioTrackEndReason.REPLACED)
+			break;
+		case REPLACED:
 			notifyOfEvent(new MusicSkipEvent(track));
+			break;
+		default: 
+			break; //no-op
+		}
+	}
+	
+	@Override
+	public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
+		notifyOfEvent(new LoadFailedEvent(exception));
 	}
 	
 	@Override
@@ -277,13 +290,14 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		public void noMatches() {
 			Logging.debug("No match found in search");
 			notifyOfEvent(new NoMatchEvent());
-
+			loading = false;
 		}
 
 		@Override
 		public void loadFailed(FriendlyException exception) {
 			Logging.debug(exception.getMessage());
 			notifyOfEvent(new LoadFailedEvent(exception));
+			loading =false;
 			
 		}
 
