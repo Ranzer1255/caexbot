@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -25,8 +26,33 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 		Matcher xp_match = Pattern.compile(XP_REGEX).matcher(args[0]);
 		if(!xp_match.matches()) return; //TODO usage
 		
+		int donation = Math.abs(Integer.parseInt(xp_match.group("xp")));
+		
+		if(!donationAmountCheck(donation, event.getMember())) return;//TODO amount error
+		
+		Member donatee = getDonatee(args[1],event);
+		if (donatee==null) return; //TODO no donatee
+		
+		Member donator = event.getMember();
+		
+		donate(donatee, donator, donation);
 		
 		
+	}
+
+	private void donate(Member donatee, Member donator, int donation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Member getDonatee(String string, MessageReceivedEvent event) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean donationAmountCheck(int donation, Member member) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
