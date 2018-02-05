@@ -8,7 +8,11 @@ import java.util.regex.Pattern;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
+import caexbot.data.GuildData;
+import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -35,13 +39,13 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 		
 		Member donator = event.getMember();
 		
-		donate(donatee, donator, donation);
+		donate(donatee, donator, donation,event.getChannel());
 		
 		
 	}
 
-	private void donate(Member donatee, Member donator, int donation) {
-		// TODO Auto-generated method stub
+	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {//TODO this is where i was working
+		GuildManager.getGuildData(donatee.getGuild()).addXP(donatee.getUser(), donation, (TextChannel)channel);
 		
 	}
 
