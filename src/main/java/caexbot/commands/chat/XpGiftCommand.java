@@ -2,6 +2,8 @@ package caexbot.commands.chat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
@@ -11,17 +13,19 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class XpGiftCommand extends CaexCommand implements Describable {
 	
-	final String IDREGEX = "(?<id>\\d{18})";
+	private final String ID_REGEX = "(?<id>\\d{18})";
+	private final String XP_REGEX = "((?<xp>\\d+)(\\s?[xX][pP])?)";
+	
 
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {		
 	
-		List<User> mentions = event.getMessage().getMentionedUsers();
-		if(mentions==null||mentions.size()==0){
-			
-		} else {
-			
-		}
+		if(args.length!=2) return;//TODO usage
+		
+		Matcher xp_match = Pattern.compile(XP_REGEX).matcher(args[0]);
+		if(!xp_match.matches()) return; //TODO usage
+		
+		
 		
 	}
 
@@ -43,7 +47,7 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("gift","give");
+		return Arrays.asList("donate","gift","give");
 	}
 
 	@Override
