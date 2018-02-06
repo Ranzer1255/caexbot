@@ -12,14 +12,12 @@ import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class XpGiftCommand extends CaexCommand implements Describable {
 	
-	private final String ID_REGEX = "(?<id>\\d{18})";
-	private final String XP_REGEX = "((?<xp>\\d+)(\\s?[xX][pP])?)";
+	private final Pattern ID_REGEX = Pattern.compile("(?<id>\\d{18})");
+	private final Pattern XP_REGEX = Pattern.compile("((?<xp>\\d+)(\\s?[xX][pP])?)");
 	
 
 	@Override
@@ -27,36 +25,50 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 	
 		if(args.length!=2) return;//TODO usage
 		
-		Matcher xp_match = Pattern.compile(XP_REGEX).matcher(args[0]);
-		if(!xp_match.matches()) return; //TODO usage
+		int donation=-1;
 		
-		int donation = Math.abs(Integer.parseInt(xp_match.group("xp")));
-		
-		if(!donationAmountCheck(donation, event.getMember())) return;//TODO amount error
-		
+		donation = getDonation(event.getMessage().getContentRaw());
+		if(donation <=0) return; //TODO no donation
+				
 		Member donatee = getDonatee(args[1],event);
 		if (donatee==null) return; //TODO no donatee
 		
 		Member donator = event.getMember();
 		
-		donate(donatee, donator, donation,event.getChannel());
+		donate(donatee, donator, donation,event.getChannel());	
+	}
+	
+	/**
+	 * 
+	 * @return donation as a positive integer or -1 if an error is detected
+	 */
+	private int getDonation(String string) {
+		int donation = -1;
 		
+		Matcher m = XP_REGEX.matcher(string);
+		if(m.matches()){
+			try {
+				donation = Math.abs(Integer.parseInt(m.group("xp")));
+			} catch (NumberFormatException e) {
+				// TODO bad donation message
+				return -1;
+			}
+		}
 		
+		return donation;
 	}
 
-	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {//TODO this is where i was working
-		GuildManager.getGuildData(donatee.getGuild()).addXP(donatee.getUser(), donation, (TextChannel)channel);
-		
+
+
+	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {
+		GuildData gd = GuildManager.getGuildData(donatee.getGuild());
+		gd.removeXP(donator.getUser(), donation, channel);
+		gd.addXP(donatee.getUser(), donation, channel);		
 	}
 
 	private Member getDonatee(String string, MessageReceivedEvent event) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	private boolean donationAmountCheck(int donation, Member member) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
