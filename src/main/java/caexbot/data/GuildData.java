@@ -14,6 +14,7 @@ import caexbot.functions.levels.UserLevel;
 import caexbot.util.Logging;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -28,7 +29,7 @@ public class GuildData {
 	}
 
 	//xp methods
-	public void addXP(User author, int XP, TextChannel channel) {
+	public void addXP(User author, int XP, MessageChannel channel) {
 
 		int oldLevel = this.getLevel(author);
 		Logging.debug("Adding "+ XP + "XP to "+ author.getName()+":"+guild.getName());
@@ -81,13 +82,13 @@ public class GuildData {
 		}
 	}
 
-	private void levelUpAlert(User author, TextChannel channel) {
+	private void levelUpAlert(User author, MessageChannel channel) {
 		if(getXPannouncement()){
 			channel.sendMessage(String.format("Well met %s!\nYou have advanced to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
 		
 	}
-	private void levelDownAlert(User author, TextChannel channel) {
+	private void levelDownAlert(User author, MessageChannel channel) {
 		if(getXPannouncement()){
 			channel.sendMessage(String.format("Oh No %s!\nYou have decreased to level __**%d**__", author.getAsMention(), getLevel(author))).queue();
 		}
