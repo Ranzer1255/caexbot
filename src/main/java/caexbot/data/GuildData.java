@@ -58,7 +58,7 @@ public class GuildData {
 		}
 	}
 	
-	public void removeXP(User author, int XP, TextChannel channel){
+	public void removeXP(User author, int XP, MessageChannel channel){
 		int oldLevel = this.getLevel(author);
 		Logging.debug("Removing "+ XP + "XP from "+ author.getName()+":"+guild.getName());
 		
