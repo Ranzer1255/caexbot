@@ -10,8 +10,11 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class XpGiftCommand extends CaexCommand implements Describable {
@@ -21,17 +24,21 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 	
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {		
-	
-		if(args.length!=2) return;//TODO usage
+	public void process(String[] args, MessageReceivedEvent event) {
 		
 		int donation=-1;
 		
 		donation = getDonation(event.getMessage().getContentRaw());
-		if(donation <=0) return; //TODO no donation
+		if(donation <=0) {
+			System.out.println("no donation");
+			return; //TODO no donation
+		}
 				
-		Member donatee = getDonatee(args[1],event);
-		if (donatee==null) return; //TODO no donatee
+		Member donatee = getDonatee(event.getMessage().getContentRaw(),event.getGuild());
+		if (donatee==null) {
+			System.out.println("no donatee");
+			return; //TODO no donatee
+		}
 		
 		Member donator = event.getMember();
 		
@@ -46,13 +53,9 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 		int donation = -1;
 		
 		Matcher m = XP_REGEX.matcher(string);
-		if(m.matches()){
-			try {
-				donation = Math.abs(Integer.parseInt(m.group("xp")));
-			} catch (NumberFormatException e) {
-				// TODO bad donation message
-				return -1;
-			}
+		
+		if(m.find()){
+			donation = Math.abs(Integer.parseInt(m.group("xp")));
 		}
 		
 		return donation;
@@ -62,12 +65,52 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 
 	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {
 		GuildData gd = GuildManager.getGuildData(donatee.getGuild());
+
+		//affordance check
+		if(gd.getXP(donator.getUser())<donation){
+			channel.sendMessage(String.format(
+					"you can't afford to donate %,dxp, you only have %,dxp to your name.",
+					donation,gd.getXP(donator.getUser()))).queue();		
+			return;
+		}
+		//bot check
+		if(donatee.getUser().isBot()){
+			channel.sendMessage("While I appreciate the gesture, my fellow bots and I don't need XP. It's for you humans only.").queue();
+			return;
+		}
+		
+		channel.sendMessage(donationEmbed(donator,donation,donatee)).queue();
+		
 		gd.removeXP(donator.getUser(), donation, channel);
 		gd.addXP(donatee.getUser(), donation, channel);		
 	}
 
-	private Member getDonatee(String string, MessageReceivedEvent event) {
-		// TODO Auto-generated method stub
+	private MessageEmbed donationEmbed(Member donator, int donation, Member donatee) {
+		EmbedBuilder eb = new EmbedBuilder();
+		
+		eb.setTitle("Donation");
+		eb.setColor(getCatagory().COLOR);
+		eb.setDescription(
+				String.format("**From:** %s\n"
+						+ "**To:** %s\n"
+						+ "%,dxp", 
+						donator.getEffectiveName(),
+						donatee.getEffectiveName(),
+						donation)
+				);
+		eb.setThumbnail(donatee.getUser().getAvatarUrl());
+		
+		return eb.build();
+	}
+
+	private Member getDonatee(String string, Guild guild) {
+		
+		Matcher id = ID_REGEX.matcher(string);
+		if (id.find()){
+			return guild.getMemberById(id.group("id"));
+		}
+		
+		
 		return null;
 	}
 
@@ -79,7 +122,13 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 	@Override
 	public String getLongDescription() {
 		return getShortDescription()+"\n\n"
-				+ "";//TODO add instructions for gifting
+				+ "<donation> the amount you would like to give\n"
+				+ "<recipient> ether mention them or put in their user ID number (the 18 digit number)";
+	}
+	
+	@Override
+	public String getUsage(Guild g) {
+		return String.format("%s%s <donation> <recipient>", getPrefix(g),getName());
 	}
 
 	@Override

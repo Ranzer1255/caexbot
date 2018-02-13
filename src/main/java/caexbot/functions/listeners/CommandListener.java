@@ -47,7 +47,8 @@ public class CommandListener extends ListenerAdapter {
 			.addCommand(new HiLowCommand())
 			.addCommand(new LevelAlertToggleCommand())
 			.addCommand(new AnnouncementSettingCommand())
-			.addCommand(new JoinLeaveSettingCommand());
+			.addCommand(new JoinLeaveSettingCommand())
+			.addCommand(new XpGiftCommand());
 	}
 	
 	public CommandListener addCommand(CaexCommand cmd){
