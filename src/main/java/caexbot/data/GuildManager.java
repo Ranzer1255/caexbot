@@ -3,6 +3,7 @@ package caexbot.data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import caexbot.CaexBot;
@@ -65,8 +66,8 @@ public class GuildManager extends ListenerAdapter{
 			stmt.setString(1, event.getGuild().getId());
 			stmt.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue joining guild to DB");
+			Logging.log(e);
 		}
 		
 	}
@@ -75,10 +76,9 @@ public class GuildManager extends ListenerAdapter{
 	public void onGuildLeave(GuildLeaveEvent event) {
 		super.onGuildLeave(event);
 		
-		try{//TODO change to Try with Resouces
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"delete from guild where guild_id = ?"
-			);
+			)){
 			
 			stmt.setString(1, event.getGuild().getId());
 			Logging.info(String.format("Delteting guild %s(%s",
@@ -98,10 +98,10 @@ public class GuildManager extends ListenerAdapter{
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		super.onGuildMemberLeave(event);
 		
-		try {//TODO change to Try with Resouces
-			PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
+		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"delete from member where guild_id=? and user_id = ?"
-			);
+			)){
+			
 			
 			stmt.setString(1, event.getGuild().getId());
 			stmt.setString(2, event.getMember().getUser().getId());
@@ -120,32 +120,53 @@ public class GuildManager extends ListenerAdapter{
 	}
 
 	private static void addNewGuilds() {
-		List<Guild> guilds = CaexBot.getJDA().getGuilds();
-		for(Guild g:guilds){
-			try 
-				
+		List<Guild> dbGuilds = pullGuildsFromDB();
+		
+		for(Guild g:CaexBot.getJDA().getGuilds()){
+			if(!dbGuilds.contains(g)){
+				try 
 				//TODO this hits the DB with a qurery for every guild on startup.... may optimize this later
 				(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 						"insert into guild(guild_id) values (?) on duplicate key update guild_id = guild_id"
-				)){
-				stmt.setString(1, g.getId());
+						)){
+					stmt.setString(1, g.getId());
+					
+					Logging.info(String.format("%d rows added to Guild Table", stmt.executeUpdate()));
+					
+					
+				} catch (SQLException e) {
+					Logging.error("issue adding new guilds to the DB");
+					Logging.log(e);
+				}
 				
-				Logging.info(String.format("%d rows added to Guild Table", stmt.executeUpdate()));
-				
-				
-			} catch (SQLException e) {
-				Logging.error("issue adding new guilds to the DB");
-				Logging.log(e);
 			}
 		}
 	}
 
-	private static void removeOldGuilds() {
-		try {//TODO change to Try with Resouces
-			ResultSet rs = CaexDB.getConnection().prepareStatement(
-					"select guild_id from guild" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
-			).executeQuery();
+	private static List<Guild> pullGuildsFromDB() {
+		List<Guild> rtn = new ArrayList<>();
+		
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
+				"select guild_id from guild" 
+		).executeQuery()){
 			
+			while(rs.next()){
+				rtn.add(CaexBot.getJDA().getGuildById(rs.getString(1)));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return rtn;
+	}
+
+	private static void removeOldGuilds() {
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
+					"select guild_id from guild" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
+			).executeQuery()){
+
 			while(rs.next()){
 				if(CaexBot.getJDA().getGuildById(rs.getString(1))==null)
 					rs.deleteRow();
@@ -158,10 +179,9 @@ public class GuildManager extends ListenerAdapter{
 	}
 
 	private static void updateMembers() {
-		try {//TODO change to Try with Resouces
-			ResultSet rs = CaexDB.getConnection().prepareStatement(
+		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
 				"select guild_id, user_id from member" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
-			).executeQuery();
+			).executeQuery()){
 			
 			while (rs.next()){
 				if (CaexBot.getJDA().getGuildById(rs.getString(1)).getMemberById(rs.getString(2))==null){

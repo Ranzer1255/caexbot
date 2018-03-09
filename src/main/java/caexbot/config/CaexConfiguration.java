@@ -33,6 +33,8 @@ public class CaexConfiguration {
 	private String owner = "userID";
 	private String version = "Test_Build";
 	
+	private long lastModified = 0;
+	
 	private CaexConfiguration(){
 
 		this.logLocation =new File(System.getProperty("user.home"),logPath);
@@ -44,6 +46,7 @@ public class CaexConfiguration {
 		if (instance==null){
 			instance = new CaexConfiguration();
 			instance.load();
+			instance.startConfigMonitorThread();
 		}
 		return instance;
 	}
@@ -137,11 +140,11 @@ public class CaexConfiguration {
 	public void setDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
 	}
-	@CaexConfigItem(key="dbName", type=String.class,_default="caexdb")
+	@CaexConfigItem(key="dbName", type=String.class,_default="caexdb2")
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
-	@CaexConfigItem(key="testDBName", type=String.class, _default="cekipdb")
+	@CaexConfigItem(key="testDBName", type=String.class, _default="cekipdb2")
 	public void setTestDatabaseName(String testDatabaseName) {
 		this.testDatabaseName = testDatabaseName;
 	}
@@ -186,6 +189,7 @@ public class CaexConfiguration {
 		try {
 			String home = System.getProperty("user.home");
 			File configurationFile = new File(home, CONFIG_PATH);
+			lastModified = configurationFile.lastModified();
 			Properties properties = new Properties();
 			properties.load(new FileReader(configurationFile));
 
@@ -254,5 +258,26 @@ public class CaexConfiguration {
 				} catch (IOException e) {
 					setVersion("TESTING_VERSION");
 				}
+	}
+
+	private void startConfigMonitorThread() {
+		
+	new Thread(){
+		@Override
+		public void run() {
+			
+			setName("Config Monitor");
+			
+			while(true){
+				String home = System.getProperty("user.home");
+				File configurationFile = new File(home, CONFIG_PATH);
+				if(configurationFile.lastModified()!=lastModified){
+					load();
+				}
+				try {sleep(60000);} catch (InterruptedException e) {}
+			}
+		}
+	}.start();
+		
 	}
 }
