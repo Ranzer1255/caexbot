@@ -40,14 +40,15 @@ public class CommandListener extends ListenerAdapter {
 			.addCommand(new PingCommand())
 			.addCommand(new ShutdownCommand())
 			.addCommand(new YoutubeSearchCommand())
-			.addCommand(new ZomDiceCommand())
+//			.addCommand(new ZomDiceCommand()) TODO handle cross guild play
 			.addCommand(new PrefixCommand())
 			.addCommand(new XPPermCommand())
 			.addCommand(new MusicCommand())
 			.addCommand(new HiLowCommand())
 			.addCommand(new LevelAlertToggleCommand())
 			.addCommand(new AnnouncementSettingCommand())
-			.addCommand(new JoinLeaveSettingCommand());
+			.addCommand(new JoinLeaveSettingCommand())
+			.addCommand(new XpGiftCommand());
 	}
 	
 	public CommandListener addCommand(CaexCommand cmd){

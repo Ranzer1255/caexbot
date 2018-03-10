@@ -2,11 +2,10 @@ package caexbot.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import caexbot.config.CaexConfiguration;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.entities.Guild;
 
 
 public class CaexDB {
@@ -39,19 +38,5 @@ public class CaexDB {
 			Logging.log(e);
 			return null;
 		}
-	}
-
-	public static void removePrefix(Guild key) {
-		PreparedStatement stmt;
-		try {
-			stmt = getConnection().prepareStatement("delete from guild_prefix where guild_id = ?;");
-			stmt.setString(1, key.getId());
-			stmt.execute();
-			
-		} catch (SQLException e) {
-			Logging.error(e.getMessage());
-			Logging.log(e);
-		}
-		
 	}
 }

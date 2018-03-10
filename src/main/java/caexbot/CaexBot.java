@@ -18,7 +18,6 @@ import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.ShutdownEvent;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
@@ -62,7 +61,7 @@ public class CaexBot {
 		//build
 		try {
 			JDA = build.buildAsync();
-		} catch (LoginException | IllegalArgumentException | RateLimitedException e) {
+		} catch (LoginException | IllegalArgumentException e) {
 			Logging.error(e.getMessage());
 			Logging.log(e);
 		}
