@@ -151,8 +151,8 @@ public class GuildManager extends ListenerAdapter{
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue pulling data from DB");
+			Logging.log(e);
 		}
 		
 		return rtn;

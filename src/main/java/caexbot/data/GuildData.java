@@ -228,8 +228,8 @@ public class GuildData {
 			stmt.setBoolean(4, exclude);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue setting excluded roles");
+			Logging.log(e);
 		}
 	}
 
