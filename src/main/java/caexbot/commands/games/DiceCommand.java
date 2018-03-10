@@ -82,12 +82,6 @@ public class DiceCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public String invalidUsage(Guild g) {
-		// TODO make invalidUsage
-		return super.invalidUsage(g);
-	}
-
-	@Override
 	public boolean isAplicableToPM() {
 		return true;
 	}

@@ -31,7 +31,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) { //TODO trouble shoot out of bounds exeption
+	public void process(String[] args, MessageReceivedEvent event) {
 
 		if (event.getChannelType().equals(ChannelType.TEXT)) {
 			guildCall(args, event);

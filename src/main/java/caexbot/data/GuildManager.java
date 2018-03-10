@@ -101,8 +101,6 @@ public class GuildManager extends ListenerAdapter{
 		try (PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 					"delete from member where guild_id=? and user_id = ?"
 			)){
-			
-			
 			stmt.setString(1, event.getGuild().getId());
 			stmt.setString(2, event.getMember().getUser().getId());
 			Logging.info(String.format("Removing user %s(%s) from guild %s(%s)",
@@ -125,7 +123,6 @@ public class GuildManager extends ListenerAdapter{
 		for(Guild g:CaexBot.getJDA().getGuilds()){
 			if(!dbGuilds.contains(g)){
 				try 
-				//TODO this hits the DB with a qurery for every guild on startup.... may optimize this later
 				(PreparedStatement stmt = CaexDB.getConnection().prepareStatement(
 						"insert into guild(guild_id) values (?) on duplicate key update guild_id = guild_id"
 						)){
@@ -142,7 +139,6 @@ public class GuildManager extends ListenerAdapter{
 			}
 		}
 	}
-
 	private static List<Guild> pullGuildsFromDB() {
 		List<Guild> rtn = new ArrayList<>();
 		
@@ -155,8 +151,8 @@ public class GuildManager extends ListenerAdapter{
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.error("issue pulling data from DB");
+			Logging.log(e);
 		}
 		
 		return rtn;
@@ -182,7 +178,6 @@ public class GuildManager extends ListenerAdapter{
 		try (ResultSet rs = CaexDB.getConnection().prepareStatement(
 				"select guild_id, user_id from member" ,ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE
 			).executeQuery()){
-			
 			while (rs.next()){
 				if (CaexBot.getJDA().getGuildById(rs.getString(1)).getMemberById(rs.getString(2))==null){
 					rs.deleteRow();

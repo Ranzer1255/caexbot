@@ -31,13 +31,13 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 		donation = getDonation(event.getMessage().getContentRaw());
 		if(donation <=0) {
 			System.out.println("no donation");
-			return; //TODO no donation
+			return;
 		}
 				
 		Member donatee = getDonatee(event.getMessage().getContentRaw(),event.getGuild());
 		if (donatee==null) {
 			System.out.println("no donatee");
-			return; //TODO no donatee
+			return;
 		}
 		
 		Member donator = event.getMember();
