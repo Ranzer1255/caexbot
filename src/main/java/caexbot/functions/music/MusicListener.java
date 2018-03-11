@@ -11,6 +11,7 @@ import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.NoMatchEvent;
+import caexbot.functions.music.events.PermErrorEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
@@ -100,6 +101,15 @@ public class MusicListener implements MusicEventListener{
 		
 		else if (event instanceof NoMatchEvent){
 			getMusicChannel().sendMessage("I'm sorry, but i didn't find anything matching that search").queue();
+		}
+		
+		else if (event instanceof PermErrorEvent){
+			getMusicChannel().sendMessage(
+					String.format("I'm sorry I dont have permission to join %s\n"
+							+ "(If this is in error insure I have `%s` and `Speak` in this channel)",
+							((PermErrorEvent) event).getVoiceChannel().getName(),
+							((PermErrorEvent) event).getException().getPermission().getName())
+			).queue();
 		}
 		
 		else{
