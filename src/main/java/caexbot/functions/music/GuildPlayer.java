@@ -25,6 +25,7 @@ import caexbot.functions.music.events.MusicPausedEvent;
 import caexbot.functions.music.events.MusicSkipEvent;
 import caexbot.functions.music.events.MusicStartEvent;
 import caexbot.functions.music.events.NoMatchEvent;
+import caexbot.functions.music.events.PermErrorEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
@@ -32,6 +33,10 @@ import caexbot.util.Logging;
 import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.managers.AudioManager;
 
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
@@ -83,8 +88,36 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	}
 
 	public void join(VoiceChannel channel) {
-		guildAM.openAudioConnection(channel);
+		try {
+			guildAM.openAudioConnection(channel);
+		} catch (InsufficientPermissionException e) {
+			notifyOfEvent(new PermErrorEvent(channel, e));
+			return;
+		}
 		notifyOfEvent(new MusicJoinEvent(channel));
+		
+		channel.getJDA().addEventListener(new ListenerAdapter() {
+			
+			@Override
+			public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
+				channelCheck(event.getChannelLeft());
+			}
+
+			@Override
+			public void onGuildVoiceMove(GuildVoiceMoveEvent event) {
+				channelCheck(event.getChannelLeft());
+			}
+
+			private void channelCheck(VoiceChannel vc) {
+				if (!vc.equals(guildAM.getConnectedChannel())) return;
+				
+				if (vc.getMembers().size()==1){
+					stop(false);
+					vc.getJDA().removeEventListener(this);
+				}
+			}
+			
+		});
 	}
 
 	/**
@@ -150,7 +183,9 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			stop(true);
 			return;
 		}
-		player.playTrack(queue.remove());
+		if (player.getPlayingTrack()==null)
+			player.playTrack(queue.remove());
+		
 		player.setPaused(false);
 
 	}
@@ -160,8 +195,10 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	 */
 	public void stop(boolean clearQueue) {
 		player.setPaused(true);
-		player.stopTrack();
-		if(clearQueue) clearQueue();
+		if(clearQueue) {
+			player.stopTrack();
+			clearQueue();
+		}
 		close();
 	}
 	
