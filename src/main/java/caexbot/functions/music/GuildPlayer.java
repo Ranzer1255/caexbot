@@ -165,14 +165,14 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		}
 		
 		if (player.getPlayingTrack() == null) {
-			playNext();
+			playNext(false);
 		}
 	}
 
 	/**
 	 * Play the next song in the queue
 	 */
-	public void playNext() {
+	public void playNext(boolean skip) {
 		while (loading) {
 			try {
 				Thread.sleep(5);
@@ -183,7 +183,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			stop(true);
 			return;
 		}
-		if (player.getPlayingTrack()==null)
+		if (player.getPlayingTrack()==null||skip)
 			player.playTrack(queue.remove());
 		
 		player.setPaused(false);
@@ -265,7 +265,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		case LOAD_FAILED:
 			//this is handled in onTrackException()
 		case FINISHED:
-			playNext();
+			playNext(true);
 			break;
 		case REPLACED:
 			notifyOfEvent(new MusicSkipEvent(track));

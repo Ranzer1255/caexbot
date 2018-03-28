@@ -13,7 +13,7 @@ public class SkipCommand extends AbstractMusicCommand implements Describable{
 	public void process(String[] args, MessageReceivedEvent event) {
 
 		if(GuildPlayerManager.getPlayer(event.getGuild()).isPlaying()){
-			GuildPlayerManager.getPlayer(event.getGuild()).playNext();
+			GuildPlayerManager.getPlayer(event.getGuild()).playNext(true);
 		}
 	}
 
