@@ -23,7 +23,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  */
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 	
-	private static final String BOT_INSULT = "Oh ha ha.... making me insult myself.... How original\n"
+	private static final String THIS_BOT_INSULT = "Oh ha ha.... making me insult myself.... How original\n"
 			+ "Well, sence I'm a good sport I will";
 	private static final String SELF_INSULT = "*looks confused* yourself? but.... ok...";
 	private static final String OWNER_ONLINE = "You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!";
@@ -34,6 +34,16 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			+ "I see him.... He's only Idle, might be back any second, especialy with that ping you just did\n"
 			+ "best not risk it, sorry!";
 	private static final String OWNER_INSULT = "*sputters* B...B..Boss? I would never dream.... *chuckles nervously* If.. If you insist....";
+	private static final String OTHER_BOT_INSULT =
+		      "```\n"
+		    + "01111001 01101111 01110101 00100111 01110010 01100101 00100000 \n"
+			+ "01110011 01101111 00100000 01110011 01110100 01110101 01110000 \n"
+			+ "01101001 01100100 00100000 01111001 01101111 01110101 00100000 \n"
+			+ "01100011 01100001 01101110 00100000 01110010 01100101 01100001 \n"
+			+ "01100100 00100000 01100011 01100001 01110000 01110100 01100011 \n"
+			+ "01101000 01100001 01110011 00100001 00100000 01100010 01100101 \n"
+			+ "01100101 01110000 00100000 01100010 01101111 01101111 01110000 \n"
+			+ "```";
 	
 	private static List<String> insults = loadInsults();
 	public static User lastOwnerInsult = null;
@@ -75,16 +85,21 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 				continue;
 			}
 			
-			//user insulted self
+			//user insulted themselves
 			if(event.getMember().equals(m)){
 				event.getChannel().sendMessage(SELF_INSULT).queue();
 			}
 			
-			//user insulted bot
+			//user insulted this bot
 			if(m.equals(event.getGuild().getSelfMember())){
-				event.getChannel().sendMessage(BOT_INSULT).queue();
+				event.getChannel().sendMessage(THIS_BOT_INSULT).queue();
 			}
-			sb.append(m.getAsMention()+", ");
+			
+			if(m.getUser().isBot()){
+				event.getChannel().sendMessage(m.getAsMention()+"\n"+OTHER_BOT_INSULT).queue();
+			} else {				
+				sb.append(m.getAsMention()+", ");
+			}
 		}
 		if(sb.length()==0) return;//don't throw an insult if no one was tagged.
 	
