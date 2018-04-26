@@ -43,7 +43,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			+ "01100100 00100000 01100011 01100001 01110000 01110100 01100011 \n"
 			+ "01101000 01100001 01110011 00100001 00100000 01100010 01100101 \n"
 			+ "01100101 01110000 00100000 01100010 01101111 01101111 01110000 \n"
-			+ "```";
+			+ "```";//TODO might change this later to be a single line with no spaces
 	
 	private static List<String> insults = loadInsults();
 	public static User lastOwnerInsult = null;
