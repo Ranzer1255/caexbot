@@ -17,6 +17,10 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 			GuildPlayerManager.getPlayer(event.getGuild()).vol();
 			return;
 		}
+		if(!inSameVoiceChannel(event)){
+			event.getChannel().sendMessage("You must be listening to adjust the volume.").queue();
+			return;
+		}
 		try {
 			int vol = Integer.parseInt(args[0]);
 			GuildPlayerManager.getPlayer(event.getGuild()).vol(vol);
@@ -39,7 +43,8 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 	public String getLongDescription() {
 		return super.getLongDescription()+
 				"not supplying a value will give the current volume setting\n\n"
-				+ "volume goes to values between `101` and `150` are \"boosted\" beyond the original track's volume use with caution";
+				+ "volume goes to values between `101` and `150` are \"boosted\" beyond the original track's volume use with caution\n\n"
+				+ "you must be in the same voice channel to adjust the volume";
 	}
 	
 	@Override

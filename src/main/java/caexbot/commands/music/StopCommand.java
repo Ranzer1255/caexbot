@@ -13,7 +13,7 @@ public class StopCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 
-		if (args.length>0&&args[0].equals("keep")){
+		if (args.length>0&&args[0].equals("keep")||!inSameVoiceChannel(event)){
 			GuildPlayerManager.getPlayer(event.getGuild()).stop(false);
 			return;
 		}
@@ -33,7 +33,8 @@ public class StopCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public String getLongDescription() {
 		return super.getLongDescription()+
-				"`keep`: will do as above, except **__not__** clear the queue";
+				"`keep`: will do as above, except **__not__** clear the queue\n\n"
+				+ "if called when not in Voice chat will act as if the `keep` arg was applied";
 	}
 	
 	@Override
