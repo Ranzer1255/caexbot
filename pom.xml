@@ -108,7 +108,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>caexbot.CaexBot</mainClass>
+									<mainClass>net.ranzer.caexbot.CaexBot</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
@@ -134,7 +134,7 @@
 					</platforms>
 					<programs>
 						<program>
-							<mainClass>caexbot.CaexBot</mainClass>
+							<mainClass>net.ranzer.caexbot.CaexBot</mainClass>
 							<id>StartCaex</id>
 						</program>
 					</programs>
