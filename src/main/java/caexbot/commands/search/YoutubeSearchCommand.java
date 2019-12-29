@@ -7,8 +7,8 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class YoutubeSearchCommand extends CaexCommand implements Describable{
 

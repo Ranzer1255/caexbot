@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CaexConfigItem {
 
-	public String key();
-	public Class<?> type();
-	public String _default();
+	String key();
+	Class<?> type();
+	String _default();
 }

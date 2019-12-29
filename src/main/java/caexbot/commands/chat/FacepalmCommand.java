@@ -12,8 +12,8 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.commands.DraconicCommand;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
 
@@ -32,20 +32,20 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 	
-		if (ThreadLocalRandom.current().nextInt(2)==0) {
+//		if (ThreadLocalRandom.current().nextInt(2)==0) {
 			event.getChannel().sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],
 					event.getAuthor().getAsMention())).queue();
-		} else {
-			
-			
-			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
-			
-			if(fp==null){
-				return;
-			}
-			event.getChannel().sendFile(fp, new MessageBuilder().append(event.getAuthor().getAsMention()).build()).complete();;
-			fp.delete();
-		}
+//		} else {
+//
+//
+//			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
+//
+//			if(fp==null){
+//				return;
+//			}
+//			event.getChannel().sendFile(fp, new MessageBuilder().append(event.getAuthor().getAsMention()).build()).complete();;
+//			fp.delete();
+//		}
 
 	}
 

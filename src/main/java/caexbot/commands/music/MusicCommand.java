@@ -9,9 +9,9 @@ import caexbot.commands.CaexCommand;
 import caexbot.commands.Describable;
 import caexbot.commands.admin.HelpCommand;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class MusicCommand extends AbstractMusicCommand implements Describable {
 
@@ -43,7 +43,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 		if (args.length == 0) {
-			event.getTextChannel().sendMessage(new MessageBuilder().setEmbed(HelpCommand.getDescription(this, event.getGuild())).build()).queue();;
+			event.getTextChannel().sendMessage(new MessageBuilder().setEmbed(HelpCommand.getDescription(this, event.getGuild())).build()).queue();
 			return;
 		}
 

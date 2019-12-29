@@ -5,18 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class HiLowCommand extends CaexCommand implements Describable {
 
@@ -36,7 +37,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		}
 		
 		//parse bet
-		GuildData gd = 	GuildManager.getGuildData(event.getGuild());
+		GuildData gd = 	CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
 		if(gd.getXP(event.getAuthor())<MIN_XP){
 			event.getChannel().sendMessage("I'm sorry, but you have not yet earned enough points to gamble you XP away.\n"
 					+ "Come back after you have earned " + MIN_XP+ " points").queue();

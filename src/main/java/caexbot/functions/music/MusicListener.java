@@ -1,5 +1,6 @@
 package caexbot.functions.music;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.music.MusicCommand;
 import caexbot.data.GuildManager;
@@ -15,9 +16,9 @@ import caexbot.functions.music.events.PermErrorEvent;
 import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 public class MusicListener implements MusicEventListener{
 	private Guild guild;
@@ -28,8 +29,8 @@ public class MusicListener implements MusicEventListener{
 	}
 
 	public TextChannel getMusicChannel() {
-		TextChannel mc = GuildManager.getGuildData(guild).getDefaultMusicChannel();
-		
+		TextChannel mc = CaexBot.GUILD_MANAGER.getGuildData(guild).getDefaultMusicChannel();
+
 		if (mc==null){
 			mc = lastMusicChannel;
 		}

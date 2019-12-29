@@ -14,8 +14,8 @@ import caexbot.functions.games.zdice.subcommands.ZomQuitCommand;
 import caexbot.functions.games.zdice.subcommands.ZomRollCommand;
 import caexbot.functions.games.zdice.subcommands.ZomScoreCommand;
 import caexbot.functions.games.zdice.subcommands.ZomStartCommand;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ZomDiceCommand extends CaexCommand implements Describable{
 

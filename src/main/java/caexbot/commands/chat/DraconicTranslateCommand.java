@@ -9,10 +9,10 @@ import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.util.DraconicTranslator;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class DraconicTranslateCommand extends CaexCommand implements Describable{
 

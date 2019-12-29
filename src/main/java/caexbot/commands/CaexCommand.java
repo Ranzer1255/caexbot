@@ -2,12 +2,13 @@ package caexbot.commands;
 
 import java.util.List;
 
+import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class CaexCommand{
 
@@ -18,7 +19,7 @@ public abstract class CaexCommand{
 		if (guild==null){
 			return "";
 		}
-		return GuildManager.getPrefix(guild);
+		return CaexBot.GUILD_MANAGER.getPrefix(guild);
 	}
 
 	public void runCommand(String[] args, MessageReceivedEvent event){

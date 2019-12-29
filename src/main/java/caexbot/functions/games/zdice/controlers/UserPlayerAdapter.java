@@ -1,7 +1,7 @@
 package caexbot.functions.games.zdice.controlers;
 
 import caexbot.functions.games.zdice.Player;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 
 public class UserPlayerAdapter extends Player {
 
@@ -18,8 +18,7 @@ public class UserPlayerAdapter extends Player {
 	@Override
 	public boolean equals(Object obj){
 		if((obj instanceof UserPlayerAdapter)){
-			if (((UserPlayerAdapter)obj).getUser().getId().equals(this.getUser().getId()))
-				return true;
+			return ((UserPlayerAdapter) obj).getUser().getId().equals(this.getUser().getId());
 		}
 			
 		return false;

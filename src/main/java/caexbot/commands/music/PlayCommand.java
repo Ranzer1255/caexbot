@@ -7,8 +7,8 @@ import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PlayCommand extends AbstractMusicCommand implements Describable{
 

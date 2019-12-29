@@ -3,14 +3,14 @@ package caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
-import caexbot.data.GuildData;
-import caexbot.data.GuildManager;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import caexbot.data.mysql.MySQLGuildData;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class LevelAlertToggleCommand extends CaexCommand implements Describable {
 
@@ -19,7 +19,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 		
 		if (args.length==0){
 			event.getTextChannel().sendMessage("The Level announcement setting for this guild is currently: "+
-					GuildManager.getGuildData(event.getGuild()).getXPannouncement()).queue();
+					CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getXPAnnouncement()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
@@ -28,7 +28,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 			return;
 		}
 		
-		GuildManager.getGuildData(event.getGuild()).setXPannouncement(Boolean.parseBoolean(args[0]));
+		CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).setXPAnnouncement(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
 			event.getTextChannel().sendMessage("I will now inform you when your level changes!").queue();
@@ -59,7 +59,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 				+ "leaving the value blank will return the current setting for this Guild\n\n"
 				+ "`True`: users will be notified when their level changes\n"
 				+ "`False`: users will not be notified when their level changes\n"
-				+ "`Default Value`: " + GuildData.DEFAULT_XP_announceMENT;
+				+ "`Default Value`: " + MySQLGuildData.DEFAULT_XP_announceMENT;
 	}
 
 	@Override

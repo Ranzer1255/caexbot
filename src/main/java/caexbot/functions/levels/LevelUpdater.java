@@ -2,11 +2,12 @@ package caexbot.functions.levels;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import caexbot.CaexBot;
 import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
 //import caexbot.util.Logging;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class LevelUpdater extends ListenerAdapter{
 
@@ -15,7 +16,7 @@ public class LevelUpdater extends ListenerAdapter{
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-		GuildData gd = GuildManager.getGuildData(event.getGuild());
+		GuildData gd = CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
 //		Logging.debug(String.format("i heard %s speak on %s server", event.getAuthor().getName(), event.getGuild().getName()));
 
 		if (isXPChannel(event, gd)) {

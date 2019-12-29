@@ -12,9 +12,9 @@ import caexbot.commands.chat.*;
 import caexbot.commands.games.*;
 import caexbot.commands.music.*;
 import caexbot.commands.search.*;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
 	private static CommandListener cl;

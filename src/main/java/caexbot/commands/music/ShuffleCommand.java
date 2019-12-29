@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ShuffleCommand extends AbstractMusicCommand {
 

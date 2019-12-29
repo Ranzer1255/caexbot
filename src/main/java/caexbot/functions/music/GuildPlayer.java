@@ -1,5 +1,6 @@
 package caexbot.functions.music;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -30,14 +31,14 @@ import caexbot.functions.music.events.PlaylistLoadEvent;
 import caexbot.functions.music.events.ShuffleEvent;
 import caexbot.functions.music.events.VolumeChangeEvent;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.audio.AudioSendHandler;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import net.dv8tion.jda.core.managers.AudioManager;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
@@ -212,7 +213,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			public void run() {
 				guildAM.closeAudioConnection();
 				interrupt();
-			};
+			}
 		}.start();
 	}
 
@@ -249,8 +250,8 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	}
 
 	@Override
-	public byte[] provide20MsAudio() {
-		return lastFrame.data;
+	public ByteBuffer provide20MsAudio() {
+		return ByteBuffer.wrap(lastFrame.getData());
 	}
 
 	@Override

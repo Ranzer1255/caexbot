@@ -81,10 +81,7 @@ public class DraconicTranslator {
 		}
 		
 		private static boolean dictTimeout() {
-			if(System.currentTimeMillis()-lastUpdate > TIMEOUT){
-				return true;
-			}
-			return false;
+			return System.currentTimeMillis() - lastUpdate > TIMEOUT;
 		}
 		
 		private static void updateDict() {
@@ -133,7 +130,7 @@ public class DraconicTranslator {
 		
 		private static void writeBackupFile(Document doc) {
 			File backupFile = new File(System.getProperty("user.home"),BACKUP_FILE_LOCATION);
-			try (FileWriter fileWriter = new FileWriter(backupFile);){
+			try (FileWriter fileWriter = new FileWriter(backupFile)){
 				
 				fileWriter.write(doc.toString());
 				

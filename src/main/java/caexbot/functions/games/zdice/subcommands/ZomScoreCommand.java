@@ -6,7 +6,7 @@ import java.util.List;
 import caexbot.commands.Describable;
 import caexbot.functions.games.zdice.controlers.UserPlayerAdapter;
 import caexbot.functions.games.zdice.controlers.ZomDiceDiscordControler;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ZomScoreCommand extends AbstractZombieCommand implements Describable{
 

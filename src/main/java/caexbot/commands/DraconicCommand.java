@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface DraconicCommand{
 
-	public List<String> getDraconicAlias();
-	public CaexCommand getCommand();
+	List<String> getDraconicAlias();
+	CaexCommand getCommand();
 }

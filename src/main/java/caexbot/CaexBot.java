@@ -1,24 +1,25 @@
 package caexbot;
 
-import java.time.LocalDateTime;
-
-import javax.security.auth.login.LoginException;
-
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
+import caexbot.data.json.JSONGuildManager;
+import caexbot.data.mysql.MySQLGuildManager;
 import caexbot.functions.levels.LevelUpdater;
 import caexbot.functions.listeners.CommandListener;
 import caexbot.functions.listeners.DraconicListener;
 import caexbot.functions.listeners.JoinLeaveListener;
 import caexbot.util.Logging;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.ReadyEvent;
-import net.dv8tion.jda.core.events.ShutdownEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.ShutdownEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import javax.security.auth.login.LoginException;
+import java.time.LocalDateTime;
 
 /**
  * Credit where credit is due:
@@ -34,6 +35,7 @@ public class CaexBot {
 	private static JDA JDA;
 	public final static LocalDateTime START_TIME = LocalDateTime.now();
 	private static CaexConfiguration config = CaexConfiguration.getInstance();
+	public static GuildManager GUILD_MANAGER;
 
 	public static void main (String[] args){
 		Logging.info("Huu... Wha... who... Oh, I guess it's time to [start up]");
@@ -50,17 +52,17 @@ public class CaexBot {
 		}
 		
 		//add Listeners
-		build.addEventListener(CommandListener.getInstance(),
+		build.addEventListeners(CommandListener.getInstance(),
 							   DraconicListener.getInstance(),
 							   new JoinLeaveListener(),
-							   new LevelUpdater(),
+//							   new LevelUpdater(),
 							   new StartUpListener());
-		build.setGame(Game.playing("Waking up, please wait"));
+		build.setActivity(Activity.playing("Waking up, please wait"));
 		build.setStatus(OnlineStatus.DO_NOT_DISTURB);
 		
 		//build
 		try {
-			JDA = build.buildAsync();
+			JDA = build.build();
 		} catch (LoginException | IllegalArgumentException e) {
 			Logging.error(e.getMessage());
 			Logging.log(e);
@@ -68,6 +70,7 @@ public class CaexBot {
 	}	
 
 	public static JDA getJDA(){
+
 		return JDA;
 	}
 	
@@ -79,8 +82,9 @@ public class CaexBot {
 		public void onReady(ReadyEvent event) {
 			super.onReady(event);
 			JDA=event.getJDA();
-			JDA.addEventListener(new GuildManager());
-			JDA.getPresence().setGame(Game.playing(config.getStatus()));
+			GUILD_MANAGER = new JSONGuildManager();
+			JDA.addEventListener(GUILD_MANAGER);
+			JDA.getPresence().setActivity(Activity.playing(config.getStatus()));
 			
 			Logging.info("Done Loading and ready to go!");
 			JDA.getPresence().setStatus(OnlineStatus.ONLINE);
@@ -91,7 +95,7 @@ public class CaexBot {
 		
 			Logging.info("Shutting down....");
 			JDA.getPresence().setStatus(OnlineStatus.IDLE);
-			JDA.getPresence().setGame(Game.playing("shutting down...."));
+			JDA.getPresence().setActivity(Activity.playing("shutting down...."));
 		}
 		
 	}

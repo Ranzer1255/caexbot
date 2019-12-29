@@ -3,7 +3,7 @@ package caexbot.functions.games.zdice.subcommands;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 public abstract class AbstractZombieCommand extends CaexCommand implements Describable{
 

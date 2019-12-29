@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 import caexbot.CaexBot;
 import caexbot.config.CaexConfiguration;
-import net.dv8tion.jda.core.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.PrivateChannel;
 
 public class Logging {
 

@@ -1,7 +1,7 @@
 package caexbot.functions.music.events;
 
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 
 public class PermErrorEvent extends MusicEvent {
 

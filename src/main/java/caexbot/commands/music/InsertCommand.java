@@ -6,8 +6,8 @@ import java.util.List;
 import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class InsertCommand extends AbstractMusicCommand implements Describable {
 
@@ -20,7 +20,7 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 	public void process(String[] args, MessageReceivedEvent event) {
 
 		if (args[0].startsWith(getPrefix(event.getGuild()))) {
-			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[0].substring(getPrefix(event.getGuild()).length(), args[0].length()));
+			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[0].substring(getPrefix(event.getGuild()).length()));
 		} else {
 			GuildPlayerManager.getPlayer(event.getGuild()).insertSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
 		}

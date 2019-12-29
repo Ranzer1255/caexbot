@@ -5,8 +5,8 @@ import java.util.Deque;
 import caexbot.functions.games.zdice.Player;
 import caexbot.functions.games.zdice.RollResult;
 import caexbot.functions.games.zdice.ZomDie;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 
 public class ZomDiceDiscordControler extends ZomDiceController{
 

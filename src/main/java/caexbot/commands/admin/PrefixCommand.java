@@ -3,14 +3,15 @@ package caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.config.CaexConfiguration;
 import caexbot.data.GuildManager;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PrefixCommand extends CaexCommand implements Describable{
 
@@ -19,12 +20,12 @@ public class PrefixCommand extends CaexCommand implements Describable{
 		
 		switch (args.length){
 		case 0:
-			GuildManager.removePrefix(event.getGuild());
+			CaexBot.GUILD_MANAGER.removePrefix(event.getGuild());
 			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexConfiguration.getInstance().getPrefix())).queue();
 			return;
 		case 1:
-			GuildManager.setPrefix(event.getGuild(), args[0]);
-			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", GuildManager.getPrefix(event.getGuild()))).queue();
+			CaexBot.GUILD_MANAGER.setPrefix(event.getGuild(), args[0]);
+			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexBot.GUILD_MANAGER.getPrefix(event.getGuild()))).queue();
 			return;
 		default:			
 			event.getChannel().sendMessage("Hey, i can't listen for more than one thing ;)").queue();

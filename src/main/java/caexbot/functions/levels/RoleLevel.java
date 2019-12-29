@@ -1,6 +1,6 @@
 package caexbot.functions.levels;
 
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.Role;
 
 public class RoleLevel implements Comparable<RoleLevel> {
 

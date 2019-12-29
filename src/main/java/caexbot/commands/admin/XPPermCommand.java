@@ -3,14 +3,15 @@ package caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.data.ChannelData;
 import caexbot.data.GuildManager;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class XPPermCommand extends CaexCommand implements Describable{
 
@@ -19,7 +20,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 		if (args.length==0){
 			event.getChannel().sendMessage("This channel's XP setting is currently: "+
-					GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
+					CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
@@ -28,7 +29,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 			return;
 		}
 		
-		GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).setXPPerm(Boolean.parseBoolean(args[0]));
+		CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).setXPPerm(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
 			event.getChannel().sendMessage("You will now earn XP in this channel").queue();

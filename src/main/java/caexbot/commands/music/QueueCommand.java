@@ -9,16 +9,16 @@ import caexbot.commands.Describable;
 import caexbot.functions.music.GuildPlayer;
 import caexbot.functions.music.GuildPlayerManager;
 import caexbot.util.StringUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
 
 	private static final int SHOW_QUEUE_LENGTH = 10;
 
 	@Override
-	public void process(String[] args, net.dv8tion.jda.core.events.message.MessageReceivedEvent event) {
+	public void process(String[] args, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
 			GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
 			EmbedBuilder eb = new EmbedBuilder();

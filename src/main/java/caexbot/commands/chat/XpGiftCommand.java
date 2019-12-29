@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import caexbot.CaexBot;
 import caexbot.commands.CaexCommand;
 import caexbot.commands.Catagory;
 import caexbot.commands.Describable;
 import caexbot.data.GuildData;
 import caexbot.data.GuildManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class XpGiftCommand extends CaexCommand implements Describable {
 	
@@ -64,7 +65,7 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 
 
 	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {
-		GuildData gd = GuildManager.getGuildData(donatee.getGuild());
+		GuildData gd = CaexBot.GUILD_MANAGER.getGuildData(donatee.getGuild());
 
 		//affordance check
 		if(gd.getXP(donator.getUser())<donation){
