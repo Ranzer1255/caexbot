@@ -7,16 +7,9 @@ import java.util.Optional;
 
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.DraconicCommand;
-import caexbot.commands.admin.*;
-import caexbot.commands.chat.*;
-import caexbot.commands.games.*;
-import caexbot.commands.music.*;
-import caexbot.commands.search.*;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.commands.admin.*;
 import net.ranzer.caexbot.commands.chat.*;
 import net.ranzer.caexbot.commands.games.DiceCommand;
@@ -26,7 +19,7 @@ import net.ranzer.caexbot.commands.search.YoutubeSearchCommand;
 
 public class CommandListener extends ListenerAdapter {
 	private static CommandListener cl;
-	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
+	private List<CaexCommand> cmds = new ArrayList<>();
 	private DraconicListener dl;
 	
 	public static CommandListener getInstance(){
@@ -59,7 +52,7 @@ public class CommandListener extends ListenerAdapter {
 			.addCommand(new XpGiftCommand());
 	}
 	
-	public CommandListener addCommand(CaexCommand cmd){
+	private CommandListener addCommand(CaexCommand cmd){
 		this.cmds.add(cmd);
 		if (cmd instanceof DraconicCommand) dl.addCommand((DraconicCommand)cmd);
 		return this;
@@ -116,8 +109,8 @@ public class CommandListener extends ListenerAdapter {
 
 	}
 
-	protected void callCommand(MessageReceivedEvent event, String[] finalArgs, 
-			CaexCommand cmd) {
+	void callCommand(MessageReceivedEvent event, String[] finalArgs,
+					 CaexCommand cmd) {
 		new Thread() {
 			@Override
 			public void run(){
