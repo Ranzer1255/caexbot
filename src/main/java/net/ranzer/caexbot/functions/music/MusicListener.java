@@ -128,7 +128,7 @@ public class MusicListener implements MusicEventListener{
 		if (vol<=100) {
 			
 			//number of bars to add (if the math comes out to neg set to 0
-			int volBars = ((vol / 4)-2)>0?(vol / 4)-2:0;
+			int volBars = Math.max(((vol / 4) - 2), 0);
 			
 			//add bars
 			for (int i = 0; i < volBars; i++) {
