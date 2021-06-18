@@ -1,13 +1,11 @@
 package net.ranzer.caexbot.functions.levels;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.data.GuildData;
-import net.ranzer.caexbot.data.GuildManager;
-//import Logging;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LevelUpdater extends ListenerAdapter{
 
@@ -16,13 +14,13 @@ public class LevelUpdater extends ListenerAdapter{
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-		GuildData gd = GuildManager.getGuildData(event.getGuild());
+		IGuildData gd = GuildManager.getGuildData(event.getGuild());
 //		Logging.debug(String.format("i heard %s speak on %s server", event.getAuthor().getName(), event.getGuild().getName()));
 
 		if (isXPChannel(event, gd)) {
 			if (isNotBot(event)) {
 				if (isNotTimedout(event, gd)) {
-					gd.addXP(event.getAuthor(), getRandomXP(),event.getChannel());
+					gd.getMemberData(event.getAuthor()).addXP(getRandomXP(),event.getChannel());
 
 				}
 			} 
@@ -30,17 +28,17 @@ public class LevelUpdater extends ListenerAdapter{
 		
 	}
 	
-	private boolean isNotTimedout(GuildMessageReceivedEvent event, GuildData gd) {
+	private boolean isNotTimedout(GuildMessageReceivedEvent event, IGuildData gd) {
 		
-		return gd.getUserLevel(event.getMember())==null
-				||(System.currentTimeMillis()- gd.getUserLevel(event.getMember()).getLastXPTime()) > MESSAGE_TIMEOUT;
+		return gd.getMemberData(event.getMember()).getUserLevel()==null
+				||(System.currentTimeMillis()- gd.getMemberData(event.getMember()).getUserLevel().getLastXPTime()) > MESSAGE_TIMEOUT;
 	}
 	
 	private boolean isNotBot(GuildMessageReceivedEvent event) {
 		return (event.getAuthor() != event.getJDA().getSelfUser()) && !event.getAuthor().isBot();
 	}
 	
-	private boolean isXPChannel(GuildMessageReceivedEvent event, GuildData gd) {
+	private boolean isXPChannel(GuildMessageReceivedEvent event, IGuildData gd) {
 		return gd.getChannel(event.getChannel()).getXPPerm();
 	}
 	

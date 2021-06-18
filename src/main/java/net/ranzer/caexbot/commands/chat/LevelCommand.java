@@ -101,8 +101,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			.setColor(member.getColor())
 			.setThumbnail(member.getUser().getAvatarUrl())
 			.setTitle("XP Breakdown",null)
-			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getXP(member.getUser())), true)
-			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true)
+			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getMemberData(member).getXP()), true)
+			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getMemberData(member).getLevel()), true)
 			.setFooter(XP_RULES, null);
 		return eb.build();
 	}

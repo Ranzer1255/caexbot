@@ -52,16 +52,20 @@ public class UserLevel implements Comparable<UserLevel> {
 	}
 
 	public static int getLevel(int xp){
-		int rtn = 1;
-		boolean found=false;
-		while(!found){
-			rtn+=1;
-			if (xp<calcXPForLevel(rtn)){
-				found=true;
-			}
-			
-		}
-		return rtn-1;
+
+		return (int) Math.floor((25+Math.sqrt(5)*Math.sqrt(125+xp))/50);
+//		//todo reverse this function?
+//		//(500*x^2)-(500*x) => 1/50 (25 + sqrt(5) sqrt(125 + x))
+//		int rtn = 1;
+//		boolean found=false;
+//		while(!found){
+//			rtn+=1;
+//			if (xp<calcXPForLevel(rtn)){
+//				found=true;
+//			}
+//
+//		}
+//		return rtn-1;
 	}
 	
 	static public int calcXPForLevel(int level){

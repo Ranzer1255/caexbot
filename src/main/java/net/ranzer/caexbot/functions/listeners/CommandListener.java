@@ -1,17 +1,5 @@
 package net.ranzer.caexbot.functions.listeners;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.DraconicCommand;
-import caexbot.commands.admin.*;
-import caexbot.commands.chat.*;
-import caexbot.commands.games.*;
-import caexbot.commands.music.*;
-import caexbot.commands.search.*;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -23,6 +11,11 @@ import net.ranzer.caexbot.commands.games.DiceCommand;
 import net.ranzer.caexbot.commands.games.HiLowCommand;
 import net.ranzer.caexbot.commands.music.MusicCommand;
 import net.ranzer.caexbot.commands.search.YoutubeSearchCommand;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 public class CommandListener extends ListenerAdapter {
 	private static CommandListener cl;

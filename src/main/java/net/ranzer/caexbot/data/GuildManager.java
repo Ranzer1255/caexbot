@@ -145,14 +145,7 @@ public class GuildManager extends ListenerAdapter {
 	@Override
 	public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
 
-		//remove leaver's xp
-		IMemberData md = getGuildData(event.getGuild()).getMemberData(event.getMember());
-		int xp = md.getXP();
-		md.removeXP(xp);
-
-		//we don't want to delete member data when they leave the guild
-		//this is to help prevent ban evasion
-//		getGuildData(event.getGuild()).deleteMember(event.getMember());
+		getGuildData(event.getGuild()).deleteMember(event.getMember());
 
 	}
 

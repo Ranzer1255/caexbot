@@ -11,6 +11,7 @@ import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IGuildData;
+import net.ranzer.caexbot.data.IMemberData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,26 +64,28 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 
 
 
-	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {
-		IGuildData gd = GuildManager.getGuildData(donatee.getGuild());
+	private void donate(Member recipient, Member donor, int donation, MessageChannel channel) {
+		IGuildData gd = GuildManager.getGuildData(recipient.getGuild());
+		IMemberData donorData = gd.getMemberData(donor);
+		IMemberData recipientData = gd.getMemberData(recipient);
 
 		//affordance check
-		if(gd.getXP(donator.getUser())<donation){
+		if(donorData.getXP()<donation){
 			channel.sendMessage(String.format(
 					"you can't afford to donate %,dxp, you only have %,dxp to your name.",
-					donation,gd.getXP(donator.getUser()))).queue();		
+					donation,donorData.getXP())).queue();
 			return;
 		}
 		//bot check
-		if(donatee.getUser().isBot()){
+		if(recipient.getUser().isBot()){
 			channel.sendMessage("While I appreciate the gesture, my fellow bots and I don't need XP. It's for you humans only.").queue();
 			return;
 		}
 		
-		channel.sendMessage(donationEmbed(donator,donation,donatee)).queue();
+		channel.sendMessage(donationEmbed(donor,donation,recipient)).queue();
 		
-		gd.removeXP(donator.getUser(), donation, channel);
-		gd.addXP(donatee.getUser(), donation, channel);		
+		donorData.removeXP(donation, channel);
+		recipientData.addXP(donation, channel);
 	}
 
 	private MessageEmbed donationEmbed(Member donator, int donation, Member donatee) {

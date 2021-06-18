@@ -1,15 +1,14 @@
 package net.ranzer.caexbot.database.interfaces;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.ranzer.caexbot.CaexBot;
+import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IMemberData;
 import net.ranzer.caexbot.database.HibernateManager;
 import net.ranzer.caexbot.database.model.MemberDataModel;
 import net.ranzer.caexbot.database.model.MemberPK;
+import net.ranzer.caexbot.functions.levels.UserLevel;
 import org.hibernate.Session;
 
 import javax.persistence.NoResultException;
@@ -52,15 +51,42 @@ public class MemberData extends AbstractData implements IMemberData {
 	}
 
 	@Override
-	public void addXP(int amount) {
+	public void addXP(int amount,MessageChannel channel) {
+		int oldLvl = this.getLevel();
 		mdm.addXp(amount);
 		save(mdm);
+		if(this.getLevel()>oldLvl){
+			levelUpAlert(getMember(),channel);
+		}
 	}
 
 	@Override
-	public void removeXP(int amount) {
+	public void removeXP(int amount, MessageChannel channel) {
+		int oldLvl = this.getLevel();
 		mdm.removeXP(amount);
 		save(mdm);
+		if(this.getLevel()<oldLvl){
+			levelDownAlert(getMember(),channel);
+		}
+	}
+
+	private void levelUpAlert(Member author, MessageChannel channel) {
+		if(GuildManager.getGuildData(author.getGuild()).getXPAnnouncement()){
+			channel.sendMessage(String.format(
+					"Well met %s!\nYou have advanced to level __**%d**__",
+					author.getAsMention(),
+					this.getLevel())).queue();
+		}
+
+	}
+	private void levelDownAlert(Member author, MessageChannel channel) {
+		if(GuildManager.getGuildData(author.getGuild()).getXPAnnouncement()){
+			channel.sendMessage(String.format(
+					"Oh No %s!\nYou have decreased to level __**%d**__",
+					author.getAsMention(),
+					this.getLevel())).queue();
+		}
+
 	}
 
 	@Override
@@ -117,6 +143,15 @@ public class MemberData extends AbstractData implements IMemberData {
 		save(mdm);
 	}
 
+	@Override
+	public int getLevel() {
+		return UserLevel.getLevel(this.getXP());
+	}
+
+	@Override
+	public UserLevel getUserLevel() {
+		return new UserLevel(getMember(),getXP(),lastXP());
+	}
 
 
 }

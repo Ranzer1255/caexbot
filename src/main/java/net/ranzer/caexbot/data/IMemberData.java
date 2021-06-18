@@ -1,7 +1,10 @@
 package net.ranzer.caexbot.data;
 
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.ranzer.caexbot.functions.levels.UserLevel;
 
 import java.util.Map;
 
@@ -11,8 +14,8 @@ public interface IMemberData {
 
     int getXP();
 
-    void addXP(int amount);
-    void removeXP(int amount);
+    void addXP(int amount, MessageChannel channel);
+    void removeXP(int amount, MessageChannel channel);
     long lastXP();
 
     boolean isBannedFromRaffle();
@@ -37,4 +40,12 @@ public interface IMemberData {
      * @param role role to be removed from this member
      */
 	void removedTimedRole(Role role);
+
+    /**
+     * calculated based on xp
+     * @return
+     */
+	int getLevel();
+
+    UserLevel getUserLevel();
 }

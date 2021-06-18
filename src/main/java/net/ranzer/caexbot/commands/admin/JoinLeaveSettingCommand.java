@@ -24,7 +24,7 @@ public class JoinLeaveSettingCommand extends CaexCommand implements Describable 
 		if(args.length>0){
 			//set alert toggle
 			boolean setting = Boolean.parseBoolean(args[0]);
-			gd.setJLannouncement(setting);
+			gd.setJLAnnouncement(setting);
 			if(setting){
 				event.getChannel().sendMessage(TRUE_MESSAGE).queue();
 			} else {
@@ -34,7 +34,7 @@ public class JoinLeaveSettingCommand extends CaexCommand implements Describable 
 		} else {
 			//inform toggle
 			event.getChannel().sendMessage(String.format(INFO_MESSAGE,
-					gd.getJLannouncement()?"":"**__not__** ")).queue();
+					gd.getJLAnnouncement()?"":"**__not__** ")).queue();
 		}
 	
 	}

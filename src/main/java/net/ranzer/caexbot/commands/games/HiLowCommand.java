@@ -1,24 +1,22 @@
 package net.ranzer.caexbot.commands.games;
 
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.GuildData;
-import net.ranzer.caexbot.data.GuildManager;
-import net.ranzer.caexbot.data.IGuildData;
-import net.ranzer.caexbot.util.Logging;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
+import net.ranzer.caexbot.util.Logging;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HiLowCommand extends CaexCommand implements Describable {
 
@@ -39,7 +37,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		
 		//parse bet
 		IGuildData gd = 	GuildManager.getGuildData(event.getGuild());
-		if(gd.getXP(event.getAuthor())<MIN_XP){
+		if(gd.getMemberData(event.getMember()).getXP()<MIN_XP){
 			event.getChannel().sendMessage("I'm sorry, but you have not yet earned enough points to gamble you XP away.\n"
 					+ "Come back after you have earned " + MIN_XP+ " points").queue();
 			return;
@@ -52,7 +50,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 			return;
 		}
 		
-		if (bet > (gd.getXP(event.getAuthor())*MAX_BET_PERCENTAGE)){
+		if (bet > (gd.getMemberData(event.getMember()).getXP()*MAX_BET_PERCENTAGE)){
 			event.getChannel().sendMessage("I'm sorry I can't allow you to bet more than "+ (MAX_BET_PERCENTAGE*100) +"% of your XP.").queue();
 			return;
 		}
@@ -74,21 +72,20 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		runGame(gd, bet, c, event);
 	}
 
-	private void runGame(GuildData gd, int bet, Choice c, MessageReceivedEvent event) {
+	private void runGame(IGuildData gd, int bet, Choice c, MessageReceivedEvent event) {
 		HiLowGame game = new HiLowGame(event, bet, c);
 		
 		try {
 			if (game.win()){
-				gd.addXP(event.getAuthor(), bet, event.getTextChannel());
+				gd.getMemberData(event.getMember()).addXP(bet, event.getTextChannel());
 				win(game);
 			} else {
-				gd.removeXP(event.getAuthor(), bet, event.getTextChannel());
+				gd.getMemberData(event.getMember()).removeXP(bet, event.getTextChannel());
 				lose(game);
 			}
 		} catch (Exception e) {
 			Logging.error("WTF!! just happend");
 			Logging.log(e);
-			return;
 		}
 	}
 

@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.ranzer.caexbot.functions.levels.RoleLevel;
+import net.ranzer.caexbot.functions.levels.UserLevel;
 
 import java.util.List;
 
@@ -85,4 +87,20 @@ public interface IGuildData {
     boolean addModRole(Role r);
 
     boolean removeModRole(Role r);
+
+    void setAnnouncementChannel(TextChannel textChannel);
+
+    TextChannel getAnnouncementChannel();
+
+    void setJLAnnouncement(boolean allowed);
+
+    boolean getJLAnnouncement();
+
+    boolean getXPAnnouncement();
+
+    void setXPAnnouncement(boolean allowed);
+
+    List<UserLevel> getGuildRankings();
+
+    List<RoleLevel> getRoleRankings();
 }
