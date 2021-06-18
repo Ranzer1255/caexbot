@@ -1,15 +1,5 @@
 package net.ranzer.caexbot;
 
-import net.ranzer.caexbot.config.CaexConfiguration;
-import net.ranzer.caexbot.data.GuildManager;
-import net.ranzer.caexbot.data.json.JSONGuildManager;
-import net.ranzer.caexbot.data.mysql.MySQLGuildManager;
-import net.ranzer.caexbot.functions.levels.LevelUpdater;
-import net.ranzer.caexbot.functions.listeners.CommandListener;
-import net.ranzer.caexbot.functions.listeners.DraconicListener;
-import net.ranzer.caexbot.functions.listeners.JoinLeaveListener;
-import net.ranzer.caexbot.util.Logging;
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -17,8 +7,11 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.ranzer.caexbot.config.CaexConfiguration;
-import net.ranzer.caexbot.data.json.JSONGuildManager;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.functions.levels.LevelUpdater;
 import net.ranzer.caexbot.functions.listeners.CommandListener;
 import net.ranzer.caexbot.functions.listeners.DraconicListener;
 import net.ranzer.caexbot.functions.listeners.JoinLeaveListener;
@@ -26,6 +19,8 @@ import net.ranzer.caexbot.util.Logging;
 
 import javax.security.auth.login.LoginException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Credit where credit is due:
@@ -49,20 +44,26 @@ public class CaexBot {
 		
 		
 		JDABuilder build;
-		
+
+		//setup intents
+		Collection<GatewayIntent> intents = Arrays.asList(
+				GatewayIntent.GUILD_MEMBERS, //privileged
+				GatewayIntent.DIRECT_MESSAGES,
+				GatewayIntent.GUILD_MESSAGES
+		);
+
 		//set token
 		if (config.isDebug()) {
-			build = new JDABuilder(AccountType.BOT).setToken(config.getTestToken());
-		} else {			
-			build = new JDABuilder(AccountType.BOT).setToken(config.getToken());
+			build = JDABuilder.create(config.getTestToken(),intents);
+		} else {
+			build = JDABuilder.create(config.getToken(),intents);
 		}
+
+		build.enableIntents(GatewayIntent.GUILD_MEMBERS);
+		build.setMemberCachePolicy(MemberCachePolicy.ALL);
 		
 		//add Listeners
-		build.addEventListeners(CommandListener.getInstance(),
-							   DraconicListener.getInstance(),
-							   new JoinLeaveListener(),
-//							   new LevelUpdater(),
-							   new StartUpListener());
+		build.addEventListeners(new StartUpListener());
 		build.setActivity(Activity.playing("Waking up, please wait"));
 		build.setStatus(OnlineStatus.DO_NOT_DISTURB);
 		
@@ -88,8 +89,12 @@ public class CaexBot {
 		public void onReady(ReadyEvent event) {
 			super.onReady(event);
 			JDA=event.getJDA();
-			GUILD_MANAGER = new JSONGuildManager();
-			JDA.addEventListener(GUILD_MANAGER);
+			JDA.addEventListener(new GuildManager(),
+								 CommandListener.getInstance(),
+								 DraconicListener.getInstance(),
+								 new JoinLeaveListener(),
+								 new LevelUpdater());
+
 			JDA.getPresence().setActivity(Activity.playing(config.getStatus()));
 			
 			Logging.info("Done Loading and ready to go!");

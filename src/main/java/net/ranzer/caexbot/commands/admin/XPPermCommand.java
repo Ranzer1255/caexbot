@@ -1,17 +1,16 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.ChannelData;
-import net.ranzer.caexbot.data.GuildManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IChannelData;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class XPPermCommand extends CaexCommand implements Describable{
 
@@ -20,7 +19,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 		if (args.length==0){
 			event.getChannel().sendMessage("This channel's XP setting is currently: "+
-					CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
+					GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
@@ -29,7 +28,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 			return;
 		}
 		
-		CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).setXPPerm(Boolean.parseBoolean(args[0]));
+		GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).setXPPerm(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
 			event.getChannel().sendMessage("You will now earn XP in this channel").queue();
@@ -60,7 +59,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 				+ "leaving the value blank will return the current setting for this Channel\n\n"
 				+ "`True`: users will earn xp in this channel\n"
 				+ "`False`: users will not earn XP\n"
-				+ "`Default Value`: " + ChannelData.DEFAULT_XP_SETTING;
+				+ "`Default Value`: " + IChannelData.DEFAULT_XP_SETTING;
 	}
 
 	@Override

@@ -101,8 +101,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			.setColor(member.getColor())
 			.setThumbnail(member.getUser().getAvatarUrl())
 			.setTitle("XP Breakdown",null)
-			.addField("XP", String.format("%,dxp",CaexBot.GUILD_MANAGER.getGuildData(member.getGuild()).getXP(member.getUser())), true)
-			.addField("Level", String.format("Lvl: %,d", CaexBot.GUILD_MANAGER.getGuildData(member.getGuild()).getLevel(member.getUser())), true)
+			.addField("XP", String.format("%,dxp",GuildManager.getGuildData(member.getGuild()).getXP(member.getUser())), true)
+			.addField("Level", String.format("Lvl: %,d", GuildManager.getGuildData(member.getGuild()).getLevel(member.getUser())), true)
 			.setFooter(XP_RULES, null);
 		return eb.build();
 	}
@@ -146,7 +146,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		eb.setThumbnail(guild.getIconUrl());
 		
 		
-		List<UserLevel> rankings = CaexBot.GUILD_MANAGER.getGuildData(guild).getGuildRankings();
+		List<UserLevel> rankings = GuildManager.getGuildData(guild).getGuildRankings();
 		
 		int index=0;
 		for (UserLevel entry : rankings) {
@@ -170,7 +170,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
 		
-		List<RoleLevel> rankings = CaexBot.GUILD_MANAGER.getGuildData(guild).getRoleRankings();
+		List<RoleLevel> rankings = GuildManager.getGuildData(guild).getRoleRankings();
 		
 		eb.setAuthor("Current Role Leaderboard", null, null);
 		eb.setDescription(XP_RULES + "\n[wip] role exclusion to come");

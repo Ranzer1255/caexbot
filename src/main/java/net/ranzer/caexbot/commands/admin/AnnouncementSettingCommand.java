@@ -7,7 +7,8 @@ import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.GuildData;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -17,7 +18,7 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 		
-		GuildData guildData = CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
+		IGuildData guildData = GuildManager.getGuildData(event.getGuild());
 		
 		if (args.length==1){
 			subCommand cmd = subCommand.UNKNOWN;

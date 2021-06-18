@@ -1,15 +1,15 @@
-package net.ranzer.caexbot.data.hibernate.database.interfaces;
+package net.ranzer.caexbot.database.interfaces;
 
 import net.dv8tion.jda.api.entities.*;
 import net.ranzer.caexbot.config.CaexConfiguration;
-import net.ranzer.caexbot.data.hibernate.IChannelData;
-import net.ranzer.caexbot.data.hibernate.IGuildData;
-import net.ranzer.caexbot.data.hibernate.IMemberData;
-import net.ranzer.caexbot.data.hibernate.IRaffleData;
-import net.ranzer.caexbot.data.hibernate.database.HibernateManager;
-import net.ranzer.caexbot.data.hibernate.database.model.ChannelDataModel;
-import net.ranzer.caexbot.data.hibernate.database.model.GuildDataModel;
-import net.ranzer.caexbot.data.hibernate.database.model.MemberDataModel;
+import net.ranzer.caexbot.data.IChannelData;
+import net.ranzer.caexbot.data.IGuildData;
+import net.ranzer.caexbot.data.IMemberData;
+import net.ranzer.caexbot.data.IRaffleData;
+import net.ranzer.caexbot.database.HibernateManager;
+import net.ranzer.caexbot.database.model.ChannelDataModel;
+import net.ranzer.caexbot.database.model.GuildDataModel;
+import net.ranzer.caexbot.database.model.MemberDataModel;
 import org.hibernate.Session;
 
 import javax.persistence.NoResultException;

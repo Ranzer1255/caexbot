@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate;
+package net.ranzer.caexbot.data;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -11,6 +11,7 @@ public interface IGuildData {
 
     long DEFAULT_MESSAGE_TIMEOUT = 60000L;
     int DEFAULT_XP_LOWBOUND = 15, DEFAULT_XP_HIGHBOUND = 25;
+    Boolean DEFAULT_XP_ANNOUNCEMENT = true;
 
     //prefix methods
     String getPrefix();

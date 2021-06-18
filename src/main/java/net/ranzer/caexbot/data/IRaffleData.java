@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate;
+package net.ranzer.caexbot.data;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;

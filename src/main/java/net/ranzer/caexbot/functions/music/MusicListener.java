@@ -28,7 +28,7 @@ public class MusicListener implements MusicEventListener{
 	}
 
 	public TextChannel getMusicChannel() {
-		TextChannel mc = CaexBot.GUILD_MANAGER.getGuildData(guild).getDefaultMusicChannel();
+		TextChannel mc = GuildManager.getGuildData(guild).getDefaultMusicChannel();
 
 		if (mc==null){
 			mc = lastMusicChannel;

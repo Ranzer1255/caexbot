@@ -11,6 +11,7 @@ import net.ranzer.caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.data.GuildManager;
 
 public class PrefixCommand extends CaexCommand implements Describable{
 
@@ -19,12 +20,12 @@ public class PrefixCommand extends CaexCommand implements Describable{
 		
 		switch (args.length){
 		case 0:
-			CaexBot.GUILD_MANAGER.removePrefix(event.getGuild());
+			GuildManager.removePrefix(event.getGuild());
 			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexConfiguration.getInstance().getPrefix())).queue();
 			return;
 		case 1:
-			CaexBot.GUILD_MANAGER.setPrefix(event.getGuild(), args[0]);
-			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", CaexBot.GUILD_MANAGER.getPrefix(event.getGuild()))).queue();
+			GuildManager.setPrefix(event.getGuild(), args[0]);
+			event.getChannel().sendMessage(String.format("Ok boss, I'll listen for \"%s\"", GuildManager.getPrefix(event.getGuild()))).queue();
 			return;
 		default:			
 			event.getChannel().sendMessage("Hey, i can't listen for more than one thing ;)").queue();

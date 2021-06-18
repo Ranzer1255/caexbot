@@ -1,22 +1,21 @@
 package net.ranzer.caexbot.commands.chat;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.GuildData;
-import net.ranzer.caexbot.data.GuildManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XpGiftCommand extends CaexCommand implements Describable {
 	
@@ -65,7 +64,7 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 
 
 	private void donate(Member donatee, Member donator, int donation, MessageChannel channel) {
-		GuildData gd = CaexBot.GUILD_MANAGER.getGuildData(donatee.getGuild());
+		IGuildData gd = GuildManager.getGuildData(donatee.getGuild());
 
 		//affordance check
 		if(gd.getXP(donator.getUser())<donation){

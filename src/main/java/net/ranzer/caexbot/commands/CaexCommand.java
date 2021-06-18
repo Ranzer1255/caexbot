@@ -19,7 +19,7 @@ public abstract class CaexCommand{
 		if (guild==null){
 			return "";
 		}
-		return CaexBot.GUILD_MANAGER.getPrefix(guild);
+		return GuildManager.getPrefix(guild);
 	}
 
 	public void runCommand(String[] args, MessageReceivedEvent event){

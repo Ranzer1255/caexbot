@@ -1,16 +1,16 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.GuildData;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class JoinLeaveSettingCommand extends CaexCommand implements Describable {
 
@@ -20,7 +20,7 @@ public class JoinLeaveSettingCommand extends CaexCommand implements Describable 
 
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
-		GuildData gd = CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
+		IGuildData gd = GuildManager.getGuildData(event.getGuild());
 		if(args.length>0){
 			//set alert toggle
 			boolean setting = Boolean.parseBoolean(args[0]);

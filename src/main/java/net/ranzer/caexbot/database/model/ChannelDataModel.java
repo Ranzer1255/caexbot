@@ -1,7 +1,7 @@
-package net.ranzer.caexbot.data.hibernate.database.model;
+package net.ranzer.caexbot.database.model;
 
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.ranzer.caexbot.data.hibernate.IChannelData;
+import net.ranzer.caexbot.data.IChannelData;
 
 import javax.persistence.*;
 

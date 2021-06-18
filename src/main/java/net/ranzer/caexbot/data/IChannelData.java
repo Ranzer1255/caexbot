@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate;
+package net.ranzer.caexbot.data;
 
 public interface IChannelData {
 

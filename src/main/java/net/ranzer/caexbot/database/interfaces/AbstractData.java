@@ -1,6 +1,6 @@
-package net.ranzer.caexbot.data.hibernate.database.interfaces;
+package net.ranzer.caexbot.database.interfaces;
 
-import net.ranzer.caexbot.data.hibernate.database.HibernateManager;
+import net.ranzer.caexbot.database.HibernateManager;
 import org.hibernate.Session;
 
 public abstract class AbstractData {

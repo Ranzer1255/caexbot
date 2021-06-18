@@ -16,7 +16,7 @@ public class LevelUpdater extends ListenerAdapter{
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-		GuildData gd = CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
+		GuildData gd = GuildManager.getGuildData(event.getGuild());
 //		Logging.debug(String.format("i heard %s speak on %s server", event.getAuthor().getName(), event.getGuild().getName()));
 
 		if (isXPChannel(event, gd)) {

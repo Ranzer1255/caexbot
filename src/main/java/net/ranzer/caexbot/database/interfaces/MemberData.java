@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate.database.interfaces;
+package net.ranzer.caexbot.database.interfaces;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -6,10 +6,10 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.data.hibernate.IMemberData;
-import net.ranzer.caexbot.data.hibernate.database.HibernateManager;
-import net.ranzer.caexbot.data.hibernate.database.model.MemberDataModel;
-import net.ranzer.caexbot.data.hibernate.database.model.MemberPK;
+import net.ranzer.caexbot.data.IMemberData;
+import net.ranzer.caexbot.database.HibernateManager;
+import net.ranzer.caexbot.database.model.MemberDataModel;
+import net.ranzer.caexbot.database.model.MemberPK;
 import org.hibernate.Session;
 
 import javax.persistence.NoResultException;

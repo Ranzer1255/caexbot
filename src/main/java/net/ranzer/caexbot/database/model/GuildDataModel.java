@@ -1,8 +1,8 @@
-package net.ranzer.caexbot.data.hibernate.database.model;
+package net.ranzer.caexbot.database.model;
 
 import net.dv8tion.jda.api.entities.Member;
-import net.ranzer.caexbot.data.hibernate.IGuildData;
-import net.ranzer.caexbot.data.hibernate.IRaffleData;
+import net.ranzer.caexbot.data.IGuildData;
+import net.ranzer.caexbot.data.IRaffleData;
 
 import javax.persistence.*;
 import java.util.ArrayList;

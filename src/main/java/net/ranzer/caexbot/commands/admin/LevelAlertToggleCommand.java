@@ -3,14 +3,14 @@ package net.ranzer.caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.data.mysql.MySQLGuildData;
+import net.ranzer.caexbot.data.GuildManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.data.IGuildData;
 
 public class LevelAlertToggleCommand extends CaexCommand implements Describable {
 
@@ -19,7 +19,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 		
 		if (args.length==0){
 			event.getTextChannel().sendMessage("The Level announcement setting for this guild is currently: "+
-					CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).getXPAnnouncement()).queue();
+					GuildManager.getGuildData(event.getGuild()).getXPAnnouncement()).queue();
 			return;
 		}
 		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
@@ -28,7 +28,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 			return;
 		}
 		
-		CaexBot.GUILD_MANAGER.getGuildData(event.getGuild()).setXPAnnouncement(Boolean.parseBoolean(args[0]));
+		GuildManager.getGuildData(event.getGuild()).setXPAnnouncement(Boolean.parseBoolean(args[0]));
 		
 		if(Boolean.parseBoolean(args[0])){
 			event.getTextChannel().sendMessage("I will now inform you when your level changes!").queue();
@@ -59,7 +59,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 				+ "leaving the value blank will return the current setting for this Guild\n\n"
 				+ "`True`: users will be notified when their level changes\n"
 				+ "`False`: users will not be notified when their level changes\n"
-				+ "`Default Value`: " + MySQLGuildData.DEFAULT_XP_announceMENT;
+				+ "`Default Value`: " + IGuildData.DEFAULT_XP_ANNOUNCEMENT;
 	}
 
 	@Override

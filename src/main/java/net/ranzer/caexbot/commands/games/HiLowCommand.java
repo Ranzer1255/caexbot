@@ -10,6 +10,8 @@ import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildData;
+import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.data.IGuildData;
 import net.ranzer.caexbot.util.Logging;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -36,7 +38,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		}
 		
 		//parse bet
-		GuildData gd = 	CaexBot.GUILD_MANAGER.getGuildData(event.getGuild());
+		IGuildData gd = 	GuildManager.getGuildData(event.getGuild());
 		if(gd.getXP(event.getAuthor())<MIN_XP){
 			event.getChannel().sendMessage("I'm sorry, but you have not yet earned enough points to gamble you XP away.\n"
 					+ "Come back after you have earned " + MIN_XP+ " points").queue();

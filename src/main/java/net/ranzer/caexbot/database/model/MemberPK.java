@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate.database.model;
+package net.ranzer.caexbot.database.model;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;

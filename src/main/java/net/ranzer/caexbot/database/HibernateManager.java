@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.data.hibernate.database;
+package net.ranzer.caexbot.database;
 
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.util.Logging;
