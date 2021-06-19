@@ -1,22 +1,22 @@
 package net.ranzer.caexbot.commands.chat;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.util.Logging;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Ranzer
@@ -64,7 +64,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 				}
 				
 				//owner status check
-				switch (m.getOnlineStatus()){
+				switch (m.getGuild().retrieveMemberById(m.getId()).complete().getOnlineStatus()){
 				case ONLINE:
 					event.getChannel().sendMessage(OWNER_ONLINE).queue();
 					break;

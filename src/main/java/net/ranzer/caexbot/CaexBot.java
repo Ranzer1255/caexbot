@@ -48,8 +48,11 @@ public class CaexBot {
 		//setup intents
 		Collection<GatewayIntent> intents = Arrays.asList(
 				GatewayIntent.GUILD_MEMBERS, //privileged
+				GatewayIntent.GUILD_PRESENCES, //privileged
 				GatewayIntent.DIRECT_MESSAGES,
-				GatewayIntent.GUILD_MESSAGES
+				GatewayIntent.GUILD_MESSAGES,
+				GatewayIntent.GUILD_VOICE_STATES
+
 		);
 
 		//set token

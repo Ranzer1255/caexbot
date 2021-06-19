@@ -104,7 +104,9 @@ public class GuildData extends AbstractData implements IGuildData {
 
 	@Override
 	public TextChannel getDefaultMusicChannel() {
-		return guild.getTextChannelById(gdm.getMusicChannelID());
+		String channelID = gdm.getMusicChannelID();
+		if (channelID == null) return null;
+		return guild.getTextChannelById(channelID);
 	}
 	@Override
 	public void setDefaultMusicChannel(TextChannel channel){
