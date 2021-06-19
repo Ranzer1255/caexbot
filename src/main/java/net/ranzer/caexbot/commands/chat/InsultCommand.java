@@ -146,7 +146,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 	

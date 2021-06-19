@@ -3,7 +3,6 @@ package net.ranzer.caexbot.commands.chat;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
@@ -22,7 +21,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.functions.levels.UserLevel;
 
 public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
 
@@ -197,9 +195,10 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		return Arrays.asList("tawura_authot");
 	}
 
+	//is applicable
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 }

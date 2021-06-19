@@ -12,7 +12,6 @@ import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
@@ -104,7 +103,7 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 

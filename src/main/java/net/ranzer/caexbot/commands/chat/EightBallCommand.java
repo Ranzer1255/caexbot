@@ -76,7 +76,7 @@ public class EightBallCommand extends CaexCommand implements Describable{
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 }

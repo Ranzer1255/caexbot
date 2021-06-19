@@ -2,7 +2,6 @@ package net.ranzer.caexbot.commands;
 
 import java.util.List;
 
-import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
 import net.dv8tion.jda.api.Permission;
@@ -29,14 +28,14 @@ public abstract class CaexCommand{
 				return;
 			} 
 		}
-		if(event.getGuild()==null && !isAplicableToPM()){
+		if(event.getGuild()==null && !isApplicableToPM()){
 			event.getChannel().sendMessage("This command cannot be used in Private channels").queue();
 			return;
 		}
 		process(args, event);
 	}
 	
-	abstract public boolean isAplicableToPM();
+	abstract public boolean isApplicableToPM();
 	
 	abstract public void process(String[] args, MessageReceivedEvent event);
 	

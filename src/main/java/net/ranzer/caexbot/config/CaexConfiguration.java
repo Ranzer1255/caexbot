@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class CaexConfiguration {
 	
-	private static final String CONFIG_PATH = "/net/ranzer/caexbot/config/caex.conf";
+	private static final String CONFIG_PATH = "caexbot/config/caex.conf";
 	private static CaexConfiguration instance;
 	
 	private String databaseManagementSystem = "mysql";
@@ -23,7 +23,7 @@ public class CaexConfiguration {
 	private String databaseName = "caexdb";
 	private String testDatabaseName = "cekipdb";
 	private Boolean debug = false;
-	private String logPath = "/net/ranzer/caexbot/logs/caex.log";//Default path for log Location
+	private String logPath = "caexbot/logs/caex.log";//Default path for log Location
 	private File logLocation;
 	private String prefix = "!";
 	private String botToken = "token";

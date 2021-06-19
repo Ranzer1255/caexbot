@@ -70,7 +70,7 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 		return Catagory.SEARCH;
 	}
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 

@@ -10,6 +10,8 @@ import net.ranzer.caexbot.database.HibernateManager;
 import net.ranzer.caexbot.database.model.ChannelDataModel;
 import net.ranzer.caexbot.database.model.GuildDataModel;
 import net.ranzer.caexbot.database.model.MemberDataModel;
+import net.ranzer.caexbot.functions.levels.RoleLevel;
+import net.ranzer.caexbot.functions.levels.UserLevel;
 import org.hibernate.Session;
 
 import javax.persistence.NoResultException;
@@ -60,7 +62,6 @@ public class GuildData extends AbstractData implements IGuildData {
 	}
 
 	//XP Methods
-
 	@Override
 	public void setXPTimeout(long timeout) {
 		gdm.setXPTimeout(timeout);
@@ -71,6 +72,11 @@ public class GuildData extends AbstractData implements IGuildData {
 		return gdm.getXPTimeout();
 	}
 	@Override
+	public void setXPBounds(int low, int high) {
+		gdm.setXPBounds(low,high);
+		save(gdm);
+	}
+	@Override
 	public int getXPLowBound() {
 		return gdm.getXPLowBound();
 	}
@@ -79,10 +85,33 @@ public class GuildData extends AbstractData implements IGuildData {
 		return gdm.getXPHighBound();
 	}
 	@Override
-	public void setXPBounds(int low, int high) {
-		gdm.setXPBounds(low,high);
+	public void setXPAnnouncement(boolean allowed) {
+		gdm.setXPAnnouncement(allowed);
 		save(gdm);
 	}
+	@Override
+	public boolean getXPAnnouncement() {
+		return gdm.getXPAnnouncement();
+	}
+	@Override
+	public List<UserLevel> getGuildRankings() {
+		return null;
+	}//todo
+	@Override
+	public List<RoleLevel> getRoleRankings() {
+		return null;
+	}//todo
+
+	@Override
+	public TextChannel getDefaultMusicChannel() {
+		return guild.getTextChannelById(gdm.getMusicChannelID());
+	}
+	@Override
+	public void setDefaultMusicChannel(TextChannel channel){
+		gdm.setMusicChannelID(channel.getId());
+		save(gdm);
+	}
+
 
 	//memberData methods
 	@Override
@@ -94,19 +123,18 @@ public class GuildData extends AbstractData implements IGuildData {
 		Member m = guild.retrieveMember(u).complete();
 		return getMemberData(m);
 	}
-
 	@Override
 	public void addMember(Member m) {
 		gdm.addMember(m);
 		save(gdm);
 	}
-
 	@Override
-	public void deleteMember(Member m) {//TODO test this
+	public void deleteMember(Member m) {
 		gdm.removeMember(new MemberDataModel(m,gdm));
 		save(gdm);
 	}
 
+	//ChannelData methods
 	@Override
 	public IChannelData getChannel(TextChannel channel) {
 
@@ -123,7 +151,7 @@ public class GuildData extends AbstractData implements IGuildData {
 		}
 
 		final ChannelDataModel cdm = model;
-		return new IChannelData() {//todo build tess for all of this
+		return new IChannelData() {
 			@Override
 			public void setXPPerm(boolean earnEXP) {
 				cdm.setXpPerm(earnEXP);
@@ -147,7 +175,6 @@ public class GuildData extends AbstractData implements IGuildData {
 			}
 		};
 	}
-
 	@Override
 	public void deleteChannel(TextChannel channel) {
 
@@ -159,13 +186,13 @@ public class GuildData extends AbstractData implements IGuildData {
 			s.remove(cdm);
 		}
 	}
-
 	@Override
 	public void addChannel(TextChannel channel) {
 		ChannelDataModel cdm = new ChannelDataModel(channel,gdm);
 		save(cdm);
 	}
 
+	//Raffle Data
 	@Override
 	public IRaffleData getRaffleData() {
 
@@ -240,6 +267,8 @@ public class GuildData extends AbstractData implements IGuildData {
 		};
 	}
 
+
+	//Moderation settings
 	@Override
 	public List<Role> getModRoles() {
 		List<Role> rtn = new ArrayList<>();
@@ -251,7 +280,6 @@ public class GuildData extends AbstractData implements IGuildData {
 			return rtn;
 		}
 	}
-
 	@Override
 	public boolean addModRole(Role r) {
 		try(Session s = HibernateManager.getSessionFactory().openSession()) {
@@ -263,7 +291,6 @@ public class GuildData extends AbstractData implements IGuildData {
 			return rtn;
 		}
 	}
-
 	@Override
 	public boolean removeModRole(Role r) {
 		try(Session s =HibernateManager.getSessionFactory().openSession()) {
@@ -274,6 +301,28 @@ public class GuildData extends AbstractData implements IGuildData {
 			s.flush();
 			return rtn;
 		}
+	}
+
+	//announcements
+	@Override
+	public void setAnnouncementChannel(TextChannel textChannel) {
+		gdm.setAnnouncementChannelID(textChannel.getId());
+		save(gdm);
+	}
+	@Override
+	public TextChannel getAnnouncementChannel() {
+		String channelID = gdm.getAnnouncementChannelID();
+		if (channelID == null) return null;
+		return guild.getTextChannelById(channelID);
+	}
+
+	@Override
+	public void setJLAnnouncement(boolean allowed) {
+		gdm.setJLAnnouncement(allowed);
+	}
+	@Override
+	public boolean getJLAnnouncement() {
+		return gdm.getJLAnnouncement();
 	}
 
 	public GuildDataModel getModel() {

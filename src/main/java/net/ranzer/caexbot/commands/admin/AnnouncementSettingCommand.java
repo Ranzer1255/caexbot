@@ -3,7 +3,6 @@ package net.ranzer.caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.Catagory;
 import net.ranzer.caexbot.commands.Describable;
@@ -72,7 +71,7 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 

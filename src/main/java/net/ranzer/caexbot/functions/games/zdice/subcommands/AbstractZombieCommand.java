@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.Guild;
 public abstract class AbstractZombieCommand extends CaexCommand implements Describable{
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 	

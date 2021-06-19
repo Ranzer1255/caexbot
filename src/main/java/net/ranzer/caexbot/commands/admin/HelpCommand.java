@@ -149,7 +149,7 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 }

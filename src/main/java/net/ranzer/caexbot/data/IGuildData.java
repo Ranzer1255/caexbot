@@ -49,6 +49,8 @@ public interface IGuildData {
 
     //member data
 
+    void setDefaultMusicChannel(TextChannel channel);
+
     /**
      *
      * @param m Member to retrieve Data on
@@ -103,4 +105,6 @@ public interface IGuildData {
     List<UserLevel> getGuildRankings();
 
     List<RoleLevel> getRoleRankings();
+
+    TextChannel getDefaultMusicChannel();
 }

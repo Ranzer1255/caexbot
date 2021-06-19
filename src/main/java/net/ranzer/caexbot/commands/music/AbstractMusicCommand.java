@@ -7,7 +7,6 @@ import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 
 public abstract class AbstractMusicCommand extends CaexCommand implements Describable{
 
@@ -30,7 +29,7 @@ public abstract class AbstractMusicCommand extends CaexCommand implements Descri
 	}
 	
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 

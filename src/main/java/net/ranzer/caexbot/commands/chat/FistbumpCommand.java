@@ -30,7 +30,7 @@ public class FistbumpCommand extends CaexCommand implements Describable, Draconi
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return true;
 	}
 

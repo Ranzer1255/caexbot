@@ -74,7 +74,7 @@ public class LevelAlertToggleCommand extends CaexCommand implements Describable 
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 

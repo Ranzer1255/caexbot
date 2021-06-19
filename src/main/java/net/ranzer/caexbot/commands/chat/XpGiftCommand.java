@@ -135,7 +135,7 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 	}
 
 	@Override
-	public boolean isAplicableToPM() {
+	public boolean isApplicableToPM() {
 		return false;
 	}
 
