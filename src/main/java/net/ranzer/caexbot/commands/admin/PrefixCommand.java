@@ -1,16 +1,16 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.config.CaexConfiguration;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Category;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PrefixCommand extends CaexCommand implements Describable{
 
@@ -28,18 +28,17 @@ public class PrefixCommand extends CaexCommand implements Describable{
 			return;
 		default:			
 			event.getChannel().sendMessage("Hey, i can't listen for more than one thing ;)").queue();
-			return;
 		}
 	}
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("set-prefix");
+		return Collections.singletonList("set-prefix");
 	}
 
 	@Override
 	public String getShortDescription() {
-		return "Set prefix for the Guild (requires Administrator permision)";
+		return "Set prefix for the Guild (requires Administrator permission)";
 	}
 
 	@Override
@@ -59,8 +58,8 @@ public class PrefixCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 
 	@Override

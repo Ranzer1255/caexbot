@@ -1,11 +1,11 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.api.entities.Message;
@@ -25,7 +25,7 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("ping");
+		return Collections.singletonList("ping");
 	}
 
 	@Override
@@ -40,12 +40,12 @@ public class PingCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("relgar");
+		return Collections.singletonList("relgar");
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 
 	@Override

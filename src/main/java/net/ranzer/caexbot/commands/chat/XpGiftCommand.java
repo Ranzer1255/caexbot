@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IGuildData;
@@ -27,7 +27,7 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 		
-		int donation=-1;
+		int donation;
 		
 		donation = getDonation(event.getMessage().getContentRaw());
 		if(donation <=0) {
@@ -35,15 +35,15 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 			return;
 		}
 				
-		Member donatee = getDonatee(event.getMessage().getContentRaw(),event.getGuild());
-		if (donatee==null) {
-			System.out.println("no donatee");
+		Member recipient = getRecipient(event.getMessage().getContentRaw(),event.getGuild());
+		if (recipient==null) {
+			System.out.println("no recipient");
 			return;
 		}
 		
-		Member donator = event.getMember();
+		Member donor = event.getMember();
 		
-		donate(donatee, donator, donation,event.getChannel());	
+		donate(recipient, donor, donation,event.getChannel());
 	}
 	
 	/**
@@ -82,31 +82,31 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 			return;
 		}
 		
-		channel.sendMessage(donationEmbed(donor,donation,recipient)).queue();
+		channel.sendMessageEmbeds(donationEmbed(donor,donation,recipient)).queue();
 		
 		donorData.removeXP(donation, channel);
 		recipientData.addXP(donation, channel);
 	}
 
-	private MessageEmbed donationEmbed(Member donator, int donation, Member donatee) {
+	private MessageEmbed donationEmbed(Member donor, int donation, Member recipient) {
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setTitle("Donation");
-		eb.setColor(getCatagory().COLOR);
+		eb.setColor(getCategory().COLOR);
 		eb.setDescription(
 				String.format("**From:** %s\n"
 						+ "**To:** %s\n"
 						+ "%,dxp", 
-						donator.getEffectiveName(),
-						donatee.getEffectiveName(),
+						donor.getEffectiveName(),
+						recipient.getEffectiveName(),
 						donation)
 				);
-		eb.setThumbnail(donatee.getUser().getAvatarUrl());
+		eb.setThumbnail(recipient.getUser().getAvatarUrl());
 		
 		return eb.build();
 	}
 
-	private Member getDonatee(String string, Guild guild) {
+	private Member getRecipient(String string, Guild guild) {
 		
 		Matcher id = ID_REGEX.matcher(string);
 		if (id.find()){
@@ -144,9 +144,10 @@ public class XpGiftCommand extends CaexCommand implements Describable {
 		return Arrays.asList("donate","gift","give");
 	}
 
+	//Category
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.util.Logging;
 import net.dv8tion.jda.api.entities.Guild;
@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class YoutubeSearchCommand extends CaexCommand implements Describable{
 
 	private static final String YOUTUBE_BASE_STRING = "https://youtu.be/";
-	private YouTubeSearcher yts;
+	private final YouTubeSearcher yts;
 	
 	public YoutubeSearchCommand() {
 		yts = new YouTubeSearcher();
@@ -21,23 +21,18 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 		StringBuilder queryBuilder = new StringBuilder();
-		
-		for (int i = 0; i < args.length; i++) {
-			queryBuilder.append(args[i]).append(" ");
+
+		for (String arg : args) {
+			queryBuilder.append(arg).append(" ");
 		}
 		String videoID = yts.searchForVideo(queryBuilder.toString());
 
-
-		Logging.debug(queryBuilder.toString()+" : " +videoID);
+		Logging.debug(queryBuilder+" : " +videoID);
 		
 		if(videoID!=null){
-			StringBuilder youtubeURL = new StringBuilder();
-			youtubeURL.append(YOUTUBE_BASE_STRING).append(videoID);
-			event.getChannel().sendMessage(event.getAuthor().getAsMention() + " "+ youtubeURL.toString()).queue();
+			event.getChannel().sendMessage(event.getAuthor().getAsMention() + " " + YOUTUBE_BASE_STRING + videoID).queue();
 		} else {
-			event.getChannel().sendMessage("I'm sorry, i didn't find anything").queue();			
-
-
+			event.getChannel().sendMessage("I'm sorry, i didn't find anything").queue();
 		}
 
 		
@@ -66,8 +61,8 @@ public class YoutubeSearchCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.SEARCH;
+	public Category getCategory() {
+		return Category.SEARCH;
 	}
 	@Override
 	public boolean isApplicableToPM() {

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.util.DraconicTranslator;
 import net.ranzer.caexbot.util.StringUtil;
@@ -38,7 +38,7 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 		eb.addField("Draconic:", phrase, false);
 		eb.addField("Common:", DraconicTranslator.translate(phrase, false), false);
 		
-		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbeds(eb.build()).build()).queue();
 	}
 
 	private void toDraconic(String phrase, MessageReceivedEvent event) {
@@ -51,7 +51,7 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 		eb.addField("Common:", phrase, false);
 		eb.addField("Draconic", DraconicTranslator.translate(phrase, true), false);
 		
-		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbeds(eb.build()).build()).queue();
 	}
 
 	@Override
@@ -79,8 +79,8 @@ public class DraconicTranslateCommand extends CaexCommand implements Describable
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 	@Override

@@ -1,14 +1,9 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.functions.listeners.CommandListener;
@@ -33,48 +28,44 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 		
 		//single command help line
 		if(args.length==1){
-			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
+			Optional<Describable> opt = getDescribable(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
 			if(opt.isPresent()){
 				Describable d = opt.get();
-				event.getChannel().sendMessage(mb.setEmbed(getDescription(d,event.getGuild())).build()).queue();
+				event.getChannel().sendMessage(mb.setEmbeds(getDescription(d,event.getGuild())).build()).queue();
 			}
 		}else if(args.length == 2){
-			Optional<Describable> opt = getDescribables(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
+			Optional<Describable> opt = getDescribable(cmds.getCommands()).stream().filter(cc -> cc.getAlias().contains(args[0].toLowerCase())).findFirst();
 			if(opt.isPresent()&&opt.get().hasSubcommands()){
 				Describable baseCommand = opt.get();
-				Optional<Describable> subOpt = getDescribables(baseCommand.getSubcommands()).stream().filter(cc -> cc.getAlias().contains(args[1].toLowerCase())).findFirst();
-				if(subOpt.isPresent()){
-					event.getChannel().sendMessage(new MessageBuilder().setEmbed(getDescription(subOpt.get(),event.getGuild())).build()).queue();
-				}
+				Optional<Describable> subOpt = getDescribable(baseCommand.getSubcommands()).stream().filter(cc -> cc.getAlias().contains(args[1].toLowerCase())).findFirst();
+				subOpt.ifPresent(describable -> event.getChannel().sendMessage(new MessageBuilder().setEmbeds(getDescription(describable, event.getGuild())).build()).queue());
 			}
 		//full command list	
 		}else{
 			
-			Map<Catagory, List<Describable>> catagorized = new HashMap<>();
+			Map<Category, List<Describable>> categorized = new HashMap<>();
 			
-			for (Describable d : getDescribables(cmds.getCommands())) {
-				if(catagorized.get(d.getCatagory())==null){
-					catagorized.put(d.getCatagory(), new ArrayList<>());
-				}
-				catagorized.get(d.getCatagory()).add(d);				
+			for (Describable d : getDescribable(cmds.getCommands())) {
+				categorized.computeIfAbsent(d.getCategory(), k -> new ArrayList<>());
+				categorized.get(d.getCategory()).add(d);
 			}	
 			StringBuilder sb = new StringBuilder();
 			EmbedBuilder eb = new EmbedBuilder();
 			
 			eb.setAuthor("Full Command List", null, null);
-			if (event.getGuild() !=null) {
-				eb.setColor(event.getGuild().getMember(event.getJDA().getSelfUser()).getColor());
+			if (event.isFromGuild()) {
+				eb.setColor(Objects.requireNonNull(event.getMember()).getColor());
 			}
-			catagorized.keySet().stream().sorted((o1,o2)->
+			categorized.keySet().stream().sorted((o1,o2)->
 					o1.NAME.compareToIgnoreCase(o2.name())				
 			).forEachOrdered(cat -> {
 				sb.append(String.format("**__%s__**\n", cat.NAME));
-				catagorized.get(cat).stream().sorted((o1, o2) -> {return o1.getName().compareToIgnoreCase(o2.getName());}
-				).forEachOrdered(d -> {sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription()));});
+				categorized.get(cat).stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName())
+				).forEachOrdered(d -> sb.append(String.format("**%s:** %s\n", d.getName(), d.getShortDescription())));
 			sb.append("\n");
 			});
 			eb.setDescription(sb.toString());
-			mb.setEmbed(eb.build());
+			mb.setEmbeds(eb.build());
 
 			event.getChannel().sendMessage(mb.build()).queue();
 		}
@@ -83,15 +74,15 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 	public static MessageEmbed getDescription(Describable d, Guild g) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(d.getName(), null, null);
-		eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long descript wip");
-		eb.setColor(d.getCatagory().COLOR);
+		eb.setDescription((d.getLongDescription()!=null)?d.getLongDescription():"long description wip");
+		eb.setColor(d.getCategory().COLOR);
 		eb.addField("Usage",d.getUsage(g)!=null?d.getUsage(g):"usage wip",false);
 		eb.addField("Other Aliases",
 				(d.getAlias().size()-1)!=0 ? 
 						"`"+StringUtil.arrayToString(d.getAlias().subList(1, d.getAlias().size()), "`, `")+"`":
 						"*none*",
 				true );
-		eb.addField("Catagory", d.getCatagory().toString(), true);
+		eb.addField("Category", d.getCategory().toString(), true);
 		if (d.getPermissionRequirements() != null) {
 			eb.addField("Role Requirement", d.getPermissionRequirements().getName(), true);
 		}
@@ -112,31 +103,31 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public String getShortDescription() {
-		return "Gives a list of avaliable command";
+		return "Gives a list of available command";
 	}
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("letoclo");
+		return Collections.singletonList("letoclo");
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 	
 	@Override
 	public String getLongDescription() {
 		
 		return getShortDescription()+"\n\n"
-				+ "when given a command as an agrument, `help` will generate a help page for that command and return it\n\n"
+				+ "when given a command as an argument, `help` will generate a help page for that command and return it\n\n"
 				+ "__**Usage syntax**__\n"
-				+ "arguemnts in `<>` are to be substituded with the requested value\n"
+				+ "arguments in `<>` are to be substituted with the requested value\n"
 				+ "arguments in `[]` are optional and can be ignored\n"
-				+ "arguments in `{}` mean pick one from the list seperated by `|`";
+				+ "arguments in `{}` mean pick one from the list separated by `|`";
 	}
 
-	private List<Describable> getDescribables(List<CaexCommand> list){
+	private List<Describable> getDescribable(List<CaexCommand> list){
 		List<Describable> rtn = new ArrayList<>();
 			
 		for (CaexCommand cmd :list) {

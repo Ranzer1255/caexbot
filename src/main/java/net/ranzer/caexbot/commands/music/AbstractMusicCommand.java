@@ -1,12 +1,13 @@
 package net.ranzer.caexbot.commands.music;
 
+import net.dv8tion.jda.api.entities.*;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.util.Objects;
 
 public abstract class AbstractMusicCommand extends CaexCommand implements Describable{
 
@@ -14,8 +15,8 @@ public abstract class AbstractMusicCommand extends CaexCommand implements Descri
 		GuildPlayerManager.getPlayer(channel.getGuild()).getMusicListener().setMusicChannel(channel);
 	}
 	
-	public Catagory getCatagory(){
-		return Catagory.MUSIC;
+	public Category getCategory(){
+		return Category.MUSIC;
 	}
 	
 	@Override
@@ -33,8 +34,15 @@ public abstract class AbstractMusicCommand extends CaexCommand implements Descri
 		return false;
 	}
 
-	protected boolean inSameVoiceChannel(MessageReceivedEvent event) {
-		return event.getMember().getVoiceState().inVoiceChannel()&&
-				event.getMember().getVoiceState().getChannel()==event.getGuild().getSelfMember().getVoiceState().getChannel();
+	protected boolean notInSameVoiceChannel(MessageReceivedEvent event) {
+
+		VoiceChannel requesterChannel = getVoiceChannel(Objects.requireNonNull(event.getMember()));
+		VoiceChannel botChannel = getVoiceChannel(event.getGuild().getSelfMember());
+
+		return !Objects.equals(requesterChannel, botChannel);
+	}
+
+	protected VoiceChannel getVoiceChannel(Member m){
+		return Objects.requireNonNull(m.getVoiceState()).getChannel();
 	}
 }

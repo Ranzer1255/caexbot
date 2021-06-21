@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.games.zdice.subcommands.ZomEndTurnCommand;
 import net.ranzer.caexbot.functions.games.zdice.subcommands.ZomJoinCommand;
@@ -17,6 +17,7 @@ import net.ranzer.caexbot.functions.games.zdice.subcommands.ZomStartCommand;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+//this is disabled for the time being
 public class ZomDiceCommand extends CaexCommand implements Describable{
 
 	List<CaexCommand> zomSubCommands = new ArrayList<>();
@@ -62,7 +63,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 		StringBuilder sb = new StringBuilder();
 		
 		
-		sb.append(getShortDescription() +"\n\n");
+		sb.append(getShortDescription()).append("\n\n");
 		
 		for (CaexCommand cmd : zomSubCommands) {
 			sb.append(
@@ -89,8 +90,8 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.GAME;
+	public Category getCategory() {
+		return Category.GAME;
 	}
 	
 	@Override

@@ -1,10 +1,11 @@
 package net.ranzer.caexbot.commands.chat;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.dv8tion.jda.api.entities.Message;
@@ -13,8 +14,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class FistbumpCommand extends CaexCommand implements Describable, DraconicCommand {
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class FistbumpCommand extends CaexCommand implements Describable, Draconi
 	@Override
 	public String getLongDescription() {
 		return getShortDescription() + "\n\n"
-				+ "Need a dramatic flair to pinpoint your success? FistBump! Boom! (W/ manditory explosion!)";
+				+ "Need a dramatic flair to pinpoint your success? FistBump! Boom! (W/ mandatory explosion!)";
 		
 	}
 
@@ -38,11 +39,11 @@ public class FistbumpCommand extends CaexCommand implements Describable, Draconi
 	public void process(String[] args, MessageReceivedEvent event) {
 		Message m = event.getChannel().sendMessage(":right_facing_fist:    :left_facing_fist:").complete();
 		try {
-			Thread.sleep(1000l);
+			Thread.sleep(1000L);
 			m.editMessage(":right_facing_fist::left_facing_fist:").complete();
-			Thread.sleep(1000l);
+			Thread.sleep(1000L);
 			m.editMessage(":boom:").complete();
-		} catch (Exception e) {	}
+		} catch (Exception ignored) {	}
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class FistbumpCommand extends CaexCommand implements Describable, Draconi
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("bemin");
+		return Collections.singletonList("bemin");
 	}
 
 }

@@ -19,8 +19,8 @@ import java.util.Optional;
 
 public class CommandListener extends ListenerAdapter {
 	private static CommandListener cl;
-	private List<CaexCommand> cmds = new ArrayList<CaexCommand>();
-	private DraconicListener dl;
+	private final List<CaexCommand> cmds = new ArrayList<>();
+	private final DraconicListener dl;
 	
 	public static CommandListener getInstance(){
 		if (cl==null) cl = new CommandListener();

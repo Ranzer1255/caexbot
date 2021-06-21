@@ -1,19 +1,16 @@
-/**
- * 
- */
 package net.ranzer.caexbot.commands.music;
+
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 
 import java.util.Arrays;
 import java.util.List;
-
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
+import java.util.Objects;
 
 /**
- * Joins requester's voice channel
+ * Joins requester voice channel
  * 
  * @author Ranzer
  *
@@ -23,7 +20,7 @@ public class JoinCommand extends AbstractMusicCommand implements Describable{
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 		
-		VoiceChannel join = event.getGuild().getMember(event.getAuthor()).getVoiceState().getChannel();
+		VoiceChannel join = getVoiceChannel(Objects.requireNonNull(event.getMember()));
 		
 		if(join!=null){	
 			GuildPlayerManager.getPlayer(event.getGuild()).join(join);

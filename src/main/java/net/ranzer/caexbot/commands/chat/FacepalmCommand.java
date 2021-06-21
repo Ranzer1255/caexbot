@@ -1,22 +1,23 @@
 package net.ranzer.caexbot.commands.chat;
 
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.Category;
+import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.commands.DraconicCommand;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
-import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.commands.DraconicCommand;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-
 public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
 
-	private String[] facepalms ={
+	private final String[] facepalms ={
 			"*%s is ashamed for you*",
 			"*%s shoves their palm through their brain*",
 			"*%s slaps their face with a thunderous clap*",
@@ -60,23 +61,26 @@ public class FacepalmCommand extends CaexCommand implements DraconicCommand, Des
 
 	@Override
 	public String getLongDescription() {
+		@SuppressWarnings("StringBufferReplaceableByString")
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(getShortDescription()).append("\n\n");
 		sb.append("Caex will pull a random facepalming emote from his hat and serve it up for you...\ngroan to your heart's content");
-		
+
 		return sb.toString();
 	}
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("ehaism_cha'sid");
+		return Collections.singletonList("ehaism_cha'sid");
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
-	
+
+	//this *will* be used once i fix the image based facepalms
+	@SuppressWarnings("unused")
 	private static File getResourceAsFile(String path){
 		try {
 			InputStream in =FacepalmCommand.class.getResourceAsStream(path);

@@ -3,7 +3,6 @@ package net.ranzer.caexbot.data;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.ranzer.caexbot.functions.levels.UserLevel;
 
 import java.util.Map;
@@ -43,7 +42,7 @@ public interface IMemberData {
 
     /**
      * calculated based on xp
-     * @return
+     * @return level based on formula calculation
      */
 	int getLevel();
 

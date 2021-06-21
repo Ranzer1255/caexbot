@@ -1,11 +1,10 @@
 package net.ranzer.caexbot.commands.music;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ShuffleCommand extends AbstractMusicCommand {
 

@@ -1,6 +1,7 @@
 package net.ranzer.caexbot.commands.admin;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.ranzer.caexbot.CaexBot;
@@ -24,31 +25,32 @@ public class ShutdownCommand extends CaexCommand {
 		event.getChannel().sendMessage("if you insist boss.... *blerg*").complete();
 		if(InsultCommand.lastOwnerInsult!=null){
 			InsultCommand.lastOwnerInsult.openPrivateChannel().complete()
-			.sendMessage(event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).getName()+
+			.sendMessage(event.getJDA().retrieveUserById(CaexConfiguration.getInstance().getOwner())
+							.complete().getName()+
 					" found out I insulted him behind his back....\n"
 					+ "he just issued the shutdown command...... i'm.... goi... *cough* *cough*\n\n"
 					+ "......goodbye........"
-					).queue((m) ->	sucsesfulMessage(m), (t)->failedMessage(t));
+					).queue(this::successfulMessage, this::failedMessage);
 		}
-		try {Thread.sleep(1000L);} catch (InterruptedException e) {}
+		try {Thread.sleep(1000L);} catch (InterruptedException ignored) {}
 		event.getJDA().shutdown();
 		System.exit(0);
 	}
 
-	private void sucsesfulMessage(Message m) {
-		m.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+	private void successfulMessage(Message m) {
+		m.getJDA().retrieveUserById(CaexConfiguration.getInstance().getOwner()).complete().openPrivateChannel().complete()
 		.sendMessage("sent shutdown message to "+InsultCommand.lastOwnerInsult.getName()).queue();	
 	}
 	
 	private void failedMessage(Throwable t){
-		CaexBot.getJDA().getUserById(CaexConfiguration.getInstance().getOwner()).openPrivateChannel().complete()
+		CaexBot.getJDA().retrieveUserById(CaexConfiguration.getInstance().getOwner()).complete().openPrivateChannel().complete()
 		.sendMessage("failed to send shutdown message to "+InsultCommand.lastOwnerInsult.getName()
 		+ "\n\nthis is why\n" + t.getMessage()).queue();
 	}
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("vdri");//this is "sleep" in draconic
+		return Collections.singletonList("vdri");//this is "sleep" in draconic
 	}
 
 	@Override

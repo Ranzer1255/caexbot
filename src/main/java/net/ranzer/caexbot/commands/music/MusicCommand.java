@@ -19,7 +19,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	public static final String ADD = "Adding song to queue:\n%s";
 	public static final String NOW_PLAYING = "Now playing:\n%s";
 
-	private static List<CaexCommand> subCommands;
+	private static final List<CaexCommand> subCommands;
 
 	static {
 		subCommands = new ArrayList<>();
@@ -43,7 +43,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
 		if (args.length == 0) {
-			event.getTextChannel().sendMessage(new MessageBuilder().setEmbed(HelpCommand.getDescription(this, event.getGuild())).build()).queue();
+			event.getTextChannel().sendMessage(new MessageBuilder().setEmbeds(HelpCommand.getDescription(this, event.getGuild())).build()).queue();
 			return;
 		}
 
@@ -75,7 +75,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		StringBuilder sb = new StringBuilder();
 		
 		
-		sb.append(getShortDescription() +"\n\n");
+		sb.append(getShortDescription()).append("\n\n");
 		
 		for (CaexCommand cmd : subCommands) {
 			sb.append(

@@ -1,10 +1,12 @@
 package net.ranzer.caexbot.commands.chat;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
@@ -65,8 +67,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		for(Guild g : event.getAuthor().getMutualGuilds()){
 			MessageBuilder mb = new MessageBuilder();
-			mb.append("***__"+g.getName()+"__***");
-			mb.setEmbed(memberXPEmbed(g.getMember(event.getAuthor())));
+			mb.append("***__").append(g.getName()).append("__***");
+			mb.setEmbeds(memberXPEmbed(Objects.requireNonNull(event.getMember())));
 			
 			channel.sendMessage(mb.build()).queue();
 		}
@@ -85,12 +87,12 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			}
 			
 			if(!event.getMessage().getMentionedMembers().isEmpty()){
-				event.getChannel().sendMessage(memberXPEmbed(event.getMessage().getMentionedMembers().get(0))).queue();
+				event.getChannel().sendMessageEmbeds(memberXPEmbed(event.getMessage().getMentionedMembers().get(0))).queue();
 				return;
 			}
 		}
 		
-		event.getChannel().sendMessage(memberXPEmbed(event.getMember())).queue();
+		event.getChannel().sendMessageEmbeds(memberXPEmbed(Objects.requireNonNull(event.getMember()))).queue();
 	}
 	
 	private MessageEmbed memberXPEmbed(Member member) {
@@ -113,7 +115,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 
 	@Override
 	public String getShortDescription() {
-		return "lists your level and experence.";
+		return "lists your level and experience.";
 	}
 	
 	@Override
@@ -129,8 +131,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 
@@ -140,7 +142,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		
 		eb.setAuthor(String.format("%s Leaderboard",guild.getName()), null, null);
 		eb.setDescription(XP_RULES);
-		eb.setColor(getCatagory().COLOR);
+		eb.setColor(getCategory().COLOR);
 		eb.setThumbnail(guild.getIconUrl());
 		
 		
@@ -160,7 +162,7 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		}
 		
 		return new MessageBuilder()
-				.setEmbed(eb.build())
+				.setEmbeds(eb.build())
 				.build();
 	}
 
@@ -187,12 +189,12 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 			);
 		}
 		
-		return mb.setEmbed(eb.build()).build();
+		return mb.setEmbeds(eb.build()).build();
 	}
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("tawura_authot");
+		return Collections.singletonList("tawura_authot");
 	}
 
 	//is applicable

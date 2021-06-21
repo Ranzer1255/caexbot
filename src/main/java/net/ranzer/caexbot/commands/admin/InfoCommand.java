@@ -3,11 +3,13 @@ package net.ranzer.caexbot.commands.admin;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
@@ -29,8 +31,8 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		MessageBuilder mb = new MessageBuilder();
 		User bot = event.getJDA().getSelfUser();
 		
-		if (event.getGuild()!=null) {
-			eb.setColor(event.getGuild().getMember(bot).getColor());
+		if (event.isFromGuild()) {
+			eb.setColor(Objects.requireNonNull(event.getGuild().getMember(bot)).getColor());
 		}
 		
 		if (args.length == 1&&args[0].equals("stats")) { // 1 argument !info stats
@@ -39,7 +41,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 			eb = infoEmbed(bot);
 		}
 
-		event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
+		event.getChannel().sendMessage(mb.setEmbeds(eb.build()).build()).queue();
 
 	}
 
@@ -49,7 +51,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		  .addField("Users", countNonBotUsers(bot.getJDA()), true)
 		  .addField("Bots", countBotUsers(bot.getJDA()), true)
 		  .addField("Up Time",getUpTime(), true)
-		  .addField("Game", bot.getJDA().getPresence().getActivity().getName(), true);
+		  .addField("Game", Objects.requireNonNull(bot.getJDA().getPresence().getActivity()).getName(), true);
 		return rtn;
 	}
 
@@ -78,28 +80,27 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 		LocalDateTime now = LocalDateTime.now();
 		
 		if(CaexBot.START_TIME.until(now, ChronoUnit.YEARS)!=0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.YEARS)+" Yrs, ");
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.YEARS)).append(" Yrs, ");
 			now=now.minusYears(CaexBot.START_TIME.until(now, ChronoUnit.YEARS));
 		}
 		if(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS)!= 0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS)+" Mths, ");
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS)).append(" Mths, ");
 			now=now.minusMonths(CaexBot.START_TIME.until(now, ChronoUnit.MONTHS));
 		}
 		if(CaexBot.START_TIME.until(now, ChronoUnit.DAYS)!=0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.DAYS)+" Days, ");
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.DAYS)).append(" Days, ");
 			now=now.minusDays(CaexBot.START_TIME.until(now, ChronoUnit.DAYS));
 		}
 		if(CaexBot.START_TIME.until(now, ChronoUnit.HOURS)!=0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.HOURS)+" Hrs, ");
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.HOURS)).append(" Hrs, ");
 			now=now.minusHours(CaexBot.START_TIME.until(now, ChronoUnit.HOURS));
 		}
 		if(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES)!=0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES)+" Mins, ");
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES)).append(" Mins, ");
 			now=now.minusMinutes(CaexBot.START_TIME.until(now, ChronoUnit.MINUTES));
 		}
 		if(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS)!=0){
-			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS)+" Secs, ");
-			now=now.minusSeconds(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS));
+			sb.append(CaexBot.START_TIME.until(now, ChronoUnit.SECONDS)).append(" Secs, ");
 		}
 		
 		
@@ -134,6 +135,7 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 	}
 
 	private static String inviteLinkBuilder(User bot) {
+		@SuppressWarnings("StringBufferReplaceableByString")
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("[No Permissions]")
@@ -166,12 +168,12 @@ public class InfoCommand extends CaexCommand implements DraconicCommand, Describ
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("vucot");
+		return Collections.singletonList("vucot");
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 
 	@Override

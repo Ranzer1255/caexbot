@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.dice.Dice;
 import net.dv8tion.jda.api.entities.Guild;
@@ -19,7 +19,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  */
 public class DiceCommand extends CaexCommand implements Describable{
 
-	private static final int MAX_MESSAGE_LENGHT = 1000;
+	private static final int MAX_MESSAGE_LENGTH = 1000;
 
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {
@@ -27,10 +27,10 @@ public class DiceCommand extends CaexCommand implements Describable{
 		if(!(args.length<1)){
 			invalidUsage(event.getGuild());
 		}
-		String expression = "";
-		
-		for (int i = 0; i < args.length; i++) {
-			expression+=" " + args[i];
+		StringBuilder expression = new StringBuilder();
+
+		for (String arg : args) {
+			expression.append(" ").append(arg);
 		}
 		Dice dice = new Dice(expression.substring(1));
 		
@@ -39,7 +39,7 @@ public class DiceCommand extends CaexCommand implements Describable{
 		
 		event.getChannel().sendMessage(String.format("%s: %s = %d", 
 				event.getAuthor().getAsMention(), 
-				(dice.getBreakdown().length()<MAX_MESSAGE_LENGHT)?dice.getBreakdown():
+				(dice.getBreakdown().length()< MAX_MESSAGE_LENGTH)?dice.getBreakdown():
 					"(Message to long to display each die)"+expression.substring(1), 
 				result))
 		.queue();
@@ -66,9 +66,9 @@ public class DiceCommand extends CaexCommand implements Describable{
 				+ "[comment]: this is ignored\n"
 				+ "2d20khX: keep the X highest dice\n"
 				+ "2d20klX: keep the X lowest dice\n"
-				+ "4d6r<X: reroll every die lower than X\n"
-				+ "4d6ro<X: reroll every die lower than X, but only once\n"
-				+ "1d10!: exploding die - every time you roll a crit, add an extra die";
+				+ "4d6r<X: re-roll every die lower than X\n"
+				+ "4d6ro<X: re-roll every die lower than X, but only once\n"
+				+ "1d10!: exploding die - every time you roll a critical, add an extra die";
 	}
 	
 	@Override
@@ -77,8 +77,8 @@ public class DiceCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 	
 	@Override

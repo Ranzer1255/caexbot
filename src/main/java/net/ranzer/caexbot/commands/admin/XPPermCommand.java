@@ -4,12 +4,12 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IChannelData;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class XPPermCommand extends CaexCommand implements Describable{
@@ -22,7 +22,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 					GuildManager.getGuildData(event.getGuild()).getChannel(event.getTextChannel()).getXPPerm()).queue();
 			return;
 		}
-		if (args.length!=1||!(args[0].toLowerCase().equals("true")||args[0].toLowerCase().equals("false"))){
+		if (args.length!=1||!(args[0].equalsIgnoreCase("true")|| args[0].equalsIgnoreCase("false"))){
 			event.getChannel().sendMessage("I'm sorry i didn't understand that please follow the usage\n"
 								+getUsage(event.getGuild())).queue();
 			return;
@@ -40,7 +40,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("earn-xp");
+		return Collections.singletonList("earn-xp");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class XPPermCommand extends CaexCommand implements Describable{
 
 	@Override
 	public String getLongDescription() {
-		return "This command sets the xp earning permmision for the channel within Caex\n"
+		return "This command sets the xp earning permission for the channel within Caex\n"
 				+ "leaving the value blank will return the current setting for this Channel\n\n"
 				+ "`True`: users will earn xp in this channel\n"
 				+ "`False`: users will not earn XP\n"
@@ -69,8 +69,8 @@ public class XPPermCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 
 	@Override

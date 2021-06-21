@@ -1,7 +1,7 @@
 package net.ranzer.caexbot.functions.games.zdice.subcommands;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -18,8 +18,8 @@ public abstract class AbstractZombieCommand extends CaexCommand implements Descr
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.GAME;
+	public Category getCategory() {
+		return Category.GAME;
 	}
 	
 	@Override

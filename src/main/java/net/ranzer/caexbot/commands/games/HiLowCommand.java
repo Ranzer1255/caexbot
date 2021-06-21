@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IGuildData;
@@ -84,7 +84,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 				lose(game);
 			}
 		} catch (Exception e) {
-			Logging.error("WTF!! just happend");
+			Logging.error("WTF!! just happened");
 			Logging.log(e);
 		}
 	}
@@ -111,7 +111,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		eb.addField("Winner", "You earn "+(game.getBet()*2)+"xp!", false);
 		eb.setColor(Color.yellow);
 		
-		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
+		game.getChannel().sendMessage(new MessageBuilder().setEmbeds(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
 		
 	}
 	private void lose(HiLowGame game) {
@@ -125,7 +125,7 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		eb.addField("Loser", "You Lose "+game.getBet()+"xp!", false);
 		eb.setColor(Color.RED);
 		
-		game.getChannel().sendMessage(new MessageBuilder().setEmbed(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
+		game.getChannel().sendMessage(new MessageBuilder().setEmbeds(eb.build()).append(game.getPlayer().getAsMention()).build()).queue();
 	}
 
 
@@ -135,8 +135,8 @@ public class HiLowCommand extends CaexCommand implements Describable {
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.GAME;
+	public Category getCategory() {
+		return Category.GAME;
 	}
 
 	@Override
@@ -167,14 +167,13 @@ public class HiLowCommand extends CaexCommand implements Describable {
 		return false;
 	}
 
-	public class HiLowGame {
-		private User player;
-		private TextChannel channel;
-		private int bet;
-		private int randomNumber;
-		private Choice choice;
-		
-		
+	public static class HiLowGame {
+		private final User player;
+		private final TextChannel channel;
+		private final int bet;
+		private final int randomNumber;
+		private final Choice choice;
+
 		public HiLowGame(MessageReceivedEvent event, int bet, Choice c){
 			this.player=event.getAuthor();
 			this.channel=event.getTextChannel();
@@ -182,8 +181,6 @@ public class HiLowCommand extends CaexCommand implements Describable {
 			choice = c;
 			randomNumber = ThreadLocalRandom.current().nextInt(MIN_RAN, MAX_RAN+1);
 		}
-		
-		
 	
 		public User getPlayer() {
 			return player;
@@ -199,14 +196,6 @@ public class HiLowCommand extends CaexCommand implements Describable {
 	
 		public int getBet() {
 			return bet;
-		}
-	
-		public int getRandomNumber() {
-			return randomNumber;
-		}
-	
-		public Choice getChoice() {
-			return choice;
 		}
 	
 		public  boolean win() throws Exception{

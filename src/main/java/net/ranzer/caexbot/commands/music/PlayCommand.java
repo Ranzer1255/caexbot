@@ -1,14 +1,15 @@
 package net.ranzer.caexbot.commands.music;
 
-import java.util.Arrays;
-import java.util.List;
-
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayer;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.ranzer.caexbot.util.StringUtil;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class PlayCommand extends AbstractMusicCommand implements Describable{
 
@@ -21,7 +22,7 @@ public class PlayCommand extends AbstractMusicCommand implements Describable{
 		}
 		
 		if(!player.isConnected()){
-			player.join(event.getGuild().getMember(event.getAuthor()).getVoiceState().getChannel());
+			player.join(getVoiceChannel(Objects.requireNonNull(event.getMember())));
 		}
 		
 		player.start();

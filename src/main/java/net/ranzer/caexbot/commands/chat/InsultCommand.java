@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
@@ -13,9 +13,7 @@ import net.ranzer.caexbot.util.Logging;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -24,28 +22,29 @@ import java.util.concurrent.ThreadLocalRandom;
 public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
 	
 	private static final String THIS_BOT_INSULT = "Oh ha ha.... making me insult myself.... How original\n"
-			+ "Well, sence I'm a good sport I will";
+			+ "Well, since I'm a good sport I will";
 	private static final String SELF_INSULT = "*looks confused* yourself? but.... ok...";
 	private static final String OWNER_ONLINE = "You want me to insult him?!?!.... \n I'm sorry but I can't insult *him*.... he'll *__KILL__* me!!";
 	private static final String OWNER_OFFLINE = "*looks around nervously* ... he's not here right now....\n"
 			+ "alright, I'll do it..... **but** I wont tag him! *gulp*\n"
 			+ "if he says \"sleep\", its on your head!";
+	@SuppressWarnings("SpellCheckingInspection")
 	private static final String OWNER_IDLE = "*looks around nervously* ... he's not here righ.... wait!\n"
-			+ "I see him.... He's only Idle, might be back any second, especialy with that ping you just did\n"
+			+ "I see him.... He's only Idle, might be back any second, especially with that ping you just did\n"
 			+ "best not risk it, sorry!";
 	private static final String OWNER_INSULT = "*sputters* B...B..Boss? I would never dream.... *chuckles nervously* If.. If you insist....";
 	private static final String OTHER_BOT_INSULT =
 		      "```\n"
-		    + "01111001 01101111 01110101 00100111 01110010 01100101 00100000 \n"
-			+ "01110011 01101111 00100000 01110011 01110100 01110101 01110000 \n"
-			+ "01101001 01100100 00100000 01111001 01101111 01110101 00100000 \n"
-			+ "01100011 01100001 01101110 00100000 01110010 01100101 01100001 \n"
-			+ "01100100 00100000 01100011 01100001 01110000 01110100 01100011 \n"
-			+ "01101000 01100001 01110011 00100001 00100000 01100010 01100101 \n"
-			+ "01100101 01110000 00100000 01100010 01101111 01101111 01110000 \n"
-			+ "```";//TODO might change this later to be a single line with no spaces
+		    + "01111001011011110111010100100111011100100110010100100000 \n"
+			+ "01110011011011110010000001110011011101000111010101110000 \n"
+			+ "01101001011001000010000001111001011011110111010100100000 \n"
+			+ "01100011011000010110111000100000011100100110010101100001 \n"
+			+ "01100100001000000110001101100001011100000111010001100011 \n"
+			+ "01101000011000010111001100100001001000000110001001100101 \n"
+			+ "01100101011100000010000001100010011011110110111101110000 \n"
+			+ "```";
 	
-	private static List<String> insults = loadInsults();
+	private static final List<String> insults = loadInsults();
 	public static User lastOwnerInsult = null;
 	
 	@Override
@@ -57,9 +56,9 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			//owner insulted
 			if(m.getUser().getId().equals(CaexConfiguration.getInstance().getOwner())){
 				//owner insulted self
-				if(event.getMember().equals(m)){
+				if(Objects.equals(event.getMember(), m)){
 					event.getChannel().sendMessage(OWNER_INSULT).queue();
-					sb.append(m.getAsMention()+", ");
+					sb.append(m.getAsMention()).append(", ");
 					continue;
 				}
 				
@@ -74,19 +73,19 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 				case OFFLINE:
 					event.getChannel().sendMessage(OWNER_OFFLINE).queue();
 					lastOwnerInsult=event.getAuthor();
-					sb.append(m.getEffectiveName()+", ");
+					sb.append(m.getEffectiveName()).append(", ");
 					break;
 				case IDLE:
 					event.getChannel().sendMessage(OWNER_IDLE).queue();
 					break;
 				default :
-					event.getChannel().sendMessage("Thats odd.... He's got a weird status, best not chance it sorry.").queue();
+					event.getChannel().sendMessage("That's odd.... He's got a weird status, best not chance it sorry.").queue();
 				}
 				continue;
 			}
 			
 			//user insulted themselves
-			if(event.getMember().equals(m)){
+			if(Objects.equals(event.getMember(), m)){
 				event.getChannel().sendMessage(SELF_INSULT).queue();
 			}
 			
@@ -98,7 +97,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 			if(m.getUser().isBot()){
 				event.getChannel().sendMessage(m.getAsMention()+"\n"+OTHER_BOT_INSULT).queue();
 			} else {				
-				sb.append(m.getAsMention()+", ");
+				sb.append(m.getAsMention()).append(", ");
 			}
 		}
 		if(sb.length()==0) return;//don't throw an insult if no one was tagged.
@@ -120,12 +119,12 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public List<String> getDraconicAlias() {
-		return Arrays.asList("chikohk");
+		return Collections.singletonList("chikohk");
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 	@Override
@@ -135,7 +134,7 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getName()+" <Taged users you want to insult>`";
+		return "`"+getPrefix(g)+getName()+" <Tagged users you want to insult>`";
 	}
 
 	@Override
@@ -152,10 +151,10 @@ public class InsultCommand extends CaexCommand implements Describable, DraconicC
 	
 	private static List<String> loadInsults() {
 
-		List<String> rtn = new ArrayList<String>();
+		List<String> rtn = new ArrayList<>();
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(InsultCommand.class.getResourceAsStream("/DnDInsults.txt")));
-			String line=null;
+			BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(InsultCommand.class.getResourceAsStream("/DnDInsults.txt"))));
+			String line;
 			while ((line = br.readLine())!= null) {
 				rtn.add(line);
 				Logging.debug("read in insult: "+line);

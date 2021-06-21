@@ -160,8 +160,6 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	 * start the queue
 	 */
 	public void start() {
-		// System.out.println(player.isPaused() +" : "+
-		// player.getPlayingTrack().getInfo().title);
 		if (player.isPaused()) {
 			player.setPaused(false);
 		}

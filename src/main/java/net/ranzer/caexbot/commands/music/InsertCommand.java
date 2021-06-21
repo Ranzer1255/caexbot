@@ -1,20 +1,20 @@
 package net.ranzer.caexbot.commands.music;
 
-import java.util.Arrays;
-import java.util.List;
-
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.ranzer.caexbot.util.StringUtil;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class InsertCommand extends AbstractMusicCommand implements Describable {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("insert");
+		return Collections.singletonList("insert");
 	}
 
 	@Override

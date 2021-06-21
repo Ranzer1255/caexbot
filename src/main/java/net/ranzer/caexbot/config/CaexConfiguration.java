@@ -201,23 +201,23 @@ public class CaexConfiguration {
 						if (item.type() == Integer.class) {
 							Integer value = Integer.parseInt((String) properties.get(item.key()));
 							method.invoke(this, value);
-							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
+							System.out.printf("[CaexConfig] %s(%s)%n", method.getName(), value);
 							continue;
 						} else if (item.type() == Boolean.class) {
 							Boolean value = Boolean.parseBoolean((String) properties.get(item.key()));
 							method.invoke(this, value);
-							System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
+							System.out.printf("[CaexConfig] %s(%s)%n", method.getName(), value);
 							continue;
 						}
 
 						String value = (String) properties.get(item.key());
 						method.invoke(this, value);
-						System.out.println(String.format("[CaexConfig] %s(%s)", method.getName(), value));
+						System.out.printf("[CaexConfig] %s(%s)%n", method.getName(), value);
 					}
 				}
 			}
 		} catch (FileNotFoundException ex) {
-			System.out.println(String.format("Configuration file '%s' not found, writing default configuration values.", CONFIG_PATH));
+			System.out.printf("Configuration file '%s' not found, writing default configuration values.%n", CONFIG_PATH);
 			File configurationFile = new File(System.getProperty("user.home"), CONFIG_PATH);
 			configurationFile.getParentFile().mkdirs();
 			try {
@@ -236,7 +236,7 @@ public class CaexConfiguration {
 				e.printStackTrace();
 			}
 		} catch (Exception ex) {
-			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIG_PATH));
+			System.out.printf("Exception when loading in configuration, using default configuration values: %s.%n", CONFIG_PATH);
 			ex.printStackTrace();
 		}
 		
@@ -274,7 +274,7 @@ public class CaexConfiguration {
 				if(configurationFile.lastModified()!=lastModified){
 					load();
 				}
-				try {sleep(60000);} catch (InterruptedException e) {}
+				try {sleep(60000);} catch (InterruptedException ignored) {}
 			}
 		}
 	}.start();

@@ -1,18 +1,18 @@
 package net.ranzer.caexbot.commands.music;
 
-import java.util.Arrays;
-import java.util.List;
-
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PauseCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 
-		if(!inSameVoiceChannel(event)){
+		if(notInSameVoiceChannel(event)){
 			event.getChannel().sendMessage("You must be listening to pause.").queue();
 			return;
 		}
@@ -23,7 +23,7 @@ public class PauseCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("pause");
+		return Collections.singletonList("pause");
 	}
 
 	@Override

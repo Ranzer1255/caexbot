@@ -16,15 +16,12 @@ import net.ranzer.caexbot.util.Logging;
 
 public class YouTubeSearcher {
 
-	private YouTube yt;
-	private CaexConfiguration config;
+	private final YouTube yt;
+	private final CaexConfiguration config;
 	
 	public YouTubeSearcher() {
-		yt = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
-			
-			@Override
-			public void initialize(HttpRequest request) throws IOException {}//no-op
-		}).setApplicationName("CaexBot").build();
+		//no-op
+		yt = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), request -> {}).setApplicationName("CaexBot").build();
 		config=CaexConfiguration.getInstance();
 
 	}

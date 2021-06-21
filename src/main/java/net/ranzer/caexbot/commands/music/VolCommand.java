@@ -17,7 +17,7 @@ public class VolCommand extends AbstractMusicCommand implements Describable{
 			GuildPlayerManager.getPlayer(event.getGuild()).vol();
 			return;
 		}
-		if(!inSameVoiceChannel(event)){
+		if(notInSameVoiceChannel(event)){
 			event.getChannel().sendMessage("You must be listening to adjust the volume.").queue();
 			return;
 		}

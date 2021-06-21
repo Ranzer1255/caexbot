@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.Guild;
 
 public interface Describable {
 
-	Catagory getCatagory();
+	Category getCategory();
 	
 	String getName();
 	List<String> getAlias();

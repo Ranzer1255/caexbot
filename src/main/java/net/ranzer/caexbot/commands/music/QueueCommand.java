@@ -60,7 +60,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 				
 			}
 			MessageBuilder mb = new MessageBuilder();
-			event.getChannel().sendMessage(mb.setEmbed(eb.build()).build()).queue();
+			event.getChannel().sendMessage(mb.setEmbeds(eb.build()).build()).queue();
 			
 		} else {
 			GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));	

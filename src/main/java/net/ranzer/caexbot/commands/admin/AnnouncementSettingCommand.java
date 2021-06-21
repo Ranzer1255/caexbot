@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.data.IGuildData;
@@ -76,8 +76,8 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 	}
 
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.ADMIN;
+	public Category getCategory() {
+		return Category.ADMIN;
 	}
 	
 	@Override

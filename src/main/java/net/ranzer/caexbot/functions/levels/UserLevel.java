@@ -11,8 +11,7 @@ public class UserLevel implements Comparable<UserLevel> {
 	final private long lastXP;
 	
 	/**
-	 * create new UserLevel with initial Expereience
-	 * @param XP
+	 * create new UserLevel with initial Experience
 	 */
 	public UserLevel(Member m, int XP, Long lxp) {
 		experience = XP;
@@ -52,20 +51,11 @@ public class UserLevel implements Comparable<UserLevel> {
 	}
 
 	public static int getLevel(int xp){
+		//base lvl->xp formula => XP -> level formula
+		//(500*x^2)-(500*x) => 1/50 (25 + sqrt(5) sqrt(125 + x))
 
 		return (int) Math.floor((25+Math.sqrt(5)*Math.sqrt(125+xp))/50);
-//		//todo reverse this function?
-//		//(500*x^2)-(500*x) => 1/50 (25 + sqrt(5) sqrt(125 + x))
-//		int rtn = 1;
-//		boolean found=false;
-//		while(!found){
-//			rtn+=1;
-//			if (xp<calcXPForLevel(rtn)){
-//				found=true;
-//			}
-//
-//		}
-//		return rtn-1;
+
 	}
 	
 	static public int calcXPForLevel(int level){
@@ -76,12 +66,8 @@ public class UserLevel implements Comparable<UserLevel> {
 
 	@Override
 	public int compareTo(UserLevel o) {
-		
-		if(this.getXP()<o.getXP())
-			return 1;
-		if(this.getXP()>o.getXP())
-			return -1;
-		return 0;
-		
+
+		return Integer.compare(o.getXP(), this.getXP());
+
 	}
 }

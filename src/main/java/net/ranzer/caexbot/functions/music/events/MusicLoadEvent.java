@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 public class MusicLoadEvent extends MusicEvent {
 
-	private AudioTrack song;
+	private final AudioTrack song;
 	
 	public MusicLoadEvent(AudioTrack track) {
 		song = track;

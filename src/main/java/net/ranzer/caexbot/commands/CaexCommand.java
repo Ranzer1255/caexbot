@@ -1,6 +1,7 @@
 package net.ranzer.caexbot.commands;
 
 import java.util.List;
+import java.util.Objects;
 
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
@@ -28,7 +29,7 @@ public abstract class CaexCommand{
 				return;
 			} 
 		}
-		if(event.getGuild()==null && !isApplicableToPM()){
+		if(!event.isFromGuild() && !isApplicableToPM()){
 			event.getChannel().sendMessage("This command cannot be used in Private channels").queue();
 			return;
 		}
@@ -43,7 +44,7 @@ public abstract class CaexCommand{
 	private boolean hasPermission(String[] args, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
 			return hasRoleRequirements(args, event);
-		for (Role role : event.getGuild().getMember(event.getAuthor()).getRoles()) {
+		for (Role role : Objects.requireNonNull(event.getMember()).getRoles()) {
 			if(role.getPermissions().contains(getPermissionRequirements())){
 				return true;
 			}
@@ -54,7 +55,7 @@ public abstract class CaexCommand{
 	private boolean hasRoleRequirements(String[] args, MessageReceivedEvent event) {
 		if(getRoleRequirements()==null)
 			return true;
-		for(Role role : event.getGuild().getMember(event.getAuthor()).getRoles()){
+		for(Role role : Objects.requireNonNull(event.getMember()).getRoles()){
 			if(getRoleRequirements().contains(role.getName()))
 				return true;
 		}

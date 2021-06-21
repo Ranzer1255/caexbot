@@ -24,9 +24,7 @@ public class RoleLevel implements Comparable<RoleLevel> {
 	
 	@Override
 	public int compareTo(RoleLevel o) {
-		if(this.xp>o.getXp()) return -1;
-		if(this.xp<o.getXp()) return 1;
-		return 0;
+		return Integer.compare(o.getXp(), this.xp);
 	}
 	
 	

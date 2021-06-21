@@ -1,15 +1,13 @@
 package net.ranzer.caexbot.commands.music;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-
-import net.ranzer.caexbot.functions.music.GuildPlayerManager;
-import net.ranzer.caexbot.util.StringUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
+import net.ranzer.caexbot.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class NowPlayingCommand extends AbstractMusicCommand{
 
@@ -31,7 +29,7 @@ public class NowPlayingCommand extends AbstractMusicCommand{
 		eb.setDescription(playingBar(playing));
 		eb.setFooter("by "+playing.getInfo().author,null);
 		
-		event.getChannel().sendMessage(eb.build()).queue();
+		event.getChannel().sendMessageEmbeds(eb.build()).queue();
 	}
 
 	private String playingBar(AudioTrack playing) {
@@ -63,11 +61,11 @@ public class NowPlayingCommand extends AbstractMusicCommand{
 		for (int i = 0; i < barLength; i++) {
 			sb.append("-");
 		}
-		sb.append("-\n");
-		sb.append("```\n");
-		sb.append(StringUtil.calcTime(currentTime/1000) 
-				+ " of " 
-				+ StringUtil.calcTime(length/1000));
+		sb.append("-\n")
+		  .append("```\n")
+		  .append(StringUtil.calcTime(currentTime / 1000))
+		  .append(" of ")
+		  .append(StringUtil.calcTime(length / 1000));
 		
 		return sb.toString();
 	}

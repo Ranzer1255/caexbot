@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 @Entity
 @Table(name = "guild")
 public class GuildDataModel {

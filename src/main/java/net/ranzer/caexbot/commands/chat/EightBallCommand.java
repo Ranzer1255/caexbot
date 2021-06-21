@@ -5,10 +5,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.ranzer.caexbot.commands.CaexCommand;
-import net.ranzer.caexbot.commands.Catagory;
+import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.util.Logging;
 import net.dv8tion.jda.api.entities.Guild;
@@ -16,7 +17,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class EightBallCommand extends CaexCommand implements Describable{
 	
-	private List<String> answers;
+	private final List<String> answers;
 	
 	public EightBallCommand(){
 		
@@ -27,10 +28,10 @@ public class EightBallCommand extends CaexCommand implements Describable{
 
 	private List<String> loadAnswers() {
 
-		List<String> rtn = new ArrayList<String>();
+		List<String> rtn = new ArrayList<>();
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/8BallAnswers.txt")));
-			String line=null;
+			BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/8BallAnswers.txt"))));
+			String line;
 			while ((line = br.readLine())!= null) {
 				rtn.add(line);
 				Logging.debug("read in 8ball answer: "+line);
@@ -71,8 +72,8 @@ public class EightBallCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public Catagory getCatagory() {
-		return Catagory.CHAT;
+	public Category getCategory() {
+		return Category.CHAT;
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package net.ranzer.caexbot.commands;
 
 import java.awt.Color;
 
-public enum Catagory {
+public enum Category {
 			
 	ADMIN("Admin", Color.RED),
 	CHAT("Chat", Color.blue),
@@ -13,7 +13,7 @@ public enum Catagory {
 	public final String NAME;
 	public final Color COLOR;
 	
-	Catagory(String name, Color color){
+	Category(String name, Color color){
 		NAME = name;
 		COLOR =color;
 	}
