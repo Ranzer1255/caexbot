@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -24,12 +24,12 @@ public class DraconicTranslator {
 	 * 
 	 * @param phrase String to translate
 	 * @param common True if phrase is in common, false if phrase is in draconic.
-	 * @return
+	 * @return translated phrase
 	 */
 	static public String translate(String phrase, Boolean common){
 		String[] wordsToTranslate = phrase.split("[^a-zA-Z']+");
 		String[] translations = new String[wordsToTranslate.length];
-		Map<String, String> dict = common ? Dictonary.getCommon() : Dictonary.getDraconic();
+		Map<String, String> dict = common ? Dictionary.getCommon() : Dictionary.getDraconic();
 		for (int i = 0; i < wordsToTranslate.length; i++) {
 			if(dict.containsKey(wordsToTranslate[i].toLowerCase())&&
 					!dict.get(wordsToTranslate[i]).equals("UNKNOWN")){
@@ -46,7 +46,7 @@ public class DraconicTranslator {
 		return phrase;
 	}
 	
-	private static class Dictonary{
+	private static class Dictionary {
 		
 		private static final String BACKUP_FILE_LOCATION = "/net/ranzer/caexbot/draconic/dict.txt";
 		
@@ -57,7 +57,7 @@ public class DraconicTranslator {
 		static private Map<String,String> drcToCom = new HashMap<>();
 		
 		//Timeout the Dict after 1 hour (1*60*60*1000)
-		private static final long TIMEOUT = 3_600_000l;
+		private static final long TIMEOUT = 3_600_000L;
 
 		//timestamp for last update
 		static private long lastUpdate;
@@ -128,6 +128,7 @@ public class DraconicTranslator {
 			return rtn;
 		}
 		
+		@SuppressWarnings("ResultOfMethodCallIgnored")
 		private static void writeBackupFile(Document doc) {
 			File backupFile = new File(System.getProperty("user.home"),BACKUP_FILE_LOCATION);
 			try (FileWriter fileWriter = new FileWriter(backupFile)){
@@ -142,13 +143,13 @@ public class DraconicTranslator {
 					Logging.error("Draconic Translation: something went wrong writing the backup file");
 					Logging.error(e1.getMessage());
 					Logging.log(e1);
-					Logging.messageBoss(LogLevel.ERROR, "hey check backup File writting");
+					Logging.messageBoss(LogLevel.ERROR, "hey check backup File writing");
 				}
 			} catch (IOException e) {
 				Logging.error("Draconic Translation: something went wrong writing the backup file");
 				Logging.error(e.getMessage());
 				Logging.log(e);
-				Logging.messageBoss(LogLevel.ERROR, "Draconic Translation: hey check backup File writting");
+				Logging.messageBoss(LogLevel.ERROR, "Draconic Translation: hey check backup File writing");
 			}
 			
 		}
