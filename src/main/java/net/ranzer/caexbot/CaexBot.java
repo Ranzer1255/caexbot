@@ -16,6 +16,7 @@ import net.ranzer.caexbot.functions.listeners.CommandListener;
 import net.ranzer.caexbot.functions.listeners.DraconicListener;
 import net.ranzer.caexbot.functions.listeners.JoinLeaveListener;
 import net.ranzer.caexbot.util.Logging;
+import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.time.LocalDateTime;
@@ -35,8 +36,7 @@ public class CaexBot {
 	
 	private static JDA JDA;
 	public final static LocalDateTime START_TIME = LocalDateTime.now();
-	private static CaexConfiguration config = CaexConfiguration.getInstance();
-	public static GuildManager GUILD_MANAGER;
+	private static final CaexConfiguration config = CaexConfiguration.getInstance();
 
 	public static void main (String[] args){
 		Logging.info("Huu... Wha... who... Oh, I guess it's time to [start up]");
@@ -89,7 +89,7 @@ public class CaexBot {
 		
 		
 		@Override
-		public void onReady(ReadyEvent event) {
+		public void onReady(@NotNull ReadyEvent event) {
 			super.onReady(event);
 			JDA=event.getJDA();
 			JDA.addEventListener(new GuildManager(),
@@ -105,7 +105,7 @@ public class CaexBot {
 		}
 		
 		@Override
-		public void onShutdown(ShutdownEvent event) {
+		public void onShutdown(@NotNull ShutdownEvent event) {
 		
 			Logging.info("Shutting down....");
 			JDA.getPresence().setStatus(OnlineStatus.IDLE);

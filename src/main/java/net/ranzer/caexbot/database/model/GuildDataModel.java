@@ -167,5 +167,7 @@ public class GuildDataModel {
 		return modRoleIDs.remove(id);
 	}
 
-
+	public List<MemberDataModel> getMembers() {
+		return members;
+	}
 }
