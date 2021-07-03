@@ -261,6 +261,7 @@ public class CaexConfiguration {
 				}
 	}
 
+	//todo check into using a ScheduledExecutorService for this... (see GrimcoIA's timed role feature)
 	private void startConfigMonitorThread() {
 		
 	new Thread(){
