@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+/**
+ * represents the data in the config file. will generate the config file if it doesn't exist.
+ */
 public class CaexConfiguration {
 	
 	private static final String CONFIG_PATH = "caexbot/config/caex.conf";

@@ -12,6 +12,16 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+/**
+ * this command manages caex's announcement channel for the guild
+ *
+ * <p>announcements will include Joiners and leavers to your guild as well as bot alerts such as shutdowns
+ * and reboots. (issued when the bot owner issues a {@link ShutdownCommand} through the bot itself.
+ *
+ * <p>arguments:
+ * <p>`set`:  will set the current channel to be Caex's announcement channel
+ * <p>`clear`: will clear the announcement channel and disable all of caex's announcements
+ */
 public class AnnouncementSettingCommand extends CaexCommand implements Describable {
 
 	@Override
@@ -38,9 +48,9 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 			}
 		}
 		
-		String chan = (guildData.getAnnouncementChannel()!=null ? guildData.getAnnouncementChannel().getName():"none");
+		String channel = (guildData.getAnnouncementChannel()!=null ? guildData.getAnnouncementChannel().getName():"none");
 		event.getChannel().sendMessage(String.format("My current announcement channel is: %s",
-				chan)).queue();
+				channel)).queue();
 		
 	}
 
@@ -54,7 +64,7 @@ public class AnnouncementSettingCommand extends CaexCommand implements Describab
 		return getShortDescription()+"\n\n"
 				+ "announcements will include Joiners and leavers to your guild as well as bot alerts such"
 				+ " as shutdowns and reboots, (though these are rare)\n\n"
-				+ "`set`:  will set the current channel to be Caex's announcemnet channel\n"
+				+ "`set`:  will set the current channel to be Caex's announcement channel\n"
 				+ "`clear`: will clear the announcement channel and disable all of caex's announcements";
 	}
 	

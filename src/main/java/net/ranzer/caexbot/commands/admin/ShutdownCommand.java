@@ -10,6 +10,13 @@ import net.ranzer.caexbot.config.CaexConfiguration;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Hidden command not listed in the in-app help documentation. this command will shut the program off.
+ * this command can only be issued by the discord user identified by the ID number in the "owner" field
+ * of the Configuration file
+ *
+ * @see CaexConfiguration
+ */
 public class ShutdownCommand extends CaexCommand {
 	
 	@Override
