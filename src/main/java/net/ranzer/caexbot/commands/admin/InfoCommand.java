@@ -61,7 +61,7 @@ public class InfoCommand extends BotCommand implements DraconicCommand, Describa
 		  .addField("Language", "Java", true)
 		  .addField("Artwork", "Mellie", false)
 		  .addField("Invite me!", inviteLinkBuilder(bot), true)
-		  .addField("GitHub Repo", "[GitHub](https://github.com/sgmaniac1255/caexbot)\n[Bugs and Suggestions](https://gitreports.com/issue/Sgmaniac1255/caexbot)", true)
+		  .addField("GitHub Repo", "[GitHub](https://github.com/ranzer1255/caexbot)\n[Bugs and Suggestions](https://github.com/ranzer1255/caexbot/issues)", true)
 		  .setFooter("Please report bugs or suggestions in the link above", null);
 		return rtn;
 	}
