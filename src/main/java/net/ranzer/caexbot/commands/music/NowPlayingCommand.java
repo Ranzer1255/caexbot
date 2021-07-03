@@ -26,48 +26,10 @@ public class NowPlayingCommand extends AbstractMusicCommand{
 			),
 			playing.getInfo().uri
 		);
-		eb.setDescription(playingBar(playing));
+		eb.setDescription(StringUtil.playingBar(playing.getPosition(), playing.getDuration()));
 		eb.setFooter("by "+playing.getInfo().author,null);
 		
 		event.getChannel().sendMessageEmbeds(eb.build()).queue();
-	}
-
-	private String playingBar(AudioTrack playing) {
-		StringBuilder sb = new StringBuilder();
-		long currentTime = playing.getPosition();
-		long length = playing.getDuration();
-		int barLength = 32;
-		
-		long timePerBar = length/barLength;
-		
-		sb.append("```\n");
-		sb.append("-");
-		for (int i = 0; i < barLength; i++) {
-			sb.append("-");
-		}
-		sb.append("-\n");
-		sb.append("|");
-		
-		for (int i = 0; i < currentTime/timePerBar; i++) {
-			sb.append("=");
-		}
-		sb.append("|");
-		for (int i = 0; i < barLength-1-(currentTime/timePerBar); i++) {
-			sb.append(" ");			
-		}
-		
-		sb.append("|\n");
-		sb.append("-");
-		for (int i = 0; i < barLength; i++) {
-			sb.append("-");
-		}
-		sb.append("-\n")
-		  .append("```\n")
-		  .append(StringUtil.calcTime(currentTime / 1000))
-		  .append(" of ")
-		  .append(StringUtil.calcTime(length / 1000));
-		
-		return sb.toString();
 	}
 
 	@Override
