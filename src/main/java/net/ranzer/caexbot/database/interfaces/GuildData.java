@@ -132,13 +132,23 @@ public class GuildData extends AbstractData implements IGuildData {
 	}
 	@Override
 	public void addMember(Member m) {
-		gdm.addMember(m);
-		save(gdm);
+		try(Session s = HibernateManager.getSessionFactory().openSession()) {
+			s.load(gdm, gdm.getId());
+			gdm.addMember(m);
+			s.beginTransaction();
+			s.saveOrUpdate(gdm);
+			s.getTransaction().commit();
+		}
 	}
 	@Override
 	public void deleteMember(Member m) {
-		gdm.removeMember(new MemberDataModel(m,gdm));
-		save(gdm);
+		try(Session s = HibernateManager.getSessionFactory().openSession()) {
+			s.load(gdm, gdm.getId());
+			gdm.removeMember(new MemberDataModel(m, gdm));
+			s.beginTransaction();
+			s.saveOrUpdate(gdm);
+			s.getTransaction().commit();
+		}
 	}
 
 	//ChannelData methods
