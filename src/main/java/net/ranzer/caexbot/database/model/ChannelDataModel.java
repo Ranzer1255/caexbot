@@ -2,6 +2,8 @@ package net.ranzer.caexbot.database.model;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.ranzer.caexbot.data.IChannelData;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -15,6 +17,7 @@ public class ChannelDataModel {
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guild_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private GuildDataModel gdm;
 
 	@Column(name = "perm_raffle")

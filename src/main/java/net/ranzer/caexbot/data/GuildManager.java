@@ -84,7 +84,7 @@ public class GuildManager extends ListenerAdapter {
 			List<GuildDataModel> guilds = loadAllData(GuildDataModel.class,s);
 			for (GuildDataModel guild:guilds){
 				if(CaexBot.getJDA().getGuildById(guild.getId())==null){
-					s.delete(guild);
+					s.remove(guild);
 				}
 			}
 			s.getTransaction().commit();
@@ -98,7 +98,7 @@ public class GuildManager extends ListenerAdapter {
 			List<ChannelDataModel> channels = loadAllData(ChannelDataModel.class,s);
 			for (ChannelDataModel channel:channels){
 				if(CaexBot.getJDA().getTextChannelById(channel.getID())==null){
-					s.delete(channel);
+					s.remove(channel);
 				}
 			}
 			s.getTransaction().commit();

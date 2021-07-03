@@ -3,6 +3,7 @@ package net.ranzer.caexbot.database.model;
 import net.dv8tion.jda.api.entities.Member;
 import net.ranzer.caexbot.data.IGuildData;
 import net.ranzer.caexbot.data.IRaffleData;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
