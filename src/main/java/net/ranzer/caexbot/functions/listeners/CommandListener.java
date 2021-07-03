@@ -3,7 +3,7 @@ package net.ranzer.caexbot.functions.listeners;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.commands.admin.*;
 import net.ranzer.caexbot.commands.chat.*;
@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandListener extends ListenerAdapter {
 	private static CommandListener cl;
-	private final List<CaexCommand> cmds = new ArrayList<>();
+	private final List<BotCommand> cmds = new ArrayList<>();
 	private final DraconicListener dl;
 	
 	public static CommandListener getInstance(){
@@ -52,7 +54,7 @@ public class CommandListener extends ListenerAdapter {
 			.addCommand(new XpGiftCommand());
 	}
 	
-	public CommandListener addCommand(CaexCommand cmd){
+	public CommandListener addCommand(BotCommand cmd){
 		this.cmds.add(cmd);
 		if (cmd instanceof DraconicCommand) dl.addCommand((DraconicCommand)cmd);
 		return this;
@@ -70,18 +72,22 @@ public class CommandListener extends ListenerAdapter {
 						"My current prefix is: `%s`\n\n"
 						+ "If you have the `administrator` permission, you may change my prefix using the `set-prefix` command.\n\n"
 						+ "Do `%shelp set-prefix` for more information.",
-						CaexCommand.getPrefix(event.getGuild()),
-						CaexCommand.getPrefix(event.getGuild())
+						BotCommand.getPrefix(event.getGuild()),
+						BotCommand.getPrefix(event.getGuild())
 								)).queue();
 			}
 		}
-		
-		User author = event.getAuthor();
+
 		String message = event.getMessage().getContentRaw();
-		
-		if(!message.toLowerCase().startsWith(CaexCommand.getPrefix(event.getGuild())))
-			return;
-		findCommand(event, author, message); 
+
+		if(event.isFromGuild()){
+			if(!message.toLowerCase().startsWith(BotCommand.getPrefix(event.getGuild()))) {
+				return;
+			}
+			findCommand(event, BotCommand.getPrefix(event.getGuild()), message);
+		} else {
+			findCommand(event, "", message);
+		}
 	}
 
 	private boolean containsKeyWord(MessageReceivedEvent event) {
@@ -93,24 +99,36 @@ public class CommandListener extends ListenerAdapter {
 		}
 		return false;
 	}
-	
-	private void findCommand(MessageReceivedEvent event, User author, String message) {
-		
-		String[] args = message.split(" ");
-		String command = args[0].toLowerCase().replace(CaexCommand.getPrefix(event.getGuild()), "");
+
+	private void findCommand(MessageReceivedEvent event, String prefix, String message) {
+
+		String[] args = parseArgs(message);
+		String command = args[0].toLowerCase().replace(prefix, "");
 		String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
-		Optional<CaexCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
+		Optional<BotCommand> c = cmds.stream().filter(cc -> cc.getAlias().contains(command)).findFirst();
 
 		if(c.isPresent()){
-			CaexCommand cmd = c.get();
+			BotCommand cmd = c.get();
 
 			callCommand(event,finalArgs,  cmd);
 		}
 
 	}
+	private String[] parseArgs(String message) {
+//		return message.split(" ");
+
+		List<String> list = new ArrayList<String>();
+
+		//splits the message on whitespaces but anything in quotes stays at one argument
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message);
+		while (m.find())
+			list.add(m.group(1).replace("\"",""));
+
+		return list.toArray(new String[0]);
+	}
 
 	protected void callCommand(MessageReceivedEvent event, String[] finalArgs, 
-			CaexCommand cmd) {
+			BotCommand cmd) {
 		new Thread() {
 			@Override
 			public void run(){
@@ -120,7 +138,7 @@ public class CommandListener extends ListenerAdapter {
 		}.start();
 	}
 
-	public List<CaexCommand> getCommands() {
+	public List<BotCommand> getCommands() {
 		
 		return cmds;
 	}

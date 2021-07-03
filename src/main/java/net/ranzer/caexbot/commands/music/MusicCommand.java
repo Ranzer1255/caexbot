@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.admin.HelpCommand;
 import net.ranzer.caexbot.util.Logging;
@@ -19,7 +19,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	public static final String ADD = "Adding song to queue:\n%s";
 	public static final String NOW_PLAYING = "Now playing:\n%s";
 
-	private static final List<CaexCommand> subCommands;
+	private static final List<BotCommand> subCommands;
 
 	static {
 		subCommands = new ArrayList<>();
@@ -47,7 +47,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 			return;
 		}
 
-		Optional<CaexCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+		Optional<BotCommand> c = subCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 
 		// Silent failure of miss-typed subcommands
 		if (!c.isPresent()) {
@@ -77,7 +77,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		
 		sb.append(getShortDescription()).append("\n\n");
 		
-		for (CaexCommand cmd : subCommands) {
+		for (BotCommand cmd : subCommands) {
 			sb.append(
 				String.format("**%s**: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
 			);
@@ -91,7 +91,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
-		for(CaexCommand cmd : subCommands){
+		for(BotCommand cmd : subCommands){
 			sb.append(String.format("%s|", cmd.getName()));
 		}
 		sb.delete(sb.length()-1,sb.length());
@@ -106,7 +106,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	}
 	
 	@Override
-	public List<CaexCommand> getSubcommands() {
+	public List<BotCommand> getSubcommands() {
 		return subCommands;
 	}
 

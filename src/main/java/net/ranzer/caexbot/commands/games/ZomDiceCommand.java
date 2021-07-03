@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.games.zdice.subcommands.ZomEndTurnCommand;
@@ -18,9 +18,9 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 //this is disabled for the time being
-public class ZomDiceCommand extends CaexCommand implements Describable{
+public class ZomDiceCommand extends BotCommand implements Describable{
 
-	List<CaexCommand> zomSubCommands = new ArrayList<>();
+	List<BotCommand> zomSubCommands = new ArrayList<>();
 	
 	public ZomDiceCommand() {
 		zomSubCommands.add(new ZomStartCommand());
@@ -37,7 +37,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 			event.getChannel().sendMessage(event.getAuthor().getAsMention() + getUsage(event.getGuild())).queue();
 		}
 		
-		Optional<CaexCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
+		Optional<BotCommand> c = zomSubCommands.stream().filter(cc -> cc.getAlias().contains(args[0])).findFirst();
 		
 		if(!c.isPresent()){
 			event.getChannel().sendMessage(invalidUsage(event.getGuild())).queue();
@@ -65,7 +65,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 		
 		sb.append(getShortDescription()).append("\n\n");
 		
-		for (CaexCommand cmd : zomSubCommands) {
+		for (BotCommand cmd : zomSubCommands) {
 			sb.append(
 				String.format("`%s`: %s\n", cmd.getName(), ((Describable)cmd).getShortDescription())
 			);
@@ -80,7 +80,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(String.format("`%s%s {", getPrefix(g), getName()));
-		for(CaexCommand cmd : zomSubCommands){
+		for(BotCommand cmd : zomSubCommands){
 			sb.append(String.format("%s | ", cmd.getName()));
 		}
 		sb.delete(sb.length()-3,sb.length());
@@ -110,7 +110,7 @@ public class ZomDiceCommand extends CaexCommand implements Describable{
 	}
 	
 	@Override
-	public List<CaexCommand> getSubcommands() {
+	public List<BotCommand> getSubcommands() {
 		return zomSubCommands;
 	}
 

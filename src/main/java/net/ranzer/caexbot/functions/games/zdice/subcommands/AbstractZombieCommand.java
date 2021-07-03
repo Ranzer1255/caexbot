@@ -1,11 +1,11 @@
 package net.ranzer.caexbot.functions.games.zdice.subcommands;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.dv8tion.jda.api.entities.Guild;
 
-public abstract class AbstractZombieCommand extends CaexCommand implements Describable{
+public abstract class AbstractZombieCommand extends BotCommand implements Describable{
 
 	@Override
 	public boolean isApplicableToPM() {

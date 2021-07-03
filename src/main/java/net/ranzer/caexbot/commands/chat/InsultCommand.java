@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author Ranzer
  */
-public class InsultCommand extends CaexCommand implements Describable, DraconicCommand {
+public class InsultCommand extends BotCommand implements Describable, DraconicCommand {
 	
 	private static final String THIS_BOT_INSULT = "Oh ha ha.... making me insult myself.... How original\n"
 			+ "Well, since I'm a good sport I will";

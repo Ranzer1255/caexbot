@@ -3,7 +3,7 @@ package net.ranzer.caexbot.commands.games;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.dice.Dice;
@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  * @author Ranzer 
  *
  */
-public class DiceCommand extends CaexCommand implements Describable{
+public class DiceCommand extends BotCommand implements Describable{
 
 	private static final int MAX_MESSAGE_LENGTH = 1000;
 

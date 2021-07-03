@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
-import net.ranzer.caexbot.functions.levels.RoleLevel;
 import net.ranzer.caexbot.functions.levels.UserLevel;
 import net.ranzer.caexbot.util.StringUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,7 +23,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class LevelCommand extends CaexCommand implements DraconicCommand,Describable{
+public class LevelCommand extends BotCommand implements DraconicCommand,Describable{
 
 	private static final int NUMBER_OF_RANKINGS = 10;
 	private static final String XP_RULES = "Earn XP by talking!\n"
@@ -78,12 +77,8 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 
 	private void guildCall(String[] args, MessageReceivedEvent event) {
 		if (args.length>0){
-			if (args[0].equals("rank")){
+			if ("rank".equals(args[0])) {
 				event.getChannel().sendMessage(rankMessage(event.getGuild())).queue();
-				return;
-			} else if (args[0].equals("roles")){
-				event.getChannel().sendMessage(rollMessage(event.getGuild())).queue();
-				return;
 			}
 			
 			if(!event.getMessage().getMentionedMembers().isEmpty()){
@@ -121,13 +116,12 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 	@Override
 	public String getLongDescription() {
 		return "This command returns the caller's current XP and level.\n\n"
-				+ "`rank` option: This command will return the top 10 users in the guild\n"
-				+ "`roles` option: this command will return the top 10 roles in the guild";
+				+ "`rank` option: This command will return the top 10 users in the guild";
 	}
 	
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getAlias().get(0)+" [{rank | roles}]`";
+		return "`"+getPrefix(g)+getAlias().get(0)+" [{rank}]`";
 	}
 	
 	@Override
@@ -164,32 +158,6 @@ public class LevelCommand extends CaexCommand implements DraconicCommand,Describ
 		return new MessageBuilder()
 				.setEmbeds(eb.build())
 				.build();
-	}
-
-	private Message rollMessage(Guild guild) {
-		EmbedBuilder eb = new EmbedBuilder();
-		MessageBuilder mb = new MessageBuilder();
-		
-		List<RoleLevel> rankings = GuildManager.getGuildData(guild).getRoleRankings();
-		
-		eb.setAuthor("Current Role Leaderboard", null, null);
-		eb.setDescription(XP_RULES + "\n[wip] role exclusion to come");
-		eb.setThumbnail(guild.getIconUrl());
-		eb.setColor(rankings.get(0).ROLE.getColor());
-				
-		int index = 0;
-		for (RoleLevel entry : rankings) {
-			if(index++>=NUMBER_OF_RANKINGS) break;
-			eb.addField(
-					"**"+index+": **"+StringUtil.truncate(entry.ROLENAME,MAX_NAME_LENGTH), 
-					String.format("%,dxp",
-							entry.getXp()
-					), 
-					true
-			);
-		}
-		
-		return mb.setEmbeds(eb.build()).build();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package net.ranzer.caexbot.commands.admin;
 
 import java.util.*;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class HelpCommand extends CaexCommand implements DraconicCommand, Describable{
+public class HelpCommand extends BotCommand implements DraconicCommand, Describable{
 
 	
 	@Override
@@ -127,10 +127,10 @@ public class HelpCommand extends CaexCommand implements DraconicCommand, Describ
 				+ "arguments in `{}` mean pick one from the list separated by `|`";
 	}
 
-	private List<Describable> getDescribable(List<CaexCommand> list){
+	private List<Describable> getDescribable(List<BotCommand> list){
 		List<Describable> rtn = new ArrayList<>();
 			
-		for (CaexCommand cmd :list) {
+		for (BotCommand cmd :list) {
 			if(cmd instanceof Describable){
 				rtn.add((Describable) cmd);
 			}

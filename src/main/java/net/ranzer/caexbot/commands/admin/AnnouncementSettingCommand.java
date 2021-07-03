@@ -3,7 +3,7 @@ package net.ranzer.caexbot.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.data.GuildManager;
@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class AnnouncementSettingCommand extends CaexCommand implements Describable {
+public class AnnouncementSettingCommand extends BotCommand implements Describable {
 
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {

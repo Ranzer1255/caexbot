@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public abstract class CaexCommand{
+public abstract class BotCommand {
 
 	
 	private static final String NO_PERMISSION_MESSAGE = "You're not my player! You can't tell me what to do!";
@@ -81,7 +81,7 @@ public abstract class CaexCommand{
 		return null;
 	}
 
-	public CaexCommand getCommand() {
+	public BotCommand getCommand() {
 		return this;
 	}
 	
@@ -93,7 +93,7 @@ public abstract class CaexCommand{
 		return false;
 	}
 	
-	public List<CaexCommand> getSubcommands(){
+	public List<BotCommand> getSubcommands(){
 		return null;
 	}
 	public String getUsage(Guild g) {

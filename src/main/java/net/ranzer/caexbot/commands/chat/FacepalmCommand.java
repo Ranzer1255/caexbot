@@ -1,7 +1,7 @@
 package net.ranzer.caexbot.commands.chat;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class FacepalmCommand extends CaexCommand implements DraconicCommand, Describable{
+public class FacepalmCommand extends BotCommand implements DraconicCommand, Describable{
 
 	private final String[] facepalms ={
 			"*%s is ashamed for you*",

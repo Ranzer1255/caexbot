@@ -3,14 +3,14 @@ package net.ranzer.caexbot.commands.search;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.util.Logging;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class YoutubeSearchCommand extends CaexCommand implements Describable{
+public class YoutubeSearchCommand extends BotCommand implements Describable{
 
 	private static final String YOUTUBE_BASE_STRING = "https://youtu.be/";
 	private final YouTubeSearcher yts;

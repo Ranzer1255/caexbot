@@ -1,7 +1,7 @@
 package net.ranzer.caexbot.commands.music;
 
 import net.dv8tion.jda.api.entities.*;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Objects;
 
-public abstract class AbstractMusicCommand extends CaexCommand implements Describable{
+public abstract class AbstractMusicCommand extends BotCommand implements Describable{
 
 	protected void setMusicChannel(TextChannel channel) {
 		GuildPlayerManager.getPlayer(channel.getGuild()).getMusicListener().setMusicChannel(channel);

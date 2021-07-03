@@ -108,17 +108,6 @@ public class GuildData extends AbstractData implements IGuildData {
 	}//todo test to make sure caching works for this
 
 	@Override
-	public List<RoleLevel> getRoleRankings() {
-
-		try(Session s = HibernateManager.getSessionFactory().openSession()) {
-			List<RoleLevel> rtn = new ArrayList<>();
-			s.load(gdm,gdm.getId());
-			List<Role> roles = guild.getRoles();
-			return rtn;
-		}
-	}//todo
-
-	@Override
 	public TextChannel getDefaultMusicChannel() {
 		String channelID = gdm.getMusicChannelID();
 		if (channelID == null) return null;

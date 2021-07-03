@@ -3,14 +3,14 @@ package net.ranzer.caexbot.commands.admin;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.CaexBot;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.chat.InsultCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ShutdownCommand extends CaexCommand {
+public class ShutdownCommand extends BotCommand {
 	
 	@Override
 	public void process(String[] args,  MessageReceivedEvent event) {

@@ -104,7 +104,5 @@ public interface IGuildData {
 
     List<UserLevel> getGuildRankings();
 
-    List<RoleLevel> getRoleRankings();
-
     TextChannel getDefaultMusicChannel();
 }

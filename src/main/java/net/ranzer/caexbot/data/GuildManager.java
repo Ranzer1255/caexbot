@@ -36,7 +36,10 @@ public class GuildManager extends ListenerAdapter {
 	 */
 	static{
 		Logging.info("updating DB to things that happened while offline");
-		
+
+		Logging.info("add new guilds");
+		addNewGuilds();
+
 		Logging.info("removing old guilds");
 		removeOldGuilds();
 
@@ -75,6 +78,9 @@ public class GuildManager extends ListenerAdapter {
 	}
 
 	//DB update methods
+	private static void addNewGuilds(){
+
+	}
 
 	//todo test this
 	private static void removeOldGuilds() {//todo test this

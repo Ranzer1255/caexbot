@@ -3,7 +3,7 @@ package net.ranzer.caexbot.functions.music;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.ranzer.caexbot.commands.CaexCommand;
+import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.music.MusicCommand;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.functions.music.events.*;
@@ -59,8 +59,8 @@ public class MusicListener implements MusicEventListener{
 		else if (event instanceof MusicPausedEvent) {
 			if (!((MusicPausedEvent) event).getPaused()) {
 				getMusicChannel().sendMessage(String.format("Music paused. call `%sm play` or `%sm pause` to resume",
-						CaexCommand.getPrefix(getMusicChannel().getGuild()),
-						CaexCommand.getPrefix(getMusicChannel().getGuild()))).queue();
+						BotCommand.getPrefix(getMusicChannel().getGuild()),
+						BotCommand.getPrefix(getMusicChannel().getGuild()))).queue();
 			}
 
 		}
