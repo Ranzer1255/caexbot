@@ -5,6 +5,7 @@ import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.DraconicCommand;
+import net.ranzer.caexbot.util.Logging;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,20 +33,20 @@ public class FacepalmCommand extends BotCommand implements DraconicCommand, Desc
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
 	
-//		if (ThreadLocalRandom.current().nextInt(2)==0) {
+		if (ThreadLocalRandom.current().nextInt(2)==0) {
 			event.getChannel().sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],
 					event.getAuthor().getAsMention())).queue();
-//		} else {
-//
-//
-//			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
-//
-//			if(fp==null){
-//				return;
-//			}
-//			event.getChannel().sendFile(fp, new MessageBuilder().append(event.getAuthor().getAsMention()).build()).complete();;
-//			fp.delete();
-//		}
+		} else {
+
+
+			File fp = getResourceAsFile(String.format("/fp_st_%02d.jpg", ThreadLocalRandom.current().nextInt(13)));
+
+			if(fp==null){
+				return;
+			}
+			event.getChannel().sendMessage(event.getAuthor().getAsMention()).addFile(fp,"fp.jpg").complete();
+			Logging.debug("Facepalm fp.delete call returned: "+ fp.delete());
+		}
 
 	}
 
@@ -79,8 +80,6 @@ public class FacepalmCommand extends BotCommand implements DraconicCommand, Desc
 		return Category.CHAT;
 	}
 
-	//this *will* be used once i fix the image based facepalms
-	@SuppressWarnings("unused")
 	private static File getResourceAsFile(String path){
 		try {
 			InputStream in =FacepalmCommand.class.getResourceAsStream(path);
