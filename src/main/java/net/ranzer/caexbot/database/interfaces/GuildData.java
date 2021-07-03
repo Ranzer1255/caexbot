@@ -95,18 +95,27 @@ public class GuildData extends AbstractData implements IGuildData {
 	}
 	@Override
 	public List<UserLevel> getGuildRankings() {
-		List<MemberDataModel> members = gdm.getMembers();
-		List<UserLevel> rtn = new ArrayList<>();
-		for(MemberDataModel mdm:members){
-			rtn.add(new UserLevel(guild.getMemberById(mdm.getUserId()),mdm.getXp()));
+		try(Session s = HibernateManager.getSessionFactory().openSession()) {
+			s.load(gdm,gdm.getId());
+			List<MemberDataModel> members = gdm.getMembers();
+			List<UserLevel> rtn = new ArrayList<>();
+			for(MemberDataModel mdm:members){
+				rtn.add(new UserLevel(guild.getMemberById(mdm.getUserId()),mdm.getXp()));
+			}
+			rtn.sort(UserLevel::compareTo);
+			return rtn;
 		}
-		rtn.sort(UserLevel::compareTo);
-		return rtn;
 	}//todo test to make sure caching works for this
 
 	@Override
 	public List<RoleLevel> getRoleRankings() {
-		return null;
+
+		try(Session s = HibernateManager.getSessionFactory().openSession()) {
+			List<RoleLevel> rtn = new ArrayList<>();
+			s.load(gdm,gdm.getId());
+			List<Role> roles = guild.getRoles();
+			return rtn;
+		}
 	}//todo
 
 	@Override

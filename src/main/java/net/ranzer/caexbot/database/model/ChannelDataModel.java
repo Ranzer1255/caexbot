@@ -13,7 +13,7 @@ public class ChannelDataModel {
 	@Column(name = "text_channel_id")
 	private String channelID;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guild_id")
 	private GuildDataModel gdm;
 

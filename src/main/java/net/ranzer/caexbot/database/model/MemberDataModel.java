@@ -16,7 +16,7 @@ public class MemberDataModel {
 	private String userID;
 
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "guild_id")
 	private GuildDataModel gdm;
 

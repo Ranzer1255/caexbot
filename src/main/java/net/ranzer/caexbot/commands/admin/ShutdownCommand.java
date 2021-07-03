@@ -1,15 +1,14 @@
 package net.ranzer.caexbot.commands.admin;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.CaexCommand;
 import net.ranzer.caexbot.commands.chat.InsultCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 public class ShutdownCommand extends CaexCommand {
 	
