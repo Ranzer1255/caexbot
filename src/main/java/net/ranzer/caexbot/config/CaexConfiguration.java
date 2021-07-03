@@ -8,7 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.jar.Manifest;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class CaexConfiguration {
@@ -246,19 +249,20 @@ public class CaexConfiguration {
 	}
 	
 	private void loadVersionFromJAR(){
-		Properties pom = new Properties();
-				try {
-					InputStream in = getClass().getResourceAsStream("/META-INF/maven/com.ranzer.caexbot/caexbot/pom.properties");
-					if(in==null){
-						setVersion("TESTING_VERSION");
-						return;
-					}
-					pom.load(in);
-					setVersion(pom.getProperty("version"));
-					
-				} catch (IOException e) {
-					setVersion("TESTING_VERSION");
-				}
+		try {
+			String version;
+			Enumeration<URL> resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
+			while (resources.hasMoreElements()){
+				URL url = resources.nextElement();
+				Manifest manifest = new Manifest(url.openStream());
+				version = manifest.getMainAttributes().getValue("version");
+				setVersion(version != null ? version : "TESTING_VERSION");
+
+			}
+		} catch (IOException e) {
+			System.out.println("error loading version from JAR");
+			setVersion("TESTING_VERSION");
+		}
 	}
 
 	//todo check into using a ScheduledExecutorService for this... (see GrimcoIA's timed role feature)
