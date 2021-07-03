@@ -33,7 +33,7 @@ public class ZomDicePool {
 	}
 	
 	private List<ZomDie> buildDicePool() {
-		List<ZomDie> rtn = new ArrayList<ZomDie>();
+		List<ZomDie> rtn = new ArrayList<>();
 		
 		for (int i = 0; i < NUM_GREEN ; i++) {
 			rtn.add(new ZomDie(ZomDie.Color.GREEN));

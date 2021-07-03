@@ -17,7 +17,8 @@ import net.ranzer.caexbot.functions.games.zdice.subcommands.ZomStartCommand;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-//this is disabled for the time being
+//this is disabled until the cross-guild bug is corrected.
+@SuppressWarnings("unused")
 public class ZomDiceCommand extends BotCommand implements Describable{
 
 	List<BotCommand> zomSubCommands = new ArrayList<>();

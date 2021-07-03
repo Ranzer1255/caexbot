@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.PrivateChannel;
 
 public class Logging {
 
-	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss Z");
+	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
 	public static void log(LogLevel level, String message) {
 		CaexConfiguration config = CaexConfiguration.getInstance();

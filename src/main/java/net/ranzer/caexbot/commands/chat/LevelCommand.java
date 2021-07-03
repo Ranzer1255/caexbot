@@ -79,6 +79,7 @@ public class LevelCommand extends BotCommand implements DraconicCommand,Describa
 		if (args.length>0){
 			if ("rank".equals(args[0])) {
 				event.getChannel().sendMessage(rankMessage(event.getGuild())).queue();
+				return;
 			}
 			
 			if(!event.getMessage().getMentionedMembers().isEmpty()){
@@ -121,7 +122,7 @@ public class LevelCommand extends BotCommand implements DraconicCommand,Describa
 	
 	@Override
 	public String getUsage(Guild g) {
-		return "`"+getPrefix(g)+getAlias().get(0)+" [{rank}]`";
+		return "`"+getPrefix(g)+getAlias().get(0)+" [rank]`";
 	}
 	
 	@Override

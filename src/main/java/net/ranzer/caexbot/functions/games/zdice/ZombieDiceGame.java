@@ -133,7 +133,7 @@ public class ZombieDiceGame {
 	private void endGame() {
 		controller.announceGameEnd(
 				players.getPlayerList().stream()
-					.sorted((p1, p2) -> p1.compare(p2)).toArray(Player[]::new));
+					.sorted(Player::compare).toArray(Player[]::new));
 		players.clear();
 		state= State.PRE_GAME;
 	}
