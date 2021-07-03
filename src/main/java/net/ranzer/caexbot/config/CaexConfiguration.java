@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class CaexConfiguration {
 	
 	private static final String CONFIG_PATH = "caexbot/config/caex.conf";

@@ -19,6 +19,7 @@ public class Die extends Expression {
 	private boolean reroll = false;
 	private int critSuccessNumber = numberOfFaces;
 	private int critFailNumber = 1;
+	@SuppressWarnings("FieldCanBeLocal")
 	private int rerolledDice = 0;
 
 	/**

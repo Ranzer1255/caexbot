@@ -32,8 +32,6 @@ public class GuildPlayerManager {
 		AudioPlayerManager rtn = new DefaultAudioPlayerManager();
 		rtn.getConfiguration().setResamplingQuality(ResamplingQuality.HIGH);
 		rtn.registerSourceManager(new YoutubeAudioSourceManager());
-//		rtn.registerSourceManager(new SoundCloudAudioSourceManager());
-//		rtn.registerSourceManager(new LocalAudioSourceManager()); //We'll see if i add this or not TBD
 		return rtn;
 	}
 }
