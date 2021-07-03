@@ -1,50 +1,39 @@
 package net.ranzer.caexbot.commands.chat;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
-
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
-import net.ranzer.caexbot.util.Logging;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EightBallCommand extends BotCommand implements Describable{
 	
-	private final List<String> answers;
-	
-	public EightBallCommand(){
-		
-		answers = loadAnswers();
-		
-		
-	}
-
-	private List<String> loadAnswers() {
-
-		List<String> rtn = new ArrayList<>();
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/8BallAnswers.txt"))));
-			String line;
-			while ((line = br.readLine())!= null) {
-				rtn.add(line);
-				Logging.debug("read in 8ball answer: "+line);
-			}
-			br.close();
-		} catch ( Exception e ) {
-			Logging.error(e.getMessage());
-			Logging.log(e);
-		}
-		
-		return rtn;
-		
-	}
+	private final List<String> answers = Arrays.asList(
+			"It is certain",
+			"It is decidedly so",
+			"Without a doubt",
+			"Yes, definitely",
+			"You may rely on it",
+			"As I see it, yes",
+			"Most likely",
+			"Outlook good",
+			"Yes",
+			"Signs point to yes",
+			"Reply hazy try again",
+			"Ask again later",
+			"Better not tell you now",
+			"Cannot predict now",
+			"Concentrate and ask again",
+			"Don't count on it",
+			"My reply is no",
+			"My sources say no",
+			"Outlook not so good",
+			"Very doubtful"
+	);
 	
 	@Override
 	public void process(String[] args, MessageReceivedEvent event){
