@@ -63,7 +63,13 @@ public class CommandListener extends ListenerAdapter {
 
 	@Override
 	public void onSlashCommand(@NotNull SlashCommandEvent event) {
-		event.getCommandId()
+		//todo find the right command and call it
+		//this will require rewriting the command system to not
+		//require a "MessageReceivedEvent" to be sent down the line
+		//perhaps have the command just send the message text back?
+		//or a message builder with the required text and embeds
+		//this way it will be sent as a reply if necessary by this method
+		//or an actual message if in onMessageReceived()
 	}
 
 	@Override
