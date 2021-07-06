@@ -7,6 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.ranzer.caexbot.CaexBot;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
@@ -22,7 +27,16 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class InfoCommand extends BotCommand implements DraconicCommand, Describable{
 
-	private static final String REQUIRED_PERMISSIONS = "70372416";
+	private static final List<Permission> REQUIRED_PERMISSIONS = Arrays.asList(
+		Permission.NICKNAME_CHANGE,
+		Permission.VIEW_CHANNEL,
+		Permission.MESSAGE_WRITE,
+		Permission.MESSAGE_EMBED_LINKS,
+		Permission.MESSAGE_ATTACH_FILES,
+		Permission.MESSAGE_ADD_REACTION,
+		Permission.VOICE_CONNECT,
+		Permission.VOICE_SPEAK
+	);
 
 	@Override
 	public void process(String[] args, MessageReceivedEvent event) {
@@ -139,11 +153,11 @@ public class InfoCommand extends BotCommand implements DraconicCommand, Describa
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("[No Permissions]")
-		  .append("(https://discordapp.com/oauth2/authorize?client_id=").append(bot.getId()).append("&scope=bot)\n")
+		  .append("(").append(CaexBot.getJDA().getInviteUrl()).append(")\n")
 		  .append("[Limited Permissions]")
-		  .append("(https://discordapp.com/oauth2/authorize?client_id=").append(bot.getId()).append("&scope=bot&permissions=").append(REQUIRED_PERMISSIONS).append(")\n")
+		  .append("(").append(CaexBot.getJDA().getInviteUrl(REQUIRED_PERMISSIONS)).append(")\n")
 		  .append("[Admin Permissions]")
-		  .append("(https://discordapp.com/oauth2/authorize?client_id=").append(bot.getId()).append("&scope=bot&permissions=8)");
+		  .append("(").append(CaexBot.getJDA().getInviteUrl(Permission.ADMINISTRATOR)).append(")\n");
 
 		return sb.toString();
 	}
@@ -187,4 +201,14 @@ public class InfoCommand extends BotCommand implements DraconicCommand, Describa
 		return true;
 	}
 
+	@Override
+	public CommandData getCommandData() {
+		CommandData rtn = new CommandData(getName(),getShortDescription());
+
+		rtn.addSubcommands(
+				new SubcommandData("stats","see the stats of the bot")
+		);
+
+		return rtn;
+	}
 }

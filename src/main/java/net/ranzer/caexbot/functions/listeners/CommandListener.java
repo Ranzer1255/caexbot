@@ -1,5 +1,6 @@
 package net.ranzer.caexbot.functions.listeners;
 
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.ranzer.caexbot.commands.BotCommand;
@@ -10,6 +11,7 @@ import net.ranzer.caexbot.commands.games.DiceCommand;
 import net.ranzer.caexbot.commands.games.HiLowCommand;
 import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.commands.search.YoutubeSearchCommand;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +60,12 @@ public class CommandListener extends ListenerAdapter {
 		if (cmd instanceof DraconicCommand) dl.addCommand((DraconicCommand)cmd);
 		return this;
 	}
-	
+
+	@Override
+	public void onSlashCommand(@NotNull SlashCommandEvent event) {
+		event.getCommandId()
+	}
+
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		

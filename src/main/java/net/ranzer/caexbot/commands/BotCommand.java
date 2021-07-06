@@ -3,6 +3,7 @@ package net.ranzer.caexbot.commands;
 import java.util.List;
 import java.util.Objects;
 
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
 import net.dv8tion.jda.api.Permission;
@@ -99,5 +100,10 @@ public abstract class BotCommand {
 	public String getUsage(Guild g) {
 		return String.format("`%s%s`", getPrefix(g),getName());
 	}
+
+	//TODO make this abstract
+	public CommandData getCommandData(){
+		throw new RuntimeException("this method should not be called and isn't abstract only for testing");
+	};
 
 }

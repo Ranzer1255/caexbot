@@ -4,11 +4,14 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.ranzer.caexbot.commands.admin.InfoCommand;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.functions.levels.LevelUpdater;
@@ -97,6 +100,12 @@ public class CaexBot {
 								 DraconicListener.getInstance(),
 								 new JoinLeaveListener(),
 								 new LevelUpdater());
+			JDA.setRequiredScopes("applications.commands");
+
+			for(Guild g: JDA.getGuilds()){
+				//todo add slash commands from command listener
+				g.updateCommands().addCommands(new InfoCommand().getCommandData()).queue();
+			}
 
 			JDA.getPresence().setActivity(Activity.playing(config.getStatus()));
 			
