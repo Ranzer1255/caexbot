@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.data.GuildManager;
@@ -18,6 +19,17 @@ public class MusicListener implements MusicEventListener{
 	private final Guild guild;
 	private TextChannel lastMusicChannel;
 	private Message nowPlayingMessage;
+
+	private final ActionRow PLAYING_BUTTONS = ActionRow.of(
+			Button.primary("ml_pause","Pause"),
+			Button.primary("ml_skip","Skip"),
+			Button.danger("ml_stop", "Stop")
+	);
+	private final ActionRow PAUSED_BUTTONS = ActionRow.of(
+			Button.primary("ml_pause","Play"),
+			Button.primary("ml_skip","Skip"),
+			Button.danger("ml_stop", "Stop")
+	);
 
 	public MusicListener(Guild g) {
 		guild = g;
@@ -40,6 +52,7 @@ public class MusicListener implements MusicEventListener{
 						case "ml_pause":
 							Logging.debug("pause clicked");
 							GuildPlayerManager.getPlayer(event.getGuild()).pause();
+							break;
 						default:
 							Logging.error("[MusicListener button handler] Unhandled button pushed: " + event.getComponentId());
 							event.reply(
@@ -94,11 +107,7 @@ public class MusicListener implements MusicEventListener{
 		else if (event instanceof MusicStartEvent){
 			getMusicChannel().sendMessage(
 					String.format(MusicCommand.NOW_PLAYING, ((MusicStartEvent) event).getSong().getInfo().uri)
-			).setActionRow(
-					Button.primary("ml_pause","Pause"),
-					Button.primary("ml_skip","Skip"),
-					Button.danger("ml_stop", "Stop")
-			).queue(message -> {
+			).setActionRows(PLAYING_BUTTONS).queue(message -> {
 				if (nowPlayingMessage!=null){
 					clearButtons(nowPlayingMessage);
 				}
@@ -125,6 +134,13 @@ public class MusicListener implements MusicEventListener{
 				getMusicChannel().sendMessage(String.format("Music paused. call `%sm play` or `%sm pause` to resume",
 						BotCommand.getPrefix(getMusicChannel().getGuild()),
 						BotCommand.getPrefix(getMusicChannel().getGuild()))).queue();
+				nowPlayingMessage.editMessage(nowPlayingMessage.getContentRaw()).setActionRows(
+						PAUSED_BUTTONS
+				).queue();
+			} else {
+				nowPlayingMessage.editMessage(nowPlayingMessage.getContentRaw()).setActionRows(
+						PLAYING_BUTTONS
+				).queue();
 			}
 
 		}
