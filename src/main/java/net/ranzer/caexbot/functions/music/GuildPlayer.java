@@ -200,6 +200,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 			player.stopTrack();
 			clearQueue();
 		}
+		notifyOfEvent(new MusicStopEvent());
 		close();
 	}
 	

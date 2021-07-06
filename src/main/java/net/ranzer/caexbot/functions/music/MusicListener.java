@@ -3,19 +3,16 @@ package net.ranzer.caexbot.functions.music;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ranzer.caexbot.commands.BotCommand;
-import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.data.GuildManager;
+import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.functions.music.events.*;
 import net.ranzer.caexbot.util.Logging;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.logging.Handler;
 
 public class MusicListener implements MusicEventListener{
 	private final Guild guild;
@@ -24,36 +21,36 @@ public class MusicListener implements MusicEventListener{
 
 	public MusicListener(Guild g) {
 		guild = g;
-		g.getJDA().addEventListener(buttonHandler);
+		g.getJDA().addEventListener(new ListenerAdapter() {
+				@Override
+				public void onButtonClick(@NotNull ButtonClickEvent event) {
+					if (notInSameVoiceChannel(event.getUser())) {
+						event.reply("you must be in voice with me to use these buttons").setEphemeral(true).queue();
+						return;
+					}
+					switch (event.getComponentId()) {
+						case "ml_skip":
+							Logging.debug("skip clicked");
+							GuildPlayerManager.getPlayer(event.getGuild()).playNext(true);
+							break;
+						case "ml_stop":
+							Logging.debug("stop clicked");
+							GuildPlayerManager.getPlayer(event.getGuild()).stop(true);
+							break;
+						case "ml_pause":
+							Logging.debug("pause clicked");
+							GuildPlayerManager.getPlayer(event.getGuild()).pause();
+						default:
+							Logging.error("[MusicListener button handler] Unhandled button pushed: " + event.getComponentId());
+							event.reply(
+									"This Button isn't handled by the music button handler yet.... Yell at ranzer ("+event.getComponentId()+")"
+							).queue();
+							return;
+					}
+					event.deferEdit().queue();
+				}
+			});
 	}
-
-	private final ListenerAdapter buttonHandler = new ListenerAdapter() {
-		@Override
-		public void onButtonClick(@NotNull ButtonClickEvent event) {
-			if (notInSameVoiceChannel(event.getUser())) {
-				event.reply("you must be in voice with me to use these buttons").setEphemeral(true).queue();
-				return;
-			}
-			switch (event.getComponentId()){
-				case "ml_skip":
-					Logging.debug("skip clicked");
-					GuildPlayerManager.getPlayer(event.getGuild()).playNext(true);
-					break;
-				case "ml_stop":
-					Logging.debug("stop clicked");
-					GuildPlayerManager.getPlayer(event.getGuild()).stop(true);
-					//these steps will be moved to a "stop event"
-					//TODO make a "stop" event
-					clearButtons(nowPlayingMessage);
-					nowPlayingMessage=null;
-					break;
-				case "ml_pause":
-					Logging.debug("pause clicked");
-					GuildPlayerManager.getPlayer(event.getGuild()).pause();
-			}
-			event.deferEdit().queue();
-		}
-	};
 
 	protected boolean notInSameVoiceChannel(User u) {
 
@@ -87,6 +84,11 @@ public class MusicListener implements MusicEventListener{
 
 		if(event instanceof MusicJoinEvent){
 			getMusicChannel().sendMessage(String.format(MusicCommand.JOIN, ((MusicJoinEvent) event).getChannelJoined().getName())).queue();
+		}
+
+		else if (event instanceof MusicStopEvent){
+			clearButtons(nowPlayingMessage);
+			nowPlayingMessage=null;
 		}
 
 		else if (event instanceof MusicStartEvent){
