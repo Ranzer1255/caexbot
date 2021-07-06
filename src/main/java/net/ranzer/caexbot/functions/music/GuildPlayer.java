@@ -40,6 +40,7 @@ import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.ranzer.caexbot.functions.music.events.*;
+import org.jetbrains.annotations.NotNull;
 
 public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 
@@ -101,12 +102,12 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 		channel.getJDA().addEventListener(new ListenerAdapter() {
 			
 			@Override
-			public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
+			public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
 				channelCheck(event.getChannelLeft());
 			}
 
 			@Override
-			public void onGuildVoiceMove(GuildVoiceMoveEvent event) {
+			public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 				channelCheck(event.getChannelLeft());
 			}
 
@@ -346,7 +347,7 @@ public class GuildPlayer extends AudioEventAdapter implements AudioSendHandler {
 	 * @author Ranzer
 	 *
 	 */
-	public class TrackQueue {
+	public static class TrackQueue {
 
 		Queue<AudioTrack> queue = new LinkedList<>();
 

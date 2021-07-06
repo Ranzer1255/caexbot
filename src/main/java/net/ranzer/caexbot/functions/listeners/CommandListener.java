@@ -1,6 +1,5 @@
 package net.ranzer.caexbot.functions.listeners;
 
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.ranzer.caexbot.commands.BotCommand;
@@ -9,7 +8,7 @@ import net.ranzer.caexbot.commands.admin.*;
 import net.ranzer.caexbot.commands.chat.*;
 import net.ranzer.caexbot.commands.games.DiceCommand;
 import net.ranzer.caexbot.commands.games.HiLowCommand;
-import net.ranzer.caexbot.commands.music.MusicCommand;
+import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.commands.search.YoutubeSearchCommand;
 
 import java.util.ArrayList;

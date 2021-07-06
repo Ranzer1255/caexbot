@@ -1,19 +1,70 @@
 package net.ranzer.caexbot.functions.music;
 
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.Button;
 import net.ranzer.caexbot.commands.BotCommand;
-import net.ranzer.caexbot.commands.music.MusicCommand;
+import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.data.GuildManager;
 import net.ranzer.caexbot.functions.music.events.*;
+import net.ranzer.caexbot.util.Logging;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.logging.Handler;
 
 public class MusicListener implements MusicEventListener{
-	private Guild guild;
+	private final Guild guild;
 	private TextChannel lastMusicChannel;
+	private Message nowPlayingMessage;
 
 	public MusicListener(Guild g) {
 		guild = g;
+		g.getJDA().addEventListener(buttonHandler);
+	}
+
+	private final ListenerAdapter buttonHandler = new ListenerAdapter() {
+		@Override
+		public void onButtonClick(@NotNull ButtonClickEvent event) {
+			if (notInSameVoiceChannel(event.getUser())) {
+				event.reply("you must be in voice with me to use these buttons").setEphemeral(true).queue();
+				return;
+			}
+			switch (event.getComponentId()){
+				case "ml_skip":
+					Logging.debug("skip clicked");
+					GuildPlayerManager.getPlayer(event.getGuild()).playNext(true);
+					break;
+				case "ml_stop":
+					Logging.debug("stop clicked");
+					GuildPlayerManager.getPlayer(event.getGuild()).stop(true);
+					//these steps will be moved to a "stop event"
+					//TODO make a "stop" event
+					clearButtons(nowPlayingMessage);
+					nowPlayingMessage=null;
+					break;
+				case "ml_pause":
+					Logging.debug("pause clicked");
+					GuildPlayerManager.getPlayer(event.getGuild()).pause();
+			}
+			event.deferEdit().queue();
+		}
+	};
+
+	protected boolean notInSameVoiceChannel(User u) {
+
+		VoiceChannel requesterChannel = getVoiceChannel(guild.retrieveMember(u).complete());
+		VoiceChannel botChannel = getVoiceChannel(guild.getSelfMember());
+
+		return !Objects.equals(requesterChannel, botChannel);
+	}
+
+	private VoiceChannel getVoiceChannel(Member m){
+		return Objects.requireNonNull(m.getVoiceState()).getChannel();
 	}
 
 	public TextChannel getMusicChannel() {
@@ -39,7 +90,18 @@ public class MusicListener implements MusicEventListener{
 		}
 
 		else if (event instanceof MusicStartEvent){
-			getMusicChannel().sendMessage(String.format(MusicCommand.NOW_PLAYING, ((MusicStartEvent) event).getSong().getInfo().uri)).queue();
+			getMusicChannel().sendMessage(
+					String.format(MusicCommand.NOW_PLAYING, ((MusicStartEvent) event).getSong().getInfo().uri)
+			).setActionRow(
+					Button.primary("ml_pause","Pause"),
+					Button.primary("ml_skip","Skip"),
+					Button.danger("ml_stop", "Stop")
+			).queue(message -> {
+				if (nowPlayingMessage!=null){
+					clearButtons(nowPlayingMessage);
+				}
+				nowPlayingMessage=message;
+			});
 		}
 
 		else if (event instanceof MusicSkipEvent){
@@ -71,7 +133,7 @@ public class MusicListener implements MusicEventListener{
 			mb.append(String.format("Volume set to %d\n",((VolumeChangeEvent) event).getVol()))
 			.append("```\n")
 			.append("*-------------------------*--boost---*\n")
-			.append(volumeBar(((VolumeChangeEvent) event).getVol())+"\n")
+			.append(volumeBar(((VolumeChangeEvent) event).getVol())).append("\n")
 			.append("*-------------------------*----------*\n")
 			.append("```");
 
@@ -107,6 +169,10 @@ public class MusicListener implements MusicEventListener{
 		}
 
 
+	}
+
+	private void clearButtons(Message message) {
+		message.editMessage(message.getContentRaw()).setActionRows().queue();
 	}
 
 	private CharSequence volumeBar(int vol) {

@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.commands.music;
+package net.ranzer.caexbot.functions.music.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;

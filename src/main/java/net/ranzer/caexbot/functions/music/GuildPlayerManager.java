@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.entities.Guild;
 
 public class GuildPlayerManager {
 
-	private static Map<Guild, GuildPlayer> players = new HashMap<Guild, GuildPlayer>();
+	private static Map<Guild, GuildPlayer> players = new HashMap<>();
 	private static AudioPlayerManager pm = intPlayerManager();
 	
 	public static GuildPlayer getPlayer(Guild k){

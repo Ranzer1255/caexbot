@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.commands.music;
+package net.ranzer.caexbot.functions.music.commands;
 
 import net.dv8tion.jda.api.entities.*;
 import net.ranzer.caexbot.commands.BotCommand;

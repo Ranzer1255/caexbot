@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.commands.music;
+package net.ranzer.caexbot.functions.music.commands;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
