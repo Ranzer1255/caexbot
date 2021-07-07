@@ -9,7 +9,7 @@ import java.util.List;
 public class ShuffleCommand extends AbstractMusicCommand {
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		GuildPlayerManager.getPlayer(event.getGuild()).shuffle();
 
 	}

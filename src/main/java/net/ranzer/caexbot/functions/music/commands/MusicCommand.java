@@ -41,7 +41,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 	}
 
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		if (args.length == 0) {
 			event.getTextChannel().sendMessage(new MessageBuilder().setEmbeds(HelpCommand.getDescription(this, event.getGuild())).build()).queue();
 			return;
@@ -57,7 +57,7 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		}
 		Logging.debug("Music Subclass: "+c.get().getName());
 		setMusicChannel(event.getTextChannel());
-		c.get().runCommand(Arrays.copyOfRange(args, 1, args.length), event);
+		c.get().runPrefixCommand(Arrays.copyOfRange(args, 1, args.length), event);
 	}
 
 	@Override

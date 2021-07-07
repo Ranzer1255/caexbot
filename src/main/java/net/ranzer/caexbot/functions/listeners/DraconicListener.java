@@ -46,7 +46,7 @@ public class DraconicListener extends ListenerAdapter{
 			if(c.isPresent()){
 				BotCommand cmd = c.get().getCommand();
 				
-				CommandListener.getInstance().callCommand(event, finalArgs, cmd);
+				CommandListener.getInstance().callPrefixCommand(event, finalArgs, cmd);
 			}
 		}
 	}

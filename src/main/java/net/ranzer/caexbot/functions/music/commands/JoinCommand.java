@@ -18,7 +18,7 @@ import java.util.Objects;
 public class JoinCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		
 		VoiceChannel join = getVoiceChannel(Objects.requireNonNull(event.getMember()));
 		

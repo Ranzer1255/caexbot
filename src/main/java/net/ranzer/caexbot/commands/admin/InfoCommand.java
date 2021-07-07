@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -39,7 +41,17 @@ public class InfoCommand extends BotCommand implements DraconicCommand, Describa
 	);
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processSlash(SlashCommandEvent event) {
+		OptionMapping option = event.getOption("stats");
+		if(option!=null && option.getAsString().equals("stats") ){
+			event.replyEmbeds(statusEmbed(event.getJDA().getSelfUser()).build()).setEphemeral(true).queue();
+			return;
+		}
+		event.replyEmbeds(infoEmbed(event.getJDA().getSelfUser()).build()).setEphemeral(true).queue();
+	}
+
+	@Override
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
@@ -205,9 +217,7 @@ public class InfoCommand extends BotCommand implements DraconicCommand, Describa
 	public CommandData getCommandData() {
 		CommandData rtn = new CommandData(getName(),getShortDescription());
 
-		rtn.addSubcommands(
-				new SubcommandData("stats","see the stats of the bot")
-		);
+		rtn.addOption(OptionType.STRING,"stats","say \"stats\" if you want to see my stats");
 
 		return rtn;
 	}

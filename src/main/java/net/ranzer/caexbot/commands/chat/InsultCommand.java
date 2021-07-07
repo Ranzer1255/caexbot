@@ -48,7 +48,7 @@ public class InsultCommand extends BotCommand implements Describable, DraconicCo
 	public static User lastOwnerInsult = null;
 	
 	@Override
-	public void process(String[] args,MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		StringBuilder sb = new StringBuilder();
 		
 		for ( Member m : event.getMessage().getMentionedMembers()) {

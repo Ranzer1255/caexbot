@@ -14,7 +14,7 @@ import java.util.Objects;
 public class PlayCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		GuildPlayer player = GuildPlayerManager.getPlayer(event.getGuild());
 		if(args.length>0){

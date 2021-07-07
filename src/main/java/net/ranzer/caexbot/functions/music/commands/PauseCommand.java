@@ -10,7 +10,7 @@ import java.util.List;
 public class PauseCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if(notInSameVoiceChannel(event)){
 			event.getChannel().sendMessage("You must be listening to pause.").queue();

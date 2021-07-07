@@ -13,7 +13,7 @@ import java.util.List;
 public class ShutdownCommand extends BotCommand {
 	
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		if (event.getAuthor()!=event.getJDA().getUserById(CaexConfiguration.getInstance().getOwner())){
 			noPermission(event);
 			return;

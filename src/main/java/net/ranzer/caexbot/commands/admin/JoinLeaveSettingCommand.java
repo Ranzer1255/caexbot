@@ -19,7 +19,7 @@ public class JoinLeaveSettingCommand extends BotCommand implements Describable {
 	private static final String INFO_MESSAGE = "I am currently %sset to say when someone leaves or joins the guild.";
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		IGuildData gd = GuildManager.getGuildData(event.getGuild());
 		if(args.length>0){
 			//set alert toggle

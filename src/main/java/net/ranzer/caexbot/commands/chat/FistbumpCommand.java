@@ -36,7 +36,7 @@ public class FistbumpCommand extends BotCommand implements Describable, Draconic
 	}
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		Message m = event.getChannel().sendMessage(":right_facing_fist:    :left_facing_fist:").complete();
 		try {
 			Thread.sleep(1000L);

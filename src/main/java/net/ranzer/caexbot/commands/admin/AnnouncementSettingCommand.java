@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class AnnouncementSettingCommand extends BotCommand implements Describable {
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		
 		IGuildData guildData = GuildManager.getGuildData(event.getGuild());
 		

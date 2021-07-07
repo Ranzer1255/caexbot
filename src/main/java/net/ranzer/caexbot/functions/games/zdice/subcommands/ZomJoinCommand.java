@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class ZomJoinCommand extends AbstractZombieCommand implements Describable{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		if(ZomDiceDiscordControler.getInstance().addPlayer(event.getAuthor()))
 			event.getChannel().sendMessage(event.getAuthor().getAsMention() + ", you have been added to the game").queue();
 		else

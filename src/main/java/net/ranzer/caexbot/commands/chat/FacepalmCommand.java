@@ -31,7 +31,7 @@ public class FacepalmCommand extends BotCommand implements DraconicCommand, Desc
 	};
 	
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 	
 		if (ThreadLocalRandom.current().nextInt(2)==0) {
 			event.getChannel().sendMessage(String.format(facepalms[ThreadLocalRandom.current().nextInt(facepalms.length)],

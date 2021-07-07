@@ -15,7 +15,7 @@ import java.util.List;
 public class XPPermCommand extends BotCommand implements Describable{
 
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if (args.length==0){
 			event.getChannel().sendMessage("This channel's XP setting is currently: "+

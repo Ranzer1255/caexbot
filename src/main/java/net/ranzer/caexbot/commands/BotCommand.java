@@ -3,6 +3,7 @@ package net.ranzer.caexbot.commands;
 import java.util.List;
 import java.util.Objects;
 
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.config.CaexConfiguration;
 import net.ranzer.caexbot.data.GuildManager;
@@ -13,7 +14,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class BotCommand {
 
-	
+
 	private static final String NO_PERMISSION_MESSAGE = "You're not my player! You can't tell me what to do!";
 
 	public static String getPrefix(Guild guild) {
@@ -23,25 +24,36 @@ public abstract class BotCommand {
 		return GuildManager.getPrefix(guild);
 	}
 
-	public void runCommand(String[] args, MessageReceivedEvent event){
+	public void runSlashCommand(SlashCommandEvent event){
+		processSlash(event);
+
+	}
+
+	public void runPrefixCommand(String[] args, MessageReceivedEvent event){
 		if (!event.getAuthor().getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
 			if (!hasPermission(args, event)) {
 				noPermission(event);
 				return;
-			} 
+			}
 		}
 		if(!event.isFromGuild() && !isApplicableToPM()){
 			event.getChannel().sendMessage("This command cannot be used in Private channels").queue();
 			return;
 		}
-		process(args, event);
+		processPrefix(args, event);
 	}
-	
+
 	abstract public boolean isApplicableToPM();
-	
-	abstract public void process(String[] args, MessageReceivedEvent event);
-	
+
+	abstract public void processPrefix(String[] args, MessageReceivedEvent event);
+
+	/**
+	 * no-op
+	 * @param event
+	 */
+	public void processSlash(SlashCommandEvent event){}
 	abstract public List<String> getAlias();
+
 	private boolean hasPermission(String[] args, MessageReceivedEvent event) {
 		if(getPermissionRequirements()==null)
 			return hasRoleRequirements(args, event);
@@ -60,11 +72,11 @@ public abstract class BotCommand {
 			if(getRoleRequirements().contains(role.getName()))
 				return true;
 		}
-		
-		
+
+
 		return false;
 	}
-	
+
 	public List<String> getRoleRequirements() {
 		return null;
 	}
@@ -75,9 +87,9 @@ public abstract class BotCommand {
 
 	protected void noPermission(MessageReceivedEvent event) {
 		event.getChannel().sendMessage(event.getAuthor().getAsMention()+" "+NO_PERMISSION_MESSAGE).queue();
-		
+
 	}
-	
+
 	public String invalidUsage(Guild g){
 		return null;
 	}
@@ -85,25 +97,25 @@ public abstract class BotCommand {
 	public BotCommand getCommand() {
 		return this;
 	}
-	
+
 	public String getName(){
 		return getAlias().get(0);
 	}
-	
+
 	public boolean hasSubcommands(){
 		return false;
 	}
-	
 	public List<BotCommand> getSubcommands(){
 		return null;
 	}
+
 	public String getUsage(Guild g) {
 		return String.format("`%s%s`", getPrefix(g),getName());
 	}
 
 	//TODO make this abstract
 	public CommandData getCommandData(){
-		throw new RuntimeException("this method should not be called and isn't abstract only for testing");
+		return null;
 	};
 
 }

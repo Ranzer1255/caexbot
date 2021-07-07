@@ -36,7 +36,7 @@ public class EightBallCommand extends BotCommand implements Describable{
 	);
 	
 	@Override
-	public void process(String[] args, MessageReceivedEvent event){
+	public void processPrefix(String[] args, MessageReceivedEvent event){
 		event.getChannel().sendMessage(event.getAuthor().getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
 	}
 	

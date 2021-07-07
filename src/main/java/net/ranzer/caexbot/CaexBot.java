@@ -102,11 +102,6 @@ public class CaexBot {
 								 new LevelUpdater());
 			JDA.setRequiredScopes("applications.commands");
 
-			for(Guild g: JDA.getGuilds()){
-				//todo add slash commands from command listener
-				g.updateCommands().addCommands(new InfoCommand().getCommandData()).queue();
-			}
-
 			JDA.getPresence().setActivity(Activity.playing(config.getStatus()));
 			
 			Logging.info("Done Loading and ready to go!");

@@ -12,7 +12,7 @@ public class ZomScoreCommand extends AbstractZombieCommand implements Describabl
 
 	
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		int brains = ZomDiceDiscordControler.getInstance().getScore(new UserPlayerAdapter(event.getAuthor()));
 		event.getChannel().sendMessage(String.format("%s: your score is **%d** Brains!", event.getAuthor().getAsMention(), brains)).queue();
 	}

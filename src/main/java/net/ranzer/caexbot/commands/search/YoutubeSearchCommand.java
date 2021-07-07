@@ -19,7 +19,7 @@ public class YoutubeSearchCommand extends BotCommand implements Describable{
 		yts = new YouTubeSearcher();
 	}
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		StringBuilder queryBuilder = new StringBuilder();
 
 		for (String arg : args) {

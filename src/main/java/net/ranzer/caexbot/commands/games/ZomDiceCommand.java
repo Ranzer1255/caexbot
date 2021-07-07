@@ -33,7 +33,7 @@ public class ZomDiceCommand extends BotCommand implements Describable{
 	}
 	
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		if(args.length!=1){
 			event.getChannel().sendMessage(event.getAuthor().getAsMention() + getUsage(event.getGuild())).queue();
 		}
@@ -45,7 +45,7 @@ public class ZomDiceCommand extends BotCommand implements Describable{
 			return;
 		}
 		
-		c.get().runCommand(args, event);
+		c.get().runPrefixCommand(args, event);
 
 	}
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class NowPlayingCommand extends AbstractMusicCommand{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		if(!GuildPlayerManager.getPlayer(event.getGuild()).isPlaying()) return;//ignore command if not playing
 		
 		AudioTrack playing = GuildPlayerManager.getPlayer(event.getGuild()).getPlayingTrack();

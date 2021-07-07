@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class SkipCommand extends AbstractMusicCommand implements Describable{
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if(notInSameVoiceChannel(event)){
 			event.getChannel().sendMessage("You must be listening to skip a song.").queue();

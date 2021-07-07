@@ -19,7 +19,7 @@ public class HelpCommand extends BotCommand implements DraconicCommand, Describa
 
 	
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		Logging.debug("Help called");
 		CommandListener cmds = CommandListener.getInstance();
 

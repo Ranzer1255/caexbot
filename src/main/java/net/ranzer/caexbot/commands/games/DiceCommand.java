@@ -2,13 +2,19 @@ package net.ranzer.caexbot.commands.games;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.dice.Dice;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.ranzer.caexbot.util.StringUtil;
 
 /**
  * <p> Credit where Credit is due:
@@ -20,32 +26,44 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class DiceCommand extends BotCommand implements Describable{
 
 	private static final int MAX_MESSAGE_LENGTH = 1000;
+	private static final String SCO_DICE = "dice";
+	private static final String SCO_HIDDEN = "hidden";
 
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processSlash(SlashCommandEvent event) {
+		String expression = Objects.requireNonNull(event.getOption(SCO_DICE)).getAsString();
+		Dice dice = new Dice(expression);
+		int result = dice.roll();
+		OptionMapping isHidden = event.getOption(SCO_HIDDEN);
+		event.reply(String.format("%s = %d",
+				getRollBreakdown(expression,dice),
+				result)).setEphemeral(isHidden != null && isHidden.getAsBoolean()).queue();
+	}
+
+	@Override
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if(!(args.length<1)){
 			invalidUsage(event.getGuild());
 		}
-		StringBuilder expression = new StringBuilder();
 
-		for (String arg : args) {
-			expression.append(" ").append(arg);
-		}
-		Dice dice = new Dice(expression.substring(1));
+		String expression = StringUtil.arrayToString(args," ");
+
+		Dice dice = new Dice(expression);
 		
 		int result = dice.roll();
-		
-		
+
 		event.getChannel().sendMessage(String.format("%s: %s = %d", 
-				event.getAuthor().getAsMention(), 
-				(dice.getBreakdown().length()< MAX_MESSAGE_LENGTH)?dice.getBreakdown():
-					"(Message to long to display each die)"+expression.substring(1), 
+				event.getAuthor().getAsMention(),
+				getRollBreakdown(expression, dice),
 				result))
 		.queue();
-		
-		
-		
+
+	}
+
+	private String getRollBreakdown(String expression, Dice dice) {
+		return (dice.getBreakdown().length() < MAX_MESSAGE_LENGTH) ? dice.getBreakdown() :
+				"(Message to long to display each die)" + expression.substring(1);
 	}
 
 	@Override
@@ -86,4 +104,13 @@ public class DiceCommand extends BotCommand implements Describable{
 		return true;
 	}
 
+	@Override
+	public CommandData getCommandData() {
+		CommandData rtn = new CommandData(getName(),getShortDescription());
+
+		rtn.addOption(OptionType.STRING,SCO_DICE,"example: 1d20+5 [dex save]",true)
+				.addOption(OptionType.BOOLEAN,SCO_HIDDEN,"Hide this roll?");
+
+		return rtn;
+	}
 }

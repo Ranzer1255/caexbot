@@ -18,7 +18,7 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 	}
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if (args[0].startsWith(getPrefix(event.getGuild()))) {
 			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[0].substring(getPrefix(event.getGuild()).length()));

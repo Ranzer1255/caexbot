@@ -5,7 +5,10 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
@@ -15,17 +18,41 @@ import net.ranzer.caexbot.data.IMemberData;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XpGiftCommand extends BotCommand implements Describable {
-	
-	private final Pattern ID_REGEX = Pattern.compile("(?<id>\\d{18})");
-	private final Pattern XP_REGEX = Pattern.compile("((?<xp>\\d+)(\\s?[xX][pP])?)");
-	
+
+	private static final Pattern ID_REGEX = Pattern.compile("(?<id>\\d{18})");
+	private static final Pattern XP_REGEX = Pattern.compile("((?<xp>\\d+)(\\s?[xX][pP])?)");
+	private static final String SCO_DONATION = "donation";
+	private static final String SCO_RECIPIENT = "recipient";
+	private static final String CANT_AFFORD = "you can't afford to donate %,dxp, you only have %,dxp to your name.";
+	private static final String BOT_DONATION = "While I appreciate the gesture, my fellow bots and I don't need XP. It's for you humans only.";
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processSlash(SlashCommandEvent event) {
+		try {
+			Member donor = Objects.requireNonNull(event.getMember());
+			Member recipient = Objects.requireNonNull(Objects.requireNonNull(event.getOption(SCO_RECIPIENT)).getAsMember());
+			int donation = (int) Objects.requireNonNull(event.getOption(SCO_DONATION)).getAsLong();
+			donate(recipient,
+					donor,
+					donation,
+					event.getChannel());
+			event.replyEmbeds(donationEmbed(donor,donation,recipient)).queue();
+		} catch (CantAffordException e) {
+			event.reply(String.format(
+					CANT_AFFORD,
+					e.donation,e.balance)).setEphemeral(true).queue();
+		} catch (BotDonationException e) {
+			event.reply(BOT_DONATION).setEphemeral(true).queue();
+		}
+	}
+
+	@Override
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 		
 		int donation;
 		
@@ -41,9 +68,18 @@ public class XpGiftCommand extends BotCommand implements Describable {
 			return;
 		}
 		
-		Member donor = event.getMember();
-		
-		donate(recipient, donor, donation,event.getChannel());
+		Member donor = Objects.requireNonNull(event.getMember());
+
+		try {
+			donate(recipient, donor, donation,event.getChannel());
+			event.getChannel().sendMessageEmbeds(donationEmbed(donor,donation,recipient)).queue();
+		} catch (CantAffordException e) {
+			event.getChannel().sendMessage(String.format(
+					CANT_AFFORD,
+					e.donation,e.balance)).queue();
+		} catch (BotDonationException e){
+			event.getChannel().sendMessage(BOT_DONATION).queue();
+		}
 	}
 	
 	/**
@@ -64,26 +100,20 @@ public class XpGiftCommand extends BotCommand implements Describable {
 
 
 
-	private void donate(Member recipient, Member donor, int donation, MessageChannel channel) {
+	private void donate(Member recipient, Member donor, int donation, MessageChannel channel) throws CantAffordException, BotDonationException {
+		//bot check
+		if(recipient.getUser().isBot()){
+			throw new BotDonationException();
+		}
+
 		IGuildData gd = GuildManager.getGuildData(recipient.getGuild());
 		IMemberData donorData = gd.getMemberData(donor);
 		IMemberData recipientData = gd.getMemberData(recipient);
 
 		//affordance check
 		if(donorData.getXP()<donation){
-			channel.sendMessage(String.format(
-					"you can't afford to donate %,dxp, you only have %,dxp to your name.",
-					donation,donorData.getXP())).queue();
-			return;
+			throw new CantAffordException(donation,donorData.getXP());
 		}
-		//bot check
-		if(recipient.getUser().isBot()){
-			channel.sendMessage("While I appreciate the gesture, my fellow bots and I don't need XP. It's for you humans only.").queue();
-			return;
-		}
-		
-		channel.sendMessageEmbeds(donationEmbed(donor,donation,recipient)).queue();
-		
 		donorData.removeXP(donation, channel);
 		recipientData.addXP(donation, channel);
 	}
@@ -141,7 +171,7 @@ public class XpGiftCommand extends BotCommand implements Describable {
 
 	@Override
 	public List<String> getAlias() {
-		return Arrays.asList("donate","gift","give");
+		return Arrays.asList("gift","donate","give");
 	}
 
 	//Category
@@ -150,4 +180,24 @@ public class XpGiftCommand extends BotCommand implements Describable {
 		return Category.CHAT;
 	}
 
+	@Override
+	public CommandData getCommandData() {
+		CommandData rtn = new CommandData(getName(),getShortDescription());
+
+		rtn.addOption(OptionType.INTEGER,SCO_DONATION,"how much do you want to give?",true)
+		   .addOption(OptionType.USER, SCO_RECIPIENT,"who are you giving it to?",true);
+
+		return rtn;
+	}
+
+	private static class CantAffordException extends Exception{
+		public final int donation;
+		public final int balance;
+
+		public CantAffordException(int donation,int balance){
+			this.donation = donation;
+			this.balance = balance;
+		}
+	}
+	private static class BotDonationException extends Exception{}
 }

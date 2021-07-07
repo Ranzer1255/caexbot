@@ -27,7 +27,7 @@ public class HiLowCommand extends BotCommand implements Describable {
 	private static final int CUT_OFF = 50;
 
 	@Override
-	public void process(String[] args,  MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		//parse args
 		if (args.length==0 || args.length>2){

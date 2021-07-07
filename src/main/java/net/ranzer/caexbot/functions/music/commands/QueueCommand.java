@@ -18,7 +18,7 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 	private static final int SHOW_QUEUE_LENGTH = 10;
 
 	@Override
-	public void process(String[] args, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
+	public void processPrefix(String[] args, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
 			GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
 			EmbedBuilder eb = new EmbedBuilder();

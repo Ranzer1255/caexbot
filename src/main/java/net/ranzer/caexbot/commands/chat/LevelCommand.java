@@ -32,7 +32,7 @@ public class LevelCommand extends BotCommand implements DraconicCommand,Describa
 
 
 	@Override
-	public void process(String[] args, MessageReceivedEvent event) {
+	public void processPrefix(String[] args, MessageReceivedEvent event) {
 
 		if (event.getChannelType().equals(ChannelType.TEXT)) {
 			guildCall(args, event);
