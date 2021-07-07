@@ -87,7 +87,7 @@ public class CommandListener extends ListenerAdapter {
 				Logging.debug(String.format("%s: %s",o.getName(),o.getAsString()));
 			}
 		}
-		c.ifPresent(botCommand -> botCommand.runSlashCommand(event));
+		c.ifPresent(botCommand -> callSlashCommand(event,botCommand));
 		//todo find the right command and call it
 		//this will require rewriting the command system to not
 		//require a "MessageReceivedEvent" to be sent down the line

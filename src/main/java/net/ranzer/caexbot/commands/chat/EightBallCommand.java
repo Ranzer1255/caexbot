@@ -1,7 +1,9 @@
 package net.ranzer.caexbot.commands.chat;
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
@@ -34,7 +36,12 @@ public class EightBallCommand extends BotCommand implements Describable{
 			"Outlook not so good",
 			"Very doubtful"
 	);
-	
+
+	@Override
+	public void processSlash(SlashCommandEvent event) {
+		event.reply(answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
+	}
+
 	@Override
 	public void processPrefix(String[] args, MessageReceivedEvent event){
 		event.getChannel().sendMessage(event.getAuthor().getAsMention()+": "+answers.get(ThreadLocalRandom.current().nextInt(answers.size()))).queue();
@@ -68,5 +75,10 @@ public class EightBallCommand extends BotCommand implements Describable{
 	@Override
 	public boolean isApplicableToPM() {
 		return true;
+	}
+
+	@Override
+	public CommandData getCommandData() {
+		return new CommandData(getName(),getShortDescription());
 	}
 }

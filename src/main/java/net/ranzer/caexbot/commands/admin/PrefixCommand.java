@@ -3,6 +3,8 @@ package net.ranzer.caexbot.commands.admin;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
@@ -13,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PrefixCommand extends BotCommand implements Describable{
+
+	private static final String SCO_PREFIX = "prefix";
 
 	@Override
 	public void processPrefix(String[] args, MessageReceivedEvent event) {
@@ -65,5 +69,13 @@ public class PrefixCommand extends BotCommand implements Describable{
 	@Override
 	public boolean isApplicableToPM() {
 		return false;
+	}
+
+	@Override
+	public CommandData getCommandData() {
+		CommandData rtn = new CommandData(getName(),getShortDescription());
+		rtn.addOption(OptionType.STRING, SCO_PREFIX,"the prefix i will listen for when not using slash commands",true);
+		rtn.setDefaultEnabled(false);
+		return rtn;
 	}
 }

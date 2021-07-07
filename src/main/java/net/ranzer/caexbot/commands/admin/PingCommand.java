@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.InteractionHook;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Category;
 import net.ranzer.caexbot.commands.Describable;
@@ -12,6 +15,15 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PingCommand extends BotCommand implements DraconicCommand, Describable{
+
+	@Override
+	public void processSlash(SlashCommandEvent event) {
+		Date startTime = new Date();
+		InteractionHook pong = event.reply("pong!").complete();
+		Date endTime = new Date();
+		long lag = endTime.getTime()-startTime.getTime();
+		pong.editOriginal("pong! `"+lag+"ms`").queue();
+	}
 
 	@Override
 	public void processPrefix(String[] args, MessageReceivedEvent event) {
@@ -53,5 +65,8 @@ public class PingCommand extends BotCommand implements DraconicCommand, Describa
 		return true;
 	}
 
-
+	@Override
+	public CommandData getCommandData() {
+		return new CommandData(getName(),getShortDescription());
+	}
 }
