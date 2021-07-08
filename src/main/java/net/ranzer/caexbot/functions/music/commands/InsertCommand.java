@@ -1,20 +1,42 @@
 package net.ranzer.caexbot.functions.music.commands;
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.ranzer.caexbot.commands.Describable;
+import net.ranzer.caexbot.functions.music.GuildPlayer;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.ranzer.caexbot.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class InsertCommand extends AbstractMusicCommand implements Describable {
+public class InsertCommand extends AbstractMusicSubCommand implements Describable {
+
+	private static final String SCO_VIDEO = "video";
+	private static final String SCO_ID_SEARCH = "knowid";
 
 	@Override
 	public List<String> getAlias() {
 		return Collections.singletonList("insert");
+	}
+
+	@Override
+	public void processSlash(SlashCommandEvent event) {
+
+		event.deferReply().queue();
+		GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
+		OptionMapping searchOption = event.getOption(SCO_ID_SEARCH);
+		if(searchOption !=null&& searchOption.getAsBoolean()){
+			gp.insertID(Objects.requireNonNull(event.getOption(SCO_VIDEO)).getAsString());
+		} else {
+			gp.insertSearch(Objects.requireNonNull(event.getOption(SCO_VIDEO)).getAsString());
+		}
 	}
 
 	@Override
@@ -23,7 +45,7 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 		if (args[0].startsWith(getPrefix(event.getGuild()))) {
 			GuildPlayerManager.getPlayer(event.getGuild()).insertID(args[0].substring(getPrefix(event.getGuild()).length()));
 		} else {
-			GuildPlayerManager.getPlayer(event.getGuild()).insertSearch(StringUtil.arrayToString(Arrays.asList(args), " "));
+			GuildPlayerManager.getPlayer(event.getGuild()).insertSearch(StringUtil.arrayToString(args, " "));
 		}
 
 	}
@@ -44,5 +66,14 @@ public class InsertCommand extends AbstractMusicCommand implements Describable {
 		
 		return String.format("`%smusic %s <search string>`", getPrefix(g), getAlias().get(0)) + "\n"+
 		       String.format("`%smusic %s %s<video or playlist code>`", getPrefix(g),getName(),getPrefix(g));
+	}
+
+	@Override
+	protected SubcommandData getSubCommandData() {
+		SubcommandData rtn = new SubcommandData(getName(),getShortDescription());
+
+		rtn.addOption(OptionType.STRING,SCO_VIDEO, "what video to search for",true );
+		rtn.addOption(OptionType.BOOLEAN, SCO_ID_SEARCH,"if you have the video ID say \"true\" to skip the search",false);
+		return rtn;
 	}
 }

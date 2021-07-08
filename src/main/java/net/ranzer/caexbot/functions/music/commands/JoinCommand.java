@@ -1,7 +1,11 @@
 package net.ranzer.caexbot.functions.music.commands;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 
@@ -15,16 +19,23 @@ import java.util.Objects;
  * @author Ranzer
  *
  */
-public class JoinCommand extends AbstractMusicCommand implements Describable{
+public class JoinCommand extends AbstractMusicSubCommand implements Describable{
+
+	@Override
+	public void processSlash(SlashCommandEvent event) {
+		process(event.getMember(),event.getGuild());
+	}
 
 	@Override
 	public void processPrefix(String[] args, MessageReceivedEvent event) {
-		
-		VoiceChannel join = getVoiceChannel(Objects.requireNonNull(event.getMember()));
-		
-		if(join!=null){	
-			GuildPlayerManager.getPlayer(event.getGuild()).join(join);
-		}
+		process(event.getMember(),event.getGuild());
+	}
+
+	private void process(Member member, Guild guild){
+		VoiceChannel join = getVoiceChannel(member);
+
+		if(join!=null)
+			GuildPlayerManager.getPlayer(guild).join(join);
 	}
 
 	@Override

@@ -25,7 +25,6 @@ public class StringUtil {
 	/**
 	 * overloaded method of {@link StringUtil#arrayToString(Collection stringArray, String delimiter)}
 	 */
-	@SuppressWarnings("unused")
 	public static String arrayToString(String[] stringArray, String delimiter){
 		return arrayToString(Arrays.asList(stringArray), delimiter);
 	}

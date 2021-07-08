@@ -19,16 +19,17 @@ public class MusicListener implements MusicEventListener{
 	private final Guild guild;
 	private TextChannel lastMusicChannel;
 	private Message nowPlayingMessage;
+	private static final String MUSIC_BUTTON_PREFIX = "ml_";
 
-	private final ActionRow PLAYING_BUTTONS = ActionRow.of(
-			Button.primary("ml_pause","Pause"),
-			Button.primary("ml_skip","Skip"),
-			Button.danger("ml_stop", "Stop")
+	public static final ActionRow PLAYING_BUTTONS = ActionRow.of(
+			Button.primary(MUSIC_BUTTON_PREFIX+"pause","Pause"),
+			Button.primary(MUSIC_BUTTON_PREFIX+"skip","Skip"),
+			Button.danger(MUSIC_BUTTON_PREFIX+"stop", "Stop")
 	);
-	private final ActionRow PAUSED_BUTTONS = ActionRow.of(
-			Button.primary("ml_pause","Play"),
-			Button.primary("ml_skip","Skip"),
-			Button.danger("ml_stop", "Stop")
+	public static final ActionRow PAUSED_BUTTONS = ActionRow.of(
+			Button.primary(MUSIC_BUTTON_PREFIX+"pause","Play"),
+			Button.primary(MUSIC_BUTTON_PREFIX+"skip","Skip"),
+			Button.danger(MUSIC_BUTTON_PREFIX+"stop", "Stop")
 	);
 
 	public MusicListener(Guild g) {
@@ -36,20 +37,23 @@ public class MusicListener implements MusicEventListener{
 		g.getJDA().addEventListener(new ListenerAdapter() {
 				@Override
 				public void onButtonClick(@NotNull ButtonClickEvent event) {
+					//not a music button, don't handle it here
+					if (!event.getComponentId().startsWith(MUSIC_BUTTON_PREFIX)) return;
+
 					if (notInSameVoiceChannel(event.getUser())) {
 						event.reply("you must be in voice with me to use these buttons").setEphemeral(true).queue();
 						return;
 					}
 					switch (event.getComponentId()) {
-						case "ml_skip":
+						case MUSIC_BUTTON_PREFIX+"skip":
 							Logging.debug("skip clicked");
 							GuildPlayerManager.getPlayer(event.getGuild()).playNext(true);
 							break;
-						case "ml_stop":
+						case MUSIC_BUTTON_PREFIX+"stop":
 							Logging.debug("stop clicked");
 							GuildPlayerManager.getPlayer(event.getGuild()).stop(true);
 							break;
-						case "ml_pause":
+						case MUSIC_BUTTON_PREFIX+"pause":
 							Logging.debug("pause clicked");
 							GuildPlayerManager.getPlayer(event.getGuild()).pause();
 							break;
@@ -107,12 +111,7 @@ public class MusicListener implements MusicEventListener{
 		else if (event instanceof MusicStartEvent){
 			getMusicChannel().sendMessage(
 					String.format(MusicCommand.NOW_PLAYING, ((MusicStartEvent) event).getSong().getInfo().uri)
-			).setActionRows(PLAYING_BUTTONS).queue(message -> {
-				if (nowPlayingMessage!=null){
-					clearButtons(nowPlayingMessage);
-				}
-				nowPlayingMessage=message;
-			});
+			).queue(message -> setNowPlayingMessage(message,PLAYING_BUTTONS));
 		}
 
 		else if (event instanceof MusicSkipEvent){
@@ -189,8 +188,22 @@ public class MusicListener implements MusicEventListener{
 
 	}
 
+	public void setNowPlayingMessage(Message message, ActionRow buttons) {
+		if (nowPlayingMessage!=null){
+			clearButtons(nowPlayingMessage);
+		}
+		nowPlayingMessage = message;
+		if (!nowPlayingMessage.getContentRaw().isEmpty())
+			nowPlayingMessage.editMessage(nowPlayingMessage.getContentRaw()).setActionRows(buttons).queue();
+		else
+			nowPlayingMessage.editMessageEmbeds(nowPlayingMessage.getEmbeds()).setActionRows(buttons).queue();
+	}
+
 	private void clearButtons(Message message) {
-		message.editMessage(message.getContentRaw()).setActionRows().queue();
+		if (!message.getContentRaw().isEmpty())
+			message.editMessage(message.getContentRaw()).setActionRows().queue();
+		else
+			message.editMessageEmbeds(message.getEmbeds()).setActionRows().queue();
 	}
 
 	private CharSequence volumeBar(int vol) {

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.commands.admin.HelpCommand;
@@ -38,6 +40,23 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 
 	public MusicCommand() {
 
+	}
+
+	@Override
+	public void processSlash(SlashCommandEvent event) {
+
+		Optional<BotCommand> c = subCommands.stream()
+				.filter(cc -> cc.getAlias().contains(event.getSubcommandName())).findFirst();
+
+		// Silent failure of miss-typed subcommands
+		if (!c.isPresent()) {
+			Logging.debug("no music subcommand");
+//			channel.sendMessage(invalidUsage(event.getGuild()));
+			return;
+		}
+		Logging.debug("Music Subclass: "+c.get().getName());
+		setMusicChannel(event.getTextChannel());
+		c.get().runSlashCommand(event);
 	}
 
 	@Override
@@ -110,4 +129,13 @@ public class MusicCommand extends AbstractMusicCommand implements Describable {
 		return subCommands;
 	}
 
+	@Override
+	public CommandData getCommandData() {
+		CommandData rtn = new CommandData(getName(),getShortDescription());
+		for(BotCommand cmd:getSubcommands()){
+			if (cmd instanceof AbstractMusicSubCommand)
+				rtn.addSubcommands(((AbstractMusicSubCommand) cmd).getSubCommandData());
+		}
+		return rtn;
+	}
 }
