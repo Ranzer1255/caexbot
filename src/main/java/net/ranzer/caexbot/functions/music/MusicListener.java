@@ -40,6 +40,9 @@ public class MusicListener implements MusicEventListener{
 					//not a music button, don't handle it here
 					if (!event.getComponentId().startsWith(MUSIC_BUTTON_PREFIX)) return;
 
+					if (event.getMessage()!=nowPlayingMessage){
+						clearButtons(Objects.requireNonNull(event.getMessage()));
+					}
 					if (notInSameVoiceChannel(event.getUser())) {
 						event.reply("you must be in voice with me to use these buttons").setEphemeral(true).queue();
 						return;
