@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
+import net.ranzer.caexbot.functions.music.MusicListener;
 import net.ranzer.caexbot.util.StringUtil;
 
 import java.util.Arrays;
@@ -29,7 +30,9 @@ public class NowPlayingCommand extends AbstractMusicCommand{
 		eb.setDescription(StringUtil.playingBar(playing.getPosition(), playing.getDuration()));
 		eb.setFooter("by "+playing.getInfo().author,null);
 		
-		event.getChannel().sendMessageEmbeds(eb.build()).queue();
+		event.getChannel().sendMessageEmbeds(eb.build()).queue(message ->
+				GuildPlayerManager.getPlayer(event.getGuild()).getMusicListener()
+						.setNowPlayingMessage(message, MusicListener.PLAYING_BUTTONS));
 	}
 
 	@Override

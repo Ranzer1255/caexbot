@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ranzer.caexbot.commands.Describable;
 import net.ranzer.caexbot.functions.music.GuildPlayer;
 import net.ranzer.caexbot.functions.music.GuildPlayerManager;
 import net.ranzer.caexbot.util.StringUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 
 public class QueueCommand extends AbstractMusicCommand implements Describable {
@@ -21,51 +21,54 @@ public class QueueCommand extends AbstractMusicCommand implements Describable {
 	public void process(String[] args, net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
 		if (args.length<1) {
 			GuildPlayer gp = GuildPlayerManager.getPlayer(event.getGuild());
-			EmbedBuilder eb = new EmbedBuilder();
-			
-			eb.setAuthor("Currently Playing", null, null);
-			if(gp.getPlayingTrack()!=null){
-				eb.setTitle(
-						String.format("%s\n"
-								   +  "by %s",
-								gp.getPlayingTrack().getInfo().title,
-								gp.getPlayingTrack().getInfo().author),
-						gp.getPlayingTrack().getInfo().uri);
-			} else {
-				eb.setTitle("Nothing Playing",null);
-			}
-			
-			if(gp.getQueue().getQueue().isEmpty()){
-				
-				eb.setDescription("Nothing in Queue!");
-				
-			} else {	
-				StringBuilder sb = new StringBuilder();
-				sb.append("Queue:\n");
-				int i = 1;
-				long runtime = 0;
-				for (AudioTrack track : gp.getQueue().getQueue()) {
-					if(i>SHOW_QUEUE_LENGTH) break;
-					sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, track.getInfo().uri));
-				}
-				eb.setDescription(sb.toString());
-				
-				for(AudioTrack track:gp.getQueue().getQueue()){
-					runtime += track.getDuration();
-				}
-  				if (gp.getPlayingTrack()!=null) {
-					runtime += gp.getPlayingTrack().getDuration();
-				}
-				eb.setFooter("Estimated Runtime: "+StringUtil.calcTime(runtime/1000), null);
-				
-			}
-			MessageBuilder mb = new MessageBuilder();
-			event.getChannel().sendMessage(mb.setEmbeds(eb.build()).build()).queue();
+			event.getChannel().sendMessageEmbeds(getQueueEmbed(gp)).queue();
 			
 		} else {
 			GuildPlayerManager.getPlayer(event.getGuild()).queueSearch(StringUtil.arrayToString(Arrays.asList(args), " "));	
 		}
 	
+	}
+
+	public static MessageEmbed getQueueEmbed(GuildPlayer gp) {
+		EmbedBuilder eb = new EmbedBuilder();
+
+		eb.setAuthor("Currently Playing", null, null);
+		if(gp.getPlayingTrack()!=null){
+			eb.setTitle(
+					String.format("%s\n"
+									+  "by %s",
+							gp.getPlayingTrack().getInfo().title,
+							gp.getPlayingTrack().getInfo().author),
+					gp.getPlayingTrack().getInfo().uri);
+		} else {
+			eb.setTitle("Nothing Playing",null);
+		}
+
+		if(gp.getQueue().getQueue().isEmpty()){
+
+			eb.setDescription("Nothing in Queue!");
+
+		} else {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Queue:\n");
+			int i = 1;
+			long runtime = 0;
+			for (AudioTrack track : gp.getQueue().getQueue()) {
+				if(i>SHOW_QUEUE_LENGTH) break;
+				sb.append(String.format("%d: [%s](%s)\n", i++, track.getInfo().title, track.getInfo().uri));
+			}
+			eb.setDescription(sb.toString());
+
+			for(AudioTrack track:gp.getQueue().getQueue()){
+				runtime += track.getDuration();
+			}
+			if (gp.getPlayingTrack()!=null) {
+				runtime += gp.getPlayingTrack().getDuration();
+			}
+			eb.setFooter("Estimated Runtime: "+StringUtil.calcTime(runtime/1000), null);
+
+		}
+		return eb.build();
 	}
 
 	@Override
