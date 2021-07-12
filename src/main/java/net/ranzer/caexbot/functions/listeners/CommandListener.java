@@ -6,10 +6,11 @@ import net.ranzer.caexbot.commands.BotCommand;
 import net.ranzer.caexbot.commands.DraconicCommand;
 import net.ranzer.caexbot.commands.admin.*;
 import net.ranzer.caexbot.commands.chat.*;
-import net.ranzer.caexbot.commands.games.DiceCommand;
+import net.ranzer.caexbot.functions.dice.commands.DiceCommand;
 import net.ranzer.caexbot.commands.games.HiLowCommand;
 import net.ranzer.caexbot.functions.music.commands.MusicCommand;
 import net.ranzer.caexbot.commands.search.YoutubeSearchCommand;
+import net.ranzer.caexbot.functions.raffle.commands.RaffleCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,7 @@ public class CommandListener extends ListenerAdapter {
 	private CommandListener() {
 		dl = DraconicListener.getInstance();
 		this.addCommand(new HelpCommand())
+			.addCommand(new RaffleCommand())
 			.addCommand(new InsultCommand())
 			.addCommand(new DiceCommand())
 			.addCommand(new DraconicTranslateCommand())
@@ -116,7 +118,7 @@ public class CommandListener extends ListenerAdapter {
 	private String[] parseArgs(String message) {
 //		return message.split(" ");
 
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		//splits the message on whitespaces but anything in quotes stays at one argument
 		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message);

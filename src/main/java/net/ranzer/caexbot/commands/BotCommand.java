@@ -24,10 +24,10 @@ public abstract class BotCommand {
 
 	public void runCommand(String[] args, MessageReceivedEvent event){
 		if (!event.getAuthor().getId().equals(CaexConfiguration.getInstance().getOwner())) { //override all permission checks if its me
-			if (!hasPermission(args, event)) {
+			if (!hasPermissionToRun(event)) {
 				noPermission(event);
 				return;
-			} 
+			}
 		}
 		if(!event.isFromGuild() && !isApplicableToPM()){
 			event.getChannel().sendMessage("This command cannot be used in Private channels").queue();
@@ -41,27 +41,43 @@ public abstract class BotCommand {
 	abstract public void process(String[] args, MessageReceivedEvent event);
 	
 	abstract public List<String> getAlias();
-	private boolean hasPermission(String[] args, MessageReceivedEvent event) {
-		if(getPermissionRequirements()==null)
-			return hasRoleRequirements(args, event);
-		for (Role role : Objects.requireNonNull(event.getMember()).getRoles()) {
-			if(role.getPermissions().contains(getPermissionRequirements())){
-				return true;
+
+	private boolean hasPermissionToRun(MessageReceivedEvent event) {
+
+		if(getPermissionRequirements()==null && getRoleRequirements(event.getGuild())==null){
+			return true;
+		} else if(getPermissionRequirements()!=null && getRoleRequirements(event.getGuild())==null){
+			return checkPermissionRequirements(event);
+		} else if(getPermissionRequirements()==null && getRoleRequirements(event.getGuild())!= null){
+			return checkRoleRequirements(event);
+		} else {
+			return (checkPermissionRequirements(event) || checkRoleRequirements(event));
+		}
+	}
+
+	private boolean checkPermissionRequirements(MessageReceivedEvent event) {
+		for (Role role : event.getMember().getRoles()) {
+			if(getPermissionRequirements()!=null) {
+				if (role.getPermissions().contains(getPermissionRequirements())) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
-	private boolean hasRoleRequirements(String[] args, MessageReceivedEvent event) {
-		if(getRoleRequirements()==null)
-			return true;
-		for(Role role : Objects.requireNonNull(event.getMember()).getRoles()){
-			if(getRoleRequirements().contains(role.getName()))
+	private boolean checkRoleRequirements(MessageReceivedEvent event) {
+		for(Role role : event.getGuild().getMember(event.getAuthor()).getRoles()){
+			if(getRoleRequirements(event.getGuild()).contains(role))
 				return true;
 		}
-		
-		
+
+
 		return false;
+	}
+
+	protected List<Role> getRoleRequirements(Guild guild) {
+		return null;
 	}
 	
 	public List<String> getRoleRequirements() {

@@ -8,8 +8,9 @@ public enum Category {
 	CHAT("Chat", Color.blue),
 	GAME("Game", Color.GREEN),
 	SEARCH("Search", Color.yellow),
-	MUSIC("Music", Color.ORANGE);
-	
+	MUSIC("Music", Color.ORANGE),
+	RAFFLE("Raffle", Color.cyan);
+
 	public final String NAME;
 	public final Color COLOR;
 	
@@ -22,4 +23,5 @@ public enum Category {
 	public String toString(){
 		return NAME;
 	}
+
 }

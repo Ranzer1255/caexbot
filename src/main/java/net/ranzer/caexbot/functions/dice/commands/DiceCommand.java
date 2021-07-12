@@ -1,4 +1,4 @@
-package net.ranzer.caexbot.commands.games;
+package net.ranzer.caexbot.functions.dice.commands;
 
 import java.util.Arrays;
 import java.util.List;

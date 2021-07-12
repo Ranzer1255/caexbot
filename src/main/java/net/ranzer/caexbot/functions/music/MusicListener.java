@@ -13,7 +13,6 @@ import net.ranzer.caexbot.functions.music.commands.QueueCommand;
 import net.ranzer.caexbot.functions.music.events.*;
 import net.ranzer.caexbot.util.Logging;
 import org.jetbrains.annotations.NotNull;
-import org.omg.CORBA.NO_IMPLEMENT;
 
 import java.util.Arrays;
 import java.util.List;
