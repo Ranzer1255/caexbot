@@ -15,9 +15,9 @@ public class ChannelDataModel {
 	@Column(name = "text_channel_id")
 	private String channelID;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(/*cascade = CascadeType.ALL*/)
 	@JoinColumn(name = "guild_id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
+//	@OnDelete(action = OnDeleteAction.CASCADE)
 	private GuildDataModel gdm;
 
 	@Column(name = "perm_raffle")
